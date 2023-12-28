@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Shared\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CommonAbstractions.DB" Version="1.0.0" />
+    <PackageReference Include="CommonAbstractions.DB" Version="1.0.1" />
+    <PackageReference Include="DateKit.DB" Version="1.1.0" />
     <PackageReference Include="Money.DB" Version="1.0.1" />
   </ItemGroup>
 

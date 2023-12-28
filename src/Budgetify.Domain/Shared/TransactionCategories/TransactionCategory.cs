@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Budgetify.Domain.TransactionAccounts
+namespace Budgetify.Domain.Shared.TransactionCategories
 {
-    public sealed record TransactionAccountName(string Value);
+    public abstract record TransactionCategory
+    {
+    }
 }

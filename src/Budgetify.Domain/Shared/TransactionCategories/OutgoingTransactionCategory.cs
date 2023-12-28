@@ -1,0 +1,51 @@
+﻿namespace Budgetify.Domain.Shared.TransactionCategories
+{
+    public sealed record OutgoingTransactionCategory : TransactionCategory
+    {
+        public static readonly OutgoingTransactionCategory Housing = new("Housing");
+        public static readonly OutgoingTransactionCategory Transportation = new("Transportation");
+        public static readonly OutgoingTransactionCategory Food = new("Food");
+        public static readonly OutgoingTransactionCategory Healthcare = new("Healthcare");
+        public static readonly OutgoingTransactionCategory Insurance = new("Insurance");
+        public static readonly OutgoingTransactionCategory DebtPayments = new("Debt payments");
+        public static readonly OutgoingTransactionCategory Childcare = new("Childcare");
+        public static readonly OutgoingTransactionCategory Entertainment = new("Entertainment");
+        public static readonly OutgoingTransactionCategory Clothing = new("Clothing");
+        public static readonly OutgoingTransactionCategory Taxes = new("Taxes");
+        public static readonly OutgoingTransactionCategory Miscellaneous = new("Miscellaneous");
+        public static readonly OutgoingTransactionCategory Education = new("Education");
+        public static readonly OutgoingTransactionCategory Travel = new("Travel");
+        public static readonly OutgoingTransactionCategory Home = new("Home");
+        public static readonly OutgoingTransactionCategory Charity = new("Charity");
+        public static readonly OutgoingTransactionCategory Internal = new("Internal");
+
+        private OutgoingTransactionCategory(string value) => Value = value;
+
+        public string Value { get; init; }
+
+        public static OutgoingTransactionCategory FromValue(string code)
+        {
+            return All.FirstOrDefault(c => c.Value == code) ??
+                   throw new ApplicationException("The category of outgoing transaction is invalid");
+        }
+
+        public static readonly IReadOnlyCollection<OutgoingTransactionCategory> All = new[]
+        {
+            Housing,
+            Transportation,
+            Food,
+            Healthcare,
+            Insurance,
+            DebtPayments,
+            Childcare,
+            Entertainment,
+            Clothing,
+            Taxes,
+            Miscellaneous,
+            Education,
+            Travel,
+            Home,
+            Charity
+        };
+    }
+}
