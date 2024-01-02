@@ -5,21 +5,17 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{27E85A48-CC28-431A-B3F9-5CECEAFE7C2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgetify.API", "src\Budgetify.API\Budgetify.API.csproj", "{0A3F7097-334E-4BF9-A80D-7CAB5DF12DFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budgetify.API", "src\Budgetify.API\Budgetify.API.csproj", "{0A3F7097-334E-4BF9-A80D-7CAB5DF12DFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgetify.Application", "src\Budgetify.Application\Budgetify.Application.csproj", "{8ABB423B-AD12-46F3-97A1-1D617B077028}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budgetify.Application", "src\Budgetify.Application\Budgetify.Application.csproj", "{8ABB423B-AD12-46F3-97A1-1D617B077028}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgetify.Domain", "src\Budgetify.Domain\Budgetify.Domain.csproj", "{33B0F2AC-6D08-4664-817A-80BD2BA8BCEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budgetify.Domain", "src\Budgetify.Domain\Budgetify.Domain.csproj", "{33B0F2AC-6D08-4664-817A-80BD2BA8BCEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgetify.Infrastructure", "src\Budgetify.Infrastructure\Budgetify.Infrastructure.csproj", "{512F98C4-A89A-46D2-8D84-7E62CE749977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budgetify.Infrastructure", "src\Budgetify.Infrastructure\Budgetify.Infrastructure.csproj", "{512F98C4-A89A-46D2-8D84-7E62CE749977}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B2CF4444-CDAC-414D-8D11-86E92837921A}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {01570035-F99F-4068-B616-7EE8E4422E76}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -77,12 +73,29 @@ Global
 		{512F98C4-A89A-46D2-8D84-7E62CE749977}.Release|x64.Build.0 = Release|Any CPU
 		{512F98C4-A89A-46D2-8D84-7E62CE749977}.Release|x86.ActiveCfg = Release|Any CPU
 		{512F98C4-A89A-46D2-8D84-7E62CE749977}.Release|x86.Build.0 = Release|Any CPU
+		{B2CF4444-CDAC-414D-8D11-86E92837921A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2CF4444-CDAC-414D-8D11-86E92837921A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2CF4444-CDAC-414D-8D11-86E92837921A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B2CF4444-CDAC-414D-8D11-86E92837921A}.Debug|x64.Build.0 = Debug|Any CPU
+		{B2CF4444-CDAC-414D-8D11-86E92837921A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B2CF4444-CDAC-414D-8D11-86E92837921A}.Debug|x86.Build.0 = Debug|Any CPU
+		{B2CF4444-CDAC-414D-8D11-86E92837921A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2CF4444-CDAC-414D-8D11-86E92837921A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2CF4444-CDAC-414D-8D11-86E92837921A}.Release|x64.ActiveCfg = Release|Any CPU
+		{B2CF4444-CDAC-414D-8D11-86E92837921A}.Release|x64.Build.0 = Release|Any CPU
+		{B2CF4444-CDAC-414D-8D11-86E92837921A}.Release|x86.ActiveCfg = Release|Any CPU
+		{B2CF4444-CDAC-414D-8D11-86E92837921A}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{51D804FE-321C-446B-9E18-84A3D8DA3DAA} = {27E85A48-CC28-431A-B3F9-5CECEAFE7C2E}
 		{0A3F7097-334E-4BF9-A80D-7CAB5DF12DFA} = {27E85A48-CC28-431A-B3F9-5CECEAFE7C2E}
 		{8ABB423B-AD12-46F3-97A1-1D617B077028} = {27E85A48-CC28-431A-B3F9-5CECEAFE7C2E}
 		{33B0F2AC-6D08-4664-817A-80BD2BA8BCEF} = {27E85A48-CC28-431A-B3F9-5CECEAFE7C2E}
 		{512F98C4-A89A-46D2-8D84-7E62CE749977} = {27E85A48-CC28-431A-B3F9-5CECEAFE7C2E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01570035-F99F-4068-B616-7EE8E4422E76}
 	EndGlobalSection
 EndGlobal

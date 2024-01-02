@@ -8,6 +8,7 @@ using System.Transactions;
 using CommonAbstractions.DB.Entities;
 using Budgetify.Domain.Transactions.IncomingTransactions;
 using Budgetify.Domain.Transactions.OugoingTransactions;
+#pragma warning disable CS8618
 
 namespace Budgetify.Domain.Transactions
 {
@@ -15,6 +16,9 @@ namespace Budgetify.Domain.Transactions
     {
         public Money.DB.Money TransactionAmount { get; private set; }
         public DateTime TransactionDateUtc { get; private set; }
+
+        protected Transaction()
+        { }
 
         protected Transaction(Money.DB.Money transactionAmount) : base()
         {

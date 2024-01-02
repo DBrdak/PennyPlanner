@@ -20,16 +20,6 @@ namespace Budgetify.Domain.Shared.TransactionCategories
         public static readonly IncomingTransactionCategory Miscellaneous = new("Miscellaneous");
         public static readonly IncomingTransactionCategory Internal = new("Internal");
 
-        private IncomingTransactionCategory(string value) => Value = value;
-
-        public string Value { get; init; }
-
-        public static IncomingTransactionCategory FromValue(string code)
-        {
-            return All.FirstOrDefault(c => c.Value == code) ??
-                   throw new ApplicationException("The category of incoming transaction is invalid");
-        }
-
         public static readonly IReadOnlyCollection<IncomingTransactionCategory> All = new[]
         {
             Employment,
@@ -43,5 +33,14 @@ namespace Budgetify.Domain.Shared.TransactionCategories
             Royalties,
             Alimony
         };
+        public new static IncomingTransactionCategory FromValue(string code)
+        {
+            return All.FirstOrDefault(c => c.Value == code) ??
+                   throw new ApplicationException("The category of transaction is invalid");
+        }
+
+        private IncomingTransactionCategory(string value) : base(value)
+        {
+        }
     }
 }

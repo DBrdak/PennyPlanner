@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Budgetify.Domain.Accounts;
 using Budgetify.Domain.Shared.TransactionCategories;
+using Budgetify.Domain.TransactionEntities.TransactionRecipients;
+using Budgetify.Domain.TransactionEntities.TransactionSenders;
 using Budgetify.Domain.Transactions.IncomingTransactions;
 using Budgetify.Domain.Transactions.OugoingTransactions;
 
@@ -11,34 +14,43 @@ namespace Budgetify.Domain.Transactions
 {
     public static class TransactionService
     {
-        public static IncomingTransaction CreateIncomingTransaction(
+        public static void CreateIncomingTransaction(
             Money.DB.Money transactionAmount,
-            string destinationAccountId,
-            string senderId,
+            Account destinationAccount,
+            TransactionSender sender,
             IncomingTransactionCategory category)
         {
-            return IncomingTransaction.Create(transactionAmount, destinationAccountId, senderId, category);
+            var transaction = IncomingTransaction.Create(transactionAmount, destinationAccount, sender, category);
+
+            destinationAccount.AddIncomeTransaction(transaction);
+            sender.AddTransaction(transaction);
         }
 
-        public static OutgoingTransaction CreateOutgoingTransaction(
+        public static void CreateOutgoingTransaction(
             Money.DB.Money transactionAmount,
-            string sourceAccountId,
-            string recipientId,
+            Account sourceAccount,
+            TransactionRecipient recipient,
             OutgoingTransactionCategory category)
         {
-            return OutgoingTransaction.Create(transactionAmount, sourceAccountId, recipientId, category);
+            var transaction = OutgoingTransaction.Create(transactionAmount, sourceAccount, recipient, category);
+
+            sourceAccount.AddOutgoingTransaction(transaction);
+            recipient.AddTransaction(transaction);
         }
 
-        public static Transaction[] CreateInternalTransaction(
+        public static void CreateInternalTransaction(
             Money.DB.Money transactionAmount,
-            string sourceAccountId,
-            string destinationAccountId)
+            Account sourceAccount,
+            Account destinationAccount)
         {
-            return new Transaction[]
+            var transactions = new
             {
-                CreateOutgoingTransaction(transactionAmount, sourceAccountId, destinationAccountId, OutgoingTransactionCategory.Internal),
-                CreateIncomingTransaction(transactionAmount, destinationAccountId, sourceAccountId, IncomingTransactionCategory.Internal)
+                source = OutgoingTransaction.CreateInternal(transactionAmount, sourceAccount, destinationAccount),
+                destination = IncomingTransaction.CreateInternal(transactionAmount, destinationAccount, sourceAccount)
             };
+
+            sourceAccount.AddOutgoingTransaction(transactions.source);
+            destinationAccount.AddIncomeTransaction(transactions.destination);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Budgetify.Domain.Shared.TransactionCategories;
 using CommonAbstractions.DB.Entities;
 using DateKit.DB;
+#pragma warning disable CS8618
 
 namespace Budgetify.Domain.BudgetPlans
 {
@@ -15,6 +16,9 @@ namespace Budgetify.Domain.BudgetPlans
         public DateTimeRange BudgetPeriod { get; private set; }
         public ImmutableList<BudgetedTransactionCategory> BudgetedTransactionCategories => _budgetedTransactionCategories.ToImmutableList();
         private readonly List<BudgetedTransactionCategory> _budgetedTransactionCategories;
+
+        private BudgetPlan()
+        { }
 
         public BudgetPlan(DateTimeRange budgetPeriod)
         {

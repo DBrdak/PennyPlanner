@@ -15,6 +15,12 @@ public sealed class BudgetifyContext : DbContext
     {
         TypeNameHandling = TypeNameHandling.All
     };
+
+    public BudgetifyContext(DbContextOptions options) : base(options)
+    {
+        
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(BudgetifyContext).Assembly);

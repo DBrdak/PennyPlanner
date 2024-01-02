@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Money.DB;
+#pragma warning disable CS8618
 
 namespace Budgetify.Domain.Shared.TransactionCategories
 {
@@ -12,6 +13,9 @@ namespace Budgetify.Domain.Shared.TransactionCategories
         public TransactionCategory Category { get; private set; }
         public Money.DB.Money BudgetedAmount { get; private set; }
         public Money.DB.Money ActualAmount { get; private set; }
+
+        private BudgetedTransactionCategory()
+        { }
 
         public BudgetedTransactionCategory(TransactionCategory category, Money.DB.Money budgetedAmount)
         {

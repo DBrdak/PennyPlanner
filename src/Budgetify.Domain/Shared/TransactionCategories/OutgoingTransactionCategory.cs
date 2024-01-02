@@ -19,16 +19,6 @@
         public static readonly OutgoingTransactionCategory Charity = new("Charity");
         public static readonly OutgoingTransactionCategory Internal = new("Internal");
 
-        private OutgoingTransactionCategory(string value) => Value = value;
-
-        public string Value { get; init; }
-
-        public static OutgoingTransactionCategory FromValue(string code)
-        {
-            return All.FirstOrDefault(c => c.Value == code) ??
-                   throw new ApplicationException("The category of outgoing transaction is invalid");
-        }
-
         public static readonly IReadOnlyCollection<OutgoingTransactionCategory> All = new[]
         {
             Housing,
@@ -47,5 +37,15 @@
             Home,
             Charity
         };
+
+        public new static OutgoingTransactionCategory FromValue(string code)
+        {
+            return All.FirstOrDefault(c => c.Value == code) ??
+                   throw new ApplicationException("The category of transaction is invalid");
+        }
+
+        private OutgoingTransactionCategory(string value) : base(value)
+        {
+        }
     }
 }

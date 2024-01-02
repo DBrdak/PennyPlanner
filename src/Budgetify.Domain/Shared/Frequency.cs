@@ -37,6 +37,7 @@ namespace Budgetify.Domain.Shared
             Quarterly,
             Yearly
         };
+
     }
 
 }

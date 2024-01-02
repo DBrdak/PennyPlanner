@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  budgetify-db:
+    image: postgres:latest
+    container_name: budgetify-db
+    environment:
+      - POSTGRES_DB=budgetify
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  budgetify-api:
+    image: ${DOCKER_REGISTRY-}budgetifyapi
+    container_name: budgetify-api
+    build:
+      context: .
+      dockerfile: src/Budgetify.API/Dockerfile    
+    depends_on:
+      - budgetify-db
