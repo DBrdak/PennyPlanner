@@ -1,4 +1,4 @@
-﻿namespace Budgetify.Domain.Shared.TransactionCategories
+﻿namespace Budgetify.Domain.Transactions.OugoingTransactions
 {
     public sealed record OutgoingTransactionCategory : TransactionCategory
     {

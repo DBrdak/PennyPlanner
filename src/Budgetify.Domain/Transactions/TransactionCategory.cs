@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Budgetify.Domain.Transactions.IncomingTransactions;
+using Budgetify.Domain.Transactions.OugoingTransactions;
 // ReSharper disable InvokeAsExtensionMethod
 
-namespace Budgetify.Domain.Shared.TransactionCategories
+namespace Budgetify.Domain.Transactions
 {
     public abstract record TransactionCategory
     {
@@ -15,7 +17,7 @@ namespace Budgetify.Domain.Shared.TransactionCategories
 
         public static TransactionCategory FromValue(string code)
         {
-            var all = Enumerable.Concat<TransactionCategory>(IncomingTransactionCategory.All, OutgoingTransactionCategory.All);
+            var all = IncomingTransactionCategory.All.Concat<TransactionCategory>(OutgoingTransactionCategory.All);
 
             return all.FirstOrDefault(c => c.Value == code) ??
                    throw new ApplicationException("The category of transaction is invalid");

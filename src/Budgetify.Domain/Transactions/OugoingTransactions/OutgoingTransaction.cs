@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Budgetify.Domain.Accounts;
-using Budgetify.Domain.Shared.TransactionCategories;
 using Budgetify.Domain.TransactionEntities.TransactionRecipients;
 #pragma warning disable CS8618
 
@@ -45,6 +44,13 @@ namespace Budgetify.Domain.Transactions.OugoingTransactions
             Account internalDestinationAccountId)
         {
             return new (transactionAmount, sourceAccountId, null, internalDestinationAccountId, OutgoingTransactionCategory.Internal);
+        }
+
+        internal static OutgoingTransaction CreateEqualizing(
+            Money.DB.Money transactionAmount,
+            Account account)
+        {
+            return new(transactionAmount, account, null, null, OutgoingTransactionCategory.Internal);
         }
 
         internal static OutgoingTransaction Create(

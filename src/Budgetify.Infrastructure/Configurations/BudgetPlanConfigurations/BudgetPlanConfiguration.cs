@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Budgetify.Domain.BudgetPlans;
-using Budgetify.Domain.Shared.TransactionCategories;
+using Budgetify.Domain.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Money.DB;

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Budgetify.Domain.Accounts;
-using Budgetify.Domain.Shared.TransactionCategories;
 using Budgetify.Domain.TransactionEntities.TransactionRecipients;
 using Budgetify.Domain.TransactionEntities.TransactionSenders;
 using Budgetify.Domain.Transactions.IncomingTransactions;
@@ -51,6 +50,23 @@ namespace Budgetify.Domain.Transactions
 
             sourceAccount.AddOutgoingTransaction(transactions.source);
             destinationAccount.AddIncomeTransaction(transactions.destination);
+        }
+
+        internal static void CreateEqualizingTransaction(
+            Money.DB.Money transactionAmount,
+            Account account)
+        {
+            switch (transactionAmount.Amount > 0)
+            {
+                case true:
+                    var equalizingIncomeTransaction = IncomingTransaction.CreateEqualizing(transactionAmount, account);
+                    account.AddIncomeTransaction(equalizingIncomeTransaction);
+                    break;
+                case false:
+                    var equalizingOutcomeTransaction = OutgoingTransaction.CreateEqualizing(transactionAmount, account)
+                    account.AddOutgoingTransaction(equalizingOutcomeTransaction);
+                    break;
+            }
         }
     }
 }

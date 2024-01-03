@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Budgetify.Domain.Shared.TransactionCategories;
 using Budgetify.Domain.Transactions;
 using Budgetify.Domain.Transactions.OugoingTransactions;
 using CommonAbstractions.DB.Entities;

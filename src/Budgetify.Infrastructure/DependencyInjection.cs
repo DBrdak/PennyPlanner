@@ -1,4 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Budgetify.Domain.Accounts;
+using Budgetify.Domain.BudgetPlans;
+using Budgetify.Domain.TransactionEntities;
+using Budgetify.Domain.Transactions;
+using Budgetify.Infrastructure.Repositories;
+using CommonAbstractions.DB;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,6 +31,16 @@ namespace Budgetify.Infrastructure
             {
                 options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
             });
+
+            services.AddScoped<IAccountRepository, AccountRepository>();
+
+            services.AddScoped<ITransactionEntityRepository, TransactionEntityRepository>();
+
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+            services.AddScoped<IBudgetPlanRepository, BudgetPlanRepository>();
+
+            services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<BudgetifyContext>());
         }
     }
 }

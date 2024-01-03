@@ -1,10 +1,12 @@
 ﻿using System.Collections.Immutable;
-using Budgetify.Domain.Shared.TransactionCategories;
 using Budgetify.Domain.Transactions;
 using Budgetify.Domain.Transactions.IncomingTransactions;
 using Budgetify.Domain.Transactions.OugoingTransactions;
 using CommonAbstractions.DB.Entities;
-using Money.DB;
+using Currency = Money.DB.Currency;
+using Money = Money.DB.Money;
+using Transaction = Budgetify.Domain.Transactions.Transaction;
+
 #pragma warning disable CS8618
 
 namespace Budgetify.Domain.Accounts
@@ -14,7 +16,7 @@ namespace Budgetify.Domain.Accounts
         public ImmutableList<Transaction> Transactions => _transactions.ToImmutableList();
         private readonly List<Transaction> _transactions;
         public AccountName Name { get; private set; }
-        public Money.DB.Money Balance { get; private set; }
+        public global::Money.DB.Money Balance { get; private set; }
 
         protected Account()
         { }
@@ -22,13 +24,22 @@ namespace Budgetify.Domain.Accounts
         protected Account(AccountName name, Currency currency) : base()
         {
             Name = name;
-            Balance = new Money.DB.Money(0, currency);
+            Balance = new global::Money.DB.Money(0, currency);
             _transactions = new();
         }
 
-        public void ChangeAccountName(AccountName newName)
+        public void UpdateAccount(Account newAccountValues)
         {
-            Name = newName;
+            if(newAccountValues.Balance != Balance)
+            {
+                AdjustAccountBalance(newAccountValues.Balance);
+            }
+
+            if(newAccountValues.Name.Value != Name.Value)
+            {
+                ChangeAccountName(newAccountValues.Name);
+            }
+
         }
 
         internal void AddIncomeTransaction(IncomingTransaction transaction)
@@ -41,6 +52,22 @@ namespace Budgetify.Domain.Accounts
         {
             _transactions.Add(transaction);
             Balance -= transaction.TransactionAmount;
+        }
+        private void ChangeAccountName(AccountName newName)
+        {
+            Name = newName;
+        }
+
+        private void AdjustAccountBalance(global::Money.DB.Money newBalance)
+        {
+            if (newBalance.Currency != Balance.Currency)
+            {
+                Balance = new(Balance.Amount, newBalance.Currency);
+            }
+
+            var difference = newBalance - Balance;
+
+            TransactionService.CreateEqualizingTransaction(difference, this);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Budgetify.Domain.Shared.TransactionCategories
+namespace Budgetify.Domain.Transactions.IncomingTransactions
 {
     public sealed record IncomingTransactionCategory : TransactionCategory
     {
