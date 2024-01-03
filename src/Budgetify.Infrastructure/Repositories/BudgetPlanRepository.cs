@@ -5,18 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Budgetify.Domain.BudgetPlans;
 using DateKit.DB;
+using Microsoft.EntityFrameworkCore;
 
 namespace Budgetify.Infrastructure.Repositories
 {
-    public sealed class BudgetPlanRepository : Repository<BudgetPlan>, IBudgetPlanRepository
+    public sealed class BudgetPlanRepository : Repository<BudgetPlan, BudgetPlanId>, IBudgetPlanRepository
     {
         public BudgetPlanRepository(BudgetifyContext dbContext) : base(dbContext)
         {
-        }
-
-        public async Task<BudgetPlan> GetForPeriodAsync(DateTimeRange period)
-        {
-            return null;
         }
 
     }

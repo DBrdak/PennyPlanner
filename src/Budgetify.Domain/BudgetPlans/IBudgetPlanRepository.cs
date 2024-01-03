@@ -9,6 +9,5 @@ namespace Budgetify.Domain.BudgetPlans
 {
     public interface IBudgetPlanRepository
     {
-        Task<BudgetPlan> GetForPeriodAsync(DateTimeRange period);
     }
 }

@@ -15,19 +15,12 @@ namespace Budgetify.Infrastructure.Configurations.TransactionConfigurations
     {
         public void Configure(EntityTypeBuilder<OutgoingTransaction> builder)
         {
-            builder.HasOne(outgoingTransaction => outgoingTransaction.SourceAccount)
-                .WithMany()
-                .HasPrincipalKey(account => account.Id)
-                .HasForeignKey(outgoingTransaction => outgoingTransaction.SourceAccountId);
-
             builder.HasOne(outgoingTransaction => outgoingTransaction.Recipient)
                 .WithMany()
-                .HasPrincipalKey(recipient => recipient.Id)
                 .HasForeignKey(outgoingTransaction => outgoingTransaction.RecipientId);
 
             builder.HasOne(outgoingTransaction => outgoingTransaction.InternalDestinationAccount)
                 .WithMany()
-                .HasPrincipalKey(account => account.Id)
                 .HasForeignKey(outgoingTransaction => outgoingTransaction.InternalDestinationAccountId);
 
 

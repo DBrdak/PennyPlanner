@@ -10,7 +10,7 @@ using DateKit.DB;
 
 namespace Budgetify.Domain.BudgetPlans
 {
-    public sealed class BudgetPlan : Entity
+    public sealed class BudgetPlan : Entity<BudgetPlanId>
     {
         public DateTimeRange BudgetPeriod { get; private set; }
         public ImmutableList<BudgetedTransactionCategory> BudgetedTransactionCategories => _budgetedTransactionCategories.ToImmutableList();
@@ -19,7 +19,7 @@ namespace Budgetify.Domain.BudgetPlans
         private BudgetPlan()
         { }
 
-        public BudgetPlan(DateTimeRange budgetPeriod)
+        public BudgetPlan(DateTimeRange budgetPeriod): base(new BudgetPlanId())
         {
             _budgetedTransactionCategories = new ();
             BudgetPeriod = budgetPeriod;

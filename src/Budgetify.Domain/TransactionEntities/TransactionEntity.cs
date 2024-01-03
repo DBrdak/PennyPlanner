@@ -12,7 +12,7 @@ using CommonAbstractions.DB.Entities;
 
 namespace Budgetify.Domain.TransactionEntities
 {
-    public abstract class TransactionEntity : Entity
+    public abstract class TransactionEntity : Entity<TransactionEntityId>
     {
         public TransactionEntityName Name { get; private set; }
         public ImmutableList<Transaction> Transactions => _transactions.ToImmutableList();
@@ -21,7 +21,7 @@ namespace Budgetify.Domain.TransactionEntities
         protected TransactionEntity()
         { }
 
-        protected TransactionEntity(TransactionEntityName name)
+        protected TransactionEntity(TransactionEntityName name) : base(new TransactionEntityId())
         {
             Name = name;
             _transactions = new();

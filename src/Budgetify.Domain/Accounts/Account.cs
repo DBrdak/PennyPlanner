@@ -11,7 +11,7 @@ using Transaction = Budgetify.Domain.Transactions.Transaction;
 
 namespace Budgetify.Domain.Accounts
 {
-    public abstract class Account : Entity
+    public abstract class Account : Entity<AccountId>
     {
         public ImmutableList<Transaction> Transactions => _transactions.ToImmutableList();
         private readonly List<Transaction> _transactions;
@@ -21,7 +21,7 @@ namespace Budgetify.Domain.Accounts
         protected Account()
         { }
 
-        protected Account(AccountName name, Currency currency) : base()
+        protected Account(AccountName name, Currency currency) : base(new AccountId())
         {
             Name = name;
             Balance = new global::Money.DB.Money(0, currency);

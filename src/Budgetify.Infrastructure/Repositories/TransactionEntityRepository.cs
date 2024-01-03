@@ -7,7 +7,7 @@ using Budgetify.Domain.TransactionEntities;
 
 namespace Budgetify.Infrastructure.Repositories
 {
-    public sealed class TransactionEntityRepository : Repository<TransactionEntity>, ITransactionEntityRepository
+    public sealed class TransactionEntityRepository : Repository<TransactionEntity, TransactionEntityId>, ITransactionEntityRepository
     {
         public TransactionEntityRepository(BudgetifyContext dbContext) : base(dbContext)
         {

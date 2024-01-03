@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Budgetify.Infrastructure.Repositories
 {
-    public sealed class AccountRepository : Repository<Account>, IAccountRepository
+    public sealed class AccountRepository : Repository<Account, AccountId>, IAccountRepository
     {
         public AccountRepository(BudgetifyContext dbContext) : base(dbContext)
         {

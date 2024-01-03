@@ -21,6 +21,9 @@ namespace Budgetify.Infrastructure.Configurations.AccountConfigurations
 
             builder.HasKey(account => account.Id);
 
+            builder.Property(account => account.Id)
+                .HasConversion(id => id.Value, value => new AccountId(value));
+
             builder.Property(account => account.Name)
                 .HasConversion(accountName => accountName.Value, value => new AccountName(value));
 
@@ -34,7 +37,6 @@ namespace Budgetify.Infrastructure.Configurations.AccountConfigurations
 
             builder.HasMany(account => account.Transactions)
                 .WithOne()
-                .HasPrincipalKey(account => account.Id)
                 .HasForeignKey(transaction => transaction.Id);
 
             builder.HasDiscriminator<string>("account_type")

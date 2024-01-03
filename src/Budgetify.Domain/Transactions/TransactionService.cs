@@ -63,7 +63,7 @@ namespace Budgetify.Domain.Transactions
                     account.AddIncomeTransaction(equalizingIncomeTransaction);
                     break;
                 case false:
-                    var equalizingOutcomeTransaction = OutgoingTransaction.CreateEqualizing(transactionAmount, account)
+                    var equalizingOutcomeTransaction = OutgoingTransaction.CreateEqualizing(transactionAmount, account);
                     account.AddOutgoingTransaction(equalizingOutcomeTransaction);
                     break;
             }

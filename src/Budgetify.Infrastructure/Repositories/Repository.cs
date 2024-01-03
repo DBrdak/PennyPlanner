@@ -8,33 +8,35 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Budgetify.Infrastructure.Repositories
 {
-    public abstract class Repository<TEntity> where TEntity : Entity
+    public abstract class Repository<TEntity, TEntityId>
+        where TEntityId : EntityId
+        where TEntity : Entity<TEntityId>
     {
-        protected readonly BudgetifyContext _dbContext;
+        protected readonly BudgetifyContext DbContext;
 
         protected Repository(BudgetifyContext dbContext)
         {
-            _dbContext = dbContext;
+            DbContext = dbContext;
         }
 
-        public async Task<TEntity?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<TEntity?> GetByIdAsync(TEntityId id, CancellationToken cancellationToken = default)
         {
-            return await _dbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            return await DbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
         
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _dbContext.Set<TEntity>().ToListAsync();
+            return await DbContext.Set<TEntity>().ToListAsync();
         }
 
         public async Task AddAsync(TEntity entity)
         {
-            await _dbContext.Set<TEntity>().AddAsync(entity);
+            await DbContext.Set<TEntity>().AddAsync(entity);
         }
 
         public void Remove(TEntity entity)
         {
-            _dbContext.Set<TEntity>().Remove(entity);
+            DbContext.Set<TEntity>().Remove(entity);
         }
     }
 }

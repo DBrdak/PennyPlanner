@@ -19,13 +19,15 @@ namespace Budgetify.Infrastructure.Configurations.TransactionEntitiesConfigurati
 
             builder.HasKey(t => t.Id);
 
+            builder.Property(transactionEntity => transactionEntity.Id)
+                .HasConversion(id => id.Value, value => new TransactionEntityId(value));
+
             builder.Property(transactionEntity => transactionEntity.Name)
                 .HasConversion(name => name.Value, value => new TransactionEntityName(value));
 
             builder.HasMany(transactionEntity => transactionEntity.Transactions)
                 .WithOne()
-                .HasPrincipalKey(transactionEntity => transactionEntity.Id)
-                .HasForeignKey(transaction => transaction.Id);
+                .HasPrincipalKey(transactionEntity => transactionEntity.Id);
 
             builder.HasDiscriminator<string>("entity_type")
                 .HasValue<TransactionSender>(nameof(TransactionSender))

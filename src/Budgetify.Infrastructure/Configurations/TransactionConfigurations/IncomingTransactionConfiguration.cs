@@ -13,19 +13,12 @@ namespace Budgetify.Infrastructure.Configurations.TransactionConfigurations
     {
         public void Configure(EntityTypeBuilder<IncomingTransaction> builder)
         {
-            builder.HasOne(incomingTransaction => incomingTransaction.DestinationAccount)
-                .WithMany()
-                .HasPrincipalKey(account => account.Id)
-                .HasForeignKey(incomingTransaction => incomingTransaction.DestinationAccountId);
-
             builder.HasOne(incomingTransaction => incomingTransaction.Sender)
                 .WithMany()
-                .HasPrincipalKey(recipient => recipient.Id)
                 .HasForeignKey(incomingTransaction => incomingTransaction.SenderId);
 
             builder.HasOne(incomingTransaction => incomingTransaction.InternalSourceAccount)
                 .WithMany()
-                .HasPrincipalKey(account => account.Id)
                 .HasForeignKey(incomingTransaction => incomingTransaction.InternalSourceAccountId);
 
             builder.Property(incomingTransaction => incomingTransaction.Category)

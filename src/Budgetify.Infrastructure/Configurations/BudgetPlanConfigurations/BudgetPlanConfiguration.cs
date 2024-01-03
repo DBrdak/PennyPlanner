@@ -19,6 +19,9 @@ namespace Budgetify.Infrastructure.Configurations.BudgetPlanConfigurations
 
             builder.HasKey(x => x.Id);
 
+            builder.Property(budgetPlan => budgetPlan.Id)
+                .HasConversion(id => id.Value, value => new BudgetPlanId(value));
+
             builder.OwnsOne(budgetPlan => budgetPlan.BudgetPeriod);
 
             builder.OwnsMany(budgetPlan => budgetPlan.BudgetedTransactionCategories,

@@ -20,6 +20,9 @@ namespace Budgetify.Infrastructure.Configurations.TransactionConfigurations
 
             builder.HasKey(t => t.Id);
 
+            builder.Property(transaction => transaction.Id)
+                .HasConversion(id => id.Value, value => new TransactionId(value));
+
             builder.OwnsOne(
                 transaction => transaction.TransactionAmount,
                 moneyBuilder =>
@@ -27,6 +30,10 @@ namespace Budgetify.Infrastructure.Configurations.TransactionConfigurations
                     moneyBuilder.Property(money => money.Currency)
                         .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
                 });
+
+            builder.HasOne(transaction => transaction.Account)
+                .WithMany(account => account.Transactions)
+                .HasForeignKey(transaction => transaction.AccountId);
 
             builder.HasDiscriminator<string>("transaction_type")
                 .HasValue<IncomingTransaction>(nameof(IncomingTransaction))
