@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Budgetify.Domain.Accounts;
-using CommonAbstractions.DB.Messaging;
 
-namespace Budgetify.Application.Accounts.GetAccounts
+namespace Budgetify.Application.Accounts.UpdateAccount
 {
-    public sealed record GetAccountsQuery() : IQuery<List<Account>>
+    public sealed record AccountUpdateData(AccountId AccountId, AccountName Name, Money.DB.Money Balance)
     {
     }
 }

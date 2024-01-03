@@ -28,16 +28,16 @@ namespace Budgetify.Domain.Accounts
             _transactions = new();
         }
 
-        public void UpdateAccount(Account newAccountValues)
+        public void UpdateAccount(AccountName name, global::Money.DB.Money balance)
         {
-            if(newAccountValues.Balance != Balance)
+            if(balance != Balance)
             {
-                AdjustAccountBalance(newAccountValues.Balance);
+                AdjustAccountBalance(balance);
             }
 
-            if(newAccountValues.Name.Value != Name.Value)
+            if(name.Value != Name.Value)
             {
-                ChangeAccountName(newAccountValues.Name);
+                ChangeAccountName(name);
             }
         }
 

@@ -26,7 +26,9 @@ namespace Budgetify.Infrastructure.Repositories
         
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await DbContext.Set<TEntity>().ToListAsync();
+            return await DbContext.Set<TEntity>()
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task AddAsync(TEntity entity)

@@ -10,6 +10,7 @@ namespace Budgetify.Domain.Accounts
     public interface IAccountRepository
     {
         Task AddAsync(Account account);
-        //Task<IEnumerable<Account>> BrowseForUserAsync(User user);
+        Task<List<Account>> GetUserAccounts(/*UserId user, */CancellationToken cancellationToken = default);
+        Task<Account?> GetUserAccountByIdAsync(AccountId accountId, /*UserId userId, */ CancellationToken cancellationToken = default);
     }
 }

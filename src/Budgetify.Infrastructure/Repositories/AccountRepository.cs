@@ -14,5 +14,11 @@ namespace Budgetify.Infrastructure.Repositories
         {
         }
 
+        public async Task<List<Account>> GetUserAccounts(CancellationToken cancellationToken = default)
+        {
+            return await DbContext.Set<Account>()
+                .Where(/*a => a.UserId == userId*/ x => true)
+                .ToListAsync(cancellationToken);
+        }
     }
 }

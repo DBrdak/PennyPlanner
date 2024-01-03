@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using Budgetify.Domain.Accounts;
@@ -33,6 +34,8 @@ namespace Budgetify.Application.Accounts.AddAccount
                 case "Transactional":
                     await CreateTransactionalAccount(request.NewAccountData);
                     break;
+                default:
+                    return Result.Failure(Error.InvalidRequest("Account type not supported"));
             }
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
