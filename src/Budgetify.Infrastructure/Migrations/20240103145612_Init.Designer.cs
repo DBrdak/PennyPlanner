@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Budgetify.Infrastructure.Migrations
 {
     [DbContext(typeof(BudgetifyContext))]
-    [Migration("20240103143546_StrongTypedIds")]
-    partial class StrongTypedIds
+    [Migration("20240103145612_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

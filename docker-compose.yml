@@ -9,7 +9,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - ./.containers/database:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data/
     ports:
       - 5432:5432
 
@@ -21,3 +21,6 @@ services:
       dockerfile: src/Budgetify.API/Dockerfile    
     depends_on:
       - budgetify-db
+
+volumes:
+  postgres_data:

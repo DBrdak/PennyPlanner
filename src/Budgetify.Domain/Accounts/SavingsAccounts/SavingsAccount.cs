@@ -8,7 +8,7 @@ namespace Budgetify.Domain.Accounts.SavingsAccounts
         private SavingsAccount()
         { }
 
-        public SavingsAccount(AccountName name, Currency currency) : base(name, currency)
+        public SavingsAccount(AccountName name, Currency currency, decimal initialBalance = 0) : base(name, currency, initialBalance)
         {
         }
 

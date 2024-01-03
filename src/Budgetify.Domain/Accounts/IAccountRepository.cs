@@ -9,6 +9,7 @@ namespace Budgetify.Domain.Accounts
 {
     public interface IAccountRepository
     {
+        Task AddAsync(Account account);
         //Task<IEnumerable<Account>> BrowseForUserAsync(User user);
     }
 }

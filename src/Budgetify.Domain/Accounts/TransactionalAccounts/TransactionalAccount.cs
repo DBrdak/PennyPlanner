@@ -9,7 +9,7 @@ namespace Budgetify.Domain.Accounts.TransactionalAccounts
         private TransactionalAccount()
         { }
 
-        public TransactionalAccount(AccountName name, Currency currency) : base(name, currency)
+        public TransactionalAccount(AccountName name, Currency currency, decimal initialBalance = 0) : base(name, currency, initialBalance)
         {
         }
     }

@@ -16,7 +16,7 @@ namespace Budgetify.Infrastructure.Migrations
                 name: "accounts",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "text", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     balance_amount = table.Column<decimal>(type: "numeric", nullable: false),
                     balance_currency = table.Column<string>(type: "text", nullable: false),
@@ -31,7 +31,7 @@ namespace Budgetify.Infrastructure.Migrations
                 name: "budget_plans",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "text", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     budget_period_start = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     budget_period_end = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -44,7 +44,7 @@ namespace Budgetify.Infrastructure.Migrations
                 name: "transaction_entities",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "text", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     entity_type = table.Column<string>(type: "text", nullable: false)
                 },
@@ -57,7 +57,7 @@ namespace Budgetify.Infrastructure.Migrations
                 name: "budgeted_transaction_category",
                 columns: table => new
                 {
-                    budget_plan_id = table.Column<string>(type: "text", nullable: false),
+                    budget_plan_id = table.Column<Guid>(type: "uuid", nullable: false),
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     category = table.Column<string>(type: "text", nullable: false),
@@ -70,7 +70,7 @@ namespace Budgetify.Infrastructure.Migrations
                 {
                     table.PrimaryKey("pk_budgeted_transaction_category", x => new { x.budget_plan_id, x.id });
                     table.ForeignKey(
-                        name: "fk_budgeted_transaction_category_budget_plan_budget_plan_id",
+                        name: "fk_budgeted_transaction_category_budget_plan_budget_plan_temp_",
                         column: x => x.budget_plan_id,
                         principalTable: "budget_plans",
                         principalColumn: "id",
@@ -81,72 +81,55 @@ namespace Budgetify.Infrastructure.Migrations
                 name: "transactions",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "text", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    account_id = table.Column<Guid>(type: "uuid", nullable: false),
                     transaction_amount_amount = table.Column<decimal>(type: "numeric", nullable: false),
                     transaction_amount_currency = table.Column<string>(type: "text", nullable: false),
                     transaction_date_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    transaction_entity_id = table.Column<Guid>(type: "uuid", nullable: true),
                     transaction_type = table.Column<string>(type: "text", nullable: false),
-                    destination_account_id = table.Column<string>(type: "text", nullable: true),
-                    sender_id = table.Column<string>(type: "text", nullable: true),
-                    internal_source_account_id = table.Column<string>(type: "text", nullable: true),
+                    sender_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    internal_source_account_id = table.Column<Guid>(type: "uuid", nullable: true),
                     incoming_transaction_category = table.Column<string>(type: "text", nullable: true),
-                    source_account_id = table.Column<string>(type: "text", nullable: true),
-                    recipient_id = table.Column<string>(type: "text", nullable: true),
-                    internal_destination_account_id = table.Column<string>(type: "text", nullable: true),
+                    recipient_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    internal_destination_account_id = table.Column<Guid>(type: "uuid", nullable: true),
                     category = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_transactions", x => x.id);
                     table.ForeignKey(
-                        name: "fk_transaction_accounts_destination_account_id",
-                        column: x => x.destination_account_id,
-                        principalTable: "accounts",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_transaction_accounts_internal_destination_account_id",
+                        name: "fk_transaction_accounts_internal_destination_account_id1",
                         column: x => x.internal_destination_account_id,
                         principalTable: "accounts",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "fk_transaction_accounts_internal_source_account_id",
+                        name: "fk_transaction_accounts_internal_source_account_id1",
                         column: x => x.internal_source_account_id,
                         principalTable: "accounts",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "fk_transaction_accounts_source_account_id",
-                        column: x => x.source_account_id,
-                        principalTable: "accounts",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "fk_transactions_accounts_id",
-                        column: x => x.id,
+                        column: x => x.account_id,
                         principalTable: "accounts",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_transactions_transaction_entities_recipient_id",
+                        name: "fk_transactions_transaction_entity_recipient_id",
                         column: x => x.recipient_id,
                         principalTable: "transaction_entities",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "fk_transactions_transaction_entities_sender_id",
+                        name: "fk_transactions_transaction_entity_sender_id",
                         column: x => x.sender_id,
                         principalTable: "transaction_entities",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "fk_transactions_transaction_entity_transaction_entity_id",
-                        column: x => x.id,
+                        name: "fk_transactions_transaction_entity_transaction_entity_temp_id",
+                        column: x => x.transaction_entity_id,
                         principalTable: "transaction_entities",
                         principalColumn: "id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "ix_transaction_destination_account_id",
-                table: "transactions",
-                column: "destination_account_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_transaction_internal_destination_account_id",
@@ -169,9 +152,14 @@ namespace Budgetify.Infrastructure.Migrations
                 column: "sender_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_transaction_source_account_id",
+                name: "ix_transactions_account_id",
                 table: "transactions",
-                column: "source_account_id");
+                column: "account_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_transactions_transaction_entity_id",
+                table: "transactions",
+                column: "transaction_entity_id");
         }
 
         /// <inheritdoc />

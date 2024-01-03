@@ -21,10 +21,10 @@ namespace Budgetify.Domain.Accounts
         protected Account()
         { }
 
-        protected Account(AccountName name, Currency currency) : base(new AccountId())
+        protected Account(AccountName name, Currency currency, decimal initialBalance) : base(new AccountId())
         {
             Name = name;
-            Balance = new global::Money.DB.Money(0, currency);
+            Balance = new global::Money.DB.Money(initialBalance, currency);
             _transactions = new();
         }
 
@@ -39,7 +39,6 @@ namespace Budgetify.Domain.Accounts
             {
                 ChangeAccountName(newAccountValues.Name);
             }
-
         }
 
         internal void AddIncomeTransaction(IncomingTransaction transaction)
