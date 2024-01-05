@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
+using System.Text.Json.Serialization;
 using Budgetify.Domain.Transactions;
-using Budgetify.Domain.Transactions.IncomingTransactions;
-using Budgetify.Domain.Transactions.OugoingTransactions;
 using CommonAbstractions.DB.Entities;
 using Currency = Money.DB.Currency;
 using Money = Money.DB.Money;
@@ -13,19 +12,22 @@ namespace Budgetify.Domain.Accounts
 {
     public abstract class Account : Entity<AccountId>
     {
-        public ImmutableList<Transaction> Transactions => _transactions.ToImmutableList();
+        public IReadOnlyCollection<Transaction> Transactions => _transactions;
         private readonly List<Transaction> _transactions;
         public AccountName Name { get; private set; }
         public global::Money.DB.Money Balance { get; private set; }
 
+        [JsonConstructor]
         protected Account()
         { }
 
         protected Account(AccountName name, Currency currency, decimal initialBalance) : base(new AccountId())
         {
             Name = name;
-            Balance = new global::Money.DB.Money(initialBalance, currency);
+            Balance = new global::Money.DB.Money(0, currency);
             _transactions = new();
+
+            TransactionService.CreatePrivateTransaction(new (initialBalance, currency), this);
         }
 
         public void UpdateAccount(AccountName name, global::Money.DB.Money balance)
@@ -41,17 +43,12 @@ namespace Budgetify.Domain.Accounts
             }
         }
 
-        internal void AddIncomeTransaction(IncomingTransaction transaction)
+        internal void AddTransaction(Transaction transaction)
         {
             _transactions.Add(transaction);
             Balance += transaction.TransactionAmount;
         }
 
-        internal void AddOutgoingTransaction(OutgoingTransaction transaction)
-        {
-            _transactions.Add(transaction);
-            Balance -= transaction.TransactionAmount;
-        }
         private void ChangeAccountName(AccountName newName)
         {
             Name = newName;
@@ -66,7 +63,7 @@ namespace Budgetify.Domain.Accounts
 
             var difference = newBalance - Balance;
 
-            TransactionService.CreateEqualizingTransaction(difference, this);
+            TransactionService.CreatePrivateTransaction(difference, this);
         }
     }
 }

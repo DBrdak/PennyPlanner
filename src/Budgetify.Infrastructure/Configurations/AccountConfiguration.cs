@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Money.DB;
 
-namespace Budgetify.Infrastructure.Configurations.AccountConfigurations
+namespace Budgetify.Infrastructure.Configurations
 {
     internal sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
     {

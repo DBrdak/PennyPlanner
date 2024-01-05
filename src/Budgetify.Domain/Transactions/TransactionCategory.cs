@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Budgetify.Domain.Transactions.IncomingTransactions;
-using Budgetify.Domain.Transactions.OugoingTransactions;
 // ReSharper disable InvokeAsExtensionMethod
 
 namespace Budgetify.Domain.Transactions

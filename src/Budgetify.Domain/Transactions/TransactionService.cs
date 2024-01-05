@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using Budgetify.Domain.Accounts;
 using Budgetify.Domain.TransactionEntities.TransactionRecipients;
 using Budgetify.Domain.TransactionEntities.TransactionSenders;
-using Budgetify.Domain.Transactions.IncomingTransactions;
-using Budgetify.Domain.Transactions.OugoingTransactions;
 
 namespace Budgetify.Domain.Transactions
 {
@@ -19,9 +17,9 @@ namespace Budgetify.Domain.Transactions
             TransactionSender sender,
             IncomingTransactionCategory category)
         {
-            var transaction = IncomingTransaction.Create(transactionAmount, destinationAccount, sender, category);
+            var transaction = Transaction.CreateIncome(transactionAmount, destinationAccount, sender, category);
 
-            destinationAccount.AddIncomeTransaction(transaction);
+            destinationAccount.AddTransaction(transaction);
             sender.AddTransaction(transaction);
         }
 
@@ -31,9 +29,9 @@ namespace Budgetify.Domain.Transactions
             TransactionRecipient recipient,
             OutgoingTransactionCategory category)
         {
-            var transaction = OutgoingTransaction.Create(transactionAmount, sourceAccount, recipient, category);
+            var transaction = Transaction.CreateOutcome(transactionAmount, sourceAccount, recipient, category);
 
-            sourceAccount.AddOutgoingTransaction(transaction);
+            sourceAccount.AddTransaction(transaction);
             recipient.AddTransaction(transaction);
         }
 
@@ -44,27 +42,27 @@ namespace Budgetify.Domain.Transactions
         {
             var transactions = new
             {
-                source = OutgoingTransaction.CreateInternal(transactionAmount, sourceAccount, destinationAccount),
-                destination = IncomingTransaction.CreateInternal(transactionAmount, destinationAccount, sourceAccount)
+                source = Transaction.CreateInternalOutcome(transactionAmount, sourceAccount, destinationAccount),
+                destination = Transaction.CreateInternalIncome(transactionAmount, destinationAccount, sourceAccount)
             };
 
-            sourceAccount.AddOutgoingTransaction(transactions.source);
-            destinationAccount.AddIncomeTransaction(transactions.destination);
+            sourceAccount.AddTransaction(transactions.source);
+            destinationAccount.AddTransaction(transactions.destination);
         }
 
-        internal static void CreateEqualizingTransaction(
+        internal static void CreatePrivateTransaction(
             Money.DB.Money transactionAmount,
             Account account)
         {
             switch (transactionAmount.Amount > 0)
             {
                 case true:
-                    var equalizingIncomeTransaction = IncomingTransaction.CreateEqualizing(transactionAmount, account);
-                    account.AddIncomeTransaction(equalizingIncomeTransaction);
+                    var equalizingIncomeTransaction = Transaction.CreatePrivateIncome(transactionAmount, account);
+                    account.AddTransaction(equalizingIncomeTransaction);
                     break;
                 case false:
-                    var equalizingOutcomeTransaction = OutgoingTransaction.CreateEqualizing(transactionAmount, account);
-                    account.AddOutgoingTransaction(equalizingOutcomeTransaction);
+                    var equalizingOutcomeTransaction = Transaction.CreatePrivateOutcome(transactionAmount, account);
+                    account.AddTransaction(equalizingOutcomeTransaction);
                     break;
             }
         }

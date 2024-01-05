@@ -24,11 +24,11 @@ namespace Budgetify.Infrastructure.Repositories
             return await DbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
         
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        public async Task<IEnumerable<TEntity>> BrowseAllAsync(CancellationToken cancellationToken = default)
         {
             return await DbContext.Set<TEntity>()
                 .AsNoTracking()
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
         public async Task AddAsync(TEntity entity)

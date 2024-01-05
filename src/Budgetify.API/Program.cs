@@ -1,7 +1,10 @@
+using System.Text.Json.Serialization;
 using Budgetify.API.Extensions;
 using Budgetify.Application;
 using Budgetify.Infrastructure;
 using Carter;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 

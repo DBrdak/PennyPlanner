@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Budgetify.Domain.Transactions.IncomingTransactions
+namespace Budgetify.Domain.Transactions
 {
     public sealed record IncomingTransactionCategory : TransactionCategory
     {
@@ -19,6 +19,7 @@ namespace Budgetify.Domain.Transactions.IncomingTransactions
         public static readonly IncomingTransactionCategory Alimony = new("Alimony");
         public static readonly IncomingTransactionCategory Miscellaneous = new("Miscellaneous");
         public static readonly IncomingTransactionCategory Internal = new("Internal");
+        public static readonly IncomingTransactionCategory Private = new("Private");
 
         public static readonly IReadOnlyCollection<IncomingTransactionCategory> All = new[]
         {
@@ -31,7 +32,9 @@ namespace Budgetify.Domain.Transactions.IncomingTransactions
             Pension,
             SocialSecurity,
             Royalties,
-            Alimony
+            Alimony,
+            Internal,
+            Private
         };
         public new static IncomingTransactionCategory FromValue(string code)
         {

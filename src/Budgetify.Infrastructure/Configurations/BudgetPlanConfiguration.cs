@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Money.DB;
 
-namespace Budgetify.Infrastructure.Configurations.BudgetPlanConfigurations
+namespace Budgetify.Infrastructure.Configurations
 {
     internal sealed class BudgetPlanConfiguration : IEntityTypeConfiguration<BudgetPlan>
     {

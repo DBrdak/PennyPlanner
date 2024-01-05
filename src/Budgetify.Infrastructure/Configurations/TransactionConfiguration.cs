@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Budgetify.Domain.Transactions;
-using Budgetify.Domain.Transactions.IncomingTransactions;
-using Budgetify.Domain.Transactions.OugoingTransactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Money.DB;
 
-namespace Budgetify.Infrastructure.Configurations.TransactionConfigurations
+namespace Budgetify.Infrastructure.Configurations
 {
     internal sealed class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
     {
@@ -35,10 +33,24 @@ namespace Budgetify.Infrastructure.Configurations.TransactionConfigurations
                 .WithMany(account => account.Transactions)
                 .HasForeignKey(transaction => transaction.AccountId);
 
-            builder.HasDiscriminator<string>("transaction_type")
-                .HasValue<IncomingTransaction>(nameof(IncomingTransaction))
-                .HasValue<OutgoingTransaction>(nameof(OutgoingTransaction));
+            builder.HasOne(transaction => transaction.Sender)
+                .WithMany()
+                .HasForeignKey(transaction => transaction.SenderId);
 
+            builder.HasOne(transaction => transaction.FromAccount)
+                .WithMany()
+                .HasForeignKey(transaction => transaction.FromAccountId);
+
+            builder.HasOne(transaction => transaction.Recipient)
+                .WithMany()
+                .HasForeignKey(transaction => transaction.RecipientId);
+
+            builder.HasOne(transaction => transaction.ToAccount)
+                .WithMany()
+                .HasForeignKey(transaction => transaction.ToAccountId);
+
+            builder.Property(transaction => transaction.Category)
+                .HasConversion(category => category.Value, value => TransactionCategory.FromValue(value));
         }
     }
 }

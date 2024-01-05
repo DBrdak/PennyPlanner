@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Budgetify.Infrastructure.Migrations
 {
     [DbContext(typeof(BudgetifyContext))]
-    [Migration("20240103145612_Init")]
+    [Migration("20240105145201_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -99,6 +99,27 @@ namespace Budgetify.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("account_id");
 
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("category");
+
+                    b.Property<Guid?>("FromAccountId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("from_account_id");
+
+                    b.Property<Guid?>("RecipientId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("recipient_id");
+
+                    b.Property<Guid?>("SenderId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("sender_id");
+
+                    b.Property<Guid?>("ToAccountId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("to_account_id");
+
                     b.Property<DateTime>("TransactionDateUtc")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("transaction_date_utc");
@@ -107,25 +128,28 @@ namespace Budgetify.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("transaction_entity_id");
 
-                    b.Property<string>("transaction_type")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("transaction_type");
-
                     b.HasKey("Id")
                         .HasName("pk_transactions");
 
                     b.HasIndex("AccountId")
                         .HasDatabaseName("ix_transactions_account_id");
 
+                    b.HasIndex("FromAccountId")
+                        .HasDatabaseName("ix_transactions_from_account_id");
+
+                    b.HasIndex("RecipientId")
+                        .HasDatabaseName("ix_transactions_recipient_id");
+
+                    b.HasIndex("SenderId")
+                        .HasDatabaseName("ix_transactions_sender_id");
+
+                    b.HasIndex("ToAccountId")
+                        .HasDatabaseName("ix_transactions_to_account_id");
+
                     b.HasIndex("TransactionEntityId")
                         .HasDatabaseName("ix_transactions_transaction_entity_id");
 
                     b.ToTable("transactions", (string)null);
-
-                    b.HasDiscriminator<string>("transaction_type").HasValue("Transaction");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Budgetify.Domain.Accounts.SavingsAccounts.SavingsAccount", b =>
@@ -154,64 +178,6 @@ namespace Budgetify.Infrastructure.Migrations
                     b.HasBaseType("Budgetify.Domain.TransactionEntities.TransactionEntity");
 
                     b.HasDiscriminator().HasValue("TransactionSender");
-                });
-
-            modelBuilder.Entity("Budgetify.Domain.Transactions.IncomingTransactions.IncomingTransaction", b =>
-                {
-                    b.HasBaseType("Budgetify.Domain.Transactions.Transaction");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("category");
-
-                    b.Property<Guid?>("InternalSourceAccountId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("internal_source_account_id");
-
-                    b.Property<Guid?>("SenderId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("sender_id");
-
-                    b.HasIndex("InternalSourceAccountId")
-                        .HasDatabaseName("ix_transaction_internal_source_account_id");
-
-                    b.HasIndex("SenderId")
-                        .HasDatabaseName("ix_transaction_sender_id");
-
-                    b.ToTable("transactions", t =>
-                        {
-                            t.Property("Category")
-                                .HasColumnName("incoming_transaction_category");
-                        });
-
-                    b.HasDiscriminator().HasValue("IncomingTransaction");
-                });
-
-            modelBuilder.Entity("Budgetify.Domain.Transactions.OugoingTransactions.OutgoingTransaction", b =>
-                {
-                    b.HasBaseType("Budgetify.Domain.Transactions.Transaction");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("category");
-
-                    b.Property<Guid?>("InternalDestinationAccountId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("internal_destination_account_id");
-
-                    b.Property<Guid?>("RecipientId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("recipient_id");
-
-                    b.HasIndex("InternalDestinationAccountId")
-                        .HasDatabaseName("ix_transaction_internal_destination_account_id");
-
-                    b.HasIndex("RecipientId")
-                        .HasDatabaseName("ix_transaction_recipient_id");
-
-                    b.HasDiscriminator().HasValue("OutgoingTransaction");
                 });
 
             modelBuilder.Entity("Budgetify.Domain.Accounts.Account", b =>
@@ -374,6 +340,26 @@ namespace Budgetify.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_transactions_accounts_id");
 
+                    b.HasOne("Budgetify.Domain.Accounts.Account", "FromAccount")
+                        .WithMany()
+                        .HasForeignKey("FromAccountId")
+                        .HasConstraintName("fk_transactions_accounts_from_account_id1");
+
+                    b.HasOne("Budgetify.Domain.TransactionEntities.TransactionRecipients.TransactionRecipient", "Recipient")
+                        .WithMany()
+                        .HasForeignKey("RecipientId")
+                        .HasConstraintName("fk_transactions_transaction_entity_recipient_id");
+
+                    b.HasOne("Budgetify.Domain.TransactionEntities.TransactionSenders.TransactionSender", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .HasConstraintName("fk_transactions_transaction_entity_sender_id");
+
+                    b.HasOne("Budgetify.Domain.Accounts.Account", "ToAccount")
+                        .WithMany()
+                        .HasForeignKey("ToAccountId")
+                        .HasConstraintName("fk_transactions_accounts_to_account_id1");
+
                     b.HasOne("Budgetify.Domain.TransactionEntities.TransactionEntity", null)
                         .WithMany("Transactions")
                         .HasForeignKey("TransactionEntityId")
@@ -405,42 +391,16 @@ namespace Budgetify.Infrastructure.Migrations
 
                     b.Navigation("Account");
 
-                    b.Navigation("TransactionAmount")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Budgetify.Domain.Transactions.IncomingTransactions.IncomingTransaction", b =>
-                {
-                    b.HasOne("Budgetify.Domain.Accounts.Account", "InternalSourceAccount")
-                        .WithMany()
-                        .HasForeignKey("InternalSourceAccountId")
-                        .HasConstraintName("fk_transaction_accounts_internal_source_account_id1");
-
-                    b.HasOne("Budgetify.Domain.TransactionEntities.TransactionSenders.TransactionSender", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderId")
-                        .HasConstraintName("fk_transactions_transaction_entity_sender_id");
-
-                    b.Navigation("InternalSourceAccount");
-
-                    b.Navigation("Sender");
-                });
-
-            modelBuilder.Entity("Budgetify.Domain.Transactions.OugoingTransactions.OutgoingTransaction", b =>
-                {
-                    b.HasOne("Budgetify.Domain.Accounts.Account", "InternalDestinationAccount")
-                        .WithMany()
-                        .HasForeignKey("InternalDestinationAccountId")
-                        .HasConstraintName("fk_transaction_accounts_internal_destination_account_id1");
-
-                    b.HasOne("Budgetify.Domain.TransactionEntities.TransactionRecipients.TransactionRecipient", "Recipient")
-                        .WithMany()
-                        .HasForeignKey("RecipientId")
-                        .HasConstraintName("fk_transactions_transaction_entity_recipient_id");
-
-                    b.Navigation("InternalDestinationAccount");
+                    b.Navigation("FromAccount");
 
                     b.Navigation("Recipient");
+
+                    b.Navigation("Sender");
+
+                    b.Navigation("ToAccount");
+
+                    b.Navigation("TransactionAmount")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Budgetify.Domain.Accounts.Account", b =>

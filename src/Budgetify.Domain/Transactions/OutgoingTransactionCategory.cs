@@ -1,4 +1,4 @@
-﻿namespace Budgetify.Domain.Transactions.OugoingTransactions
+﻿namespace Budgetify.Domain.Transactions
 {
     public sealed record OutgoingTransactionCategory : TransactionCategory
     {
@@ -18,6 +18,7 @@
         public static readonly OutgoingTransactionCategory Home = new("Home");
         public static readonly OutgoingTransactionCategory Charity = new("Charity");
         public static readonly OutgoingTransactionCategory Internal = new("Internal");
+        public static readonly OutgoingTransactionCategory Private = new("Private");
 
         public static readonly IReadOnlyCollection<OutgoingTransactionCategory> All = new[]
         {
@@ -35,7 +36,9 @@
             Education,
             Travel,
             Home,
-            Charity
+            Charity,
+            Internal,
+            Private
         };
 
         public new static OutgoingTransactionCategory FromValue(string code)

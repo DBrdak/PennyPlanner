@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using Budgetify.Domain.Accounts;
 using Budgetify.Domain.TransactionEntities;
 using Budgetify.Domain.Transactions;
-using Budgetify.Domain.Transactions.IncomingTransactions;
-using Budgetify.Domain.Transactions.OugoingTransactions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Budgetify.Infrastructure.Repositories
@@ -29,8 +27,6 @@ namespace Budgetify.Infrastructure.Repositories
         public async Task<IEnumerable<Transaction>> BrowseSenderTransactionsAsync(TransactionEntityId senderId)
         {
             return await DbContext.Set<Transaction>()
-                .Where(t => t is IncomingTransaction)
-                .Cast<IncomingTransaction>()
                 .Where(t => t.SenderId == senderId)
                 .ToListAsync();
         }
@@ -38,8 +34,6 @@ namespace Budgetify.Infrastructure.Repositories
         public async Task<IEnumerable<Transaction>> BrowseRecipientTransactionsAsync(TransactionEntityId recipientId)
         {
             return await DbContext.Set<Transaction>()
-                .Where(t => t is OutgoingTransaction)
-                .Cast<OutgoingTransaction>()
                 .Where(t => t.RecipientId == recipientId)
                 .ToListAsync();
         }

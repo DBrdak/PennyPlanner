@@ -9,7 +9,7 @@ using Budgetify.Domain.TransactionEntities.TransactionSenders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Budgetify.Infrastructure.Configurations.TransactionEntitiesConfiguration
+namespace Budgetify.Infrastructure.Configurations
 {
     internal sealed class TransactionEntitiesConfiguration : IEntityTypeConfiguration<TransactionEntity>
     {

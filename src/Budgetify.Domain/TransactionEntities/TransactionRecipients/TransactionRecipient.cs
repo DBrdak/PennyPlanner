@@ -1,11 +1,10 @@
-﻿using Budgetify.Domain.Transactions.IncomingTransactions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Budgetify.Domain.Transactions.OugoingTransactions;
 using Budgetify.Domain.TransactionEntities;
+using Budgetify.Domain.Transactions;
 
 namespace Budgetify.Domain.TransactionEntities.TransactionRecipients
 {
@@ -18,7 +17,7 @@ namespace Budgetify.Domain.TransactionEntities.TransactionRecipients
         {
         }
 
-        internal void AddTransaction(OutgoingTransaction transaction)
+        internal void AddTransaction(Transaction transaction)
         {
             _transactions.Add(transaction);
         }

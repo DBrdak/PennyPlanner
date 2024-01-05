@@ -13,7 +13,7 @@ namespace Budgetify.Domain.BudgetPlans
     public sealed class BudgetPlan : Entity<BudgetPlanId>
     {
         public DateTimeRange BudgetPeriod { get; private set; }
-        public ImmutableList<BudgetedTransactionCategory> BudgetedTransactionCategories => _budgetedTransactionCategories.ToImmutableList();
+        public IReadOnlyCollection<BudgetedTransactionCategory> BudgetedTransactionCategories => _budgetedTransactionCategories;
         private readonly List<BudgetedTransactionCategory> _budgetedTransactionCategories;
 
         private BudgetPlan()

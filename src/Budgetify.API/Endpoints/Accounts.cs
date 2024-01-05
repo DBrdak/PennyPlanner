@@ -1,8 +1,10 @@
 ﻿using Budgetify.Application.Accounts.AddAccount;
 using Budgetify.Application.Accounts.GetAccounts;
+using Budgetify.Application.Accounts.UpdateAccount;
 using Carter;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Budgetify.API.Endpoints
 {
@@ -28,6 +30,23 @@ namespace Budgetify.API.Endpoints
                 async (NewAccountData newAccountData, ISender sender, CancellationToken cancellationToken) =>
                 {
                     var command = new AddAccountCommand(newAccountData);
+
+                    var result = await sender.Send(command, cancellationToken);
+
+                    return result.IsSuccess ?
+                        Results.Ok() :
+                        Results.BadRequest(result.Error);
+                });
+
+            app.MapPut(
+                "accounts/{accountId}",
+                async (
+                    [FromRoute] string accountId,
+                    AccountUpdateData accountUpdateData,
+                    ISender sender,
+                    CancellationToken cancellationToken) =>
+                {
+                    var command = new UpdateAccountCommand(accountUpdateData);
 
                     var result = await sender.Send(command, cancellationToken);
 

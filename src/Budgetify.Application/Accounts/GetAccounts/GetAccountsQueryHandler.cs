@@ -21,7 +21,7 @@ namespace Budgetify.Application.Accounts.GetAccounts
         public async Task<Result<List<Account>>> Handle(GetAccountsQuery request, CancellationToken cancellationToken)
         {
             //TODO Retrive user id
-            return await _accountRepository.GetUserAccounts(cancellationToken);
+            return await _accountRepository.BrowseUserAccounts(cancellationToken);
         }
     }
 }

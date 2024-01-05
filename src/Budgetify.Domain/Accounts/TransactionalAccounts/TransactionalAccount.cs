@@ -1,5 +1,4 @@
-﻿using Budgetify.Domain.Transactions.IncomingTransactions;
-using Money.DB;
+﻿using Money.DB;
 #pragma warning disable CS8618
 
 namespace Budgetify.Domain.Accounts.TransactionalAccounts

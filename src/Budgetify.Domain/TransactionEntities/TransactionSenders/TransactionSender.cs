@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Budgetify.Domain.TransactionEntities;
-using Budgetify.Domain.Transactions.IncomingTransactions;
+using Budgetify.Domain.Transactions;
 
 namespace Budgetify.Domain.TransactionEntities.TransactionSenders
 {
@@ -17,7 +17,7 @@ namespace Budgetify.Domain.TransactionEntities.TransactionSenders
         {
         }
 
-        internal void AddTransaction(IncomingTransaction transaction)
+        internal void AddTransaction(Transaction transaction)
         {
             _transactions.Add(transaction);
         }
