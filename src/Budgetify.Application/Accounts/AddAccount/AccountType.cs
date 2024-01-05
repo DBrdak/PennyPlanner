@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Budgetify.Application.Accounts.AddAccount
@@ -10,6 +11,7 @@ namespace Budgetify.Application.Accounts.AddAccount
     {
         public string Value { get; init;  }
 
+        [JsonConstructor]
         private AccountType(string value) =>
             Value = value;
 

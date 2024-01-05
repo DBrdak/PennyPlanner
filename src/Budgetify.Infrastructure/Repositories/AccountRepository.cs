@@ -20,5 +20,11 @@ namespace Budgetify.Infrastructure.Repositories
                 .Where(/*a => a.UserId == userId*/ x => true)
                 .ToListAsync(cancellationToken);
         }
+
+        public async Task<Account?> GetUserAccountByIdAsync(AccountId accountId, CancellationToken cancellationToken = default)
+        {
+            return await DbContext.Set<Account>()
+                .FirstOrDefaultAsync(/*a => a.UserId == userId*/ a => a.Id == accountId, cancellationToken);
+        }
     }
 }
