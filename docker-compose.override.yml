@@ -1,7 +1,17 @@
 version: '3.4'
 
 services:
-  budgetify-api:
+  domestica-budget-db:
+    environment:
+      - POSTGRES_DB=budget
+      - POSTGRES_USER=domestica
+      - POSTGRES_PASSWORD=4qdpm8-xD
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+
+  domestica.budget.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80

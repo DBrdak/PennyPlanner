@@ -1,26 +1,18 @@
 version: '3.4'
 
 services:
-  budgetify-db:
+  domestica-budget-db:
     image: postgres:latest
-    container_name: budgetify-db
-    environment:
-      - POSTGRES_DB=budgetify
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    ports:
-      - 5432:5432
+    container_name: domestica-budget-db
 
-  budgetify-api:
-    image: ${DOCKER_REGISTRY-}budgetifyapi
-    container_name: budgetify-api
+  domestica-budget-api:
+    image: ${DOCKER_REGISTRY-}domesticabudgetapi
+    container_name: domestica-budget-api
     build:
       context: .
-      dockerfile: src/Budgetify.API/Dockerfile    
+      dockerfile: src/Domestica.Budget.API/Dockerfile
     depends_on:
-      - budgetify-db
+      - domestica-budget-db
 
 volumes:
   postgres_data:
