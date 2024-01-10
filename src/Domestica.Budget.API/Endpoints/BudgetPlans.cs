@@ -13,7 +13,7 @@ namespace Domestica.Budget.API.Endpoints
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             app.MapGet(
-                "budgetPlans",
+                "budget-plans",
                 async (ISender sender, CancellationToken cancellationToken) =>
                 {
                     var query = new GetBudgetPlansQuery();
@@ -26,7 +26,7 @@ namespace Domestica.Budget.API.Endpoints
                 });
 
             app.MapPost(
-                "budgetPlans",
+                "budget-plans",
                 async (DateTimeRange budgetPeriod, ISender sender, CancellationToken cancellationToken) =>
                 {
                     var query = new CreateBudgetPlanCommand(budgetPeriod);
@@ -39,7 +39,7 @@ namespace Domestica.Budget.API.Endpoints
                 });
 
             app.MapPut(
-                "budgetPlans/{budgetPlanId}",
+                "budget-plans/{budgetPlanId}",
                 async (
                     IEnumerable<BudgetedTransactionCategoryValues> budgetedTransactionCategoryValues,
                     [FromRoute] string budgetPlanId,
