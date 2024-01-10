@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Behaviors.DB;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Domestica.Budget.Application
 {
@@ -14,6 +15,10 @@ namespace Domestica.Budget.Application
                     config.RegisterServicesFromAssemblyContaining<ApplicationAssemblyReference>();
 
                 });
+
+            services.AddDomainEventPublishBehavior();
+            services.AddLoggingBehavior();
+            services.AddValidationBehavior();
             
             return services;
         }

@@ -39,6 +39,10 @@ namespace Domestica.Budget.Infrastructure.Configurations
                             category => category.Value,
                             value => TransactionCategory.FromValue(value));
                 });
+
+            builder.HasMany(budgetPlan => budgetPlan.Transactions)
+                .WithOne()
+                .HasPrincipalKey(budgetPlan => budgetPlan.Id);
         }
     }
 }

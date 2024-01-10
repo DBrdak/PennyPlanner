@@ -1,4 +1,5 @@
 ﻿using Domestica.Budget.Domain.BudgetPlans;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domestica.Budget.Infrastructure.Repositories
 {
@@ -8,5 +9,12 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
         }
 
+        public async Task<BudgetPlan?> GetBudgetPlanByDateAsync(DateTime dateTime, CancellationToken cancellationToken)
+        {
+            return await DbContext.Set<BudgetPlan>()
+                .FirstOrDefaultAsync(
+                    budgetPlan => budgetPlan.BudgetPeriod.Contains(dateTime) /*&& budgetPlan.UserId == userId*/,
+                    cancellationToken);
+        }
     }
 }

@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Budgetify.Infrastructure;
 using Carter;
 using Domestica.Budget.API.Extensions;
 using Domestica.Budget.Application;

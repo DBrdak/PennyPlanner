@@ -1,35 +1,32 @@
 ﻿using Carter;
-using Domestica.Budget.Application.Accounts.AddAccount;
-using Domestica.Budget.Application.Accounts.GetAccounts;
-using Domestica.Budget.Application.Accounts.UpdateAccount;
+using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
+using Domestica.Budget.Application.TransactionEntities.GetTransactionEntities;
+using Domestica.Budget.Application.TransactionEntities.UpdateTransactionEntity;
+using Domestica.Budget.Domain.TransactionEntities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Domestica.Budget.API.Endpoints
 {
-    public sealed class Accounts : ICarterModule
+    public sealed class TransactionEntities : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             app.MapGet(
-                "accounts",
+                "transaction-entities",
                 async (ISender sender, CancellationToken cancellationToken) =>
                 {
-                    var query = new GetAccountsQuery();
-
-                    var result = await sender.Send(query, cancellationToken);
+                    var result = await sender.Send(new GetTransactionEntitiesQuery(), cancellationToken);
 
                     return result.IsSuccess ?
-                        Results.Ok(result.Value) :
+                        Results.Ok() :
                         Results.BadRequest(result.Error);
                 });
 
             app.MapPost(
-                "accounts",
-                async (NewAccountData newAccountData, ISender sender, CancellationToken cancellationToken) =>
+                "transaction-entities",
+                async (AddTransactionEntityCommand command, ISender sender, CancellationToken cancellationToken) =>
                 {
-                    var command = new AddAccountCommand(newAccountData);
-
                     var result = await sender.Send(command, cancellationToken);
 
                     return result.IsSuccess ?
@@ -38,13 +35,14 @@ namespace Domestica.Budget.API.Endpoints
                 });
 
             app.MapPut(
-                "accounts/{accountId}",
+                "transaction-entities/{transactionEntityId}",
                 async (
-                    AccountUpdateData accountUpdateData,
+                    [FromRoute] string transactionEntityId,
+                    TransactionEntityName newName,
                     ISender sender,
                     CancellationToken cancellationToken) =>
                 {
-                    var command = new UpdateAccountCommand(accountUpdateData);
+                    var command = new UpdateTransactionEntityCommand(new (Guid.Parse(transactionEntityId)), newName);
 
                     var result = await sender.Send(command, cancellationToken);
 

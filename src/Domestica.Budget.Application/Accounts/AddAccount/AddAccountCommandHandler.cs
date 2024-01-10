@@ -23,10 +23,12 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
             switch (request.NewAccountData.Type.Value)
             {
                 case "Savings":
-                    await CreateSavingsAccount(request.NewAccountData);
+                    var newTransactionalAccount = CreateSavingsAccount(request.NewAccountData);
+                    await _accountRepository.AddAsync(newTransactionalAccount, cancellationToken);
                     break;
                 case "Transactional":
-                    await CreateTransactionalAccount(request.NewAccountData);
+                    var newSavingsAccount = CreateTransactionalAccount(request.NewAccountData);
+                    await _accountRepository.AddAsync(newSavingsAccount, cancellationToken);
                     break;
                 default:
                     return Result.Failure(Error.InvalidRequest("Account type not supported"));
@@ -42,24 +44,20 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
             return Result.Failure(Error.TaskFailed("Problem while saving new account to database"));
         }
 
-        private async Task CreateTransactionalAccount(NewAccountData newTransactionalAccountData)
+        private TransactionalAccount CreateTransactionalAccount(NewAccountData newTransactionalAccountData)
         {
-            var newTransactionalAccount = new TransactionalAccount(
+            return new TransactionalAccount(
                 newTransactionalAccountData.Name,
                 newTransactionalAccountData.Currency,
                 newTransactionalAccountData.InitialBalance);
-
-            await _accountRepository.AddAsync(newTransactionalAccount);
         }
 
-        private async Task CreateSavingsAccount(NewAccountData newSavingsAccountData)
+        private SavingsAccount CreateSavingsAccount(NewAccountData newSavingsAccountData)
         {
-            var newSavingsAccount = new SavingsAccount(
+            return new SavingsAccount(
                 newSavingsAccountData.Name,
                 newSavingsAccountData.Currency,
                 newSavingsAccountData.InitialBalance);
-
-            await _accountRepository.AddAsync(newSavingsAccount);
         }
     }
 }

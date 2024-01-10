@@ -1,6 +1,9 @@
-﻿namespace Domestica.Budget.Application.TransactionEntities.UpdateTransactionEntity
+﻿using CommonAbstractions.DB.Messaging;
+using Domestica.Budget.Domain.TransactionEntities;
+
+namespace Domestica.Budget.Application.TransactionEntities.UpdateTransactionEntity
 {
-    internal class UpdateTransactionEntityCommand
+    public sealed record UpdateTransactionEntityCommand(TransactionEntityId Id, TransactionEntityName NewName) : ICommand
     {
     }
 }

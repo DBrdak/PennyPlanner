@@ -10,6 +10,9 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Domestica.Budget.API/Domestica.Budget.API.csproj", "src/Domestica.Budget.API/"]
+COPY ["src/Domestica.Budget.Application/Domestica.Budget.Application.csproj", "src/Domestica.Budget.Application/"]
+COPY ["src/Domestica.Budget.Domain/Domestica.Budget.Domain.csproj", "src/Domestica.Budget.Domain/"]
+COPY ["src/Domestica.Budget.Infrastructure/Domestica.Budget.Infrastructure.csproj", "src/Domestica.Budget.Infrastructure/"]
 RUN dotnet restore "./src/Domestica.Budget.API/./Domestica.Budget.API.csproj"
 COPY . .
 WORKDIR "/src/src/Domestica.Budget.API"

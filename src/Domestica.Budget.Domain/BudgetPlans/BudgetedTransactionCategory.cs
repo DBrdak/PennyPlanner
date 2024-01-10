@@ -1,4 +1,5 @@
 ﻿using Domestica.Budget.Domain.Transactions;
+using Exceptions.DB;
 
 #pragma warning disable CS8618
 
@@ -18,6 +19,11 @@ namespace Domestica.Budget.Domain.BudgetPlans
             Category = category;
             BudgetedAmount = budgetedAmount;
             ActualAmount = new(0, budgetedAmount.Currency);
+        }
+
+        internal void AddTransaction(Transaction transaction)
+        {
+            ActualAmount += transaction.TransactionAmount;
         }
     }
 }

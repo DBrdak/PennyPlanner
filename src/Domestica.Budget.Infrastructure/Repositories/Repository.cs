@@ -26,9 +26,9 @@ namespace Domestica.Budget.Infrastructure.Repositories
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task AddAsync(TEntity entity)
+        public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
-            await DbContext.Set<TEntity>().AddAsync(entity);
+            await DbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
         }
 
         public void Remove(TEntity entity)

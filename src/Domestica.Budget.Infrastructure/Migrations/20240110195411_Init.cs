@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Budgetify.Infrastructure.Migrations
+namespace Domestica.Budget.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class Init : Migration
@@ -91,6 +91,7 @@ namespace Budgetify.Infrastructure.Migrations
                     transaction_amount_currency = table.Column<string>(type: "text", nullable: false),
                     category = table.Column<string>(type: "text", nullable: false),
                     transaction_date_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    budget_plan_id = table.Column<Guid>(type: "uuid", nullable: true),
                     transaction_entity_id = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
@@ -113,6 +114,11 @@ namespace Budgetify.Infrastructure.Migrations
                         principalTable: "accounts",
                         principalColumn: "id");
                     table.ForeignKey(
+                        name: "fk_transactions_budget_plans_budget_plan_id",
+                        column: x => x.budget_plan_id,
+                        principalTable: "budget_plans",
+                        principalColumn: "id");
+                    table.ForeignKey(
                         name: "fk_transactions_transaction_entity_recipient_id",
                         column: x => x.recipient_id,
                         principalTable: "transaction_entities",
@@ -133,6 +139,11 @@ namespace Budgetify.Infrastructure.Migrations
                 name: "ix_transactions_account_id",
                 table: "transactions",
                 column: "account_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_transactions_budget_plan_id",
+                table: "transactions",
+                column: "budget_plan_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_transactions_from_account_id",
@@ -170,10 +181,10 @@ namespace Budgetify.Infrastructure.Migrations
                 name: "transactions");
 
             migrationBuilder.DropTable(
-                name: "budget_plans");
+                name: "accounts");
 
             migrationBuilder.DropTable(
-                name: "accounts");
+                name: "budget_plans");
 
             migrationBuilder.DropTable(
                 name: "transaction_entities");

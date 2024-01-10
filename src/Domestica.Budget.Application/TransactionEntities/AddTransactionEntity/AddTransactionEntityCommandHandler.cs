@@ -23,13 +23,14 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
             switch (request.Type.Value)
             {
                 case "Recipient":
-                    await CreateTransactionRecipient(request);
+                    var recipient = new TransactionRecipient(request.Name);
+                    await _transactionEntityRepository.AddAsync(recipient, cancellationToken);
                     break;
                 case "Sender":
-                    await CreateTransactionSender(request);
+                    var sender = new TransactionSender(request.Name);
+                    await _transactionEntityRepository.AddAsync(sender, cancellationToken);
                     break;
-                default:
-                    return Result.Failure(Error.InvalidRequest("Invalid transaction entity type"));
+                default: return Result.Failure(Error.InvalidRequest("Invalid transaction entity type"));
             }
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
@@ -40,18 +41,6 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
             }
 
             return Result.Failure(Error.TaskFailed("Problem while adding new transaction entity"));
-        }
-
-        private async Task CreateTransactionRecipient(AddTransactionEntityCommand request)
-        {
-            var recipient = new TransactionRecipient(request.Name);
-            await _transactionEntityRepository.AddAsync(recipient);
-        }
-
-        private async Task CreateTransactionSender(AddTransactionEntityCommand request)
-        {
-            var sender = new TransactionSender(request.Name);
-            await _transactionEntityRepository.AddAsync(sender);
         }
     }
 }

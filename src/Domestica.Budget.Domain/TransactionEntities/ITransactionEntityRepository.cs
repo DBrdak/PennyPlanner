@@ -5,7 +5,7 @@
         Task<TransactionEntity> GetByIdAsync(TransactionEntityId id, CancellationToken cancellationToken = default);
 
         Task<List<TransactionEntity>> BrowseUserTransactionEntitiesAsync(/*UserId userId*/);
-        Task AddAsync(TransactionEntity entity);
+        Task AddAsync(TransactionEntity entity, CancellationToken cancellationToken);
         //Task<IEnumerable<TransactionEntity>> BrowseForUserAsync(User user);
     }
 }

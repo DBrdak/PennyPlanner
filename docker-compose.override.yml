@@ -11,7 +11,7 @@ services:
     ports:
       - 5432:5432
 
-  domestica.budget.api:
+  domestica-budget-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80

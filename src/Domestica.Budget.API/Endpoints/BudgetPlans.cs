@@ -1,21 +1,22 @@
 ﻿using Carter;
-using Domestica.Budget.Application.Accounts.AddAccount;
-using Domestica.Budget.Application.Accounts.GetAccounts;
-using Domestica.Budget.Application.Accounts.UpdateAccount;
+using DateKit.DB;
+using Domestica.Budget.Application.BudgetPlans.CreateBudgetPlan;
+using Domestica.Budget.Application.BudgetPlans.GetBudgetPlans;
+using Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Domestica.Budget.API.Endpoints
 {
-    public sealed class Accounts : ICarterModule
+    public sealed class BudgetPlans : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             app.MapGet(
-                "accounts",
+                "budgetPlans",
                 async (ISender sender, CancellationToken cancellationToken) =>
                 {
-                    var query = new GetAccountsQuery();
+                    var query = new GetBudgetPlansQuery();
 
                     var result = await sender.Send(query, cancellationToken);
 
@@ -25,12 +26,12 @@ namespace Domestica.Budget.API.Endpoints
                 });
 
             app.MapPost(
-                "accounts",
-                async (NewAccountData newAccountData, ISender sender, CancellationToken cancellationToken) =>
+                "budgetPlans",
+                async (DateTimeRange budgetPeriod, ISender sender, CancellationToken cancellationToken) =>
                 {
-                    var command = new AddAccountCommand(newAccountData);
+                    var query = new CreateBudgetPlanCommand(budgetPeriod);
 
-                    var result = await sender.Send(command, cancellationToken);
+                    var result = await sender.Send(query, cancellationToken);
 
                     return result.IsSuccess ?
                         Results.Ok() :
@@ -38,15 +39,16 @@ namespace Domestica.Budget.API.Endpoints
                 });
 
             app.MapPut(
-                "accounts/{accountId}",
+                "budgetPlans/{budgetPlanId}",
                 async (
-                    AccountUpdateData accountUpdateData,
+                    IEnumerable<BudgetedTransactionCategoryValues> budgetedTransactionCategoryValues,
+                    [FromRoute] string budgetPlanId,
                     ISender sender,
                     CancellationToken cancellationToken) =>
                 {
-                    var command = new UpdateAccountCommand(accountUpdateData);
+                    var query = new SetBudgetPlanCategoriesCommand(new(Guid.Parse(budgetPlanId)), budgetedTransactionCategoryValues);
 
-                    var result = await sender.Send(command, cancellationToken);
+                    var result = await sender.Send(query, cancellationToken);
 
                     return result.IsSuccess ?
                         Results.Ok() :

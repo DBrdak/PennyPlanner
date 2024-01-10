@@ -4,6 +4,7 @@ using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.TransactionEntities.TransactionRecipients;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
+using Domestica.Budget.Domain.Transactions.DomainEvents;
 
 #pragma warning disable CS8618
 
@@ -51,6 +52,8 @@ namespace Domestica.Budget.Domain.Transactions
             TransactionAmount = transactionAmount;
             TransactionDateUtc = DateTime.UtcNow;
             Category = category;
+
+            RaiseDomainEvent(new TransactionCreatedDomainEvent(this));
         }
 
         internal static Transaction CreateIncome(
