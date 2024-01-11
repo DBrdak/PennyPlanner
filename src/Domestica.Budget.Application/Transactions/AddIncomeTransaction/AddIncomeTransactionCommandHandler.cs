@@ -2,6 +2,7 @@
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.TransactionEntities;
+using Domestica.Budget.Domain.TransactionEntities.TransactionRecipients;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
 using Domestica.Budget.Domain.Transactions;
 using Responses.DB;
@@ -30,7 +31,10 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
                 return Result.Failure(Error.NotFound($"Account with ID: {request.DestinationAccountId} not found"));
             }
 
-            var sender = await _transactionEntityRepository.GetByIdAsync(request.SenderId, cancellationToken) as TransactionSender;
+            var sender = await _transactionEntityRepository.GetByIdIncludeAsync(
+                request.SenderId,
+                te => te.Transactions,
+                cancellationToken) as TransactionSender;
 
             if (sender is null)
             {

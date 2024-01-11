@@ -41,7 +41,7 @@ namespace Domestica.Budget.API.Endpoints
             app.MapPut(
                 "budget-plans/{budgetPlanId}",
                 async (
-                    IEnumerable<BudgetedTransactionCategoryValues> budgetedTransactionCategoryValues,
+                    [FromBody]IEnumerable<BudgetedTransactionCategoryValues> budgetedTransactionCategoryValues,
                     [FromRoute] string budgetPlanId,
                     ISender sender,
                     CancellationToken cancellationToken) =>

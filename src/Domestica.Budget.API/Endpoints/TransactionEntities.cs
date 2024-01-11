@@ -19,7 +19,7 @@ namespace Domestica.Budget.API.Endpoints
                     var result = await sender.Send(new GetTransactionEntitiesQuery(), cancellationToken);
 
                     return result.IsSuccess ?
-                        Results.Ok() :
+                        Results.Ok(result.Value) :
                         Results.BadRequest(result.Error);
                 });
 

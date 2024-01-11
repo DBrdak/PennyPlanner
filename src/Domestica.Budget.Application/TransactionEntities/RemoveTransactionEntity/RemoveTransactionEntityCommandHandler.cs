@@ -1,4 +1,4 @@
-﻿namespace Domestica.Budget.Application.TransactionEntities.RemoveUpdateTransactionEntity
+﻿namespace Domestica.Budget.Application.TransactionEntities.RemoveTransactionEntity
 {
     internal class RemoveTransactionEntityCommandHandler
     {

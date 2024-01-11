@@ -30,7 +30,10 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
                 return Result.Failure(Error.NotFound($"Account with ID: {request.SourceAccountId} not found"));
             }
 
-            var recipient = await _transactionEntityRepository.GetByIdAsync(request.RecipientId, cancellationToken) as TransactionRecipient;
+            var recipient = await _transactionEntityRepository.GetByIdIncludeAsync(
+                request.RecipientId,
+                te => te.Transactions,
+                cancellationToken) as TransactionRecipient;
 
             if (recipient is null)
             {

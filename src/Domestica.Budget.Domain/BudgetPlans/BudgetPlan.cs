@@ -21,7 +21,7 @@ namespace Domestica.Budget.Domain.BudgetPlans
         public BudgetPlan(DateTimeRange budgetPeriod): base(new BudgetPlanId())
         {
             _budgetedTransactionCategories = new ();
-            BudgetPeriod = budgetPeriod;
+            BudgetPeriod = budgetPeriod.ParseToUTC();
             _transactions = new ();
         }
 

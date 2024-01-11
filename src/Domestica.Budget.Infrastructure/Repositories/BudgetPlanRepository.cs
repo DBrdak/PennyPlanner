@@ -16,5 +16,14 @@ namespace Domestica.Budget.Infrastructure.Repositories
                     budgetPlan => budgetPlan.BudgetPeriod.Contains(dateTime) /*&& budgetPlan.UserId == userId*/,
                     cancellationToken);
         }
+
+        public async Task<IReadOnlyCollection<BudgetPlan>> BrowseUserBudgetPlansAsync(CancellationToken cancellationToken = default)
+        {
+            return await DbContext.Set<BudgetPlan>()
+                .AsNoTracking()
+                .Include(bp => bp.Transactions)
+                .Where(bp => /*bp.UserId == userId*/ true)
+                .ToListAsync(cancellationToken);
+        }
     }
 }

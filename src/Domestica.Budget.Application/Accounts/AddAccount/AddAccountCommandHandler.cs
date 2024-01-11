@@ -48,16 +48,16 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
         {
             return new TransactionalAccount(
                 newTransactionalAccountData.Name,
-                newTransactionalAccountData.Currency,
-                newTransactionalAccountData.InitialBalance);
+                newTransactionalAccountData.InitialBalance.Currency,
+                newTransactionalAccountData.InitialBalance.Amount);
         }
 
         private SavingsAccount CreateSavingsAccount(NewAccountData newSavingsAccountData)
         {
             return new SavingsAccount(
                 newSavingsAccountData.Name,
-                newSavingsAccountData.Currency,
-                newSavingsAccountData.InitialBalance);
+                newSavingsAccountData.InitialBalance.Currency,
+                newSavingsAccountData.InitialBalance.Amount);
         }
     }
 }

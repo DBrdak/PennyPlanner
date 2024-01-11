@@ -8,7 +8,7 @@ using Domestica.Budget.Domain.BudgetPlans;
 
 namespace Domestica.Budget.Application.BudgetPlans.GetBudgetPlans
 {
-    public sealed record GetBudgetPlansQuery : IQuery<IEnumerable<BudgetPlan>>
+    public sealed record GetBudgetPlansQuery : IQuery<IReadOnlyCollection<BudgetPlan>>
     {
     }
 }

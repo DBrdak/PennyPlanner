@@ -1,4 +1,6 @@
-﻿namespace Domestica.Budget.Domain.Transactions
+﻿using System.Text.Json.Serialization;
+
+namespace Domestica.Budget.Domain.Transactions
 {
     public sealed record IncomingTransactionCategory : TransactionCategory
     {
@@ -36,6 +38,7 @@
                    throw new ApplicationException("The category of transaction is invalid");
         }
 
+        [JsonConstructor]
         private IncomingTransactionCategory(string value) : base(value)
         {
         }
