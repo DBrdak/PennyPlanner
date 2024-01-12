@@ -8,7 +8,7 @@ using Responses.DB;
 
 namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
 {
-    internal sealed class AddOutcomeTransactionCommandHandler : ICommandHandler<AddOutcomeTransactionCommand>
+    internal sealed class AddOutcomeTransactionCommandHandler : ICommandHandler<AddOutcomeTransactionCommand, Transaction>
     {
         private readonly IAccountRepository _accountRepository;
         private readonly ITransactionEntityRepository _transactionEntityRepository;
@@ -21,13 +21,13 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(AddOutcomeTransactionCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Transaction>> Handle(AddOutcomeTransactionCommand request, CancellationToken cancellationToken)
         {
             var sourceAccount = await _accountRepository.GetUserAccountByIdAsync(request.SourceAccountId, cancellationToken);
 
             if (sourceAccount is null)
             {
-                return Result.Failure(Error.NotFound($"Account with ID: {request.SourceAccountId} not found"));
+                return Result.Failure<Transaction>(Error.NotFound($"Account with ID: {request.SourceAccountId} not found"));
             }
 
             var recipient = await _transactionEntityRepository.GetByIdIncludeAsync(
@@ -37,19 +37,23 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
 
             if (recipient is null)
             {
-                return Result.Failure(Error.NotFound($"Recipient with ID: {request.RecipientId} not found"));
+                return Result.Failure<Transaction>(Error.NotFound($"Recipient with ID: {request.RecipientId} not found"));
             }
 
-            TransactionService.CreateOutgoingTransaction(request.TransactionAmount, sourceAccount, recipient, request.Category);
+            var createdTransaction = TransactionService.CreateOutgoingTransaction(
+                request.TransactionAmount,
+                sourceAccount,
+                recipient,
+                request.Category);
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
             if (isSuccessful)
             {
-                return Result.Success();
+                return Result.Success(createdTransaction);
             }
 
-            return Result.Failure(Error.TaskFailed("Problem while adding outcome transaction"));
+            return Result.Failure<Transaction>(Error.TaskFailed("Problem while adding outcome transaction"));
         }
     }
 }

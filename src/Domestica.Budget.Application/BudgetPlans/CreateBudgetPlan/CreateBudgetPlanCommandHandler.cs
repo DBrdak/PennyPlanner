@@ -10,7 +10,7 @@ using Responses.DB;
 
 namespace Domestica.Budget.Application.BudgetPlans.CreateBudgetPlan
 {
-    internal sealed class CreateBudgetPlanCommandHandler : ICommandHandler<CreateBudgetPlanCommand>
+    internal sealed class CreateBudgetPlanCommandHandler : ICommandHandler<CreateBudgetPlanCommand, BudgetPlan>
     {
         private readonly IBudgetPlanRepository _budgetPlanRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -21,7 +21,7 @@ namespace Domestica.Budget.Application.BudgetPlans.CreateBudgetPlan
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(CreateBudgetPlanCommand request, CancellationToken cancellationToken)
+        public async Task<Result<BudgetPlan>> Handle(CreateBudgetPlanCommand request, CancellationToken cancellationToken)
         {
             //TODO Retrive user id
 
@@ -32,10 +32,10 @@ namespace Domestica.Budget.Application.BudgetPlans.CreateBudgetPlan
 
             if (isSuccessful)
             {
-                return Result.Success();
+                return Result.Success(budgetPlan);
             }
 
-            return Result.Failure(Error.TaskFailed("Problem while adding new budget plan"));
+            return Result.Failure<BudgetPlan>(Error.TaskFailed("Problem while adding new budget plan"));
         }
     }
 }

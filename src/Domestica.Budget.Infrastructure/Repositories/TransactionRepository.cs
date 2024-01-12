@@ -1,4 +1,5 @@
-﻿using Domestica.Budget.Domain.Accounts;
+﻿using DateKit.DB;
+using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.Transactions;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,18 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
             return await DbContext.Set<Transaction>()
                 .Where(t => t.RecipientId == recipientId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Transaction>> GetTransactionsByDateAndCategoryAsync(
+            DateTimeRange dateTimePeriod,
+            TransactionCategory category)
+        {
+            return await DbContext.Set<Transaction>()
+                .Where(
+                    t => t.TransactionDateUtc.Date >= dateTimePeriod.Start &&
+                         t.TransactionDateUtc <= dateTimePeriod.End &&
+                         t.Category == category)
                 .ToListAsync();
         }
     }

@@ -12,8 +12,9 @@ namespace Domestica.Budget.Infrastructure.Repositories
         public async Task<BudgetPlan?> GetBudgetPlanByDateAsync(DateTime dateTime, CancellationToken cancellationToken)
         {
             return await DbContext.Set<BudgetPlan>()
+                .Include(bp => bp.Transactions)
                 .FirstOrDefaultAsync(
-                    budgetPlan => budgetPlan.BudgetPeriod.Contains(dateTime) /*&& budgetPlan.UserId == userId*/,
+                    budgetPlan => budgetPlan.BudgetPeriod.Start <= dateTime && budgetPlan.BudgetPeriod.End >= dateTime /*&& budgetPlan.UserId == userId*/,
                     cancellationToken);
         }
 

@@ -1,5 +1,6 @@
 ﻿using CommonAbstractions.DB.Entities;
 using DateKit.DB;
+using Domestica.Budget.Domain.BudgetPlans.DomainEvents;
 using Domestica.Budget.Domain.Transactions;
 using Exceptions.DB;
 
@@ -37,6 +38,8 @@ namespace Domestica.Budget.Domain.BudgetPlans
             var budgetedTransactionCategory = new BudgetedTransactionCategory(category, budgetedAmount);
 
             _budgetedTransactionCategories.Add(budgetedTransactionCategory);
+
+            RaiseDomainEvent(new BudgetPlanCategoryBudgetedDomainEvent(Id, category));
         }
 
         public void AddTransaction(Transaction transaction)

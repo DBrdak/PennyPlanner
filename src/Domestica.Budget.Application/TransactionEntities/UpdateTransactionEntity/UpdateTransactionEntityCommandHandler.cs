@@ -5,7 +5,7 @@ using Responses.DB;
 
 namespace Domestica.Budget.Application.TransactionEntities.UpdateTransactionEntity
 {
-    internal sealed class UpdateTransactionEntityCommandHandler : ICommandHandler<UpdateTransactionEntityCommand>
+    internal sealed class UpdateTransactionEntityCommandHandler : ICommandHandler<UpdateTransactionEntityCommand, TransactionEntity>
     {
         private readonly ITransactionEntityRepository _transactionEntityRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -16,13 +16,13 @@ namespace Domestica.Budget.Application.TransactionEntities.UpdateTransactionEnti
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(UpdateTransactionEntityCommand request, CancellationToken cancellationToken)
+        public async Task<Result<TransactionEntity>> Handle(UpdateTransactionEntityCommand request, CancellationToken cancellationToken)
         {
             var transactionEntity = await _transactionEntityRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (transactionEntity is null)
             {
-                return Result.Failure(Error.NotFound("Transaction entity not found"));
+                return Result.Failure<TransactionEntity>(Error.NotFound("Transaction entity not found"));
             }
 
             transactionEntity.ChangeName(request.NewName);
@@ -31,10 +31,10 @@ namespace Domestica.Budget.Application.TransactionEntities.UpdateTransactionEnti
 
             if (isSuccessful)
             {
-                return Result.Success();
+                return Result.Success(transactionEntity);
             }
 
-            return Result.Failure(Error.TaskFailed($"Problem while updating transaction entity name with ID: {transactionEntity.Id}"));
+            return Result.Failure<TransactionEntity>(Error.TaskFailed($"Problem while updating transaction entity name with ID: {transactionEntity.Id}"));
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Domestica.Budget.Domain.Transactions
 {
     public static class TransactionService
     {
-        public static void CreateIncomingTransaction(
+        public static Transaction CreateIncomingTransaction(
             Money.DB.Money transactionAmount,
             Account destinationAccount,
             TransactionSender sender,
@@ -16,9 +16,11 @@ namespace Domestica.Budget.Domain.Transactions
 
             destinationAccount.AddTransaction(transaction);
             sender.AddTransaction(transaction);
+
+            return transaction;
         }
 
-        public static void CreateOutgoingTransaction(
+        public static Transaction CreateOutgoingTransaction(
             Money.DB.Money transactionAmount,
             Account sourceAccount,
             TransactionRecipient recipient,
@@ -28,12 +30,14 @@ namespace Domestica.Budget.Domain.Transactions
 
             sourceAccount.AddTransaction(transaction);
             recipient.AddTransaction(transaction);
+
+            return transaction;
         }
 
-        public static void CreateInternalTransaction(
+        public static Transaction[] CreateInternalTransaction(
             Money.DB.Money transactionAmount,
             Account sourceAccount,
-            Account destinationAccount)
+            Account destinationAccount) 
         {
             var transactions = new
             {
@@ -43,6 +47,12 @@ namespace Domestica.Budget.Domain.Transactions
 
             sourceAccount.AddTransaction(transactions.source);
             destinationAccount.AddTransaction(transactions.destination);
+
+            return new []
+            {
+                transactions.source, 
+                transactions.destination
+            };
         }
 
         internal static void CreatePrivateTransaction(

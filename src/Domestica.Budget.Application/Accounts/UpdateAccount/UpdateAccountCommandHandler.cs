@@ -5,7 +5,7 @@ using Responses.DB;
 
 namespace Domestica.Budget.Application.Accounts.UpdateAccount
 {
-    internal sealed class UpdateAccountCommandHandler : ICommandHandler<UpdateAccountCommand>
+    internal sealed class UpdateAccountCommandHandler : ICommandHandler<UpdateAccountCommand, Account>
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -16,7 +16,7 @@ namespace Domestica.Budget.Application.Accounts.UpdateAccount
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Account>> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)
         {
             //TODO Retrive user id
 
@@ -24,7 +24,7 @@ namespace Domestica.Budget.Application.Accounts.UpdateAccount
 
             if (account is null)
             {
-                return Result.Failure(Error.NotFound("Account with Id not found"));
+                return Result.Failure<Account>(Error.NotFound("Account with Id not found"));
             }
 
             account.UpdateAccount(request.AccountUpdateData.Name, request.AccountUpdateData.Balance);
@@ -33,10 +33,10 @@ namespace Domestica.Budget.Application.Accounts.UpdateAccount
 
             if (isSuccessful)
             {
-                return Result.Success();
+                return Result.Success(account);
             }
 
-            return Result.Failure(Error.TaskFailed($"Problem while updating account with ID: {account.Id}"));
+            return Result.Failure<Account>(Error.TaskFailed($"Problem while updating account with ID: {account.Id}"));
         }
     }
 }

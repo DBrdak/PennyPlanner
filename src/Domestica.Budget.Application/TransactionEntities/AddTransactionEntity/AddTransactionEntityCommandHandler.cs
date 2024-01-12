@@ -7,7 +7,7 @@ using Responses.DB;
 
 namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
 {
-    internal sealed class AddTransactionEntityCommandHandler : ICommandHandler<AddTransactionEntityCommand>
+    internal sealed class AddTransactionEntityCommandHandler : ICommandHandler<AddTransactionEntityCommand, TransactionEntity>
     {
         private readonly ITransactionEntityRepository _transactionEntityRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -18,29 +18,32 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(AddTransactionEntityCommand request, CancellationToken cancellationToken)
+        public async Task<Result<TransactionEntity>> Handle(AddTransactionEntityCommand request, CancellationToken cancellationToken)
         {
+            TransactionEntity newTransactionEntity;
+
             switch (request.Type.Value)
             {
                 case "Recipient":
-                    var recipient = new TransactionRecipient(request.Name);
-                    await _transactionEntityRepository.AddAsync(recipient, cancellationToken);
+                    newTransactionEntity = new TransactionRecipient(request.Name);
+                    await _transactionEntityRepository.AddAsync(newTransactionEntity, cancellationToken);
                     break;
                 case "Sender":
-                    var sender = new TransactionSender(request.Name);
-                    await _transactionEntityRepository.AddAsync(sender, cancellationToken);
+                    newTransactionEntity = new TransactionSender(request.Name);
+                    await _transactionEntityRepository.AddAsync(newTransactionEntity, cancellationToken);
                     break;
-                default: return Result.Failure(Error.InvalidRequest("Invalid transaction entity type"));
+                default:
+                    return Result.Failure<TransactionEntity>(Error.InvalidRequest("Invalid transaction entity type"));
             }
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
             if (isSuccessful)
             {
-                return Result.Success();
+                return Result.Success(newTransactionEntity);
             }
 
-            return Result.Failure(Error.TaskFailed("Problem while adding new transaction entity"));
+            return Result.Failure<TransactionEntity>(Error.TaskFailed("Problem while adding new transaction entity"));
         }
     }
 }

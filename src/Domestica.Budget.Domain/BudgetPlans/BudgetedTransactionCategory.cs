@@ -23,7 +23,7 @@ namespace Domestica.Budget.Domain.BudgetPlans
 
         internal void AddTransaction(Transaction transaction)
         {
-            ActualAmount += transaction.TransactionAmount;
+            ActualAmount += new Money.DB.Money(Math.Abs(transaction.TransactionAmount.Amount), transaction.TransactionAmount.Currency);
         }
     }
 }

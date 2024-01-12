@@ -9,7 +9,7 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
         AccountId DestinationAccountId,
         TransactionEntityId SenderId,
         Money.DB.Money TransactionAmount,
-        IncomingTransactionCategory Category) : ICommand
+        IncomingTransactionCategory Category) : ICommand<Transaction>
     {
     }
 }

@@ -8,7 +8,9 @@ using Domestica.Budget.Domain.BudgetPlans;
 
 namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
 {
-    public sealed record SetBudgetPlanCategoriesCommand(BudgetPlanId BudgetPlanId, IEnumerable<BudgetedTransactionCategoryValues> BudgetedTransactionCategoryValues) : ICommand
+    public sealed record SetBudgetPlanCategoriesCommand(
+        BudgetPlanId BudgetPlanId,
+        IEnumerable<BudgetedTransactionCategoryValues> BudgetedTransactionCategoryValues) : ICommand<BudgetPlan>
     {
     }
 }

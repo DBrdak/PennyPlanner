@@ -10,7 +10,7 @@ using Responses.DB;
 
 namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
 {
-    internal sealed class SetBudgetPlanCategoriesCommandHandler : ICommandHandler<SetBudgetPlanCategoriesCommand>
+    internal sealed class SetBudgetPlanCategoriesCommandHandler : ICommandHandler<SetBudgetPlanCategoriesCommand, BudgetPlan>
     {
         private readonly IBudgetPlanRepository _budgetPlanRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -21,7 +21,7 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(SetBudgetPlanCategoriesCommand request, CancellationToken cancellationToken)
+        public async Task<Result<BudgetPlan>> Handle(SetBudgetPlanCategoriesCommand request, CancellationToken cancellationToken)
         {
             //TODO Retrive user id
 
@@ -29,7 +29,7 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
 
             if (budgetPlan is null)
             {
-                return Result.Failure(Error.NotFound("Budget plan not found"));
+                return Result.Failure<BudgetPlan>(Error.NotFound("Budget plan not found"));
             }
 
             foreach (var budgetedTransactionCategoryValues in request.BudgetedTransactionCategoryValues)
@@ -41,10 +41,10 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
 
             if (isSuccessful)
             {
-                return Result.Success();
+                return Result.Success(budgetPlan);
             }
 
-            return Result.Failure(Error.TaskFailed("Problem while setting budgeted categories"));
+            return Result.Failure<BudgetPlan>(Error.TaskFailed("Problem while setting budgeted categories"));
         }
     }
 }

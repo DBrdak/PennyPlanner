@@ -9,7 +9,7 @@ using Responses.DB;
 
 namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
 {
-    internal sealed class AddIncomeTransactionCommandHandler : ICommandHandler<AddIncomeTransactionCommand>
+    internal sealed class AddIncomeTransactionCommandHandler : ICommandHandler<AddIncomeTransactionCommand, Transaction>
     {
         private readonly IAccountRepository _accountRepository;
         private readonly ITransactionEntityRepository _transactionEntityRepository;
@@ -22,13 +22,13 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
             _transactionEntityRepository = transactionEntityRepository;
         }
 
-        public async Task<Result> Handle(AddIncomeTransactionCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Transaction>> Handle(AddIncomeTransactionCommand request, CancellationToken cancellationToken)
         {
             var destinationAccount = await _accountRepository.GetUserAccountByIdAsync(request.DestinationAccountId, cancellationToken);
 
             if (destinationAccount is null)
             {
-                return Result.Failure(Error.NotFound($"Account with ID: {request.DestinationAccountId} not found"));
+                return Result.Failure<Transaction>(Error.NotFound($"Account with ID: {request.DestinationAccountId} not found"));
             }
 
             var sender = await _transactionEntityRepository.GetByIdIncludeAsync(
@@ -38,19 +38,23 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
 
             if (sender is null)
             {
-                return Result.Failure(Error.NotFound($"Sender with ID: {request.SenderId} not found"));
+                return Result.Failure<Transaction>(Error.NotFound($"Sender with ID: {request.SenderId} not found"));
             }
 
-            TransactionService.CreateIncomingTransaction(request.TransactionAmount, destinationAccount, sender, request.Category);
+            var createdTransaction = TransactionService.CreateIncomingTransaction(
+                request.TransactionAmount,
+                destinationAccount,
+                sender,
+                request.Category);
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
             if (isSuccessful)
             {
-                return Result.Success();
+                return Result.Success(createdTransaction);
             }
 
-            return Result.Failure(Error.TaskFailed("Problem while adding income transaction"));
+            return Result.Failure<Transaction>(Error.TaskFailed("Problem while adding income transaction"));
         }
     }
 }

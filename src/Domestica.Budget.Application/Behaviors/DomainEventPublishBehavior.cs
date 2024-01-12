@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using CommonAbstractions.DB.Entities;
 using CommonAbstractions.DB.Messaging;
 using MediatR;
@@ -78,31 +79,45 @@ namespace Domestica.Budget.Application.Behaviors
                 return null;
             }
 
-            var isEntity = IsEntityType(value);
-
-            if (!isEntity)
+            if (value.GetType().IsArray)
             {
-                return null;
+                List<IDomainEvent> domainEvents = new();
+
+                foreach (var val in value as Array)
+                {
+                    var domainEventsMethod = GetDomainEventsMethod(val);
+
+                    if (domainEventsMethod is null)
+                    {
+                        return null;
+                    }
+
+                    var entityDomainEvents = GetDomainEvents(domainEventsMethod, val);
+
+                    domainEvents.AddRange(entityDomainEvents);
+                }
+
+                return domainEvents;
             }
-
-            var domainEventsMethod = GetDomainEventsMethod(value);
-
-            if (domainEventsMethod is null)
+            else
             {
-                return null;
+                var domainEventsMethod = GetDomainEventsMethod(value);
+
+                if (domainEventsMethod is null)
+                {
+                    return null;
+                }
+
+                var domainEvents = GetDomainEvents(domainEventsMethod, value);
+
+                return domainEvents;
             }
-
-            var domainEvents = GetDomainEvents(domainEventsMethod, value);
-
-            return domainEvents;
         }
 
         private static List<IDomainEvent>? GetDomainEvents(MethodInfo domainEventsMethod, object value) =>
             domainEventsMethod.Invoke(value, null) as List<IDomainEvent>;
 
         private static MethodInfo? GetDomainEventsMethod(object value) => value.GetType().GetMethod("GetDomainEvents");
-
-        private static bool IsEntityType(object value) => value.GetType().IsSubclassOf(typeof(Entity));
 
         private static object? GetValueFromProperty(object obj, PropertyInfo property) => property.GetValue(obj);
 
