@@ -1,4 +1,6 @@
-﻿using Domestica.Budget.Domain.Transactions;
+﻿using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
+using Domestica.Budget.Domain.Transactions;
+using Exceptions.DB;
 
 namespace Domestica.Budget.Domain.TransactionEntities.TransactionRecipients
 {
@@ -13,6 +15,11 @@ namespace Domestica.Budget.Domain.TransactionEntities.TransactionRecipients
 
         internal void AddTransaction(Transaction transaction)
         {
+            if (!IsActive)
+            {
+                throw new DomainException<TransactionRecipient>("Cannot add transaction to inactive transaction recipient");
+            }
+
             _transactions.Add(transaction);
         }
     }

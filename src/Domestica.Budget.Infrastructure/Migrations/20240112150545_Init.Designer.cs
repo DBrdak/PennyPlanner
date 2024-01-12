@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Domestica.Budget.Infrastructure.Migrations
 {
     [DbContext(typeof(BudgetifyContext))]
-    [Migration("20240110195411_Init")]
+    [Migration("20240112150545_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -30,6 +30,15 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("currency");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_active");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -68,6 +77,10 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_active");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -185,36 +198,6 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     b.HasBaseType("Domestica.Budget.Domain.TransactionEntities.TransactionEntity");
 
                     b.HasDiscriminator().HasValue("TransactionSender");
-                });
-
-            modelBuilder.Entity("Domestica.Budget.Domain.Accounts.Account", b =>
-                {
-                    b.OwnsOne("Money.DB.Money", "Balance", b1 =>
-                        {
-                            b1.Property<Guid>("AccountId")
-                                .HasColumnType("uuid")
-                                .HasColumnName("id");
-
-                            b1.Property<decimal>("Amount")
-                                .HasColumnType("numeric")
-                                .HasColumnName("balance_amount");
-
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("balance_currency");
-
-                            b1.HasKey("AccountId");
-
-                            b1.ToTable("accounts");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AccountId")
-                                .HasConstraintName("fk_accounts_accounts_id");
-                        });
-
-                    b.Navigation("Balance")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domestica.Budget.Domain.BudgetPlans.BudgetPlan", b =>

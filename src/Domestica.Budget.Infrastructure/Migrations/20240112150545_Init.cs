@@ -18,8 +18,8 @@ namespace Domestica.Budget.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
-                    balance_amount = table.Column<decimal>(type: "numeric", nullable: false),
-                    balance_currency = table.Column<string>(type: "text", nullable: false),
+                    currency = table.Column<string>(type: "text", nullable: false),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false),
                     account_type = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -46,6 +46,7 @@ namespace Domestica.Budget.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false),
                     entity_type = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>

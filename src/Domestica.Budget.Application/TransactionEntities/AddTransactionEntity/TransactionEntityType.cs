@@ -8,10 +8,12 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
         public string Value { get; init; }
 
         [JsonConstructor]
-        private TransactionEntityType(string value) =>
+        private TransactionEntityType(string value)
+        {
             Value = value;
+        }
 
-        public static TransactionEntityType FromString(string value) =>
+    public static TransactionEntityType FromString(string value) =>
             value switch
             {
                 "Sender" => Sender,

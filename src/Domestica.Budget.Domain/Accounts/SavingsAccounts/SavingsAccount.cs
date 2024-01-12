@@ -12,6 +12,5 @@ namespace Domestica.Budget.Domain.Accounts.SavingsAccounts
         public SavingsAccount(AccountName name, Currency currency, decimal initialBalance = 0) : base(name, currency, initialBalance)
         {
         }
-
     }
 }

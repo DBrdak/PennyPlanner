@@ -8,8 +8,10 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
         public string Value { get; init;  }
 
         [JsonConstructor]
-        private AccountType(string value) =>
+        private AccountType(string value)
+        {
             Value = value;
+        }
 
         public static AccountType FromString(string value) =>
             value switch

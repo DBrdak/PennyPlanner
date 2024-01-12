@@ -5,11 +5,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Accounts\RemoveAccount\" />
-    <Folder Include="Transactions\RemoveTransaction\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.8.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
   </ItemGroup>

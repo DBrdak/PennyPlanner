@@ -21,6 +21,9 @@ namespace Domestica.Budget.Infrastructure.Configurations
             builder.Property(account => account.Name)
                 .HasConversion(accountName => accountName.Value, value => new AccountName(value));
 
+            builder.Property(account => account.Currency)
+                .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
+            /*
             builder.OwnsOne(
                 account => account.Balance,
                 moneyBuilder =>
@@ -28,7 +31,7 @@ namespace Domestica.Budget.Infrastructure.Configurations
                     moneyBuilder.Property(money => money.Currency)
                         .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
                 });
-
+            */
             builder.HasMany(account => account.Transactions)
                 .WithOne()
                 .HasForeignKey(transaction => transaction.Id);

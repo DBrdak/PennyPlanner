@@ -9,9 +9,10 @@ namespace Domestica.Budget.Domain.Transactions
         Task<IEnumerable<Transaction>> BrowseAccountTransactionsAsync(AccountId accountId);
         Task<IEnumerable<Transaction>> BrowseSenderTransactionsAsync(TransactionEntityId senderId);
         Task<IEnumerable<Transaction>> BrowseRecipientTransactionsAsync(TransactionEntityId recipientId);
-
+        Task<Transaction?> GetByIdAsync(TransactionId transactionId, CancellationToken cancellationToken);
         Task<IEnumerable<Transaction>> GetTransactionsByDateAndCategoryAsync(
             DateTimeRange dateTimePeriod,
             TransactionCategory category);
+        void Remove(Transaction transaction);
     }
 }

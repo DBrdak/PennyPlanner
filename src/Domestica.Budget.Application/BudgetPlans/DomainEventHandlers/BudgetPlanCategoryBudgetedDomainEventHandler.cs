@@ -27,7 +27,10 @@ namespace Domestica.Budget.Application.BudgetPlans.DomainEventHandlers
 
         public async Task Handle(BudgetPlanCategoryBudgetedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var budget = await _budgetPlanRepository.GetByIdAsync(notification.CreatedBudgetPlanId, cancellationToken);
+            var budget = await _budgetPlanRepository.GetByIdIncludeAsync(
+                notification.CreatedBudgetPlanId,
+                budgetPlan => budgetPlan.Transactions,
+                cancellationToken);
 
             if (budget is null)
             {

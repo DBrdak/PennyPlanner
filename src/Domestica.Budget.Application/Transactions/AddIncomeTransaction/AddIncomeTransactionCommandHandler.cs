@@ -45,7 +45,7 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
                 request.TransactionAmount,
                 destinationAccount,
                 sender,
-                request.Category);
+                IncomingTransactionCategory.FromValue(request.Category.Value));
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 

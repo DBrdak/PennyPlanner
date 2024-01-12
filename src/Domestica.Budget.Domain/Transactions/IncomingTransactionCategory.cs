@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Exceptions.DB;
 
 namespace Domestica.Budget.Domain.Transactions
 {
@@ -35,7 +36,7 @@ namespace Domestica.Budget.Domain.Transactions
         public new static IncomingTransactionCategory FromValue(string code)
         {
             return All.FirstOrDefault(c => c.Value == code) ??
-                   throw new ApplicationException("The category of transaction is invalid");
+                   throw new DomainException<IncomingTransactionCategory>("The category of transaction is invalid");
         }
 
         [JsonConstructor]
