@@ -8,7 +8,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
 {
     public sealed class TransactionRepository : Repository<Transaction, TransactionId>, ITransactionRepository
     {
-        public TransactionRepository(BudgetifyContext dbContext) : base(dbContext)
+        public TransactionRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
 

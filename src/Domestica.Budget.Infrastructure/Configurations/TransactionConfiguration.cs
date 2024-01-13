@@ -1,4 +1,6 @@
-﻿using Domestica.Budget.Domain.Transactions;
+﻿using Domestica.Budget.Domain.Accounts;
+using Domestica.Budget.Domain.TransactionEntities;
+using Domestica.Budget.Domain.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Money.DB;
@@ -24,28 +26,17 @@ namespace Domestica.Budget.Infrastructure.Configurations
                         .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
                 });
 
-            builder.HasOne(transaction => transaction.Account)
-                .WithMany(account => account.Transactions)
-                .HasForeignKey(transaction => transaction.AccountId);
-
-            builder.HasOne(transaction => transaction.Sender)
-                .WithMany()
-                .HasForeignKey(transaction => transaction.SenderId);
-
-            builder.HasOne(transaction => transaction.FromAccount)
-                .WithMany()
-                .HasForeignKey(transaction => transaction.FromAccountId);
-
-            builder.HasOne(transaction => transaction.Recipient)
-                .WithMany()
-                .HasForeignKey(transaction => transaction.RecipientId);
-
-            builder.HasOne(transaction => transaction.ToAccount)
-                .WithMany()
-                .HasForeignKey(transaction => transaction.ToAccountId);
-
             builder.Property(transaction => transaction.Category)
                 .HasConversion(category => category.Value, value => TransactionCategory.FromValue(value));
+
+            builder.Property(transaction => transaction.SenderId)
+                .HasConversion(id => id.Value, value => new TransactionEntityId(value));
+            builder.Property(transaction => transaction.RecipientId)
+                .HasConversion(id => id.Value, value => new TransactionEntityId(value));
+            builder.Property(transaction => transaction.FromAccountId)
+                .HasConversion(id => id.Value, value => new AccountId(value));
+            builder.Property(transaction => transaction.ToAccountId)
+                .HasConversion(id => id.Value, value => new AccountId(value));
         }
     }
 }

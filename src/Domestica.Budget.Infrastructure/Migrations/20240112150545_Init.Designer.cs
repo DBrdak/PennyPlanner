@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Domestica.Budget.Infrastructure.Migrations
 {
-    [DbContext(typeof(BudgetifyContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240112150545_Init")]
     partial class Init
     {

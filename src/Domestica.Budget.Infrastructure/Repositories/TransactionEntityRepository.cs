@@ -5,7 +5,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
 {
     public sealed class TransactionEntityRepository : Repository<TransactionEntity, TransactionEntityId>, ITransactionEntityRepository
     {
-        public TransactionEntityRepository(BudgetifyContext dbContext) : base(dbContext)
+        public TransactionEntityRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
 
@@ -14,7 +14,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
             return await DbContext.Set<TransactionEntity>()
                 .AsNoTracking()
                 .Include(te => te.Transactions)
-                .Where(te => true /*te.UserId == userId*/)
+                .Where(te => te.IsActive /*te.UserId == userId*/)
                 .ToListAsync();
         }
     }

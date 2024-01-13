@@ -27,7 +27,7 @@ namespace Domestica.Budget.Infrastructure
                 configuration.GetConnectionString("Database") ??
                 throw new ArgumentNullException(nameof(configuration));
 
-            services.AddDbContext<BudgetifyContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
             });
@@ -40,7 +40,7 @@ namespace Domestica.Budget.Infrastructure
 
             services.AddScoped<IBudgetPlanRepository, BudgetPlanRepository>();
 
-            services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<BudgetifyContext>());
+            services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
         }
     }
 }

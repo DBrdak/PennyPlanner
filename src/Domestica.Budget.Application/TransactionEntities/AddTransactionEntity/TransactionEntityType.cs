@@ -24,7 +24,7 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
         public static readonly TransactionEntityType Sender = new("Sender");
         public static readonly TransactionEntityType Recipient = new("Recipient");
 
-        public readonly IReadOnlyCollection<TransactionEntityType> All = new[]
+        public static readonly IReadOnlyCollection<TransactionEntityType> All = new[]
         {
             Sender, 
             Recipient

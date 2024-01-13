@@ -56,5 +56,31 @@ namespace Domestica.Budget.Domain.BudgetPlans
             budgetedTransactionCategory.AddTransaction(transaction);
             _transactions.Add(transaction);
         }
+
+        public void UpdateBudgetCategory(TransactionCategory category, Money.DB.Money budgetedAmount)
+        {
+            var budgetedTransactionCategory = _budgetedTransactionCategories.SingleOrDefault(budgetedTransactionCategory => budgetedTransactionCategory.Category == category);
+
+            if (budgetedTransactionCategory is null)
+            {
+                throw new DomainException<BudgetPlan>(
+                                       $"Category: {category.Value} is not budgeted for period: [{BudgetPeriod.Start:dd/MM/yyyy} - {BudgetPeriod.End:dd/MM/yyyy}]");
+            }
+
+            budgetedTransactionCategory.UpdateBudgetedAmount(budgetedAmount);
+        }
+
+        public void ResetBudgetCategory(TransactionCategory category)
+        {
+            var budgetedTransactionCategory = _budgetedTransactionCategories.SingleOrDefault(budgetedTransactionCategory => budgetedTransactionCategory.Category == category);
+
+            if (budgetedTransactionCategory is null)
+            {
+                throw new DomainException<BudgetPlan>(
+                    $"Category: {category.Value} is not budgeted for period: [{BudgetPeriod.Start:dd/MM/yyyy} - {BudgetPeriod.End:dd/MM/yyyy}]");
+            }
+
+            _budgetedTransactionCategories.Remove(budgetedTransactionCategory);
+        }
     }
 }

@@ -9,9 +9,9 @@ namespace Domestica.Budget.Infrastructure.Repositories
         where TEntityId : EntityId
         where TEntity : Entity<TEntityId>
     {
-        protected readonly BudgetifyContext DbContext;
+        protected readonly ApplicationDbContext DbContext;
 
-        protected Repository(BudgetifyContext dbContext)
+        protected Repository(ApplicationDbContext dbContext)
         {
             DbContext = dbContext;
         }

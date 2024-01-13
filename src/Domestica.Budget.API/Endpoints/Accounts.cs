@@ -1,5 +1,6 @@
 ﻿using Carter;
 using Domestica.Budget.Application.Accounts.AddAccount;
+using Domestica.Budget.Application.Accounts.DeactivateAccount;
 using Domestica.Budget.Application.Accounts.GetAccounts;
 using Domestica.Budget.Application.Accounts.UpdateAccount;
 using MediatR;
@@ -45,6 +46,22 @@ namespace Domestica.Budget.API.Endpoints
                     CancellationToken cancellationToken) =>
                 {
                     var command = new UpdateAccountCommand(accountUpdateData);
+
+                    var result = await sender.Send(command, cancellationToken);
+
+                    return result.IsSuccess ?
+                        Results.Ok() :
+                        Results.BadRequest(result.Error);
+                });
+
+            app.MapPut(
+                "accounts/{accountId}/deactivate",
+                async (
+                    ISender sender,
+                    [FromRoute] string accountId,
+                    CancellationToken cancellationToken) =>
+                {
+                    var command = new DeactivateAccountCommand(new(Guid.Parse(accountId)));
 
                     var result = await sender.Send(command, cancellationToken);
 

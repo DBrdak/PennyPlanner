@@ -1,5 +1,6 @@
 ﻿using Carter;
 using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
+using Domestica.Budget.Application.TransactionEntities.DeactivateTransactionEntity;
 using Domestica.Budget.Application.TransactionEntities.GetTransactionEntities;
 using Domestica.Budget.Application.TransactionEntities.UpdateTransactionEntity;
 using Domestica.Budget.Domain.TransactionEntities;
@@ -43,6 +44,22 @@ namespace Domestica.Budget.API.Endpoints
                     CancellationToken cancellationToken) =>
                 {
                     var command = new UpdateTransactionEntityCommand(new (Guid.Parse(transactionEntityId)), newName);
+
+                    var result = await sender.Send(command, cancellationToken);
+
+                    return result.IsSuccess ?
+                        Results.Ok() :
+                        Results.BadRequest(result.Error);
+                });
+
+            app.MapPut(
+                "transaction-entities/{transactionEntityId}/deactivate",
+                async (
+                    ISender sender,
+                    [FromRoute] string transactionEntityId,
+                    CancellationToken cancellationToken) =>
+                {
+                    var command = new DeactivateTransactionEntityCommand(new(Guid.Parse(transactionEntityId)));
 
                     var result = await sender.Send(command, cancellationToken);
 

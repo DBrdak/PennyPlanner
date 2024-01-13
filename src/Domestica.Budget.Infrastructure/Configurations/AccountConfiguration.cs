@@ -23,18 +23,10 @@ namespace Domestica.Budget.Infrastructure.Configurations
 
             builder.Property(account => account.Currency)
                 .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
-            /*
-            builder.OwnsOne(
-                account => account.Balance,
-                moneyBuilder =>
-                {
-                    moneyBuilder.Property(money => money.Currency)
-                        .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
-                });
-            */
+
             builder.HasMany(account => account.Transactions)
-                .WithOne()
-                .HasForeignKey(transaction => transaction.Id);
+                .WithOne(transaction => transaction.Account)
+                .HasForeignKey(transaction => transaction.AccountId);
 
             builder.HasDiscriminator<string>("account_type")
                 .HasValue<SavingsAccount>(nameof(SavingsAccount))

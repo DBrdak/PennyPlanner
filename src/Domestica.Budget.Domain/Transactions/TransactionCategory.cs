@@ -16,10 +16,16 @@ namespace Domestica.Budget.Domain.Transactions
 
         public static TransactionCategory FromValue(string code)
         {
-            var all = Enumerable.Concat<TransactionCategory>(IncomingTransactionCategory.All, OutgoingTransactionCategory.All);
-
-            return all.FirstOrDefault(c => c.Value == code) ??
+            return All.FirstOrDefault(c => c.Value == code) ??
                    throw new DomainException<TransactionCategory>("The category of transaction is invalid");
         }
+
+        public override string ToString() => Value;
+
+        public static IReadOnlyCollection<TransactionCategory> All =>
+            Enumerable.Concat<TransactionCategory>(
+                    IncomingTransactionCategory.All,
+                    OutgoingTransactionCategory.All)
+                .ToList();
     }
 }

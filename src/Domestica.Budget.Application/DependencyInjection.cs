@@ -1,4 +1,6 @@
-﻿using Domestica.Budget.Application.Behaviors;
+﻿using System.Reflection;
+using Domestica.Budget.Application.Behaviors;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Domestica.Budget.Application
@@ -7,7 +9,7 @@ namespace Domestica.Budget.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(ApplicationAssemblyReference.Assembly);
             
             services.AddMediatR(
                 config =>

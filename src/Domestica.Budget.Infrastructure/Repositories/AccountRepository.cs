@@ -7,7 +7,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
 {
     public sealed class AccountRepository : Repository<Account, AccountId>, IAccountRepository
     {
-        public AccountRepository(BudgetifyContext dbContext) : base(dbContext)
+        public AccountRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
 
@@ -25,7 +25,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
             return await DbContext.Set<Account>()
                 .Include(a => a.Transactions)
                 .FirstOrDefaultAsync( /*a => a.UserId == userId*/
-                    a => a.Id == accountId && a.IsActive == true,
+                    a => a.Id == accountId && a.IsActive,
                     cancellationToken);
         }
     }

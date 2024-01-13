@@ -3,6 +3,7 @@ using System;
 using Domestica.Budget.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Domestica.Budget.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class BudgetifyContextModelSnapshot : ModelSnapshot
+    [Migration("20240112235825_Check")]
+    partial class Check
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,6 +153,18 @@ namespace Domestica.Budget.Infrastructure.Migrations
 
                     b.HasIndex("BudgetPlanId")
                         .HasDatabaseName("ix_transactions_budget_plan_id");
+
+                    b.HasIndex("FromAccountId")
+                        .HasDatabaseName("ix_transactions_from_account_id");
+
+                    b.HasIndex("RecipientId")
+                        .HasDatabaseName("ix_transactions_recipient_id");
+
+                    b.HasIndex("SenderId")
+                        .HasDatabaseName("ix_transactions_sender_id");
+
+                    b.HasIndex("ToAccountId")
+                        .HasDatabaseName("ix_transactions_to_account_id");
 
                     b.HasIndex("TransactionEntityId")
                         .HasDatabaseName("ix_transactions_transaction_entity_id");
@@ -313,12 +328,32 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_transactions_accounts_account_id");
+                        .HasConstraintName("fk_transactions_accounts_id");
 
                     b.HasOne("Domestica.Budget.Domain.BudgetPlans.BudgetPlan", null)
                         .WithMany("Transactions")
                         .HasForeignKey("BudgetPlanId")
                         .HasConstraintName("fk_transactions_budget_plans_budget_plan_id");
+
+                    b.HasOne("Domestica.Budget.Domain.Accounts.Account", "FromAccount")
+                        .WithMany()
+                        .HasForeignKey("FromAccountId")
+                        .HasConstraintName("fk_transactions_accounts_from_account_id1");
+
+                    b.HasOne("Domestica.Budget.Domain.TransactionEntities.TransactionRecipients.TransactionRecipient", "Recipient")
+                        .WithMany()
+                        .HasForeignKey("RecipientId")
+                        .HasConstraintName("fk_transactions_transaction_entity_recipient_id");
+
+                    b.HasOne("Domestica.Budget.Domain.TransactionEntities.TransactionSenders.TransactionSender", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .HasConstraintName("fk_transactions_transaction_entity_sender_id");
+
+                    b.HasOne("Domestica.Budget.Domain.Accounts.Account", "ToAccount")
+                        .WithMany()
+                        .HasForeignKey("ToAccountId")
+                        .HasConstraintName("fk_transactions_accounts_to_account_id1");
 
                     b.HasOne("Domestica.Budget.Domain.TransactionEntities.TransactionEntity", null)
                         .WithMany("Transactions")
@@ -350,6 +385,14 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         });
 
                     b.Navigation("Account");
+
+                    b.Navigation("FromAccount");
+
+                    b.Navigation("Recipient");
+
+                    b.Navigation("Sender");
+
+                    b.Navigation("ToAccount");
 
                     b.Navigation("TransactionAmount")
                         .IsRequired();
