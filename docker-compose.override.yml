@@ -21,3 +21,13 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  seq:
+    restart: always
+    environment:
+    - ACCEPT_EULA=Y
+    ports:
+    - "5341:5341"
+    - "8101:80"
+    networks:
+    - default  

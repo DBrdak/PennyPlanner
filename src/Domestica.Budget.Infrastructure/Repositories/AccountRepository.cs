@@ -15,7 +15,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
             return await DbContext.Set<Account>()
                 .Include(a => a.Transactions)
-                .Where(/*a => a.UserId == userId*/ a => a.IsActive == true)
+                .Where(/*a => a.UserId == userId*/ x=> true)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
         }
@@ -25,7 +25,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
             return await DbContext.Set<Account>()
                 .Include(a => a.Transactions)
                 .FirstOrDefaultAsync( /*a => a.UserId == userId*/
-                    a => a.Id == accountId && a.IsActive,
+                    a => a.Id == accountId,
                     cancellationToken);
         }
     }

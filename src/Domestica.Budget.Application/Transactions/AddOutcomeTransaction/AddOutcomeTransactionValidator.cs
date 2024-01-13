@@ -10,7 +10,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
         {
             RuleFor(x => x.Category)
                 .Must(
-                    category => IncomingTransactionCategory.All.Any(
+                    category =>  OutgoingTransactionCategory.All.Any(
                         incomingTransactionCategory => incomingTransactionCategory.Value == category.Value))
                 .WithMessage("Invalid transaction category");
 

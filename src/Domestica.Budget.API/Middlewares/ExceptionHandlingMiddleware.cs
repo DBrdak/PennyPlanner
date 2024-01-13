@@ -1,19 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Exceptions.DB;
+using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
+using Responses.DB;
 
 namespace Domestica.Budget.API.Middlewares
 {
-    public class ExceptionMiddleware
+    public sealed class ExceptionMiddleware
     {
-        private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
-        private readonly IHostEnvironment _env;
-        private const string contentType = "application/json";
+        private readonly RequestDelegate _next;
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env)
+        public ExceptionMiddleware(
+            RequestDelegate next,
+            ILogger<ExceptionMiddleware> logger)
         {
             _next = next;
             _logger = logger;
-            _env = env;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -24,20 +26,70 @@ namespace Domestica.Budget.API.Middlewares
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception, "Exception occurred: {Message}", exception.Message);
+                var exceptionDetails = GetExceptionDetails(exception);
 
                 var problemDetails = new ProblemDetails
                 {
-                    Status = StatusCodes.Status500InternalServerError,
-                    Type = "ServerError",
-                    Title = "Server error",
-                    Detail = "An unexpected error has occurred"
+                    Status = exceptionDetails.Status,
+                    Type = exceptionDetails.Type,
+                    Title = exceptionDetails.Title,
+                    Detail = exceptionDetails.Detail,
                 };
 
-                context.Response.StatusCode = (int)problemDetails.Status;
+                if (exceptionDetails.Errors is not null)
+                {
+                    problemDetails.Extensions["errors"] = exceptionDetails.Errors;
+                }
 
-                await context.Response.WriteAsJsonAsync(problemDetails);
+                _logger.LogError(exception, "{Exception} occurred: {Message}", exceptionDetails.Title, exception.Message);
+
+                context.Response.StatusCode = exceptionDetails.Status;
+
+                if (exceptionDetails.Errors is null)
+                    await context.Response.WriteAsJsonAsync(Result.Failure(Error.Exception(exceptionDetails.Title)));
+                else
+                    await context.Response.WriteAsJsonAsync(
+                        Result.Failure(
+                            Error.ValidationError(exceptionDetails.Errors.Select(e => e.ToString())!)));
             }
         }
+
+        private static ExceptionDetails GetExceptionDetails(Exception exception)
+        {
+            return exception switch
+            {
+                ValidationException validationException => new ExceptionDetails(
+                    StatusCodes.Status400BadRequest,
+                    "ValidationFailure",
+                    "Validation error",
+                    "One or more validation errors has occurred",
+                    validationException.Errors),
+                DomainException domainException => new ExceptionDetails(
+                    StatusCodes.Status400BadRequest,
+                    "DomainException",
+                    $"{domainException.Type.Name} Domain error",
+                    domainException.Message,
+                    null),
+                ApplicationException applicationException => new ExceptionDetails(
+                    StatusCodes.Status400BadRequest,
+                    "ApplicationException",
+                    "Application error",
+                    applicationException.Message,
+                    null),
+                _ => new ExceptionDetails(
+                    StatusCodes.Status500InternalServerError,
+                    "ServerError",
+                    "Server error",
+                    "An unexpected error has occurred",
+                    null)
+            };
+        }
+
+        internal record ExceptionDetails(
+            int Status,
+            string Type,
+            string Title,
+            string Detail,
+            IEnumerable<object>? Errors);
     }
 }

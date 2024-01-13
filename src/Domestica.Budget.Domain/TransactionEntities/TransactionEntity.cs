@@ -11,7 +11,6 @@ namespace Domestica.Budget.Domain.TransactionEntities
         public TransactionEntityName Name { get; private set; }
         public IReadOnlyCollection<Transaction> Transactions => _transactions;
         protected readonly List<Transaction> _transactions;
-        public bool IsActive { get; private set; }
 
         protected TransactionEntity()
         { }
@@ -20,19 +19,14 @@ namespace Domestica.Budget.Domain.TransactionEntities
         {
             Name = name;
             _transactions = new();
-            IsActive = true;
         }
 
-        public void ChangeName(TransactionEntityName newName)
+        public void ChangeName(TransactionEntityName newName) => Name = newName;
+
+
+        internal void AddTransaction(Transaction transaction)
         {
-            if (!IsActive)
-            {
-                throw new DomainException<TransactionEntity>("Cannot change name of inactive transaction entity");
-            }
-
-            Name = newName;
+            _transactions.Add(transaction);
         }
-
-        public void Deactivate() => IsActive = false;
     }
 }

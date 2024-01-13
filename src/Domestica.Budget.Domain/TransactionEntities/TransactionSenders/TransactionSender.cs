@@ -11,15 +11,5 @@ namespace Domestica.Budget.Domain.TransactionEntities.TransactionSenders
         public TransactionSender(TransactionEntityName name) : base(name)
         {
         }
-
-        internal void AddTransaction(Transaction transaction)
-        {
-            if (!IsActive)
-            {
-                throw new DomainException<TransactionSender>("Cannot add transaction to inactive transaction sender");
-            }
-
-            _transactions.Add(transaction);
-        }
     }
 }

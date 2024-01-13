@@ -14,5 +14,9 @@ services:
     depends_on:
       - domestica-budget-db
 
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+
 volumes:
   postgres_data:

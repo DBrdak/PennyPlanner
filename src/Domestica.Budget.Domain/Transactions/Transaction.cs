@@ -14,20 +14,11 @@ namespace Domestica.Budget.Domain.Transactions
 {
     public sealed class Transaction : Entity<TransactionId>
     {
-        public Account Account { get; protected set; }
-        public AccountId AccountId { get; protected set; }
-        [NotMapped]
-        public Account? FromAccount { get; protected set; }
-        public AccountId? FromAccountId { get; protected set; }
-        [NotMapped]
-        public Account? ToAccount { get; protected set; }
-        public AccountId? ToAccountId { get; protected set; }
-        [NotMapped]
-        public TransactionSender? Sender { get; protected set; }
-        public TransactionEntityId? SenderId { get; protected set; }
-        [NotMapped]
-        public TransactionRecipient? Recipient { get; protected set; }
-        public TransactionEntityId? RecipientId { get; protected set; }
+        public AccountId? AccountId { get; protected set; } // Affected Account (the one which will have added TransactionAmount to balance)
+        public AccountId? FromAccountId { get; protected set; } // Internal Transaction
+        public AccountId? ToAccountId { get; protected set; } // Internal Transaction
+        public TransactionEntityId? SenderId { get; protected set; } // Income Transaction
+        public TransactionEntityId? RecipientId { get; protected set; } // Outcome Transaction
         public Money.DB.Money TransactionAmount { get; private set; }
         public TransactionCategory Category { get; private set; }
         [JsonConverter(typeof(DateTimeConverter))]
@@ -45,15 +36,10 @@ namespace Domestica.Budget.Domain.Transactions
             Money.DB.Money transactionAmount,
             TransactionCategory category) : base(new TransactionId())
         {
-            Account = account;
             AccountId = account.Id;
-            FromAccount = fromAccount;
             FromAccountId = fromAccount?.Id;
-            ToAccount = toAccount;
             ToAccountId = toAccount?.Id;
-            Sender = sender;
             SenderId = sender?.Id;
-            Recipient = recipient;
             RecipientId = recipient?.Id;
             TransactionAmount = transactionAmount;
             TransactionDateUtc = DateTime.UtcNow;

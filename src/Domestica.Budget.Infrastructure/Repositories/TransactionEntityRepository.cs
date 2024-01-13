@@ -14,7 +14,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
             return await DbContext.Set<TransactionEntity>()
                 .AsNoTracking()
                 .Include(te => te.Transactions)
-                .Where(te => te.IsActive /*te.UserId == userId*/)
+                .Where(te => true /*te.UserId == userId*/)
                 .ToListAsync();
         }
     }

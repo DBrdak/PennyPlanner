@@ -5,5 +5,7 @@
         Task AddAsync(Account account, CancellationToken cancellationToken);
         Task<List<Account>> BrowseUserAccounts(/*UserId user, */CancellationToken cancellationToken = default);
         Task<Account?> GetUserAccountByIdAsync(AccountId accountId, /*UserId userId, */ CancellationToken cancellationToken = default);
+
+        void Remove(Account account);
     }
 }

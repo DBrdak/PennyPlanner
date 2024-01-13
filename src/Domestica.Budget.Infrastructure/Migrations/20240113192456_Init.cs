@@ -19,7 +19,6 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     currency = table.Column<string>(type: "text", nullable: false),
-                    is_active = table.Column<bool>(type: "boolean", nullable: false),
                     account_type = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -46,7 +45,6 @@ namespace Domestica.Budget.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
-                    is_active = table.Column<bool>(type: "boolean", nullable: false),
                     entity_type = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -83,7 +81,7 @@ namespace Domestica.Budget.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    account_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    account_id = table.Column<Guid>(type: "uuid", nullable: true),
                     from_account_id = table.Column<Guid>(type: "uuid", nullable: true),
                     to_account_id = table.Column<Guid>(type: "uuid", nullable: true),
                     sender_id = table.Column<Guid>(type: "uuid", nullable: true),
@@ -99,41 +97,46 @@ namespace Domestica.Budget.Infrastructure.Migrations
                 {
                     table.PrimaryKey("pk_transactions", x => x.id);
                     table.ForeignKey(
-                        name: "fk_transactions_accounts_from_account_id1",
-                        column: x => x.from_account_id,
-                        principalTable: "accounts",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "fk_transactions_accounts_id",
+                        name: "fk_transactions_accounts_account_id",
                         column: x => x.account_id,
                         principalTable: "accounts",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "fk_transactions_accounts_to_account_id1",
+                        name: "fk_transactions_accounts_from_account_id",
+                        column: x => x.from_account_id,
+                        principalTable: "accounts",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "fk_transactions_accounts_to_account_id",
                         column: x => x.to_account_id,
                         principalTable: "accounts",
-                        principalColumn: "id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "fk_transactions_budget_plans_budget_plan_id",
                         column: x => x.budget_plan_id,
                         principalTable: "budget_plans",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "fk_transactions_transaction_entity_recipient_id",
+                        name: "fk_transactions_transaction_entities_transaction_entity_id1",
                         column: x => x.recipient_id,
                         principalTable: "transaction_entities",
-                        principalColumn: "id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "fk_transactions_transaction_entity_sender_id",
+                        name: "fk_transactions_transaction_entities_transaction_entity_id11",
                         column: x => x.sender_id,
                         principalTable: "transaction_entities",
-                        principalColumn: "id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "fk_transactions_transaction_entity_transaction_entity_temp_id",
                         column: x => x.transaction_entity_id,
                         principalTable: "transaction_entities",
-                        principalColumn: "id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(

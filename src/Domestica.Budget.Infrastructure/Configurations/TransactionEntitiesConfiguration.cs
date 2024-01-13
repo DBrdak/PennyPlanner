@@ -1,6 +1,7 @@
 ﻿using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.TransactionEntities.TransactionRecipients;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
+using Domestica.Budget.Domain.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,7 +23,20 @@ namespace Domestica.Budget.Infrastructure.Configurations
 
             builder.HasMany(transactionEntity => transactionEntity.Transactions)
                 .WithOne()
-                .HasPrincipalKey(transactionEntity => transactionEntity.Id);
+                .HasPrincipalKey(transactionEntity => transactionEntity.Id)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasMany<Transaction>()
+                .WithOne()
+                .HasPrincipalKey(transactionEntity => transactionEntity.Id)
+                .HasForeignKey(transaction => transaction.SenderId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasMany<Transaction>()
+                .WithOne()
+                .HasPrincipalKey(transactionEntity => transactionEntity.Id)
+                .HasForeignKey(transaction => transaction.RecipientId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasDiscriminator<string>("entity_type")
                 .HasValue<TransactionSender>(nameof(TransactionSender))

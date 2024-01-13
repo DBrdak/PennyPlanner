@@ -3,20 +3,20 @@ using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Domain.TransactionEntities;
 using Responses.DB;
 
-namespace Domestica.Budget.Application.TransactionEntities.DeactivateTransactionEntity
+namespace Domestica.Budget.Application.TransactionEntities.RemoveTransactionEntity
 {
-    internal sealed class DeactivateTransactionEntityCommandHandler : ICommandHandler<DeactivateTransactionEntityCommand, TransactionEntity>
+    internal sealed class RemoveTransactionEntityHandler : ICommandHandler<RemoveTransactionEntityCommand, TransactionEntity>
     {
         private readonly ITransactionEntityRepository _transactionEntityRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public DeactivateTransactionEntityCommandHandler(ITransactionEntityRepository transactionEntityRepository, IUnitOfWork unitOfWork)
+        public RemoveTransactionEntityHandler(ITransactionEntityRepository transactionEntityRepository, IUnitOfWork unitOfWork)
         {
             _transactionEntityRepository = transactionEntityRepository;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<TransactionEntity>> Handle(DeactivateTransactionEntityCommand request, CancellationToken cancellationToken)
+        public async Task<Result<TransactionEntity>> Handle(RemoveTransactionEntityCommand request, CancellationToken cancellationToken)
         {
             var transactionEntity = await _transactionEntityRepository.GetByIdAsync(
                 request.TransactionEntityId,
@@ -27,7 +27,7 @@ namespace Domestica.Budget.Application.TransactionEntities.DeactivateTransaction
                 return Result.Failure<TransactionEntity>(Error.NotFound($"Transaction entity with ID: {request.TransactionEntityId} not found"));
             }
 
-            transactionEntity.Deactivate();
+            _transactionEntityRepository.Remove(transactionEntity);
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
@@ -36,7 +36,7 @@ namespace Domestica.Budget.Application.TransactionEntities.DeactivateTransaction
                 return Result.Success(transactionEntity);
             }
 
-            return Result.Failure<TransactionEntity>(Error.TaskFailed($"Problem while deactivating transaction entity with ID: {transactionEntity.Id}"));
+            return Result.Failure<TransactionEntity>(Error.TaskFailed($"Problem while removing transaction entity with ID: {transactionEntity.Id}"));
         }
     }
 }

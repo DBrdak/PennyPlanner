@@ -18,7 +18,6 @@ namespace Domestica.Budget.Domain.Accounts
         [NotMapped]
         public Money.DB.Money Balance => new(_transactions.Sum(transaction => transaction.TransactionAmount.Amount), Currency);
         public Currency Currency { get; private set; }
-        public bool IsActive { get; private set; }
 
         [JsonConstructor]
         protected Account()
@@ -29,18 +28,12 @@ namespace Domestica.Budget.Domain.Accounts
             Name = name;
             Currency = currency;
             _transactions = new();
-            IsActive = true;
 
             TransactionService.CreatePrivateTransaction(new (initialBalance, currency), this);
         }
 
         public void UpdateAccount(AccountName name, global::Money.DB.Money balance)
         {
-            if (!IsActive)
-            {
-                throw new DomainException<Account>("Cannot update inactive account");
-            }
-
             if(balance != Balance)
             {
                 AdjustAccountBalance(balance);
@@ -54,11 +47,6 @@ namespace Domestica.Budget.Domain.Accounts
 
         internal void AddTransaction(Transaction transaction)
         {
-            if (!IsActive)
-            {
-                throw new DomainException<Account>("Cannot add transaction to inactive account");
-            }
-
             _transactions.Add(transaction);
             //Balance += transaction.TransactionAmount;
         }
@@ -79,7 +67,5 @@ namespace Domestica.Budget.Domain.Accounts
 
             TransactionService.CreatePrivateTransaction(difference, this);
         }
-
-        public void DeactivateAccount() => IsActive = false;
     }
 }

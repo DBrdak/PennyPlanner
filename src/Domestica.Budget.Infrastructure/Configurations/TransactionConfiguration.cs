@@ -29,14 +29,14 @@ namespace Domestica.Budget.Infrastructure.Configurations
             builder.Property(transaction => transaction.Category)
                 .HasConversion(category => category.Value, value => TransactionCategory.FromValue(value));
 
-            builder.Property(transaction => transaction.SenderId)
-                .HasConversion(id => id.Value, value => new TransactionEntityId(value));
-            builder.Property(transaction => transaction.RecipientId)
-                .HasConversion(id => id.Value, value => new TransactionEntityId(value));
-            builder.Property(transaction => transaction.FromAccountId)
-                .HasConversion(id => id.Value, value => new AccountId(value));
-            builder.Property(transaction => transaction.ToAccountId)
-                .HasConversion(id => id.Value, value => new AccountId(value));
+            //builder.Property(transaction => transaction.SenderId)
+            //    .HasConversion(id => id.Value, value => new TransactionEntityId(value));
+            //builder.Property(transaction => transaction.RecipientId)
+            //    .HasConversion(id => id.Value, value => new TransactionEntityId(value));
+            //builder.Property(transaction => transaction.FromAccountId)
+            //    .HasConversion(id => id.Value, value => new AccountId(value));
+            //builder.Property(transaction => transaction.ToAccountId)
+            //    .HasConversion(id => id.Value, value => new AccountId(value));
         }
     }
 }

@@ -81,6 +81,8 @@ namespace Domestica.Budget.Domain.BudgetPlans
             }
 
             _budgetedTransactionCategories.Remove(budgetedTransactionCategory);
+
+            _transactions.RemoveAll(transaction => transaction.Category == category);
         }
     }
 }
