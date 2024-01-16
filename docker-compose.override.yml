@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  domestica-budget-db:
+    environment:
+      - POSTGRES_DB=budget
+      - POSTGRES_USER=domestica
+      - POSTGRES_PASSWORD=4qdpm8-xD
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+
+  domestica-budget-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - 8000:80
+      - 5001:443
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  seq:
+    restart: always
+    environment:
+    - ACCEPT_EULA=Y
+    ports:
+    - "5341:5341"
+    - "8101:80"
+    networks:
+    - default  

@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  domestica-budget-db:
+    image: postgres:latest
+    container_name: domestica-budget-db
+
+  domestica-budget-api:
+    image: ${DOCKER_REGISTRY-}domesticabudgetapi
+    container_name: domestica-budget-api
+    build:
+      context: .
+      dockerfile: src/Domestica.Budget.API/Dockerfile
+    depends_on:
+      - domestica-budget-db
+
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+
+volumes:
+  postgres_data:
