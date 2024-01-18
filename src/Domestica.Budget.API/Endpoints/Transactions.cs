@@ -52,7 +52,7 @@ namespace Domestica.Budget.API.Endpoints
                     ISender sender,
                     CancellationToken cancellationToken) =>
                 {
-                    var command = new RemoveTransactionCommand(new(Guid.Parse(transactionId)));
+                    var command = new RemoveTransactionCommand(transactionId);
 
                     var result = await sender.Send(command, cancellationToken);
 

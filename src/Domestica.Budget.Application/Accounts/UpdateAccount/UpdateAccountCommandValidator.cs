@@ -7,7 +7,7 @@ namespace Domestica.Budget.Application.Accounts.UpdateAccount
     {
         public UpdateAccountCommandValidator()
         {
-            RuleFor(x => x.AccountUpdateData.Name.Value)
+            RuleFor(x => x.AccountUpdateData.Name)
                 .NotEmpty()
                 .WithMessage("Account name is required")
                 .MaximumLength(30)
@@ -16,7 +16,7 @@ namespace Domestica.Budget.Application.Accounts.UpdateAccount
                 .WithMessage("Special characters are not allowed in account name");
 
             RuleFor(x => x.AccountUpdateData.Balance)
-                .Must(balance => Currency.All.Any(currency => currency.Code == balance.Currency.Code))
+                .Must(balance => Currency.All.Any(currency => currency.Code == balance.Currency))
                 .WithMessage("Invalid currency");
         }
     }

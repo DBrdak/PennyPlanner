@@ -19,14 +19,14 @@ namespace Domestica.Budget.Application.Transactions.AddInternalTransaction
 
         public async Task<Result<Transaction[]>> Handle(AddInternalTransactionCommand request, CancellationToken cancellationToken)
         {
-            var fromAccount = await _accountRepository.GetUserAccountByIdAsync(request.FromAccountId, cancellationToken);
+            var fromAccount = await _accountRepository.GetUserAccountByIdAsync(new(Guid.Parse(request.FromAccountId)), cancellationToken);
 
             if (fromAccount is null)
             {
                 return Result.Failure<Transaction[]>(Error.NotFound($"Account with ID: {request.FromAccountId} not found"));
             }
 
-            var toAccount = await _accountRepository.GetUserAccountByIdAsync(request.ToAccountId, cancellationToken);
+            var toAccount = await _accountRepository.GetUserAccountByIdAsync(new(Guid.Parse(request.ToAccountId)), cancellationToken);
 
             if (toAccount is null)
             {
@@ -34,7 +34,7 @@ namespace Domestica.Budget.Application.Transactions.AddInternalTransaction
             }
 
             var createdTransactions = TransactionService.CreateInternalTransaction(
-                request.TransactionAmount,
+                request.TransactionAmount.ToDomainObject(),
                 fromAccount,
                 toAccount);
 

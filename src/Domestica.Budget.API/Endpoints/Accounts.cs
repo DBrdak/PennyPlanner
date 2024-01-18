@@ -61,7 +61,7 @@ namespace Domestica.Budget.API.Endpoints
                     [FromRoute] string accountId,
                     CancellationToken cancellationToken) =>
                 {
-                    var command = new RemoveAccountCommand(new(Guid.Parse(accountId)));
+                    var command = new RemoveAccountCommand(accountId);
 
                     var result = await sender.Send(command, cancellationToken);
 

@@ -39,11 +39,11 @@ namespace Domestica.Budget.API.Endpoints
                 "transaction-entities/{transactionEntityId}",
                 async (
                     [FromRoute] string transactionEntityId,
-                    TransactionEntityName newName,
+                    [FromBody] string newName,
                     ISender sender,
                     CancellationToken cancellationToken) =>
                 {
-                    var command = new UpdateTransactionEntityCommand(new (Guid.Parse(transactionEntityId)), newName);
+                    var command = new UpdateTransactionEntityCommand(transactionEntityId, newName);
 
                     var result = await sender.Send(command, cancellationToken);
 
@@ -59,7 +59,7 @@ namespace Domestica.Budget.API.Endpoints
                     [FromRoute] string transactionEntityId,
                     CancellationToken cancellationToken) =>
                 {
-                    var command = new RemoveTransactionEntityCommand(new(Guid.Parse(transactionEntityId)));
+                    var command = new RemoveTransactionEntityCommand(transactionEntityId);
 
                     var result = await sender.Send(command, cancellationToken);
 

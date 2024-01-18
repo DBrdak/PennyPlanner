@@ -6,7 +6,7 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
     {
         public AddTransactionEntityCommandValidator()
         {
-            RuleFor(x => x.Name.Value)
+            RuleFor(x => x.Name)
                 .NotEmpty()
                 .WithMessage("Name of transaction entity is required")
                 .MaximumLength(30)
@@ -15,7 +15,7 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
                 .WithMessage("Special characters are not allowed in transaction entity name");
 
             RuleFor(x => x.Type)
-                .Must(type => TransactionEntityType.All.Any(transactionEntityType => transactionEntityType.Value == type.Value))
+                .Must(type => TransactionEntityType.All.Any(transactionEntityType => transactionEntityType.Value == type))
                 .WithMessage("Invalid transaction entity type");
         }
     }

@@ -7,7 +7,7 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
     {
         public AddAccountCommandValidator()
         {
-            RuleFor(x => x.NewAccountData.Name.Value)
+            RuleFor(x => x.NewAccountData.Name)
                 .NotEmpty()
                 .WithMessage("Account name is required")
                 .MaximumLength(30)
@@ -15,8 +15,12 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
                 .Matches("^[a-zA-Z0-9\\s]*$")
                 .WithMessage("Special characters are not allowed in account name");
 
+            RuleFor(x => x.NewAccountData.Type)
+                .Must(type => AccountType.All.Any(accountType => accountType.Value == type))
+                .WithMessage("Invalid account type");
+
             RuleFor(x => x.NewAccountData.InitialBalance)
-                .Must(balance => Currency.All.Any(currency => currency.Code == balance.Currency.Code))
+                .Must(balance => Currency.All.Any(currency => currency.Code == balance.Currency))
                 .WithMessage("Invalid currency");
         }
     }

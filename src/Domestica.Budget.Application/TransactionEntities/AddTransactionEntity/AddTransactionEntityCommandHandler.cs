@@ -22,20 +22,19 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
         {
             TransactionEntity newTransactionEntity;
 
-            switch (request.Type.Value)
+            switch (request.Type)
             {
                 case "Recipient":
-                    newTransactionEntity = new TransactionRecipient(request.Name);
-                    await _transactionEntityRepository.AddAsync(newTransactionEntity, cancellationToken);
+                    newTransactionEntity = new TransactionRecipient(new (request.Name));
                     break;
                 case "Sender":
-                    newTransactionEntity = new TransactionSender(request.Name);
-                    await _transactionEntityRepository.AddAsync(newTransactionEntity, cancellationToken);
+                    newTransactionEntity = new TransactionSender(new (request.Name));
                     break;
                 default:
                     return Result.Failure<TransactionEntity>(Error.InvalidRequest("Invalid transaction entity type"));
             }
 
+            await _transactionEntityRepository.AddAsync(newTransactionEntity, cancellationToken);
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
             if (isSuccessful)

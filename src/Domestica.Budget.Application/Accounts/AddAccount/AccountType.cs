@@ -24,7 +24,7 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
         public static readonly AccountType Savings = new("Savings");
         public static readonly AccountType Transactional = new("Transactional");
 
-        public readonly IReadOnlyCollection<AccountType> All = new[]
+        public static readonly IReadOnlyCollection<AccountType> All = new[]
         {
             Savings, 
             Transactional

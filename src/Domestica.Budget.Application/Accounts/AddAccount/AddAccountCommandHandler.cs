@@ -3,6 +3,7 @@ using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.Accounts.SavingsAccounts;
 using Domestica.Budget.Domain.Accounts.TransactionalAccounts;
+using Money.DB;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.Accounts.AddAccount
@@ -20,22 +21,26 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
 
         public async Task<Result<Account>> Handle(AddAccountCommand request, CancellationToken cancellationToken)
         {
-            Account newAccount;
+            Account? newAccount;
 
-            switch (request.NewAccountData.Type.Value)
+            switch (request.NewAccountData.Type)
             {
                 case "Savings":
-                    newAccount = CreateSavingsAccount(request.NewAccountData);
-                    await _accountRepository.AddAsync(newAccount, cancellationToken);
+                    newAccount = CreateAccount<SavingsAccount>(request.NewAccountData);
                     break;
                 case "Transactional":
-                    newAccount = CreateTransactionalAccount(request.NewAccountData);
-                    await _accountRepository.AddAsync(newAccount, cancellationToken);
+                    newAccount = CreateAccount<TransactionalAccount>(request.NewAccountData);
                     break;
                 default:
                     return Result.Failure<Account>(Error.InvalidRequest("Account type not supported"));
             }
 
+            if (newAccount is null)
+            {
+                return Result.Failure<Account>(Error.InvalidRequest("Account type not supported"));
+            }
+
+            await _accountRepository.AddAsync(newAccount, cancellationToken);
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
             if(isSuccessful)
@@ -46,20 +51,13 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
             return Result.Failure<Account>(Error.TaskFailed("Problem while saving new account to database"));
         }
 
-        private TransactionalAccount CreateTransactionalAccount(NewAccountData newTransactionalAccountData)
+        private TAccount? CreateAccount<TAccount>(NewAccountData newAccountData) where TAccount : class
         {
-            return new TransactionalAccount(
-                newTransactionalAccountData.Name,
-                newTransactionalAccountData.InitialBalance.Currency,
-                newTransactionalAccountData.InitialBalance.Amount);
-        }
-
-        private SavingsAccount CreateSavingsAccount(NewAccountData newSavingsAccountData)
-        {
-            return new SavingsAccount(
-                newSavingsAccountData.Name,
-                newSavingsAccountData.InitialBalance.Currency,
-                newSavingsAccountData.InitialBalance.Amount);
+            return Activator.CreateInstance(
+                typeof(TAccount),
+                new AccountName(newAccountData.Name),
+                Currency.FromCode(newAccountData.InitialBalance.Currency),
+                newAccountData.InitialBalance.Amount) as TAccount;
         }
     }
 }

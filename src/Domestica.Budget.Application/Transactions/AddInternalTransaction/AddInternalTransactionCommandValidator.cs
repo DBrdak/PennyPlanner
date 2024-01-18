@@ -9,7 +9,7 @@ namespace Domestica.Budget.Application.Transactions.AddInternalTransaction
         public AddInternalTransactionCommandValidator()
         {
             RuleFor(x => x.TransactionAmount.Currency)
-                .Must(currency => Currency.All.Any(c => c.Code == currency.Code))
+                .Must(currency => Currency.All.Any(c => c.Code == currency))
                 .WithMessage("Invalid currency");
         }
     }

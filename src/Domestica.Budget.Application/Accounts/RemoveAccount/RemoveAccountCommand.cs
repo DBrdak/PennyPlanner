@@ -3,7 +3,7 @@ using Domestica.Budget.Domain.Accounts;
 
 namespace Domestica.Budget.Application.Accounts.RemoveAccount
 {
-    public sealed record RemoveAccountCommand(AccountId AccountId) : ICommand<Account>
+    public sealed record RemoveAccountCommand(string AccountId) : ICommand<Account>
     {
     }
 }

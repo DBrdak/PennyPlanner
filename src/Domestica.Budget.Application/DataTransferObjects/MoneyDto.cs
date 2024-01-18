@@ -21,5 +21,10 @@ namespace Domestica.Budget.Application.DataTransferObjects
         {
             return new (domainObject.Amount, domainObject.Currency.Code);
         }
+
+        internal Money.DB.Money ToDomainObject()
+        {
+            return new (Amount, Money.DB.Currency.FromCode(Currency));
+        }
     }
 }

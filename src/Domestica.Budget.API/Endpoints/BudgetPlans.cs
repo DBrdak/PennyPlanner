@@ -68,8 +68,8 @@ namespace Domestica.Budget.API.Endpoints
                     CancellationToken cancellationToken) =>
                 {
                     var command = new UpdateBudgetPlanCategoryCommand(
-                        new(Guid.Parse(budgetPlanId)),
-                        TransactionCategory.FromValue(budgetPlanCategory),
+                        budgetPlanId,
+                        budgetPlanCategory,
                         values);
 
                     var result = await sender.Send(command, cancellationToken);

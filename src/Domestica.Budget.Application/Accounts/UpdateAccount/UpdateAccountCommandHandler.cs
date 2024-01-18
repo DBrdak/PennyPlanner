@@ -1,6 +1,7 @@
 ﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Domain.Accounts;
+using Money.DB;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.Accounts.UpdateAccount
@@ -20,14 +21,14 @@ namespace Domestica.Budget.Application.Accounts.UpdateAccount
         {
             //TODO Retrive user id
 
-            var account = await _accountRepository.GetUserAccountByIdAsync(request.AccountUpdateData.AccountId, cancellationToken);
+            var account = await _accountRepository.GetUserAccountByIdAsync(new (Guid.Parse(request.AccountUpdateData.AccountId)), cancellationToken);
 
             if (account is null)
             {
-                return Result.Failure<Account>(Error.NotFound("Account with Id not found"));
+                return Result.Failure<Account>(Error.NotFound($"Account with ID: {request.AccountUpdateData.AccountId} not found"));
             }
 
-            account.UpdateAccount(request.AccountUpdateData.Name, request.AccountUpdateData.Balance);
+            account.UpdateAccount(new(request.AccountUpdateData.Name), request.AccountUpdateData.Balance.ToDomainObject());
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
