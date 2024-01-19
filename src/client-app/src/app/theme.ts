@@ -3,25 +3,28 @@ import { red } from '@mui/material/colors';
 
 const theme = createTheme({
     palette: {
-        background: {
-            default: '#E4E4E4'
-        },
+        mode: 'dark', // Use dark mode
         primary: {
-            main: '#C32B28',
+            main: '#5b1ae7',
+            light: '#8143f8'
         },
         secondary: {
-            main: '#FFFFFF',
-        },
-        info: {
-            main: '#2269d0'
-        },
-        text: {
-            primary: '#000000'
+            main: '#b015d3',
         },
         error: {
-            main: red.A400,
+            main: '#ff1744',
         },
-
+        info: {
+            main: '#ff9800',
+        },
+        background: {
+            default: '#0d0418',
+            paper: '#1a1a1a',
+        },
+        text: {
+            primary: '#ffffff',
+            secondary: '#bdbdbd',
+        },
     },
     components: {
         MuiCssBaseline: {
@@ -38,6 +41,13 @@ const theme = createTheme({
                     '&:hover': {
                         backgroundColor: '#555',
                     },
+                },
+            },
+        },
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 50
                 },
             },
         },
