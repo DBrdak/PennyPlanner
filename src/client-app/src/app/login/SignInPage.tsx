@@ -34,8 +34,6 @@ const SignInPage: React.FC = () => {
         },
     });
 
-    const goToMain = () => navigate('/')
-
     return (
             <Stack style={{minWidth: '600px'}}>
                 <Typography variant="h4" align="center" gutterBottom>
@@ -70,7 +68,7 @@ const SignInPage: React.FC = () => {
                                 />
 
                                 <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px', width: '75%' }}
-                                onClick={goToMain}>
+                                onClick={() => console.log('Logged In !')}>
                                     Sign In
                                 </Button>
                             </CenteredStack>
