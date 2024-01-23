@@ -29,7 +29,7 @@ const SignUpPage: React.FC = () => {
         password: '',
         confirmPassword: '',
         name: '',
-        currency: ''
+        currency: 'USD'
     }
 
 
@@ -77,7 +77,7 @@ const SignUpPage: React.FC = () => {
                         initialValues={initialValues}
                         onSubmit={values => handleFormSubmit(values)}
                     >
-                        {({ handleSubmit, setValues, values, errors}) => (
+                        {({ handleSubmit, setValues, values}) => (
                             <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
                                 <CenteredStack style={{gap: 30}}>
 
@@ -118,7 +118,6 @@ const SignUpPage: React.FC = () => {
                                             <Select
                                                 value={values.currency}
                                                 onChange={(e) => setValues({...values, currency: e.target.value})}
-
                                             >
                                                 <MenuItem value={'PLN'}>PLN</MenuItem>
                                                 <MenuItem value={'USD'}>USD</MenuItem>

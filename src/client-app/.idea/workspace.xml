@@ -5,24 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/assets/FB_Logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/Google_Logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/login/SignInPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/CenteredStack.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/MainContainer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/forms/signInValues.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/theme.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ModalContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ModalContainer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/stores/layoutStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/dashboard/DashboardPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/DashboardPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AppOverlay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppOverlay.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/Routes.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dockerfile" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -32,22 +32,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ReactCreateComponentLastSelected": "functionDeclarationComponent",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "init-develop",
-    "last_opened_file_path": "D:/Programownie/Projekty/Domestica/Domestica.Budget/src/client-app/public/assets",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\Programownie\\Projekty\\Domestica\\Domestica.Budget\\src\\client-app\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ReactCreateComponentLastSelected&quot;: &quot;functionDeclarationComponent&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;init-develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Programownie/Projekty/Domestica/Domestica.Budget/src/client-app&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Programownie\\Projekty\\Domestica\\Domestica.Budget\\src\\client-app\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -58,6 +58,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\public\assets" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\router" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\stores" />
@@ -68,7 +69,21 @@
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.start">
+    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
     <configuration name="start" type="js.build_tools.npm" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="start" />
@@ -76,6 +91,11 @@
       <envs />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.Dockerfile" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -86,6 +106,9 @@
       <option name="presentableId" value="Default" />
       <updated>1705610831432</updated>
       <workItem from="1705610832569" duration="15511000" />
+      <workItem from="1705794611314" duration="8054000" />
+      <workItem from="1705939701953" duration="275000" />
+      <workItem from="1706017818745" duration="5034000" />
     </task>
     <servers />
   </component>
@@ -98,7 +121,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/app/theme.ts</url>
           <line>11</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
