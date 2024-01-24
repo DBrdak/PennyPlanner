@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/appOverlay/AppBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/appOverlay/Drawer.tsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/stores/layoutStore.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/dashboard/DashboardPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/DashboardPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AppOverlay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppOverlay.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/theme.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AppOverlay.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/Routes.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,6 +68,7 @@
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\stores" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components\appOverlay" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\public\assets" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\styles" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app" />
@@ -109,21 +114,11 @@
       <workItem from="1705794611314" duration="8054000" />
       <workItem from="1705939701953" duration="275000" />
       <workItem from="1706017818745" duration="5034000" />
+      <workItem from="1706027275102" duration="7995000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/app/theme.ts</url>
-          <line>11</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
