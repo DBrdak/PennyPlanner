@@ -43,6 +43,11 @@ namespace Domestica.Budget.Application.DataTransferObjects
             TransactionDateUtc = transactionDateUtc;
         }
 
+        private TransactionDto()
+        {
+            
+        }
+
         internal static TransactionDto FromDomainObject(Transaction domainObject)
         {
             var transactionAmount = MoneyDto.FromDomainObject(domainObject.TransactionAmount);

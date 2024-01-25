@@ -97,6 +97,7 @@ const transactionEntities = {
 }
 
 const transactions = {
+    getTransactions: () => axios.get('/transactions').then(responseBody),
     createInternalTransaction: (command: AddInternalTransactionCommand) =>
         axios.post('/transactions/internal', command).then(responseBody),
     createIncomeTransaction: (command: AddIncomeTransactionCommand) =>

@@ -7,6 +7,7 @@ using Domestica.Budget.Application.Accounts.AddAccount;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.Accounts.SavingsAccounts;
 using Domestica.Budget.Domain.Accounts.TransactionalAccounts;
+using Newtonsoft.Json;
 
 namespace Domestica.Budget.Application.DataTransferObjects
 {
@@ -25,6 +26,11 @@ namespace Domestica.Budget.Application.DataTransferObjects
             Balance = balance;
             Transactions = transactions;
             AccountType = accountType.Value;
+        }
+
+        [JsonConstructor]
+        private AccountDto()
+        {
         }
 
         internal static AccountDto FromDomainObject(Account account)

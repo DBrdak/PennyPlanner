@@ -5,6 +5,10 @@ services:
     image: postgres:latest
     container_name: domestica-budget-db
 
+  domestica-budget-cache:
+    image: redis
+    container_name: domestica-budget-cache
+
   domestica-budget-api:
     image: ${DOCKER_REGISTRY-}domesticabudgetapi
     container_name: domestica-budget-api
@@ -13,6 +17,7 @@ services:
       dockerfile: src/Domestica.Budget.API/Dockerfile
     depends_on:
       - domestica-budget-db
+      - domestica-budget-cache
 
   seq:
     image: datalust/seq:latest

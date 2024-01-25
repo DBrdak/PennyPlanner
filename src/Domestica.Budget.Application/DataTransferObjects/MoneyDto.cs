@@ -17,6 +17,11 @@ namespace Domestica.Budget.Application.DataTransferObjects
             this.Currency = Currency;
         }
 
+        private MoneyDto()
+        {
+            
+        }
+
         internal static MoneyDto FromDomainObject(Money.DB.Money domainObject)
         {
             return new (domainObject.Amount, domainObject.Currency.Code);

@@ -6,13 +6,15 @@ namespace Domestica.Budget.Domain.Transactions
 {
     public interface ITransactionRepository
     {
-        Task<IEnumerable<Transaction>> BrowseAccountTransactionsAsync(AccountId accountId);
-        Task<IEnumerable<Transaction>> BrowseSenderTransactionsAsync(TransactionEntityId senderId);
-        Task<IEnumerable<Transaction>> BrowseRecipientTransactionsAsync(TransactionEntityId recipientId);
+        Task<List<Transaction>> BrowseAccountTransactionsAsync(AccountId accountId, CancellationToken cancellationToken);
+        Task<List<Transaction>> BrowseSenderTransactionsAsync(TransactionEntityId senderId, CancellationToken cancellationToken);
+        Task<List<Transaction>> BrowseRecipientTransactionsAsync(TransactionEntityId recipientId, CancellationToken cancellationToken);
         Task<Transaction?> GetByIdAsync(TransactionId transactionId, CancellationToken cancellationToken);
-        Task<IEnumerable<Transaction>> GetTransactionsByDateAndCategoryAsync(
+        Task<List<Transaction>> GetTransactionsByDateAndCategoryAsync(
             DateTimeRange dateTimePeriod,
-            TransactionCategory category);
+            TransactionCategory category,
+            CancellationToken cancellationToken);
         void Remove(Transaction transaction);
+        Task<List<Transaction>> BrowseUserTransactions(CancellationToken cancellationToken);
     }
 }

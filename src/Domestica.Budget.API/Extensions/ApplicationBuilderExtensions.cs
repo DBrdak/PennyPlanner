@@ -6,6 +6,7 @@ using HealthChecks.ApplicationStatus.DependencyInjection;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 namespace Domestica.Budget.API.Extensions
 {
@@ -17,8 +18,7 @@ namespace Domestica.Budget.API.Extensions
                 .AddApplicationStatus()
                 .AddNpgSql(configuration.GetConnectionString("Database") ?? string.Empty);
 
-            services.AddStackExchangeRedisCache(
-                options =>
+            services.AddStackExchangeRedisCache(options =>
                     options.Configuration = configuration.GetConnectionString("Cache"));
 
             services.AddInfrastructure(configuration);
@@ -71,6 +71,7 @@ namespace Domestica.Budget.API.Extensions
 
         public static void AddMiddlewares(this IApplicationBuilder app)
         {
+            app.UseMiddleware<CacheInvalidationMiddleware>();
             app.UseMiddleware<MonitoringMiddleware>();
             app.UseMiddleware<ExceptionMiddleware>();
         }

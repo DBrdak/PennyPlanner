@@ -9,14 +9,20 @@ using System.Buffers;
 using System.Text.Json;
 using Responses.DB;
 using System;
+using System.Text.Json.Serialization;
+using Domestica.Budget.Application.Accounts.AddAccount;
+using Domestica.Budget.Application.DataTransferObjects;
 
 namespace Domestica.Budget.API.Extensions;
 
 internal static class DistributedCacheExtensions
 {
+    internal static DistributedCacheEntryOptions DefaultExpiration = new DistributedCacheEntryOptions
+        { AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60) };
+
     internal static async Task<Result<T>> GetCachedResponseAsync<T>(this IDistributedCache cache, string key, ISender sender, IQuery<T> query, CancellationToken cancellationToken = default)
     {
-        return await cache.GetAsync(
+        var result = await cache.GetAsync(
             key,
             async token =>
             {
@@ -24,8 +30,10 @@ internal static class DistributedCacheExtensions
 
                 return result;
             },
-            CacheOptions.DefaultExpiration,
+            DefaultExpiration,
             cancellationToken);
+
+        return result;
     }
 
     private static ValueTask<T> GetAsync<T>(this IDistributedCache cache, string key, Func<CancellationToken, ValueTask<T>> getMethod,
@@ -65,7 +73,7 @@ internal static class DistributedCacheExtensions
             {
                 bytes = await pending;
                 if (bytes is not null)
-                {   
+                {
                     return Deserialize<T>(bytes);
                 }
             }
@@ -77,7 +85,8 @@ internal static class DistributedCacheExtensions
                 Func<T> get => get(),
                 _ => throw new ArgumentException(nameof(getMethod)),
             };
-            bytes = Serialize<T>(result);
+            //
+            bytes = Serialize(result);
             if (options is null)
             {   
                 await cache.SetAsync(key, bytes, cancellation);
@@ -85,13 +94,14 @@ internal static class DistributedCacheExtensions
             else
             {
                 await cache.SetAsync(key, bytes, options, cancellation);
-            }
+            }//
             return result;
         }
     }
 
     private static T Deserialize<T>(byte[] bytes)
     {
+        // TODO Sprawca to AccountDto - rozkiminić deserializację
         return JsonSerializer.Deserialize<T>(bytes)!;
     }
 

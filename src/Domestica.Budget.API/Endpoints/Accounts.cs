@@ -21,7 +21,7 @@ namespace Domestica.Budget.API.Endpoints
                     var query = new GetAccountsQuery();
 
                     // TODO key for specific user accounts: "accounts_{userId}"
-                    var result = await cache.GetCachedResponseAsync("all_accounts", sender, query, cancellationToken);
+                    var result = await cache.GetCachedResponseAsync("accounts", sender, query, cancellationToken);
 
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
