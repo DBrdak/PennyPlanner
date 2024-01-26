@@ -1,5 +1,5 @@
 ﻿using Carter;
-using Domestica.Budget.API.Extensions;
+using Domestica.Budget.API.Cache;
 using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
 using Domestica.Budget.Application.TransactionEntities.GetTransactionEntities;
 using Domestica.Budget.Application.TransactionEntities.RemoveTransactionEntity;
@@ -20,7 +20,7 @@ namespace Domestica.Budget.API.Endpoints
                 async (ISender sender, IDistributedCache cache, CancellationToken cancellationToken) =>
                 {
                     var result = await cache.GetCachedResponseAsync(
-                        "transaction-entities",
+                        CacheKey.TransactionEntities(null), 
                         sender,
                         new GetTransactionEntitiesQuery(),
                         cancellationToken);

@@ -5,20 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../docker-compose.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.override.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/Accounts.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/Accounts.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/BudgetPlans.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/BudgetPlans.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/TransactionEntities.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/TransactionEntities.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/Transactions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/Transactions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Extensions/ApplicationBuilderExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Extensions/ApplicationBuilderExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Extensions/CacheOptions.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Extensions/DistributedCacheExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Extensions/DistributedCacheExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/DomainEventHandlers/BudgetPlanCategoryBudgetedDomainEventHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/DomainEventHandlers/BudgetPlanCategoryBudgetedDomainEventHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Transactions/ITransactionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Domain/Transactions/ITransactionRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/TransactionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/TransactionRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/agent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/agent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Middlewares/CacheInvalidationMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Middlewares/CacheInvalidationMiddleware.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/AccountDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/AccountDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/BudgetPlanDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/BudgetPlanDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/BudgetedTransactionCategoryDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/BudgetedTransactionCategoryDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/MoneyDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/MoneyDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/TransactionDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/TransactionDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/TransactionEntityDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/TransactionEntityDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Shared/DateTimeConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Domain/Shared/DateTimeConverter.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,6 +115,7 @@
       <workItem from="1706017818745" duration="5034000" />
       <workItem from="1706027275102" duration="7995000" />
       <workItem from="1706151986639" duration="69000" />
+      <workItem from="1706233254908" duration="50000" />
     </task>
     <servers />
   </component>

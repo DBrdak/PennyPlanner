@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using DateKit.DB;
 using Domestica.Budget.Domain.BudgetPlans;
@@ -23,6 +24,12 @@ namespace Domestica.Budget.Application.DataTransferObjects
             this.BudgetPeriod = BudgetPeriod;
             this.BudgetedTransactionCategories = BudgetedTransactionCategories;
             this.Transactions = Transactions;
+        }
+
+        [JsonConstructor]
+        private BudgetPlanDto()
+        {
+            
         }
 
         internal static BudgetPlanDto FromDomainObject(BudgetPlan domainObject)

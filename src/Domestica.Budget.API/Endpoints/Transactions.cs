@@ -1,5 +1,5 @@
 ﻿using Carter;
-using Domestica.Budget.API.Extensions;
+using Domestica.Budget.API.Cache;
 using Domestica.Budget.Application.Transactions.AddIncomeTransaction;
 using Domestica.Budget.Application.Transactions.AddInternalTransaction;
 using Domestica.Budget.Application.Transactions.AddOutcomeTransaction;
@@ -21,7 +21,7 @@ namespace Domestica.Budget.API.Endpoints
                 async (ISender sender, IDistributedCache cache, CancellationToken cancellationToken) =>
                 {
                     var result = await cache.GetCachedResponseAsync(
-                        "transactions",
+                        CacheKey.Transactions(null),
                         sender,
                         new GetTransactionsQuery(),
                         cancellationToken);

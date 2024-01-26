@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
 using Domestica.Budget.Domain.TransactionEntities.TransactionRecipients;
@@ -26,6 +27,12 @@ namespace Domestica.Budget.Application.DataTransferObjects
             Name = name;
             TransactionEntityType = transactionEntityType;
             Transactions = transactions;
+        }
+
+        [JsonConstructor]
+        private TransactionEntityDto()
+        {
+            
         }
 
         internal static TransactionEntityDto FromDomainObject(

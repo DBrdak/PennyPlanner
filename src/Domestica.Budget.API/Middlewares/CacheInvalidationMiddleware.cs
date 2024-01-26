@@ -1,5 +1,6 @@
 ﻿using StackExchange.Redis;
 using System.Security.Claims;
+using Domestica.Budget.API.Cache;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Domestica.Budget.API.Middlewares
@@ -10,28 +11,22 @@ namespace Domestica.Budget.API.Middlewares
         {
             await next(context);
 
-            //var userId = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            var collection = context.Request.Path.Value;
-
-            if (collection is null)
+            if (IsNotCommandMethod(context))
             {
                 return;
             }
+
+            //var userId = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var keys = CacheKey.All("null");
             
-            if (collection?.IndexOf('/') != -1)
-            {
-                collection = collection.Substring(0, collection.IndexOf('/'));
-            };
-
-            if (context.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase) ||
-                context.Request.Method.Equals("PUT", StringComparison.OrdinalIgnoreCase) ||
-                context.Request.Method.Equals("DELETE", StringComparison.OrdinalIgnoreCase))
-            {
-                await cache.RemoveAsync($"{collection}");
-            }
-
+            keys.ToList().ForEach(RemoveKey); //TODO Add userId
         }
-        
+
+        async void RemoveKey(CacheKey key) => await cache.RemoveAsync(key.ToString());
+
+        private bool IsNotCommandMethod(HttpContext context) =>
+            !(context.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase) ||
+              context.Request.Method.Equals("PUT", StringComparison.OrdinalIgnoreCase) ||
+              context.Request.Method.Equals("DELETE", StringComparison.OrdinalIgnoreCase));
     }
 }

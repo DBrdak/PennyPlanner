@@ -1,6 +1,6 @@
 ﻿using Carter;
 using DateKit.DB;
-using Domestica.Budget.API.Extensions;
+using Domestica.Budget.API.Cache;
 using Domestica.Budget.Application.BudgetPlans.CreateBudgetPlan;
 using Domestica.Budget.Application.BudgetPlans.GetBudgetPlans;
 using Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories;
@@ -23,7 +23,7 @@ namespace Domestica.Budget.API.Endpoints
                 {
                     var query = new GetBudgetPlansQuery();
 
-                    var result = await cache.GetCachedResponseAsync("budget-plans", sender, query, cancellationToken);
+                    var result = await cache.GetCachedResponseAsync(CacheKey.BudgetPlans(null), sender, query, cancellationToken);
 
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :

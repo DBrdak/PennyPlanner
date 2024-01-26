@@ -20,7 +20,6 @@ namespace Domestica.Budget.Application.DataTransferObjects
         public string? RecipientId { get; init; } 
         public MoneyDto TransactionAmount { get; init; }
         public string Category { get; init; }
-        [JsonConverter(typeof(DateTimeConverter))]
         public DateTime TransactionDateUtc { get; init; }
 
         private TransactionDto(
@@ -43,6 +42,7 @@ namespace Domestica.Budget.Application.DataTransferObjects
             TransactionDateUtc = transactionDateUtc;
         }
 
+        [JsonConstructor]
         private TransactionDto()
         {
             

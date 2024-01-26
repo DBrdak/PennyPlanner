@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Domestica.Budget.Application.DataTransferObjects
@@ -19,6 +20,11 @@ namespace Domestica.Budget.Application.DataTransferObjects
             this.Category = Category;
             this.BudgetedAmount = BudgetedAmount;
             this.ActualAmount = ActualAmount;
+        }
+
+        [JsonConstructor]
+        private BudgetedTransactionCategoryDto()
+        {
         }
 
         internal static BudgetedTransactionCategoryDto FromDomainObject(

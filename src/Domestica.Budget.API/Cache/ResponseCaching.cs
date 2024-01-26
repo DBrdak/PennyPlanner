@@ -3,27 +3,29 @@ using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Buffers;
 using System.Text.Json;
-using Domestica.Budget.API.Extensions;
 using CancellationToken = System.Threading.CancellationToken;
 using System.Buffers;
 using System.Text.Json;
 using Responses.DB;
 using System;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using Domestica.Budget.Application.Accounts.AddAccount;
 using Domestica.Budget.Application.DataTransferObjects;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace Domestica.Budget.API.Extensions;
+namespace Domestica.Budget.API.Cache;
 
-internal static class DistributedCacheExtensions
+internal static class ResponseCaching
 {
     internal static DistributedCacheEntryOptions DefaultExpiration = new DistributedCacheEntryOptions
-        { AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60) };
+    { AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60) };
 
-    internal static async Task<Result<T>> GetCachedResponseAsync<T>(this IDistributedCache cache, string key, ISender sender, IQuery<T> query, CancellationToken cancellationToken = default)
+    internal static async Task<Result<T>> GetCachedResponseAsync<T>(this IDistributedCache cache, CacheKey key, ISender sender, IQuery<T> query, CancellationToken cancellationToken = default)
     {
         var result = await cache.GetAsync(
-            key,
+            key.ToString(),
             async token =>
             {
                 var result = await sender.Send(query, token);
@@ -37,13 +39,13 @@ internal static class DistributedCacheExtensions
     }
 
     private static ValueTask<T> GetAsync<T>(this IDistributedCache cache, string key, Func<CancellationToken, ValueTask<T>> getMethod,
-        DistributedCacheEntryOptions? options = null, CancellationToken cancellation = default)
+        DistributedCacheEntryOptions? options = null, CancellationToken cancellation = default) where T : Result
     {
         return GetAsyncShared<int, T>(cache, key, state: 0, getMethod, options, cancellation);
     }
 
     private static ValueTask<T> GetAsyncShared<TState, T>(IDistributedCache cache, string key, TState state, Delegate getMethod,
-        DistributedCacheEntryOptions? options, CancellationToken cancellation)
+        DistributedCacheEntryOptions? options, CancellationToken cancellation) where T : Result
     {
         var pending = cache.GetAsync(key, cancellation);
         if (!pending.IsCompletedSuccessfully)
@@ -85,28 +87,38 @@ internal static class DistributedCacheExtensions
                 Func<T> get => get(),
                 _ => throw new ArgumentException(nameof(getMethod)),
             };
-            //
+            
             bytes = Serialize(result);
+
+            if (bytes is null)
+            {
+                return result;
+            }
+
             if (options is null)
-            {   
+            {
                 await cache.SetAsync(key, bytes, cancellation);
             }
             else
             {
                 await cache.SetAsync(key, bytes, options, cancellation);
-            }//
+            }
             return result;
         }
     }
 
     private static T Deserialize<T>(byte[] bytes)
     {
-        // TODO Sprawca to AccountDto - rozkiminić deserializację
-        return JsonSerializer.Deserialize<T>(bytes)!;
+        return JsonSerializer.Deserialize<T>(bytes, new JsonSerializerOptions{IncludeFields = true})!;
     }
 
-    private static byte[] Serialize<T>(T value)
+    private static byte[]? Serialize<T>(T value) where T : Result
     {
+        if (value.IsFailure)
+        {
+            return null;
+        }
+
         var buffer = new ArrayBufferWriter<byte>();
         using var writer = new Utf8JsonWriter(buffer);
         JsonSerializer.Serialize(writer, value);

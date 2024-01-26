@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Domestica.Budget.Application.Accounts.AddAccount;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.Accounts.SavingsAccounts;
 using Domestica.Budget.Domain.Accounts.TransactionalAccounts;
-using Newtonsoft.Json;
 
 namespace Domestica.Budget.Application.DataTransferObjects
 {
