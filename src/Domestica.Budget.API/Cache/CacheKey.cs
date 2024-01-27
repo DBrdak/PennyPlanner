@@ -25,30 +25,6 @@ namespace Domestica.Budget.API.Cache
                 Transactions(userId)
             };
 
-        internal static CacheKey FromPath(string? path, string? userId)
-        {
-            if(path is null)
-            {
-                ThrowPathException(path);
-            }
-
-            var start = path.IndexOf('/') + 1;
-            var end = path.IndexOf('/', path.IndexOf('/') + 1) - 1;
-
-            var collection = end switch
-            {
-                -2 => path!.Substring(start),
-                _ => path!.Substring(start, end)
-            };
-
-            if (collection is null)
-            {
-                ThrowPathException(path);
-            }
-
-            return new CacheKey(collection!, userId);
-        }
-
         public override string ToString() => $"{UserId}:{Collection}";
 
         private static void ThrowPathException(string? path) => throw new MissingMethodException($"Cannot find method for path:{path ?? ""}");

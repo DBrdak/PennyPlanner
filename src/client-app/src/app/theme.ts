@@ -1,9 +1,8 @@
 import { createTheme } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
 
 const theme = createTheme({
     palette: {
-        mode: 'dark', // Use dark mode
+        mode: 'dark',
         primary: {
             main: '#5b1ae7',
             light: '#8143f8'
@@ -23,7 +22,7 @@ const theme = createTheme({
         },
         text: {
             primary: '#ffffff',
-            secondary: '#bdbdbd',
+            secondary: '#bdbdbd'
         },
     },
     components: {
@@ -43,6 +42,15 @@ const theme = createTheme({
                     },
                 },
             },
+        },
+        MuiListItemButton:{
+            styleOverrides: {
+                root:{
+                    "&.Mui-disabled": {
+                        opacity: 1,
+                    }
+                }
+            }
         },
         MuiButton: {
             styleOverrides: {

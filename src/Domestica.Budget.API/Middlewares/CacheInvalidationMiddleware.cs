@@ -17,7 +17,7 @@ namespace Domestica.Budget.API.Middlewares
             }
 
             //var userId = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            var keys = CacheKey.All("null");
+            var keys = CacheKey.All(null);
             
             keys.ToList().ForEach(RemoveKey); //TODO Add userId
         }

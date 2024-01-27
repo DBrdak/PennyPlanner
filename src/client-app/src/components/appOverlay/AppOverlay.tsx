@@ -1,75 +1,78 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
     Toolbar,
     List,
-    ListItem,
     ListItemIcon,
     ListItemText,
     IconButton,
     Avatar,
-    ListItemButton, CssBaseline, Typography, keyframes
+    Typography,
 } from '@mui/material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {
     ChevronLeft,
     ChevronRight,
-    HomeTwoTone,
-    CalendarMonthTwoTone,
-    AssessmentTwoTone,
-    EmojiEventsTwoTone,
-    EditNoteTwoTone,
-    AccountBalanceTwoTone
 } from "@mui/icons-material";
 import Drawer from "./Drawer";
 import AppBar from "./AppBar";
 import theme from "../../app/theme";
 import '../../styles/index.css'
+import DrawerNavButton from "./DrawerNavButton";
+import DrawerListItem from "./DrawerListItem";
+import DrawerButton from "./DrawerButton";
+import {dashboardSections} from "../../app/dashboard/DashboardPage";
+import {useNavigate} from "react-router-dom";
 
 interface AppOverlayProps {
-    children: React.ReactNode;
+    children: React.ReactNode,
+    activeSectionIndex: number
 }
 
-const AppOverlay: React.FC<AppOverlayProps> = ({ children }) => {
+const AppOverlay: React.FC<AppOverlayProps> = ({ children, activeSectionIndex }) => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
-    const [selectedButton, setSelectedButton] = useState<number>(0)
+    const navigate = useNavigate()
 
-    const sideNavbarButtons: {title: string, icon: React.ReactNode}[] = [
-        {title: 'Home', icon: <HomeTwoTone color={'secondary'} fontSize={'large'} />},
-        {title: 'Budget Plans', icon: <CalendarMonthTwoTone color={'secondary'} fontSize={'large'} />},
-        {title: 'Accounts', icon: <AccountBalanceTwoTone color={'secondary'} fontSize={'large'} />},
-        {title: 'Goals', icon: <EmojiEventsTwoTone color={'secondary'} fontSize={'large'} />},
-        {title: 'Statistics', icon: <AssessmentTwoTone color={'secondary'} fontSize={'large'} />},
-        {title: 'Settings', icon: <EditNoteTwoTone color={'secondary'} fontSize={'large'} />},
-    ]
+    const sideNavBarSections = dashboardSections.filter(s => s.title !== 'User')
 
-    const fadeIn = keyframes`
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    `
+    const userSectionIndex = dashboardSections.findIndex(s => s.title === 'User')
 
     const handleDrawerClick = () => {
         setDrawerOpen(!drawerOpen)
     };
 
+    function handleSectionChange(index: number) {
+        const section = dashboardSections[index].title
+
+        const sectionPath = section.replace(' ', '-').toLowerCase()
+
+        navigate(`/${sectionPath}` )
+    }
+
     return (
-        <>
-            <AppBar position="fixed">
-                <Toolbar style={{height: '100%', justifyContent: 'space-between', alignItems: 'center',
+        <div>
+            <AppBar>
+                <Toolbar style={{height: '100%', alignItems: 'center', justifyContent: 'space-between', padding:`0px 10px`,
                     backgroundColor: theme.palette.background.paper}}>
-                    <IconButton
+                    <DrawerNavButton
+                        disableRipple
+                        isOpen={drawerOpen}
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleDrawerClick}
                         edge="start"
                     >
                         {!drawerOpen ? <ChevronRight /> : <ChevronLeft />}
-                    </IconButton>
+                    </DrawerNavButton>
                     <Typography variant={'h3'} style={{userSelect:'none', fontFamily: 'Fira Sans', color: '#8f8f8f', fontWeight: 'bold'}}>
-                        Domestica Budget
+                        Budgetify
                     </Typography>
-                    <IconButton>
-                        <Avatar>
-                            <AccountCircleIcon />
+                    <IconButton sx={{borderRadius: 0, height: '100%', aspectRatio: 1, padding:'none', margin:'none',
+                        ":disabled":{backgroundColor: theme.palette.background.default}, backgroundColor: 'transparent'}}
+                        onClick={() => handleSectionChange(sideNavBarSections.length)}
+                        disabled={activeSectionIndex === userSectionIndex}
+                    >
+                        <Avatar sx={{borderRadius: 0, aspectRatio: 1, padding:'none',
+                            backgroundColor: 'transparent' }}>
+                            {dashboardSections[userSectionIndex].icon}
                         </Avatar>
                     </IconButton>
                 </Toolbar>
@@ -85,16 +88,10 @@ const AppOverlay: React.FC<AppOverlayProps> = ({ children }) => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     height: '100%', width:'100%'}}>
-                    {sideNavbarButtons.map((btn, index) => (
-                        <ListItem key={index} disablePadding
-                                  style={{ backgroundColor: selectedButton === index ? theme.palette.background.default : theme.palette.background.paper,
-                                      height: `${100 / sideNavbarButtons.length}%`, textAlign: 'center'}}>
-                            <ListItemButton
-                                sx={{
-                                    height: '100%',
-                                    textAlign: 'center'
-                                }}
-                                onClick={() => setSelectedButton(index)}
+                    {sideNavBarSections.map((btn, index) => (
+                        <DrawerListItem key={index} onClick={() => handleSectionChange(index)} isactive={(activeSectionIndex === index).toString()} itemscount={sideNavBarSections.length}>
+                            <DrawerButton
+                                disabled={activeSectionIndex === index}
                             >
                                 <ListItemIcon
                                     sx={{
@@ -108,12 +105,13 @@ const AppOverlay: React.FC<AppOverlayProps> = ({ children }) => {
                                     {btn.icon}
                                 </ListItemIcon>
                                 {drawerOpen && (<ListItemText primary={btn.title}/>)}
-                            </ListItemButton>
-                        </ListItem>
+                            </DrawerButton>
+                        </DrawerListItem>
                     ))}
                 </List>
             </Drawer>
-        </>
+            {children}
+        </div>
     );
 };
 

@@ -13,7 +13,13 @@ export const routes: RouteObject[] = [
     children: [
       {path: '/login', element: <SignInPage />},
       {path: '/register', element: <SignUpPage />},
-      {path: '/dashboard', element: <DashboardPage />},
+      {path: '/home', element: <DashboardPage activeSectionIndex={0} />},
+      {path: '/budget-plans', element: <DashboardPage activeSectionIndex={1} />},
+      {path: '/accounts', element: <DashboardPage activeSectionIndex={2} />},
+      {path: '/goals', element: <DashboardPage activeSectionIndex={3} />},
+      {path: '/statistics', element: <DashboardPage activeSectionIndex={4} />},
+      {path: '/settings', element: <DashboardPage activeSectionIndex={5} />},
+      {path: '/user', element: <DashboardPage activeSectionIndex={6} />},
       {path: '*', element: <NotFoundPage text={'Nie znaleźliśmy szukanej zawarości 😔'} />}
     ]
   }

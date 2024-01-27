@@ -1,23 +1,21 @@
 import {
     Button,
-    ButtonGroup,
     Divider,
     FormControl,
     InputLabel, MenuItem,
     Paper,
     Select,
     Stack,
-    TextField, Tooltip,
     Typography
 } from "@mui/material";
 import CenteredStack from "../../components/CenteredStack";
 import React from "react";
 import {useNavigate} from "react-router-dom";
-import {Form, Formik, useFormik} from "formik";
-import {router} from "../../router/Routes";
+import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import MyTextInput from "../../components/MyTextInput";
 import {SignupValues} from "../../models/forms/signUpValues";
+import MainContainer from "../../components/MainContainer";
 
 
 
@@ -64,91 +62,93 @@ const SignUpPage: React.FC = () => {
     }
 
     return (
-        <Stack style={{minWidth: '600px'}}>
-            <Typography variant="h4" align="center" gutterBottom>
-                Your Logo
-            </Typography>
-            <Paper elevation={3} style={{
-                padding: '50px', borderRadius: '70px', minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <Stack justifyContent={'center'} width={'100%'} spacing={3}>
-                    <Formik
-                        validationSchema={validationSchema}
-                        initialValues={initialValues}
-                        onSubmit={values => handleFormSubmit(values)}
-                    >
-                        {({ handleSubmit, setValues, values}) => (
-                            <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                                <CenteredStack style={{gap: 30}}>
+        <MainContainer>
+            <Stack style={{minWidth: '600px'}}>
+                <Typography variant="h4" align="center" gutterBottom>
+                    Your Logo
+                </Typography>
+                <Paper elevation={3} style={{
+                    padding: '50px', borderRadius: '70px', minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <Stack justifyContent={'center'} width={'100%'} spacing={3}>
+                        <Formik
+                            validationSchema={validationSchema}
+                            initialValues={initialValues}
+                            onSubmit={values => handleFormSubmit(values)}
+                        >
+                            {({ handleSubmit, setValues, values}) => (
+                                <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
+                                    <CenteredStack style={{gap: 30}}>
 
-                                    <MyTextInput
-                                        name={'name'}
-                                        label="Name"
-                                        placeholder="Name"
-                                        type={'text'}
-                                        showErrors
-                                    />
+                                        <MyTextInput
+                                            name={'name'}
+                                            label="Name"
+                                            placeholder="Name"
+                                            type={'text'}
+                                            showErrors
+                                        />
 
-                                    <MyTextInput
-                                        name={'email'}
-                                        label="Email"
-                                        placeholder="Email"
-                                        type="email"
-                                        showErrors
-                                    />
+                                        <MyTextInput
+                                            name={'email'}
+                                            label="Email"
+                                            placeholder="Email"
+                                            type="email"
+                                            showErrors
+                                        />
 
-                                    <MyTextInput
-                                        name={'password'}
-                                        label="Password"
-                                        placeholder="Password"
-                                        type="password"
-                                        showErrors
-                                    />
+                                        <MyTextInput
+                                            name={'password'}
+                                            label="Password"
+                                            placeholder="Password"
+                                            type="password"
+                                            showErrors
+                                        />
 
-                                    <MyTextInput
-                                        name={'confirmPassword'}
-                                        label="Confirm password"
-                                        placeholder="Confirm password"
-                                        type="password"
-                                        showErrors
-                                    />
+                                        <MyTextInput
+                                            name={'confirmPassword'}
+                                            label="Confirm password"
+                                            placeholder="Confirm password"
+                                            type="password"
+                                            showErrors
+                                        />
 
-                                    <FormControl fullWidth error={values.currency.length < 1}>
-                                        <InputLabel>Currency</InputLabel>
-                                            <Select
-                                                value={values.currency}
-                                                onChange={(e) => setValues({...values, currency: e.target.value})}
-                                            >
-                                                <MenuItem value={'PLN'}>PLN</MenuItem>
-                                                <MenuItem value={'USD'}>USD</MenuItem>
-                                            </Select>
-                                    </FormControl>
+                                        <FormControl fullWidth error={values.currency.length < 1}>
+                                            <InputLabel>Currency</InputLabel>
+                                                <Select
+                                                    value={values.currency}
+                                                    onChange={(e) => setValues({...values, currency: e.target.value})}
+                                                >
+                                                    <MenuItem value={'PLN'}>PLN</MenuItem>
+                                                    <MenuItem value={'USD'}>USD</MenuItem>
+                                                </Select>
+                                        </FormControl>
 
-                                    <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px', width: '75%' }}
-                                            onClick={() => console.log('Registered !')}>
-                                        Sign Up
-                                    </Button>
-                                </CenteredStack>
-                            </Form>
-                        )}
-                    </Formik>
-                    <Typography variant={'caption'} textAlign={'center'} style={{whiteSpace: 'pre-wrap'}}>
-                        {invalidPasswordMessage}
-                    </Typography>
-                    <Divider variant="middle" />
-
-                    <CenteredStack>
-                        <Typography variant="body2" color="textSecondary" align="center" style={{ margin: '10px 0' }}>
-                            Already have an account?
+                                        <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px', width: '75%' }}
+                                                onClick={() => console.log('Registered !')}>
+                                            Sign Up
+                                        </Button>
+                                    </CenteredStack>
+                                </Form>
+                            )}
+                        </Formik>
+                        <Typography variant={'caption'} textAlign={'center'} style={{whiteSpace: 'pre-wrap'}}>
+                            {invalidPasswordMessage}
                         </Typography>
-                        <Button variant={"outlined"} color={'secondary'} style={{width: '75%', borderWidth: '3px', fontWeight: '900'}}
-                                onClick={() => navigate('/login')}>
-                            Sign In
-                        </Button>
-                    </CenteredStack>
-                </Stack>
-            </Paper>
-        </Stack>
+                        <Divider variant="middle" />
+
+                        <CenteredStack>
+                            <Typography variant="body2" color="textSecondary" align="center" style={{ margin: '10px 0' }}>
+                                Already have an account?
+                            </Typography>
+                            <Button variant={"outlined"} color={'secondary'} style={{width: '75%', borderWidth: '3px', fontWeight: '900'}}
+                                    onClick={() => navigate('/login')}>
+                                Sign In
+                            </Button>
+                        </CenteredStack>
+                    </Stack>
+                </Paper>
+            </Stack>
+        </MainContainer>
     )
 }
 

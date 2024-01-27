@@ -1,8 +1,7 @@
-import React, {useEffect} from 'react';
-import {Outlet, ScrollRestoration, useNavigate} from "react-router-dom";
+import React from 'react';
+import {Outlet, ScrollRestoration} from "react-router-dom";
 import ModalContainer from '../components/ModalContainer';
 import {ToastContainer} from "react-toastify";
-import MainContainer from "../components/MainContainer";
 
 function App() {
 
@@ -11,9 +10,7 @@ function App() {
         <ScrollRestoration />
         <ModalContainer />
         <ToastContainer position={'bottom-right'} theme={'colored'} />
-        <MainContainer>
-            <Outlet />
-        </MainContainer>
+        <Outlet />
     </>
     )
 }

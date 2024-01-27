@@ -1,13 +1,12 @@
 import React, { ReactNode } from 'react';
-import { Box, Paper } from '@mui/material';
+import { Box } from '@mui/material';
 import theme from "../app/theme";
 
-interface MainContainer {
-    backgroundColor?: string;
+interface MainContainerProps {
     children: ReactNode;
 }
 
-const MainContainer: React.FC<MainContainer> = ({ backgroundColor = '#fff', children }) => {
+const MainContainer: React.FC<MainContainerProps> = ({ children }) => {
 
     return (
         <Box
@@ -15,13 +14,13 @@ const MainContainer: React.FC<MainContainer> = ({ backgroundColor = '#fff', chil
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                minHeight: '100vh',
+                minHeight: '100svh',
                 backgroundColor: theme.palette.background.default,
             }}
         >
             {children}
         </Box>
-    );
-};
+    )
+}
 
-export default MainContainer;
+export default MainContainer

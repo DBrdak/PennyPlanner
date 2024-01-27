@@ -1,7 +1,6 @@
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import {styled} from "@mui/material";
 import {drawerWidth} from "./Drawer";
-import theme from "../../app/theme";
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -13,6 +12,7 @@ const AppBar = styled(MuiAppBar, {
     zIndex: theme.zIndex.drawer + 1,
     height: `calc(${theme.spacing(8)} + 1px)`,
     boxShadow: 'none',
+    overflow: 'hidden',
     transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,

@@ -13,6 +13,7 @@ import * as Yup from 'yup';
 import CenteredStack from "../../components/CenteredStack";
 import {router} from "../../router/Routes";
 import {useNavigate} from "react-router-dom";
+import MainContainer from "../../components/MainContainer";
 
 const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Email is required'),
@@ -35,6 +36,7 @@ const SignInPage: React.FC = () => {
     });
 
     return (
+        <MainContainer>
             <Stack style={{minWidth: '600px'}}>
                 <Typography variant="h4" align="center" gutterBottom>
                     Your Logo
@@ -68,7 +70,7 @@ const SignInPage: React.FC = () => {
                                 />
 
                                 <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px', width: '75%' }}
-                                onClick={() => console.log('Logged In !')}>
+                                        onClick={() => console.log('Logged In !')}>
                                     Sign In
                                 </Button>
                             </CenteredStack>
@@ -111,13 +113,14 @@ const SignInPage: React.FC = () => {
                                 Don't have an account?
                             </Typography>
                             <Button variant={"outlined"} color={'secondary'} style={{width: '75%', borderWidth: '3px', fontWeight: '900'}}
-                            onClick={() => navigate('/register')}>
+                                    onClick={() => navigate('/register')}>
                                 Sign up
                             </Button>
                         </CenteredStack>
                     </Stack>
                 </Paper>
             </Stack>
+        </MainContainer>
     );
 };
 
