@@ -9,18 +9,19 @@ export function AccountsPage() {
     return (
         <AppOverlay activeSectionIndex={activeSectionIndex}>
             <TilesLayout tiles={[
-                {cols: 8, rows: 6, content:
-                    <img src={'/assets/view_account.jpg'} style={{width: '100%', height: '100%'}} />
-                },
-                {cols: 4, rows: 6, content:
+                {cols: 8, content:[
                     <Typography>VIEW ACCOUNTS</Typography>
-                },
-                {cols: 4, rows: 2, content:
+                ]},
+                {cols: 4, content:[
+                    <Typography>VIEW ACCOUNTS</Typography>,
                     <Typography>VIEW ACCOUNTS</Typography>
-                },
-                {cols: 8, rows: 2, content:
+                ]},
+                {cols: 4, content:[
+                        <Typography>VIEW ACCOUNTS</Typography>
+                ]},
+                {cols: 8, content:[
                     <Typography>VIEW ACCOUNTS</Typography>
-                },
+                ]},
             ]} />
         </AppOverlay>
     );

@@ -36,8 +36,8 @@ export const dashboardSections: {title: string, icon: React.ReactNode, isNotSide
     {title: 'Accounts', icon: <AccountBalanceTwoTone color={'secondary'} fontSize={'large'} />},
     {title: 'Goals', icon: <EmojiEventsTwoTone color={'secondary'} fontSize={'large'} />},
     {title: 'Statistics', icon: <AssessmentTwoTone color={'secondary'} fontSize={'large'} />},
-    {title: 'Settings', icon: <EditNoteTwoTone color={'secondary'} fontSize={'large'} />, isNotSideNavBar: true},
-    {title: 'User', icon: <AccountBoxTwoTone color={'secondary'} fontSize={'large'} />},
+    {title: 'Settings', icon: <EditNoteTwoTone color={'secondary'} fontSize={'large'} />},
+    {title: 'User', icon: <AccountBoxTwoTone color={'secondary'} fontSize={'large'} />, isNotSideNavBar: true},
 ]
 
 const AppOverlay = ({children, activeSectionIndex}: AppOverlayProps) => {

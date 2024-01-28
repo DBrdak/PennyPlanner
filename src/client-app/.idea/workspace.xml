@@ -4,25 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Dashboard initialized">
-      <change afterPath="$PROJECT_DIR$/src/app/accounts/AccountsPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/budget-plans/BudgetPlansPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/goals/GoalsPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/home/HomePage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/settings/SettingsPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/statistics/StatisticsPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/user/UserPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/TilesLayout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/layout/dashboardSection.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/layout/tile.ts" afterDir="false" />
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Accounts Patge Init">
+      <change afterPath="$PROJECT_DIR$/public/assets/view_account.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/dashboard/DashboardPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/appOverlay/AppBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/AppBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/AccountsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/AccountsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TilesLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TilesLayout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/appOverlay/Drawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/Drawer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/Routes.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/layoutStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/layoutStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/layout/tile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/layout/tile.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +119,8 @@
       <workItem from="1706311159777" duration="8194000" />
       <workItem from="1706321322524" duration="6880000" />
       <workItem from="1706347786928" duration="2913000" />
-      <workItem from="1706388144104" duration="9470000" />
+      <workItem from="1706388144104" duration="9756000" />
+      <workItem from="1706481074862" duration="2970000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
@@ -140,7 +129,14 @@
       <option name="project" value="LOCAL" />
       <updated>1706349545682</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Accounts Patge Init">
+      <created>1706402762024</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1706402762027</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,6 +155,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Dashboard initialized" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dashboard initialized" />
+    <MESSAGE value="Accounts Patge Init" />
+    <option name="LAST_COMMIT_MESSAGE" value="Accounts Patge Init" />
   </component>
 </project>
