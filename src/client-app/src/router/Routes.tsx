@@ -4,7 +4,13 @@ import NotFoundPage from "../components/NotFoundPage";
 import App from "../app/App";
 import SignInPage from "../app/login/SignInPage";
 import SignUpPage from "../app/register/SignUpPage";
-import {DashboardPage} from "../app/dashboard/DashboardPage";
+import {HomePage} from "../app/home/HomePage";
+import {BudgetPlansPage} from "../app/budget-plans/BudgetPlansPage";
+import {AccountsPage} from "../app/accounts/AccountsPage";
+import {GoalsPage} from "../app/goals/GoalsPage";
+import {StatisticsPage} from "../app/statistics/StatisticsPage";
+import {SettingsPage} from "../app/settings/SettingsPage";
+import {UserPage} from "../app/user/UserPage";
 
 export const routes: RouteObject[] = [
   {
@@ -13,14 +19,14 @@ export const routes: RouteObject[] = [
     children: [
       {path: '/login', element: <SignInPage />},
       {path: '/register', element: <SignUpPage />},
-      {path: '/home', element: <DashboardPage activeSectionIndex={0} />},
-      {path: '/budget-plans', element: <DashboardPage activeSectionIndex={1} />},
-      {path: '/accounts', element: <DashboardPage activeSectionIndex={2} />},
-      {path: '/goals', element: <DashboardPage activeSectionIndex={3} />},
-      {path: '/statistics', element: <DashboardPage activeSectionIndex={4} />},
-      {path: '/settings', element: <DashboardPage activeSectionIndex={5} />},
-      {path: '/user', element: <DashboardPage activeSectionIndex={6} />},
-      {path: '*', element: <NotFoundPage text={'Nie znaleźliśmy szukanej zawarości 😔'} />}
+      {path: '/home', element: <HomePage />},
+      {path: '/budget-plans', element: <BudgetPlansPage />},
+      {path: '/accounts', element: <AccountsPage />},
+      {path: '/goals', element: <GoalsPage />},
+      {path: '/statistics', element: <StatisticsPage  />},
+      {path: '/settings', element: <SettingsPage  />},
+      {path: '/user', element: <UserPage />},
+      {path: '*', element: <NotFoundPage text={'We are sorry, the content you are looking for does not exist 😔'} />}
     ]
   }
 ]

@@ -12,6 +12,8 @@ const openedMixin = (theme: Theme): CSSObject => ({
     }),
     border: 'none',
     overflowX: 'hidden',
+    position: 'relative',
+    display: 'flex'
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -20,6 +22,8 @@ const closedMixin = (theme: Theme): CSSObject => ({
         duration: theme.transitions.duration.leavingScreen,
     }),
     border: 'none',
+    position: 'relative',
+    display: 'flex',
     overflowX: 'hidden',
     width: `calc(${theme.spacing(7)} + 1px)`,
     [theme.breakpoints.up('sm')]: {

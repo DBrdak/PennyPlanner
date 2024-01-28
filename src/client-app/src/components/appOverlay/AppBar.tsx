@@ -12,6 +12,7 @@ const AppBar = styled(MuiAppBar, {
     zIndex: theme.zIndex.drawer + 1,
     height: `calc(${theme.spacing(8)} + 1px)`,
     boxShadow: 'none',
+    position: 'relative',
     overflow: 'hidden',
     transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
