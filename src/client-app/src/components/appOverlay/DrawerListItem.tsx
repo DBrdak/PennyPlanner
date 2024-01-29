@@ -17,8 +17,7 @@ const DrawerListItem = styled(MuiListItem)<CustomListItemOwnProps>(
     width: 100%;
     text-align: center;
     height: ${100 / itemscount}%;
-    ${isactive === 'false' && "cursor: pointer;"}
-    ${isactive === 'true' && "cursor: default;"}
+    cursor: pointer;
   `
 );
 

@@ -1,4 +1,7 @@
-interface Tile {
+import {TileContentProps} from "../../components/tilesLayout/TileContent";
+
+export default interface Tile {
     cols: number;
-    content: React.ReactNode[];
+    height: string
+    content: React.ReactElement<TileContentProps>[]
 }
