@@ -1,6 +1,7 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import {Account} from "../models/accounts/account";
 import agent from "../api/agent";
+import {NewAccountData} from "../models/requests/newAccountData";
 
 export default class AccountStore {
     private accountsRegistry: Map<string, Account> = new Map<string, Account>()
@@ -30,6 +31,18 @@ export default class AccountStore {
                 this.accountsRegistry.clear();
                 accounts.forEach((a) => this.setAccount(a));
             });
+        } catch (e) {
+            console.error(e);
+        } finally {
+            this.setLoading(false);
+        }
+    }
+
+    async addAccount(accountData: NewAccountData) {
+        this.setLoading(true);
+        try {
+            await agent.accounts.createAccount(accountData);
+            this.accountsRegistry.clear();
         } catch (e) {
             console.error(e);
         } finally {

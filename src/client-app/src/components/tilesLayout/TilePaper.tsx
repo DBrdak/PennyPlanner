@@ -10,8 +10,11 @@ interface TilePaperProps {
 const randomGradient = (colors?: string | null) => {
     const randomNumber = Math.floor(Math.random() * 100)
 
-    if(colors === 'green'){
-        return `linear-gradient(to bottom right, ${theme.palette.background.default}, ${theme.palette.text.secondary})`;
+    if(colors === 'cyan'){
+        return `linear-gradient(to bottom right, ${theme.palette.secondary.dark}, ${theme.palette.secondary.dark})`;
+    }
+    if(colors === 'magenta'){
+        return `linear-gradient(to bottom right, ${theme.palette.primary.dark}, ${theme.palette.primary.dark})`;
     }
     if (randomNumber % 19 === 0) {
         return `linear-gradient(to bottom right, ${theme.palette.primary.dark}, ${theme.palette.secondary.light})`;

@@ -1,18 +1,18 @@
 import {Account} from "../../models/accounts/account";
 import {Transaction} from "../../models/transactions/transaction";
 
-export const calculateBalanceForToday = (account: Account): number => {
+export const calculateBalanceForToday = (transactions: Transaction[]): number => {
     const today = new Date();
-    const todayTransactions = account.transactions.filter(transaction =>
+    const todayTransactions = transactions.filter(transaction =>
         isSameDay(new Date(transaction.transactionDateUtc), today)
     );
 
     return calculateBalance(todayTransactions);
 };
 
-export const calculateBalanceForCurrentMonth = (account: Account): number => {
+export const calculateBalanceForCurrentMonth = (transactions: Transaction[]): number => {
     const currentMonth = new Date().getMonth();
-    const currentMonthTransactions = account.transactions.filter(transaction =>
+    const currentMonthTransactions = transactions.filter(transaction =>
         new Date(transaction.transactionDateUtc).getMonth() === currentMonth
     );
 

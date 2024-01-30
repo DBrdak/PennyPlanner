@@ -1,6 +1,6 @@
 import {Money} from "../shared/money";
 
 export interface UpdateBudgetPlanCategoryValues {
-    newBudgetAmount?: Money | null
+    newBudgetAmount?: number | null
     isBudgetToReset: boolean
 }

@@ -2,15 +2,30 @@ import {Divider, Stack, Typography} from "@mui/material";
 import theme from "../../theme";
 import {Account} from "../../../models/accounts/account";
 import {calculateBalanceForCurrentMonth, calculateBalanceForToday} from "../../../utils/calculators/balanceCalculator";
+import {useNavigate} from "react-router-dom";
+import {Transaction} from "../../../models/transactions/transaction";
+import {transaction} from "mobx";
 
 interface AccountBalanceDisplayProps {
     isMobile: boolean
-    account: Account
+    account?: Account
+    transactions?: Transaction[]
+    currency?: string
 }
 
-export function AccountBalanceDisplay({isMobile, account}: AccountBalanceDisplayProps) {
-    const currentMonthBalance = calculateBalanceForCurrentMonth(account)
-    const todayBalance = calculateBalanceForToday(account)
+export function AccountBalanceDisplay({isMobile, account, transactions, currency}: AccountBalanceDisplayProps) {
+
+    if(!account && (!transactions || !currency)){
+        return null
+    }
+
+    const currentMonthBalance = account ?
+        calculateBalanceForCurrentMonth(account.transactions) :
+        calculateBalanceForCurrentMonth(transactions!)
+
+    const todayBalance = account ?
+        calculateBalanceForToday(account.transactions) :
+        calculateBalanceForToday(transactions!)
 
     const generateBalanceTypography = (balance: number, color: string) => (
         <Typography
@@ -22,7 +37,7 @@ export function AccountBalanceDisplay({isMobile, account}: AccountBalanceDisplay
                 textAlign: 'center',
             }}
         >
-            {balance > 0 ? `+${balance}` : balance} {account.balance.currency}
+            {balance > 0 ? `+${balance}` : balance} {account ? account.balance.currency : currency}
         </Typography>
     );
 
@@ -44,6 +59,12 @@ export function AccountBalanceDisplay({isMobile, account}: AccountBalanceDisplay
                 : theme.palette.text.primary
     );
 
+    const balance = account ?
+        account.balance.amount :
+            Number(transactions
+                ?.map(t => t.transactionAmount)
+                    .reduce((a, acc) => a + acc.amount, 0)
+                        .toFixed(2))
 
     return (
         <Stack direction={'row'} justifyContent={'space-around'} sx={{width: '100%', height: '33%'}}>
@@ -65,7 +86,7 @@ export function AccountBalanceDisplay({isMobile, account}: AccountBalanceDisplay
                     color: theme.palette.text.primary,
                     textAlign: 'center',
                 }}>
-                    {account.balance.amount} {account.balance.currency}
+                    {balance} {account ? account.balance.currency : currency}
                 </Typography>
             </Stack>
             <Divider orientation={'vertical'} variant={'middle'} sx={{backgroundColor: theme.palette.background.paper}} />

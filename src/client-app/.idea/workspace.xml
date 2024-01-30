@@ -4,17 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Account Details Page Init">
-      <change afterPath="$PROJECT_DIR$/src/app/welcome/GradientContainer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/welcome/WelcomePage.tsx" afterDir="false" />
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Welcome Page Added">
+      <change afterPath="$PROJECT_DIR$/src/app/accounts/components/TotalAccountsTile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/accounts/details/TotalAccountsDetailsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Middlewares/MonitoringMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Middlewares/MonitoringMiddleware.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/login/SignInPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/login/SignInPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FadeContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/FadeContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MainContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MainContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/AccountsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/AccountsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/AccountBalanceDisplay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/AccountBalanceDisplay.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/NewAccountTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/NewAccountTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/new/AddAccount.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/new/AddAccount.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tilesLayout/TilePaper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tilesLayout/TilePaper.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/requests/accountUpdateData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/accountUpdateData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/requests/addIncomeTransactionCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/addIncomeTransactionCommand.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/requests/addInternalTransactionCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/addInternalTransactionCommand.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/requests/addOutcomeTransactionCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/addOutcomeTransactionCommand.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/requests/budgetedTransactionCategoryValues.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/budgetedTransactionCategoryValues.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/requests/newAccountData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/newAccountData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/requests/updateBudgetPlanCategoryValues.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/updateBudgetPlanCategoryValues.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/Routes.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/calculators/balanceCalculator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/calculators/balanceCalculator.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +137,7 @@
       <workItem from="1706481074862" duration="3221000" />
       <workItem from="1706498557149" duration="10259000" />
       <workItem from="1706516036064" duration="35510000" />
-      <workItem from="1706632785704" duration="4759000" />
+      <workItem from="1706632785704" duration="11205000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
@@ -166,7 +174,14 @@
       <option name="project" value="LOCAL" />
       <updated>1706582047956</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Welcome Page Added">
+      <created>1706637907864</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1706637907864</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,6 +204,7 @@
     <MESSAGE value="Tile Layout" />
     <MESSAGE value="Account Page 1 complete" />
     <MESSAGE value="Account Details Page Init" />
-    <option name="LAST_COMMIT_MESSAGE" value="Account Details Page Init" />
+    <MESSAGE value="Welcome Page Added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Welcome Page Added" />
   </component>
 </project>

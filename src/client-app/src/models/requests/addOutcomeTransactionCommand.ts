@@ -3,6 +3,6 @@ import {Money} from "../shared/money";
 export interface AddOutcomeTransactionCommand {
     sourceAccountId: string | null
     recipientId: string | null
-    transactionAmount: Money
+    transactionAmount: number
     category: string | null
 }

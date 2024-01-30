@@ -22,6 +22,7 @@ namespace Domestica.Budget.API.Middlewares
                 var request = context.Request;
                 var stopwatch = Stopwatch.StartNew();
 
+
                 await _next(context);
 
                 stopwatch.Stop();

@@ -1,16 +1,21 @@
+import {observer} from "mobx-react-lite";
+import {useStore} from "../../../stores/store";
 import TilePaper from "../../../components/tilesLayout/TilePaper";
-import {useNavigate} from "react-router-dom";
 import {Divider, Stack, Typography, useMediaQuery} from "@mui/material";
 import theme from "../../theme";
-import {AddCardTwoTone} from "@mui/icons-material";
 import {AccountBalanceDisplay} from "./AccountBalanceDisplay";
+import {useNavigate} from "react-router-dom";
+import {Account} from "../../../models/accounts/account";
 
-export function NewAccountTile() {
+export default observer(function TotalAccountsTile() {
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
+    const {accountStore} = useStore()
     const navigate = useNavigate()
+    const transactions = accountStore.accounts.flatMap(a => a.transactions)
+    const currency = transactions[0]?.transactionAmount.currency
 
     return (
-        <TilePaper onClick={() => navigate('/accounts/new')} colors={'cyan'}>
+        <TilePaper onClick={() => navigate(`/accounts/total`)} colors={'magenta'}>
             <Stack spacing={isMobile ? 2 : 5}
                    sx={{
                        p: '1vw',
@@ -34,18 +39,12 @@ export function NewAccountTile() {
                         color: theme.palette.text.primary,
                         textAlign: 'center',
                     }}>
-                        New Account
-                    </Typography>
-                    <Typography sx={{
-                        userSelect:'none',
-                        lineHeight: '1',
-                        color: theme.palette.text.primary,
-                        textAlign: 'center',
-                    }}>
-                        <AddCardTwoTone sx={{fontSize: '4rem'}} />
+                        Total
                     </Typography>
                 </Stack>
+                <Divider sx={{backgroundColor: theme.palette.background.paper}} />
+                <AccountBalanceDisplay isMobile={isMobile} transactions={transactions} currency={currency} />
             </Stack>
         </TilePaper>
     );
-}
+})
