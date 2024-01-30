@@ -14,8 +14,10 @@ const MainContainer: React.FC<MainContainerProps> = ({ children }) => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                minHeight: '100svh',
+                minHeight: '100%',
+                overflowX: 'hidden',
                 backgroundColor: theme.palette.background.default,
+                padding: '6rem 0'
             }}
         >
             {children}

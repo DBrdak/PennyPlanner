@@ -68,7 +68,7 @@ const SignUpPage: React.FC = () => {
                     Your Logo
                 </Typography>
                 <Paper elevation={3} style={{
-                    padding: '50px', borderRadius: '70px', minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    padding: '3rem', borderRadius: '70px', minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <Stack justifyContent={'center'} width={'100%'} spacing={3}>
                         <Formik

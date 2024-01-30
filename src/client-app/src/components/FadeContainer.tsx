@@ -9,8 +9,8 @@ const fadeIn = keyframes`
 export const FadeContainer = styled(MuiBox)(
     (theme) => ({
         animation: `${fadeIn} 2s`,
-        minWidth: '100vw',
-        height: '100vh',
-        overflowY: 'hidden',
+        minWidth: '99svw',
+        minHeight: '100svh',
+        overflowX: 'hidden'
     })
 );

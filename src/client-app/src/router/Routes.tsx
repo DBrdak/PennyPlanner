@@ -13,12 +13,14 @@ import GoalsPage from "../app/goals/GoalsPage";
 import StatisticsPage from "../app/statistics/StatisticsPage";
 import SettingsPage from "../app/settings/SettingsPage";
 import UserPage from "../app/user/UserPage";
+import WelcomePage from "../app/welcome/WelcomePage";
 
 export const routes: RouteObject[] = [
   {
     path: '/',
     element: <App />,
     children: [
+      {path: '', element: <WelcomePage />},
       {path: '/login', element: <SignInPage />},
       {path: '/register', element: <SignUpPage />},
 

@@ -6,7 +6,7 @@ import {
     TextField,
     Divider,
     Stack,
-    ButtonGroup,
+    ButtonGroup, useMediaQuery,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -14,14 +14,16 @@ import CenteredStack from "../../components/CenteredStack";
 import {router} from "../../router/Routes";
 import {useNavigate} from "react-router-dom";
 import MainContainer from "../../components/MainContainer";
+import theme from "../theme";
 
 const validationSchema = Yup.object({
-    email: Yup.string().email('Invalid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    email: Yup.string().email('Invalid email address').required('Insert email'),
+    password: Yup.string().required('Insert password'),
 });
 
 const SignInPage: React.FC = () => {
     // TODO Implement logging and registering logic
+    const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
     const navigate = useNavigate()
 
     const formik = useFormik({
@@ -42,7 +44,7 @@ const SignInPage: React.FC = () => {
                     Your Logo
                 </Typography>
                 <Paper elevation={3} style={{
-                    padding: '50px', borderRadius: '70px', minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    padding: '3rem', borderRadius: '70px', minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <Stack justifyContent={'center'} height={'100%'} spacing={3}>
                         <form onSubmit={formik.handleSubmit}>
