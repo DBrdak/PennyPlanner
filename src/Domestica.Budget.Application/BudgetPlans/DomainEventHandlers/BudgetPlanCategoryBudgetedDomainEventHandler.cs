@@ -40,7 +40,8 @@ namespace Domestica.Budget.Application.BudgetPlans.DomainEventHandlers
             var transactions = (
                 await _transactionRepository.GetTransactionsByDateAndCategoryAsync(
                     budget.BudgetPeriod,
-                    notification.Category)).ToList();
+                    notification.Category,
+                    cancellationToken)).ToList();
 
             transactions.ForEach(transaction => budget.AddTransaction(transaction));
 

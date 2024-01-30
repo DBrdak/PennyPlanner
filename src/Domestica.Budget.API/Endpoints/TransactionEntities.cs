@@ -1,4 +1,5 @@
 ﻿using Carter;
+using Domestica.Budget.API.Cache;
 using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
 using Domestica.Budget.Application.TransactionEntities.GetTransactionEntities;
 using Domestica.Budget.Application.TransactionEntities.RemoveTransactionEntity;
@@ -6,6 +7,7 @@ using Domestica.Budget.Application.TransactionEntities.UpdateTransactionEntity;
 using Domestica.Budget.Domain.TransactionEntities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Domestica.Budget.API.Endpoints
 {
@@ -15,9 +17,13 @@ namespace Domestica.Budget.API.Endpoints
         {
             app.MapGet(
                 "transaction-entities",
-                async (ISender sender, CancellationToken cancellationToken) =>
+                async (ISender sender, IDistributedCache cache, CancellationToken cancellationToken) =>
                 {
-                    var result = await sender.Send(new GetTransactionEntitiesQuery(), cancellationToken);
+                    var result = await cache.GetCachedResponseAsync(
+                        CacheKey.TransactionEntities(null), 
+                        sender,
+                        new GetTransactionEntitiesQuery(),
+                        cancellationToken);
 
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
@@ -39,11 +45,11 @@ namespace Domestica.Budget.API.Endpoints
                 "transaction-entities/{transactionEntityId}",
                 async (
                     [FromRoute] string transactionEntityId,
-                    TransactionEntityName newName,
+                    [FromBody] string newName,
                     ISender sender,
                     CancellationToken cancellationToken) =>
                 {
-                    var command = new UpdateTransactionEntityCommand(new (Guid.Parse(transactionEntityId)), newName);
+                    var command = new UpdateTransactionEntityCommand(transactionEntityId, newName);
 
                     var result = await sender.Send(command, cancellationToken);
 
@@ -59,7 +65,7 @@ namespace Domestica.Budget.API.Endpoints
                     [FromRoute] string transactionEntityId,
                     CancellationToken cancellationToken) =>
                 {
-                    var command = new RemoveTransactionEntityCommand(new(Guid.Parse(transactionEntityId)));
+                    var command = new RemoveTransactionEntityCommand(transactionEntityId);
 
                     var result = await sender.Send(command, cancellationToken);
 

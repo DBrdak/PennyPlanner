@@ -18,14 +18,14 @@ namespace Domestica.Budget.Application.TransactionEntities.UpdateTransactionEnti
 
         public async Task<Result<TransactionEntity>> Handle(UpdateTransactionEntityCommand request, CancellationToken cancellationToken)
         {
-            var transactionEntity = await _transactionEntityRepository.GetByIdAsync(request.Id, cancellationToken);
+            var transactionEntity = await _transactionEntityRepository.GetByIdAsync(new (Guid.Parse(request.Id)), cancellationToken);
 
             if (transactionEntity is null)
             {
                 return Result.Failure<TransactionEntity>(Error.NotFound("Transaction entity not found"));
             }
 
-            transactionEntity.ChangeName(request.NewName);
+            transactionEntity.ChangeName(new(request.NewName));
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 

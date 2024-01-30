@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommonAbstractions.DB.Messaging;
+using Domestica.Budget.Application.DataTransferObjects;
 using Domestica.Budget.Domain.BudgetPlans;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.BudgetPlans.GetBudgetPlans
 {
     internal sealed class
-        GetBudgetPlansQueryHandler : IQueryHandler<GetBudgetPlansQuery, IReadOnlyCollection<BudgetPlan>>
+        GetBudgetPlansQueryHandler : IQueryHandler<GetBudgetPlansQuery, IReadOnlyCollection<BudgetPlanDto>>
     {
         private readonly IBudgetPlanRepository _budgetPlanRepository;
 
@@ -20,11 +21,13 @@ namespace Domestica.Budget.Application.BudgetPlans.GetBudgetPlans
         }
 
 
-        public async Task<Result<IReadOnlyCollection<BudgetPlan>>> Handle(GetBudgetPlansQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IReadOnlyCollection<BudgetPlanDto>>> Handle(GetBudgetPlansQuery request, CancellationToken cancellationToken)
         {
             //TODO Retrive user id
 
-            return Result.Success(await _budgetPlanRepository.BrowseUserBudgetPlansAsync(cancellationToken));
+            var budgetPlans = await _budgetPlanRepository.BrowseUserBudgetPlansAsync(cancellationToken);
+
+            return budgetPlans.Select(BudgetPlanDto.FromDomainObject).ToList();
         }
     }
 }

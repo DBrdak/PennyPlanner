@@ -11,11 +11,11 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
             RuleFor(x => x.Category)
                 .Must(
                     category =>  OutgoingTransactionCategory.All.Any(
-                        incomingTransactionCategory => incomingTransactionCategory.Value == category.Value))
+                        incomingTransactionCategory => incomingTransactionCategory.Value == category))
                 .WithMessage("Invalid transaction category");
 
             RuleFor(x => x.TransactionAmount.Currency)
-                .Must(currency => Currency.All.Any(c => c.Code == currency.Code))
+                .Must(currency => Currency.All.Any(c => c.Code == currency))
                 .WithMessage("Invalid currency");
         }
     }

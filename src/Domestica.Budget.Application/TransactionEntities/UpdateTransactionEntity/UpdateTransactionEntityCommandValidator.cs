@@ -6,7 +6,7 @@ namespace Domestica.Budget.Application.TransactionEntities.UpdateTransactionEnti
     {
         public UpdateTransactionEntityCommandValidator()
         {
-            RuleFor(x => x.NewName.Value)
+            RuleFor(x => x.NewName)
                 .NotEmpty()
                 .WithMessage("Name of transaction entity is required")
                 .MaximumLength(30)

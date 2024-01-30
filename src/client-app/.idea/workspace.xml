@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Account Page 1 complete">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/accounts/components/AccountBalanceDisplay.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/accounts/components/NewAccountTile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/FadeContainer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/stores/accountStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/calculators/balanceCalculator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/agent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/agent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/AccountsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/AccountsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/browse/BrowseAccounts.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/new/AddAccount.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/new/AddAccount.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/budget-plans/BudgetPlansPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/budget-plans/BudgetPlansPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/goals/GoalsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/goals/GoalsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/HomePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/settings/SettingsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/SettingsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/statistics/StatisticsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/statistics/StatisticsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/theme.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/UserPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/UserPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CenteredStack.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CenteredStack.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NotFoundPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NotFoundPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/appOverlay/AppBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/AppBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/appOverlay/Drawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/Drawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tilesLayout/TileContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/AccountTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tilesLayout/TilePaper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tilesLayout/TilePaper.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tilesLayout/TilesLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tilesLayout/TilesLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/layout/dashboardSection.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/layout/dashboardSection.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/layout/tile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/layout/tile.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/Routes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/store.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dockerfile" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectId" id="2b8y7J1T6ElXBlZTzTqtG39cYiR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ReactCreateComponentLastSelected": "functionDeclarationComponent",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "init-develop",
+    "last_opened_file_path": "D:/Programownie/Projekty/Domestica/Domestica.Budget/src/client-app/src/app/accounts/components",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "D:\\Programownie\\Projekty\\Domestica\\Domestica.Budget\\src\\client-app\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.rcb.reactComponents" value="false" />
+        <entry key="com.haulmont.rcb.reactInspector" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\public\assets" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\router" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\stores" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components\tilesLayout" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components\appOverlay" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\public\assets" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\styles" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.start">
+    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="start" />
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.Dockerfile" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="" />
+      <created>1705610831432</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1705610831432</updated>
+      <workItem from="1705610832569" duration="15511000" />
+      <workItem from="1705794611314" duration="8054000" />
+      <workItem from="1705939701953" duration="275000" />
+      <workItem from="1706017818745" duration="5034000" />
+      <workItem from="1706027275102" duration="7995000" />
+      <workItem from="1706151986639" duration="69000" />
+      <workItem from="1706233254908" duration="50000" />
+      <workItem from="1706311159777" duration="8194000" />
+      <workItem from="1706321322524" duration="6880000" />
+      <workItem from="1706347786928" duration="2913000" />
+      <workItem from="1706388144104" duration="9756000" />
+      <workItem from="1706481074862" duration="3221000" />
+      <workItem from="1706498557149" duration="10259000" />
+      <workItem from="1706516036064" duration="30578000" />
+    </task>
+    <task id="LOCAL-00001" summary="Dashboard initialized">
+      <created>1706349545679</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1706349545682</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Accounts Patge Init">
+      <created>1706402762024</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1706402762027</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Tile Layout">
+      <created>1706485813806</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1706485813806</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Account Page 1 complete">
+      <created>1706508905792</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1706508905792</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Dashboard initialized" />
+    <MESSAGE value="Accounts Patge Init" />
+    <MESSAGE value="Tile Layout" />
+    <MESSAGE value="Account Page 1 complete" />
+    <option name="LAST_COMMIT_MESSAGE" value="Account Page 1 complete" />
+  </component>
+</project>

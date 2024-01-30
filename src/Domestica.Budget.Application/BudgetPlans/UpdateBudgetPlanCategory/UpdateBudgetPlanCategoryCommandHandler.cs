@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Domain.BudgetPlans;
+using Domestica.Budget.Domain.Transactions;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
@@ -23,20 +24,20 @@ namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
 
         public async Task<Result<BudgetPlan>> Handle(UpdateBudgetPlanCategoryCommand request, CancellationToken cancellationToken)
         {
-            var budgetPlan = await _budgetPlanRepository.GetByIdAsync(request.BudgetPlanId, cancellationToken);
+            var budgetPlan = await _budgetPlanRepository.GetByIdAsync(new(Guid.Parse(request.BudgetPlanId)), cancellationToken);
 
             if (budgetPlan is null)
             {
-                return Result.Failure<BudgetPlan>(Error.NotFound($"Budget plan with ID: {request.BudgetPlanId.Value} not found"));
+                return Result.Failure<BudgetPlan>(Error.NotFound($"Budget plan with ID: {request.BudgetPlanId} not found"));
             }
 
-            if (request.NewBudgetedAmount is not null && !request.IsBudgetToReset)
+            if (request.Values.NewBudgetAmount is not null && !request.Values.IsBudgetToReset)
             {
-                budgetPlan.UpdateBudgetCategory(request.Category, request.NewBudgetedAmount);
+                budgetPlan.UpdateBudgetCategory(TransactionCategory.FromValue(request.Category), request.Values.NewBudgetAmount.ToDomainObject());
             }
             else
             {
-                budgetPlan.ResetBudgetCategory(request.Category);
+                budgetPlan.ResetBudgetCategory(TransactionCategory.FromValue(request.Category));
             }
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;

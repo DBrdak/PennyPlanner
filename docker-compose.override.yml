@@ -2,6 +2,7 @@ version: '3.4'
 
 services:
   domestica-budget-db:
+    restart: always
     environment:
       - POSTGRES_DB=budget
       - POSTGRES_USER=domestica
@@ -10,6 +11,11 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - 5432:5432
+
+  domestica-budget-cache:
+    restart: always
+    ports:
+      - "6379:6379"
 
   domestica-budget-api:
     environment:

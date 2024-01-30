@@ -10,7 +10,7 @@ namespace Domestica.Budget.Domain.BudgetPlans
 {
     public sealed class BudgetPlan : Entity<BudgetPlanId>
     {
-        public DateTimeRange BudgetPeriod { get; private set; }
+        public DateTimeRange BudgetPeriod { get; init; }
         public IReadOnlyCollection<BudgetedTransactionCategory> BudgetedTransactionCategories => _budgetedTransactionCategories;
         private readonly List<BudgetedTransactionCategory> _budgetedTransactionCategories;
         public IReadOnlyCollection<Transaction> Transactions => _transactions;

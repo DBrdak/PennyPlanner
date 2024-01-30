@@ -15,11 +15,11 @@ namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
             RuleFor(x => x.Category)
                 .Must(
                     category => TransactionCategory.All.Any(
-                        transactionCategory => transactionCategory.Value == category.Value))
+                        transactionCategory => transactionCategory.Value == category))
                 .WithMessage("Invalid transaction category");
 
             RuleFor(x => x)
-                .Must(x => x.NewBudgetedAmount is not null || x.IsBudgetToReset)
+                .Must(x => x.Values.NewBudgetAmount is not null || x.Values.IsBudgetToReset)
                 .WithMessage("Specify whether you want to reset category or update budgeted amount");
         }
     }

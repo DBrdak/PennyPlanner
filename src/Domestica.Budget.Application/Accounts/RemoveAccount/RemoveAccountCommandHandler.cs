@@ -19,7 +19,7 @@ namespace Domestica.Budget.Application.Accounts.RemoveAccount
 
         public async Task<Result<Account>> Handle(RemoveAccountCommand request, CancellationToken cancellationToken)
         {
-            var account = await _accountRepository.GetUserAccountByIdAsync(request.AccountId, cancellationToken);
+            var account = await _accountRepository.GetUserAccountByIdAsync(new (Guid.Parse(request.AccountId)), cancellationToken);
 
             if (account is null)
             {

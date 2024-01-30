@@ -23,11 +23,11 @@ namespace Domestica.Budget.Application.Transactions.RemoveTransaction
 
         public async Task<Result<Transaction>> Handle(RemoveTransactionCommand request, CancellationToken cancellationToken)
         {
-            var transaction = await _transactionRepository.GetByIdAsync(request.TransactionId, cancellationToken);
+            var transaction = await _transactionRepository.GetByIdAsync(new(Guid.Parse(request.TransactionId)), cancellationToken);
 
             if (transaction is null)
             {
-                return Result.Failure<Transaction>(Error.NotFound($"Transaction with ID: {request.TransactionId.Value} not found"));
+                return Result.Failure<Transaction>(Error.NotFound($"Transaction with ID: {request.TransactionId} not found"));
             }
 
             _transactionRepository.Remove(transaction);

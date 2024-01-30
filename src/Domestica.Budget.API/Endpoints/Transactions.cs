@@ -1,10 +1,14 @@
 ﻿using Carter;
+using Domestica.Budget.API.Cache;
 using Domestica.Budget.Application.Transactions.AddIncomeTransaction;
 using Domestica.Budget.Application.Transactions.AddInternalTransaction;
 using Domestica.Budget.Application.Transactions.AddOutcomeTransaction;
+using Domestica.Budget.Application.Transactions.GetTransactions;
 using Domestica.Budget.Application.Transactions.RemoveTransaction;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Responses.DB;
 
 namespace Domestica.Budget.API.Endpoints
 {
@@ -12,6 +16,21 @@ namespace Domestica.Budget.API.Endpoints
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
+            app.MapGet(
+                "transactions",
+                async (ISender sender, IDistributedCache cache, CancellationToken cancellationToken) =>
+                {
+                    var result = await cache.GetCachedResponseAsync(
+                        CacheKey.Transactions(null),
+                        sender,
+                        new GetTransactionsQuery(),
+                        cancellationToken);
+
+                    return result.IsSuccess ?
+                        Results.Ok(result.Value) :
+                        Results.BadRequest(result.Error);
+                });
+
             app.MapPost(
                 "transactions/internal",
                 async (AddInternalTransactionCommand command, ISender sender, CancellationToken cancellationToken) =>
@@ -52,7 +71,7 @@ namespace Domestica.Budget.API.Endpoints
                     ISender sender,
                     CancellationToken cancellationToken) =>
                 {
-                    var command = new RemoveTransactionCommand(new(Guid.Parse(transactionId)));
+                    var command = new RemoveTransactionCommand(transactionId);
 
                     var result = await sender.Send(command, cancellationToken);
 

@@ -19,7 +19,7 @@ namespace Domestica.Budget.Application.TransactionEntities.RemoveTransactionEnti
         public async Task<Result<TransactionEntity>> Handle(RemoveTransactionEntityCommand request, CancellationToken cancellationToken)
         {
             var transactionEntity = await _transactionEntityRepository.GetByIdAsync(
-                request.TransactionEntityId,
+                new (Guid.Parse(request.TransactionEntityId)),
                 cancellationToken);
 
             if (transactionEntity is null)

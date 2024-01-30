@@ -1,11 +1,14 @@
-﻿using Carter;
+﻿using System.Text.Json;
+using Carter;
 using Domestica.Budget.API.Middlewares;
 using Domestica.Budget.Application;
+using Domestica.Budget.Domain.Shared;
 using Domestica.Budget.Infrastructure;
 using HealthChecks.ApplicationStatus.DependencyInjection;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 namespace Domestica.Budget.API.Extensions
 {
@@ -17,6 +20,8 @@ namespace Domestica.Budget.API.Extensions
                 .AddApplicationStatus()
                 .AddNpgSql(configuration.GetConnectionString("Database") ?? string.Empty);
 
+            services.AddStackExchangeRedisCache(options =>
+                    options.Configuration = configuration.GetConnectionString("Cache"));
 
             services.AddInfrastructure(configuration);
             services.AddApplication();
@@ -68,6 +73,7 @@ namespace Domestica.Budget.API.Extensions
 
         public static void AddMiddlewares(this IApplicationBuilder app)
         {
+            app.UseMiddleware<CacheInvalidationMiddleware>();
             app.UseMiddleware<MonitoringMiddleware>();
             app.UseMiddleware<ExceptionMiddleware>();
         }

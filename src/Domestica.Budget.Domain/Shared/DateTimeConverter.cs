@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -15,18 +16,26 @@ namespace Domestica.Budget.Domain.Shared
             if (reader.TokenType == JsonTokenType.String)
             {
                 var dateString = reader.GetString();
-                if (DateTime.TryParse(dateString, out DateTime result))
+                if (DateTime.TryParseExact(dateString, "dd-MM-yyyyTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
                 {
                     return result.ToUniversalTime();
                 }
             }
 
-            return reader.GetDateTime().ToUniversalTime();
+            try
+            {
+                return reader.GetDateTime().ToUniversalTime();
+            }
+            catch (FormatException)
+            {
+                return DateTime.ParseExact(reader.GetString(), "dd-MM-yyyyTHH:mm:ss", CultureInfo.InvariantCulture);
+            }
         }
 
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
         {
             var localTime = value.ToLocalTime();
+
             writer.WriteStringValue(localTime.ToString("dd-MM-yyyyTHH:mm:ss"));
         }
     }

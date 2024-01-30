@@ -12,7 +12,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
         }
 
-        public async Task<IEnumerable<Transaction>> BrowseAccountTransactionsAsync(AccountId accountId)
+        public async Task<List<Transaction>> BrowseAccountTransactionsAsync(AccountId accountId, CancellationToken cancellationToken)
         {
             return await DbContext.Set<Transaction>()
                 .AsNoTracking()
@@ -20,23 +20,24 @@ namespace Domestica.Budget.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Transaction>> BrowseSenderTransactionsAsync(TransactionEntityId senderId)
+        public async Task<List<Transaction>> BrowseSenderTransactionsAsync(TransactionEntityId senderId, CancellationToken cancellationToken)
         {
             return await DbContext.Set<Transaction>()
                 .Where(t => t.SenderId == senderId)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Transaction>> BrowseRecipientTransactionsAsync(TransactionEntityId recipientId)
+        public async Task<List<Transaction>> BrowseRecipientTransactionsAsync(TransactionEntityId recipientId, CancellationToken cancellationToken)
         {
             return await DbContext.Set<Transaction>()
                 .Where(t => t.RecipientId == recipientId)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Transaction>> GetTransactionsByDateAndCategoryAsync(
+        public async Task<List<Transaction>> GetTransactionsByDateAndCategoryAsync(
             DateTimeRange dateTimePeriod,
-            TransactionCategory category)
+            TransactionCategory category,
+            CancellationToken cancellationToken)
         {
             return await DbContext.Set<Transaction>()
                 .Where(
@@ -44,6 +45,13 @@ namespace Domestica.Budget.Infrastructure.Repositories
                          t.TransactionDateUtc <= dateTimePeriod.End &&
                          t.Category == category)
                 .ToListAsync();
+        }
+
+        public async Task<List<Transaction>> BrowseUserTransactions(CancellationToken cancellationToken)
+        {
+            return await DbContext.Set<Transaction>()
+                .Where(t => true /*t -> t.UserId == userId*/)
+                .ToListAsync(cancellationToken);
         }
     }
 }

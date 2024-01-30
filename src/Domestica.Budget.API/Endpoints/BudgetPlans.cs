@@ -1,5 +1,6 @@
 ﻿using Carter;
 using DateKit.DB;
+using Domestica.Budget.API.Cache;
 using Domestica.Budget.Application.BudgetPlans.CreateBudgetPlan;
 using Domestica.Budget.Application.BudgetPlans.GetBudgetPlans;
 using Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories;
@@ -8,6 +9,7 @@ using Domestica.Budget.Domain.BudgetPlans;
 using Domestica.Budget.Domain.Transactions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Domestica.Budget.API.Endpoints
 {
@@ -17,11 +19,11 @@ namespace Domestica.Budget.API.Endpoints
         {
             app.MapGet(
                 "budget-plans",
-                async (ISender sender, CancellationToken cancellationToken) =>
+                async (ISender sender, IDistributedCache cache, CancellationToken cancellationToken) =>
                 {
                     var query = new GetBudgetPlansQuery();
 
-                    var result = await sender.Send(query, cancellationToken);
+                    var result = await cache.GetCachedResponseAsync(CacheKey.BudgetPlans(null), sender, query, cancellationToken);
 
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
@@ -68,8 +70,8 @@ namespace Domestica.Budget.API.Endpoints
                     CancellationToken cancellationToken) =>
                 {
                     var command = new UpdateBudgetPlanCategoryCommand(
-                        new(Guid.Parse(budgetPlanId)),
-                        TransactionCategory.FromValue(budgetPlanCategory),
+                        budgetPlanId,
+                        budgetPlanCategory,
                         values);
 
                     var result = await sender.Send(command, cancellationToken);

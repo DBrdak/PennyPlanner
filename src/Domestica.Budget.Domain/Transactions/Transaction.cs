@@ -14,15 +14,15 @@ namespace Domestica.Budget.Domain.Transactions
 {
     public sealed class Transaction : Entity<TransactionId>
     {
-        public AccountId? AccountId { get; protected set; } // Affected Account (the one which will have added TransactionAmount to balance)
-        public AccountId? FromAccountId { get; protected set; } // Internal Transaction
-        public AccountId? ToAccountId { get; protected set; } // Internal Transaction
-        public TransactionEntityId? SenderId { get; protected set; } // Income Transaction
-        public TransactionEntityId? RecipientId { get; protected set; } // Outcome Transaction
-        public Money.DB.Money TransactionAmount { get; private set; }
-        public TransactionCategory Category { get; private set; }
+        public AccountId? AccountId { get; init; } // Affected Account (the one which will have added TransactionAmount to balance)
+        public AccountId? FromAccountId { get; init; } // Internal Transaction
+        public AccountId? ToAccountId { get; init; } // Internal Transaction
+        public TransactionEntityId? SenderId { get; init; } // Income Transaction
+        public TransactionEntityId? RecipientId { get; init; } // Outcome Transaction
+        public Money.DB.Money TransactionAmount { get; init; }
+        public TransactionCategory Category { get; init; }
         [JsonConverter(typeof(DateTimeConverter))]
-        public DateTime TransactionDateUtc { get; private set; }
+        public DateTime TransactionDateUtc { get; init; }
 
         private Transaction()
         { }

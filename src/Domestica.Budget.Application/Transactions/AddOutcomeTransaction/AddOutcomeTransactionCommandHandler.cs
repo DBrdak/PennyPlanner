@@ -23,7 +23,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
 
         public async Task<Result<Transaction>> Handle(AddOutcomeTransactionCommand request, CancellationToken cancellationToken)
         {
-            var sourceAccount = await _accountRepository.GetUserAccountByIdAsync(request.SourceAccountId, cancellationToken);
+            var sourceAccount = await _accountRepository.GetUserAccountByIdAsync(new(Guid.Parse(request.SourceAccountId)), cancellationToken);
 
             if (sourceAccount is null)
             {
@@ -31,7 +31,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
             }
 
             var recipient = await _transactionEntityRepository.GetByIdIncludeAsync(
-                request.RecipientId,
+                new(Guid.Parse(request.RecipientId)),
                 te => te.Transactions,
                 cancellationToken) as TransactionRecipient;
 
@@ -41,10 +41,10 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
             }
 
             var createdTransaction = TransactionService.CreateOutgoingTransaction(
-                request.TransactionAmount,
+                request.TransactionAmount.ToDomainObject(),
                 sourceAccount,
                 recipient,
-                OutgoingTransactionCategory.FromValue(request.Category.Value));
+                OutgoingTransactionCategory.FromValue(request.Category));
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Domain.BudgetPlans;
+using Domestica.Budget.Domain.Transactions;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
@@ -33,8 +34,10 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
             }
 
             foreach (var budgetedTransactionCategoryValues in request.BudgetedTransactionCategoryValues)
-            { 
-                budgetPlan.SetBudgetForCategory(budgetedTransactionCategoryValues.Category, budgetedTransactionCategoryValues.BudgetedAmount);
+            {
+                budgetPlan.SetBudgetForCategory(
+                    TransactionCategory.FromValue(budgetedTransactionCategoryValues.Category),
+                    budgetedTransactionCategoryValues.BudgetedAmount.ToDomainObject());
             }
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;

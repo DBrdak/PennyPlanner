@@ -1,10 +1,12 @@
 ﻿using Carter;
+using Domestica.Budget.API.Cache;
 using Domestica.Budget.Application.Accounts.AddAccount;
 using Domestica.Budget.Application.Accounts.GetAccounts;
 using Domestica.Budget.Application.Accounts.RemoveAccount;
 using Domestica.Budget.Application.Accounts.UpdateAccount;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Domestica.Budget.API.Endpoints
 {
@@ -14,11 +16,12 @@ namespace Domestica.Budget.API.Endpoints
         {
             app.MapGet(
                 "accounts",
-                async (ISender sender, CancellationToken cancellationToken) =>
+                async (ISender sender, IDistributedCache cache, CancellationToken cancellationToken) =>
                 {
                     var query = new GetAccountsQuery();
 
-                    var result = await sender.Send(query, cancellationToken);
+                    // TODO key for specific user accounts: "accounts_{userId}"
+                    var result = await cache.GetCachedResponseAsync(CacheKey.Accounts(null), sender, query, cancellationToken);
 
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
@@ -61,7 +64,7 @@ namespace Domestica.Budget.API.Endpoints
                     [FromRoute] string accountId,
                     CancellationToken cancellationToken) =>
                 {
-                    var command = new RemoveAccountCommand(new(Guid.Parse(accountId)));
+                    var command = new RemoveAccountCommand(accountId);
 
                     var result = await sender.Send(command, cancellationToken);
 

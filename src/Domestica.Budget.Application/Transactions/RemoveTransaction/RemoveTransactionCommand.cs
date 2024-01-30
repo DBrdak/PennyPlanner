@@ -8,7 +8,7 @@ using Domestica.Budget.Domain.Transactions;
 
 namespace Domestica.Budget.Application.Transactions.RemoveTransaction
 {
-    public sealed record RemoveTransactionCommand(TransactionId TransactionId) : ICommand<Transaction>
+    public sealed record RemoveTransactionCommand(string TransactionId) : ICommand<Transaction>
     {
     }
 }

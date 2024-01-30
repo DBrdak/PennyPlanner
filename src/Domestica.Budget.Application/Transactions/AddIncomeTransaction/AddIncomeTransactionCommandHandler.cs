@@ -24,7 +24,7 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
 
         public async Task<Result<Transaction>> Handle(AddIncomeTransactionCommand request, CancellationToken cancellationToken)
         {
-            var destinationAccount = await _accountRepository.GetUserAccountByIdAsync(request.DestinationAccountId, cancellationToken);
+            var destinationAccount = await _accountRepository.GetUserAccountByIdAsync(new(Guid.Parse(request.DestinationAccountId)), cancellationToken);
 
             if (destinationAccount is null)
             {
@@ -32,7 +32,7 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
             }
 
             var sender = await _transactionEntityRepository.GetByIdIncludeAsync(
-                request.SenderId,
+                new(Guid.Parse(request.SenderId)),
                 te => te.Transactions,
                 cancellationToken) as TransactionSender;
 
@@ -42,10 +42,10 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
             }
 
             var createdTransaction = TransactionService.CreateIncomingTransaction(
-                request.TransactionAmount,
+                request.TransactionAmount.ToDomainObject(),
                 destinationAccount,
                 sender,
-                IncomingTransactionCategory.FromValue(request.Category.Value));
+                IncomingTransactionCategory.FromValue(request.Category));
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
