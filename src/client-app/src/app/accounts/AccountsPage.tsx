@@ -1,26 +1,40 @@
 import AppOverlay, {dashboardSections} from "../../components/appOverlay/AppOverlay";
 import {TilesLayout} from "../../components/tilesLayout/TilesLayout";
-import {TileContent} from "../../components/tilesLayout/TileContent";
+import {AccountTile} from "./components/AccountTile";
+import {useStore} from "../../stores/store";
+import {useEffect} from "react";
+import {CircularProgress, useMediaQuery} from "@mui/material";
+import theme from "../theme";
+import {observer} from "mobx-react-lite";
+import {NewAccountTile} from "./components/NewAccountTile";
 
-export function AccountsPage() {
-    const activeSectionIndex = dashboardSections.findIndex(s => s.title.toLowerCase() === 'accounts')
+export default observer (function AccountsPage() {
+    const isUwhd = useMediaQuery(theme.breakpoints.up('xl'))
+    const {accountStore} = useStore()
+    const cols = isUwhd ? 4 : 6
+
+    useEffect(() => {
+        const load = async () => await accountStore.loadAccounts()
+        load()
+    }, [])
 
     return (
-        <AppOverlay activeSectionIndex={activeSectionIndex}>
-            <TilesLayout tiles={[
-                {cols: 8, height: '100%', content:[
-                    <TileContent
-                        text={'View Accounts'}
-                        img={'/assets/view_account.jpg'}
-                        navigateToPath={'browse'} />
-                ]},
-                {cols: 4, height: '100%', content:[
-                    <TileContent
-                        text={'Add Account'}
-                         img={'/assets/view_account.jpg'} 
-                        navigateToPath={'new'} />
-                ]},
-            ]} />
+        <AppOverlay>
+            {accountStore.loading ?
+                <CircularProgress color={'secondary'} /> :
+                <TilesLayout tiles={[
+                    ...accountStore.accounts.map(account => (
+                        {
+                            cols: cols, height: '50%', content:
+                                <AccountTile account={account}/>
+                        }
+                    )),
+                    {
+                        cols: cols, height: '50%', content:
+                        <NewAccountTile/>
+                    }
+                ]} />
+            }
         </AppOverlay>
     );
-}
+})

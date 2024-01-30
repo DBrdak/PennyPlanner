@@ -16,15 +16,13 @@ export function TilesLayout({ tiles }: TilesLayoutProps) {
             padding: isMobile ? 1 : 2,
             margin: 0,
             backgroundColor: theme.palette.background.paper,
-            borderRadius: '20px'
+            borderRadius: '20px',
+            overflow:'auto'
         }}>
+
             {tiles.map((tile, index) => (
-                <Grid key={index} item xs={12} sm={tile.cols} height={tile.height} padding={isMobile ? 0.5 : 1}>
-                    {tile.content.map((content, contentIndex) => (
-                        <Grid key={contentIndex} item xs={12} sx={{height: `calc(100% / ${tile.content.length})`, padding: isMobile ? 0.5 : 1}}>
-                            {content}
-                        </Grid>
-                    ))}
+                <Grid key={index} item xs={12} sm={tile.cols} height={'50%'} padding={isMobile ? 0.5 : 1}>
+                    {tile.content}
                 </Grid>
             ))}
         </Grid>

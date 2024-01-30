@@ -1,12 +1,13 @@
 import AppOverlay, {dashboardSections} from "../../../components/appOverlay/AppOverlay";
-import {TilesLayout} from "../../../components/tilesLayout/TilesLayout";
+import {useStore} from "../../../stores/store";
+import {observer} from "mobx-react-lite";
 
 
-export function AddAccount() {
-    const activeSectionIndex = dashboardSections.findIndex(s => s.title.toLowerCase() === 'accounts')
+export default observer(function AddAccount() {
 
     return (
-        <AppOverlay activeSectionIndex={activeSectionIndex}>
+        <AppOverlay>
+
         </AppOverlay>
     );
-}
+})

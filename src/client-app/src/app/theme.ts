@@ -4,34 +4,44 @@ const theme = createTheme({
     palette: {
         mode: 'dark',
         primary: {
-            main: '#5b1ae7',
-            light: '#8143f8'
+            main: '#FF69B4',
+            light: '#FFA7C4',
+            dark: '#C71585'
         },
         secondary: {
-            main: '#b015d3',
+            main: '#00FFFF',
+            light: '#B2FFFF',
+            dark: '#008B8B'
         },
         error: {
-            main: '#ff1744',
+            main: '#ee0000',
+            dark: '#8d0000',
+            light: '#ff4343'
         },
         info: {
             main: '#ff9800',
         },
         background: {
-            default: '#0d0418',
-            paper: '#1a1a1a'
+            default: '#121212',
+            paper: '#1E1E1E'
         },
         text: {
             primary: '#ffffff',
-            secondary: '#bdbdbd'
+            secondary: '#d2d2d2'
         },
+        success: {
+            main: '#0aa901',
+            light: '#83ff00',
+            dark: '#006405'
+        }
     },
     breakpoints: {
         values: {
             xs: 0,
             sm: 600,
-            md: 900,
-            lg: 1200,
-            xl: 1536,
+            md: 1200,
+            lg: 1536,
+            xl: 2200,
         }
     },
     components: {

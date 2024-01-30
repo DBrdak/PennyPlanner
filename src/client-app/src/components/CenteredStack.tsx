@@ -1,5 +1,5 @@
 import React, {CSSProperties, ReactNode} from 'react';
-import {Stack, StackProps} from '@mui/material';
+import {Stack} from '@mui/material';
 
 interface CenteredStack {
     direction?: 'row' | 'column'

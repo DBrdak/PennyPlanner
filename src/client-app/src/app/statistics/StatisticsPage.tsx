@@ -1,15 +1,14 @@
 import AppOverlay, {dashboardSections} from "../../components/appOverlay/AppOverlay";
 import {TilesLayout} from "../../components/tilesLayout/TilesLayout";
-import {TileContent} from "../../components/tilesLayout/TileContent";
+import {observer} from "mobx-react-lite";
 
-export function StatisticsPage() {
-    const activeSectionIndex = dashboardSections.findIndex(s => s.title.toLowerCase() === 'statistics')
+export default observer(function StatisticsPage() {
 
     return (
-        <AppOverlay activeSectionIndex={activeSectionIndex}>
+        <AppOverlay>
             <TilesLayout tiles={[
 
             ]} />
         </AppOverlay>
     );
-}
+})

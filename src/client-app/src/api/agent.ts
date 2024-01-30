@@ -9,6 +9,7 @@ import {UpdateBudgetPlanCategoryValues} from "../models/requests/updateBudgetPla
 import {AddInternalTransactionCommand} from "../models/requests/addInternalTransactionCommand";
 import {AddIncomeTransactionCommand} from "../models/requests/addIncomeTransactionCommand";
 import {AddOutcomeTransactionCommand} from "../models/requests/addOutcomeTransactionCommand";
+import {Account} from "../models/accounts/account";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -16,11 +17,12 @@ const sleep = (delay: number) => {
     })
 }
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+axios.defaults.baseURL = process.env.REACT_APP_API_URL
 
 const responseBody = <T> (response: AxiosResponse<T>) => response.data;
 
 axios.interceptors.response.use(async(response) => {
+
         if(process.env.NODE_ENV === "development") {
             await sleep(1000)
         }
@@ -33,6 +35,7 @@ axios.interceptors.response.use(async(response) => {
                 toast.error(errorMessage);
                 return Promise.reject();
             } else {
+                let errorMessage = ''
                 switch(error.response.status) {
                     case 400:
                         if(error.response.config.method === 'get' && error.response.data.errors.hasOwnProperty('id')){
@@ -46,11 +49,13 @@ axios.interceptors.response.use(async(response) => {
                         else toast.error('unauthorized')
                         break;
                     case 403:
-                        toast.error('forbidden')
-                        break;
+                        errorMessage = error.response.data.name;
+                        toast.error(errorMessage);
+                        return Promise.reject();
                     case 404:
-                        router.navigate('/not-found');
-                        break;
+                        errorMessage = error.response.data.name;
+                        toast.error(errorMessage);
+                        return Promise.reject();
                     case 500:
                         router.navigate('/server-error');
                         break;
@@ -71,7 +76,7 @@ const requests = {
 }
 
 const accounts = {
-    getAccounts: () => axios.get('/accounts').then(responseBody),
+    getAccounts: () => axios.get<Account[]>('/accounts').then(responseBody),
     createAccount: (data: NewAccountData) => axios.post('/accounts', data).then(responseBody),
     updateAccount: (data: AccountUpdateData) => axios.put('/accounts', data).then(responseBody),
     deleteAccount: (accountId: string) => axios.delete(`/accounts/${accountId}`),
@@ -108,7 +113,10 @@ const transactions = {
 }
 
 const agent = {
-
+    accounts,
+    budgetPlans,
+    transactionEntities,
+    transactions
 }
 
 export default agent;

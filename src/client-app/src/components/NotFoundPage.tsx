@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
-import theme from "../app/theme";
-import {Box, CircularProgress, LinearProgress, Typography, useMediaQuery} from "@mui/material";
+import {Box, LinearProgress, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
 interface NotFoundPageProps {
