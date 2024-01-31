@@ -18,7 +18,7 @@ namespace Domestica.Budget.Domain.Accounts
         private readonly List<Transaction> _transactions;
         public AccountName Name { get; private set; }
         [NotMapped]
-        public Money.DB.Money Balance => new(_transactions.Sum(transaction => transaction.TransactionAmount.Amount), Currency);
+        public global::Money.DB.Money Balance => new(_transactions.Sum(transaction => transaction.TransactionAmount.Amount), Currency);
         public Currency Currency { get; private set; }
 
         [JsonConstructor]
@@ -36,7 +36,7 @@ namespace Domestica.Budget.Domain.Accounts
 
         public void UpdateAccount(AccountName name, decimal balance)
         {
-            if(balance != Balance)
+            if(balance != Balance.Amount)
             {
                 AdjustAccountBalance(balance);
             }

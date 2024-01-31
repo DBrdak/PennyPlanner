@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from "axios"
-import { toast } from "react-toastify"
+import axios, {AxiosResponse} from "axios"
+import {Bounce, toast} from "react-toastify"
 import { router } from "../router/Routes"
 import {NewAccountData} from "../models/requests/newAccountData";
 import {AddTransactionEntityCommand} from "../models/requests/addTransactionEntityCommand";
@@ -28,38 +28,30 @@ axios.interceptors.response.use(async(response) => {
         }
         return response
     }, (error) => {
-        console.log(error.data)
-        if (error.response) {
-            if (error.response.data && error.response.data.name) {
-                const errorMessage = error.response.data.name;
-                toast.error(errorMessage);
-                return Promise.reject();
-            } else {
-                let errorMessage = ''
-                switch(error.response.status) {
-                    case 400:
-                        if(error.response.config.method === 'get' && error.response.data.errors.hasOwnProperty('id')){
-                            router.navigate('/not-found');
-                        }
-                        break;
-                    case 401:
-                        if( error.response.headers['www-authenticate']?.startsWith('Bearer error="invalid_token"')){
-                            toast.error("Session expired - please login again")
-                        }
-                        else toast.error('unauthorized')
-                        break;
-                    case 403:
-                        errorMessage = error.response.data.name;
-                        toast.error(errorMessage);
-                        return Promise.reject();
-                    case 404:
-                        errorMessage = error.response.data.name;
-                        toast.error(errorMessage);
-                        return Promise.reject();
-                    case 500:
-                        router.navigate('/server-error');
-                        break;
-                }
+        if (error) {
+            const errorMessage = error.response.data.error.name
+            const errorMessages = errorMessage.split('\n')
+            switch(error.response.status) {
+                case 400:
+                    errorMessages.forEach(toast.error)
+                    return Promise.reject();
+                case 401:
+                    if( error.response.headers['www-authenticate']?.startsWith('Bearer error="invalid_token"')){
+                        toast.error("Session expired - please login again")
+                    }
+                    else toast.error('Unauthorized')
+                    break;
+                case 403:
+                    toast.error(errorMessage);
+                    return Promise.reject();
+                case 404:
+                    if(error.response.config.method === 'get' && error.response.data.errors.hasOwnProperty('id')){
+                        router.navigate('/not-found');
+                    }
+                    return Promise.reject();
+                case 500:
+                    router.navigate('/server-error');
+                    break;
             }
         }
 
