@@ -16,10 +16,8 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
             RuleForEach(x => x.BudgetedTransactionCategoryValues)
                 .Must(values => TransactionCategory.All.Any(category => category.Value == values.Category))
                 .WithMessage("Invalid transaction category")
-                .Must(values => values.BudgetedAmount.Amount > 0)
-                .WithMessage("Budgeted amount must be greater than 0")
-                .Must(values => Currency.All.Any(currency => currency.Code == values.BudgetedAmount.Currency))
-                .WithMessage("Invalid currency");
+                .Must(values => values.BudgetedAmount > 0)
+                .WithMessage("Budgeted amount must be greater than 0");
         }
     }
 }

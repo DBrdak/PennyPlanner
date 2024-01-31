@@ -7,6 +7,7 @@ using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Domain.BudgetPlans;
 using Domestica.Budget.Domain.Transactions;
+using Money.DB;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
@@ -33,7 +34,11 @@ namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
 
             if (request.Values.NewBudgetAmount is not null && !request.Values.IsBudgetToReset)
             {
-                budgetPlan.UpdateBudgetCategory(TransactionCategory.FromValue(request.Category), request.Values.NewBudgetAmount.ToDomainObject());
+                //TODO Fetch currency from user
+                var currency = Currency.Usd;
+                budgetPlan.UpdateBudgetCategory(
+                    TransactionCategory.FromValue(request.Category),
+                    new ((decimal)request.Values.NewBudgetAmount, currency));
             }
             else
             {

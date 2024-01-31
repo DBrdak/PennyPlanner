@@ -35,6 +35,7 @@ export function AccountBalanceDisplay({isMobile, account, transactions, currency
                 lineHeight: '1',
                 color,
                 textAlign: 'center',
+                textOverflow: 'nowrap'
             }}
         >
             {balance > 0 ? `+${balance}` : balance} {account ? account.balance.currency : currency}
@@ -98,6 +99,7 @@ export function AccountBalanceDisplay({isMobile, account, transactions, currency
                     lineHeight: '1',
                     color: theme.palette.text.primary,
                     textAlign: 'center',
+                    textOverflow: 'nowrap'
                 }}>
                     {new Date().toLocaleString('en-US', { month: 'long' })}
                 </Typography>
@@ -112,6 +114,7 @@ export function AccountBalanceDisplay({isMobile, account, transactions, currency
                     lineHeight: '1',
                     color: theme.palette.text.primary,
                     textAlign: 'center',
+                    textOverflow: 'nowrap'
                 }}>
                     Today
                 </Typography>

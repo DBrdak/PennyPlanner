@@ -3,7 +3,9 @@ using System.Text.Json.Serialization;
 using CommonAbstractions.DB.Entities;
 using Domestica.Budget.Domain.Transactions;
 using Exceptions.DB;
+using Money.DB;
 using Currency = Money.DB.Currency;
+using Money = Money.DB.Money;
 using Transaction = Domestica.Budget.Domain.Transactions.Transaction;
 
 #pragma warning disable CS8618
@@ -32,7 +34,7 @@ namespace Domestica.Budget.Domain.Accounts
             TransactionService.CreatePrivateTransaction(new (initialBalance, currency), this);
         }
 
-        public void UpdateAccount(AccountName name, global::Money.DB.Money balance)
+        public void UpdateAccount(AccountName name, decimal balance)
         {
             if(balance != Balance)
             {
@@ -56,14 +58,9 @@ namespace Domestica.Budget.Domain.Accounts
             Name = newName;
         }
 
-        private void AdjustAccountBalance(global::Money.DB.Money newBalance)
+        private void AdjustAccountBalance(decimal newBalance)
         {
-            if (newBalance.Currency != Balance.Currency)
-            {
-                Currency = newBalance.Currency;
-            }
-
-            var difference = newBalance - Balance;
+            var difference = new global::Money.DB.Money(newBalance - Balance.Amount, Balance.Currency);
 
             TransactionService.CreatePrivateTransaction(difference, this);
         }

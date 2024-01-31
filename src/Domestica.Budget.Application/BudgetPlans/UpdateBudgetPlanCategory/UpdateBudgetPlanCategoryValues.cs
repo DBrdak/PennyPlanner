@@ -7,7 +7,7 @@ using Domestica.Budget.Application.DataTransferObjects;
 
 namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
 {
-    public sealed record UpdateBudgetPlanCategoryValues(MoneyDto? NewBudgetAmount, bool IsBudgetToReset)
+    public sealed record UpdateBudgetPlanCategoryValues(decimal? NewBudgetAmount, bool IsBudgetToReset)
     {
     }
 }

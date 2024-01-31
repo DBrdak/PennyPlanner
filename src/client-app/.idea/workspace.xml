@@ -4,25 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Welcome Page Added">
-      <change afterPath="$PROJECT_DIR$/src/app/accounts/components/TotalAccountsTile.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/accounts/details/TotalAccountsDetailsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Middlewares/MonitoringMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Middlewares/MonitoringMiddleware.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/AccountsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/AccountsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/AccountBalanceDisplay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/AccountBalanceDisplay.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/NewAccountTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/NewAccountTile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/new/AddAccount.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/new/AddAccount.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tilesLayout/TilePaper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tilesLayout/TilePaper.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/requests/accountUpdateData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/accountUpdateData.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/requests/addIncomeTransactionCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/addIncomeTransactionCommand.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/requests/addInternalTransactionCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/addInternalTransactionCommand.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/requests/addOutcomeTransactionCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/addOutcomeTransactionCommand.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/requests/budgetedTransactionCategoryValues.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/budgetedTransactionCategoryValues.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/requests/newAccountData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/newAccountData.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/requests/updateBudgetPlanCategoryValues.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/updateBudgetPlanCategoryValues.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/Routes.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/calculators/balanceCalculator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/calculators/balanceCalculator.ts" afterDir="false" />
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Add Account Feature Added">
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandHandler.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +120,7 @@
       <workItem from="1706481074862" duration="3221000" />
       <workItem from="1706498557149" duration="10259000" />
       <workItem from="1706516036064" duration="35510000" />
-      <workItem from="1706632785704" duration="11205000" />
+      <workItem from="1706632785704" duration="11495000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
@@ -181,7 +164,14 @@
       <option name="project" value="LOCAL" />
       <updated>1706637907864</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add Account Feature Added">
+      <created>1706650928135</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1706650928135</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,6 +195,7 @@
     <MESSAGE value="Account Page 1 complete" />
     <MESSAGE value="Account Details Page Init" />
     <MESSAGE value="Welcome Page Added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Welcome Page Added" />
+    <MESSAGE value="Add Account Feature Added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Account Feature Added" />
   </component>
 </project>

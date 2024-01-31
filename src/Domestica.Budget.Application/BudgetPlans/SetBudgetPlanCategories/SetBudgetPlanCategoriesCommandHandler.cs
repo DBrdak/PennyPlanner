@@ -7,6 +7,7 @@ using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Domain.BudgetPlans;
 using Domestica.Budget.Domain.Transactions;
+using Money.DB;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
@@ -32,12 +33,13 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
             {
                 return Result.Failure<BudgetPlan>(Error.NotFound("Budget plan not found"));
             }
-
+            //TODO Fetch currency from user
+            var currency = Currency.Usd;
             foreach (var budgetedTransactionCategoryValues in request.BudgetedTransactionCategoryValues)
             {
                 budgetPlan.SetBudgetForCategory(
                     TransactionCategory.FromValue(budgetedTransactionCategoryValues.Category),
-                    budgetedTransactionCategoryValues.BudgetedAmount.ToDomainObject());
+                    new (budgetedTransactionCategoryValues.BudgetedAmount, currency));
             }
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;

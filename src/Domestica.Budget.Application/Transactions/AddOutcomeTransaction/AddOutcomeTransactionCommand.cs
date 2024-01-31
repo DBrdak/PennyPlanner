@@ -9,7 +9,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
     public sealed record AddOutcomeTransactionCommand(
         string SourceAccountId,
         string RecipientId,
-        MoneyDto TransactionAmount,
+        decimal TransactionAmount,
         string Category) : ICommand<Transaction>
     {
     }

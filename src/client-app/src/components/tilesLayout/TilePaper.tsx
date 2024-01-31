@@ -14,7 +14,7 @@ const randomGradient = (colors?: string | null) => {
         return `linear-gradient(to bottom right, ${theme.palette.secondary.dark}, ${theme.palette.secondary.dark})`;
     }
     if(colors === 'magenta'){
-        return `linear-gradient(to bottom right, ${theme.palette.primary.dark}, ${theme.palette.primary.dark})`;
+        return `linear-gradient(to bottom right, ${theme.palette.primary.main}, ${theme.palette.primary.main})`;
     }
     if (randomNumber % 19 === 0) {
         return `linear-gradient(to bottom right, ${theme.palette.primary.dark}, ${theme.palette.secondary.light})`;

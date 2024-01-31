@@ -5,6 +5,7 @@ using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.TransactionEntities.TransactionRecipients;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
 using Domestica.Budget.Domain.Transactions;
+using Money.DB;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
@@ -41,8 +42,11 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
                 return Result.Failure<Transaction>(Error.NotFound($"Sender with ID: {request.SenderId} not found"));
             }
 
+            // TODO fetch currency from user
+            var currency = Currency.Usd;
+
             var createdTransaction = TransactionService.CreateIncomingTransaction(
-                request.TransactionAmount.ToDomainObject(),
+                new (request.TransactionAmount, currency),
                 destinationAccount,
                 sender,
                 IncomingTransactionCategory.FromValue(request.Category));

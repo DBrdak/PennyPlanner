@@ -28,7 +28,7 @@ namespace Domestica.Budget.Application.Accounts.UpdateAccount
                 return Result.Failure<Account>(Error.NotFound($"Account with ID: {request.AccountUpdateData.AccountId} not found"));
             }
 
-            account.UpdateAccount(new(request.AccountUpdateData.Name), request.AccountUpdateData.Balance.ToDomainObject());
+            account.UpdateAccount(new(request.AccountUpdateData.Name), request.AccountUpdateData.Balance);
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 

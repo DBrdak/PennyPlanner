@@ -11,7 +11,8 @@ const WelcomePage: React.FC = () => {
     const headerStyles: React.CSSProperties = {
         color: theme.palette.common.white,
         marginBottom: theme.spacing(3),
-        userSelect: 'none'
+        userSelect: 'none',
+        textShadow: '2px 2px 6px rgba(0,0,0, 0.7)'
     };
 
     return (
@@ -19,7 +20,11 @@ const WelcomePage: React.FC = () => {
             <Typography variant={isMobile ? 'h4' : 'h2'} sx={headerStyles}>
                 Welcome to Budgetify
             </Typography>
-            <Typography variant="h6" color="textSecondary" align="center" sx={{ marginBottom: theme.spacing(3), userSelect: 'none' }}>
+            <Typography variant="h6" color="textSecondary" align="center" sx={{
+                marginBottom: theme.spacing(3),
+                userSelect: 'none',
+                textShadow: '0px 0px 6px rgba(0,0,0, 0.6)'
+            }}>
                 Your budget management made easy.
             </Typography>
             {2 % 3 === 0 ? (

@@ -2,6 +2,7 @@
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.Transactions;
+using Money.DB;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.Transactions.AddInternalTransaction
@@ -32,9 +33,11 @@ namespace Domestica.Budget.Application.Transactions.AddInternalTransaction
             {
                 return Result.Failure<Transaction[]>(Error.NotFound($"Account with ID: {request.ToAccountId} not found"));
             }
+            // TODO fetch currency from user
+            var currency = Currency.Usd;
 
             var createdTransactions = TransactionService.CreateInternalTransaction(
-                request.TransactionAmount.ToDomainObject(),
+                new(request.TransactionAmount, currency),
                 fromAccount,
                 toAccount);
 

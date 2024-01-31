@@ -27,6 +27,7 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
             {
                 case "Savings":
                     newAccount = CreateAccount<SavingsAccount>(request.NewAccountData);
+
                     break;
                 case "Transactional":
                     newAccount = CreateAccount<TransactionalAccount>(request.NewAccountData);
@@ -52,12 +53,12 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
         }
 
         private TAccount? CreateAccount<TAccount>(NewAccountData newAccountData) where TAccount : class
-        {
+        {//TODO fetch currency from user
             return Activator.CreateInstance(
                 typeof(TAccount),
                 new AccountName(newAccountData.Name),
-                Currency.FromCode(newAccountData.InitialBalance.Currency),
-                newAccountData.InitialBalance.Amount) as TAccount;
+                Currency.Usd, //TODO Fetch currency from user
+                newAccountData.InitialBalance) as TAccount;
         }
     }
 }

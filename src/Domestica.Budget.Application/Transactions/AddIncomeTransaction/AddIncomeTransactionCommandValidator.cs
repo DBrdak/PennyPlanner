@@ -13,10 +13,6 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
                     category => IncomingTransactionCategory.All.Any(
                         incomingTransactionCategory => incomingTransactionCategory.Value == category))
                 .WithMessage("Invalid transaction category");
-
-            RuleFor(x => x.TransactionAmount.Currency)
-                .Must(currency => Currency.All.Any(c => c.Code == currency))
-                .WithMessage("Invalid currency");
         }
     }
 }

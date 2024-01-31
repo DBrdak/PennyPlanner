@@ -8,7 +8,7 @@ using Domestica.Budget.Domain.Transactions;
 
 namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
 {
-    public sealed record BudgetedTransactionCategoryValues(string Category, MoneyDto BudgetedAmount)
+    public sealed record BudgetedTransactionCategoryValues(string Category, decimal BudgetedAmount)
     {
     }
 }
