@@ -15,11 +15,7 @@ const useAccount = () => {
 
     useEffect(() => {
         const loadAccounts = async () => {
-            try {
-                await accountStore.loadAccounts();
-            } catch (error) {
-                console.error('Error loading accounts:', error);
-            }
+            await accountStore.loadAccounts();
         };
 
         const findAccount = () => accountStore.accounts.find(a => a.accountId === accountId);

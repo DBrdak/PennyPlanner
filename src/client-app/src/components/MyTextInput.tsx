@@ -1,5 +1,13 @@
 import React from 'react';
-import { TextField, FormControl, Tooltip, FilledInputProps, InputProps, OutlinedInputProps } from '@mui/material';
+import {
+    TextField,
+    FormControl,
+    Tooltip,
+    FilledInputProps,
+    InputProps,
+    OutlinedInputProps,
+    InputLabel
+} from '@mui/material';
 import { useField } from 'formik';
 import { observer } from 'mobx-react-lite';
 
@@ -81,7 +89,7 @@ const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, showErr
                 disabled={disabled}
                 onChange={handleChange}
                 type={type}
-                label={props.label}
+                label={props.label ? props.label : props.placeholder}
                 variant="outlined"
                 error={meta.touched && !!meta.error}
                 InputProps={inputProps} 

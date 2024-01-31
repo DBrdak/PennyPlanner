@@ -1,13 +1,25 @@
 import AppOverlay, {dashboardSections} from "../../../components/appOverlay/AppOverlay";
 import {useStore} from "../../../stores/store";
 import {observer} from "mobx-react-lite";
-import {Button, ButtonGroup, Grid, IconButton, Stack, Typography, useMediaQuery} from "@mui/material";
+import {
+    Button,
+    ButtonGroup,
+    FormControl, FormLabel,
+    Grid,
+    IconButton, InputLabel, MenuItem,
+    Select,
+    Stack,
+    Typography,
+    useMediaQuery
+} from "@mui/material";
 import theme from "../../theme";
 import {Form, Formik} from "formik";
 import MyTextInput from "../../../components/MyTextInput";
 import {UndoTwoTone} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import {NewAccountData} from "../../../models/requests/newAccountData";
+import * as yup from 'yup'
+import {number, string} from "yup";
 
 
 export default observer(function AddAccount() {
@@ -16,10 +28,15 @@ export default observer(function AddAccount() {
     const isUwhd = useMediaQuery(theme.breakpoints.up('xl'))
     const {accountStore} = useStore()
 
-    //const validationSchema //TODO Implement validation schema
+    const validationSchema = yup.object({
+        name: string().required('Pass account name'),
+        type: string().required().oneOf(['Transactional', 'Savings'], 'Invalid account type'),
+        initialBalance: number().required('Pass initial account balance')
+    })
 
     const handleFormSubmit = async (accountData: NewAccountData) => {
         await accountStore.addAccount(accountData)
+        navigate('/accounts')
     }
 
     return (
@@ -41,26 +58,38 @@ export default observer(function AddAccount() {
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    <Formik initialValues={new NewAccountData()} onSubmit={handleFormSubmit}>
-                        {({handleSubmit, setValues, values}) => (
+                    <Formik initialValues={new NewAccountData()} onSubmit={handleFormSubmit} validationSchema={validationSchema}>
+                        {({handleSubmit, setValues, values, handleChange}) => (
                             <Form style={{width: isUwhd ? '15%' : '40%'}} className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                                <Stack spacing={3} sx={{textAlign:'center'}}>
+                                <Stack spacing={3}>
                                     {!isMobile &&
-                                        <Typography variant={'h3'} sx={{userSelect: 'none', paddingBottom: '3%'}}>
+                                        <Typography variant={'h3'} sx={{userSelect: 'none', paddingBottom: '3%', textAlign: 'center'}}>
                                             Add new account
                                         </Typography>
                                     }
-                                    <MyTextInput
-                                        name={'type'}
-                                        placeholder={'Account Type'}
-                                    />
+                                    <FormControl>
+                                        <InputLabel>Account Type</InputLabel>
+                                        <Select
+                                            id={'type'}
+                                            name={'type'}
+                                            value={values.type}
+                                            label={'Account Type'}
+                                            onChange={handleChange}
+                                        >
+                                            <MenuItem key={1} value={'Transactional'}>Transactional Account</MenuItem>
+                                            <MenuItem key={2} value={'Savings'}>Savings Account</MenuItem>
+                                        </Select>
+                                    </FormControl>
                                     <MyTextInput
                                         name={'name'}
                                         placeholder={'Account Name'}
+                                        type={'text'}
+                                        showErrors
                                     />
                                     <MyTextInput
                                         name={'initialBalance'}
                                         placeholder={'Initial Account Balance'}
+                                        showErrors
                                     />
                                     <ButtonGroup sx={{alignItems:'center', justifyContent: 'center'}}>
                                         <Button fullWidth
