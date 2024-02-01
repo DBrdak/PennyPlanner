@@ -8,7 +8,8 @@ namespace Domestica.Budget.Application.Transactions.AddInternalTransaction
     public sealed record AddInternalTransactionCommand(
         string FromAccountId,
         string ToAccountId,
-        decimal TransactionAmount) : ICommand<Transaction[]>
+        decimal TransactionAmount,
+        DateTime TransactionDateTime) : ICommand<Transaction[]>
     {
     }
 }

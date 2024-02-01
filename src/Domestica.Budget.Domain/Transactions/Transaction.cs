@@ -34,7 +34,8 @@ namespace Domestica.Budget.Domain.Transactions
             TransactionSender? sender,
             TransactionRecipient? recipient,
             Money.DB.Money transactionAmount,
-            TransactionCategory category) : base(new TransactionId())
+            TransactionCategory category,
+            DateTime transactionDateTime) : base(new TransactionId())
         {
             AccountId = account.Id;
             FromAccountId = fromAccount?.Id;
@@ -42,7 +43,7 @@ namespace Domestica.Budget.Domain.Transactions
             SenderId = sender?.Id;
             RecipientId = recipient?.Id;
             TransactionAmount = transactionAmount;
-            TransactionDateUtc = DateTime.UtcNow;
+            TransactionDateUtc = transactionDateTime.ToUniversalTime();
             Category = category;
 
             RaiseDomainEvent(new TransactionCreatedDomainEvent(this));
@@ -52,51 +53,55 @@ namespace Domestica.Budget.Domain.Transactions
             Money.DB.Money transactionAmount,
             Account toAccount,
             TransactionSender sender,
-            IncomingTransactionCategory category)
+            IncomingTransactionCategory category,
+            DateTime transactionDateTime)
         {
-            return new(toAccount, null, null, sender, null, transactionAmount, category);
+            return new(toAccount, null, null, sender, null, transactionAmount, category, transactionDateTime);
         }
 
         internal static Transaction CreateOutcome(
             Money.DB.Money transactionAmount,
             Account fromAccount,
             TransactionRecipient recipient,
-            OutgoingTransactionCategory category)
+            OutgoingTransactionCategory category,
+            DateTime transactionDateTime)
         {
             if (transactionAmount.Amount > 0)
             {
-                return new(fromAccount, null, null, null, recipient, -transactionAmount, category);
+                return new(fromAccount, null, null, null, recipient, -transactionAmount, category, transactionDateTime);
             }
 
-            return new(fromAccount, null, null, null, recipient, transactionAmount, category);
+            return new(fromAccount, null, null, null, recipient, transactionAmount, category, transactionDateTime);
         }
 
         internal static Transaction CreateInternalIncome(
             Money.DB.Money transactionAmount,
             Account toAccount,
-            Account fromAccount)
+            Account fromAccount,
+            DateTime transactionDateTime)
         {
-            return new(toAccount, fromAccount, null, null, null, transactionAmount, IncomingTransactionCategory.Internal);
+            return new(toAccount, fromAccount, null, null, null, transactionAmount, IncomingTransactionCategory.Internal, transactionDateTime);
         }
 
         internal static Transaction CreateInternalOutcome(
             Money.DB.Money transactionAmount,
             Account fromAccount,
-            Account toAccount)
+            Account toAccount,
+            DateTime transactionDateTime)
         {
             if (transactionAmount.Amount > 0)
             {
-                return new(fromAccount, null, toAccount, null, null, -transactionAmount, OutgoingTransactionCategory.Internal);
+                return new(fromAccount, null, toAccount, null, null, -transactionAmount, OutgoingTransactionCategory.Internal, transactionDateTime);
             }
 
-            return new(fromAccount, null, toAccount, null, null, transactionAmount, OutgoingTransactionCategory.Internal);
+            return new(fromAccount, null, toAccount, null, null, transactionAmount, OutgoingTransactionCategory.Internal, transactionDateTime);
         }
 
         internal static Transaction CreatePrivateIncome(
             Money.DB.Money transactionAmount,
             Account account)
         {
-            return new(account, null, null, null, null, transactionAmount, IncomingTransactionCategory.Private);
+            return new(account, null, null, null, null, transactionAmount, IncomingTransactionCategory.Private, DateTime.UtcNow);
         }
 
         internal static Transaction CreatePrivateOutcome(
@@ -105,10 +110,10 @@ namespace Domestica.Budget.Domain.Transactions
         {
             if (transactionAmount.Amount > 0)
             {
-                return new(account, null, null, null, null, -transactionAmount, OutgoingTransactionCategory.Private);
+                return new(account, null, null, null, null, -transactionAmount, OutgoingTransactionCategory.Private, DateTime.UtcNow);
             }
 
-            return new(account, null, null, null, null, transactionAmount, OutgoingTransactionCategory.Private);
+            return new(account, null, null, null, null, transactionAmount, OutgoingTransactionCategory.Private, DateTime.UtcNow);
         }
     }
 }

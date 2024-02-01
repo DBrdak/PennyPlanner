@@ -39,7 +39,8 @@ namespace Domestica.Budget.Application.Transactions.AddInternalTransaction
             var createdTransactions = TransactionService.CreateInternalTransaction(
                 new(request.TransactionAmount, currency),
                 fromAccount,
-                toAccount);
+                toAccount,
+                request.TransactionDateTime);
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 

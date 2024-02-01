@@ -10,7 +10,8 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
         string SourceAccountId,
         string RecipientId,
         decimal TransactionAmount,
-        string Category) : ICommand<Transaction>
+        string Category,
+        DateTime TransactionDateTime) : ICommand<Transaction>
     {
     }
 }

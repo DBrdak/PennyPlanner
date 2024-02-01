@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Add Account Feature Added">
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandHandler.cs" afterDir="false" />
-    </list>
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Account Details Transaction List Completed" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,7 +34,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "init-develop",
-    "last_opened_file_path": "D:/Programownie/Projekty/Domestica/Domestica.Budget/src/client-app",
+    "last_opened_file_path": "D:/Programownie/Projekty/Domestica/Domestica.Budget/src/client-app/src/app/accounts/components/transactionsTable",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -56,11 +54,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components\transactionsTable" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\public\assets" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\router" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\stores" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\welcome" />
@@ -121,6 +119,7 @@
       <workItem from="1706498557149" duration="10259000" />
       <workItem from="1706516036064" duration="35510000" />
       <workItem from="1706632785704" duration="11495000" />
+      <workItem from="1706724865145" duration="25896000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
@@ -171,7 +170,35 @@
       <option name="project" value="LOCAL" />
       <updated>1706650928135</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Toast error handling fix">
+      <created>1706734041800</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1706734041800</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add Accounts feature added">
+      <created>1706736950779</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1706736950779</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Account Details Init">
+      <created>1706779389146</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1706779389146</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Account Details Transaction List Completed">
+      <created>1706800445362</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1706800445362</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,6 +223,10 @@
     <MESSAGE value="Account Details Page Init" />
     <MESSAGE value="Welcome Page Added" />
     <MESSAGE value="Add Account Feature Added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Account Feature Added" />
+    <MESSAGE value="Toast error handling fix" />
+    <MESSAGE value="Add Accounts feature added" />
+    <MESSAGE value="Account Details Init" />
+    <MESSAGE value="Account Details Transaction List Completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Account Details Transaction List Completed" />
   </component>
 </project>

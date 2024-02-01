@@ -47,7 +47,8 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
                 new(request.TransactionAmount, currency),
                 sourceAccount,
                 recipient,
-                OutgoingTransactionCategory.FromValue(request.Category));
+                OutgoingTransactionCategory.FromValue(request.Category),
+                request.TransactionDateTime);
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 

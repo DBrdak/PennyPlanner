@@ -10,9 +10,10 @@ namespace Domestica.Budget.Domain.Transactions
             Money.DB.Money transactionAmount,
             Account destinationAccount,
             TransactionSender sender,
-            IncomingTransactionCategory category)
+            IncomingTransactionCategory category,
+            DateTime transactionDateTime)
         {
-            var transaction = Transaction.CreateIncome(transactionAmount, destinationAccount, sender, category);
+            var transaction = Transaction.CreateIncome(transactionAmount, destinationAccount, sender, category, transactionDateTime);
 
             destinationAccount.AddTransaction(transaction);
             sender.AddTransaction(transaction);
@@ -24,9 +25,10 @@ namespace Domestica.Budget.Domain.Transactions
             Money.DB.Money transactionAmount,
             Account sourceAccount,
             TransactionRecipient recipient,
-            OutgoingTransactionCategory category)
+            OutgoingTransactionCategory category,
+            DateTime transactionDateTime)
         {
-            var transaction = Transaction.CreateOutcome(transactionAmount, sourceAccount, recipient, category);
+            var transaction = Transaction.CreateOutcome(transactionAmount, sourceAccount, recipient, category, transactionDateTime);
 
             sourceAccount.AddTransaction(transaction);
             recipient.AddTransaction(transaction);
@@ -37,12 +39,13 @@ namespace Domestica.Budget.Domain.Transactions
         public static Transaction[] CreateInternalTransaction(
             Money.DB.Money transactionAmount,
             Account sourceAccount,
-            Account destinationAccount) 
+            Account destinationAccount,
+            DateTime transactionDateTime) 
         {
             var transactions = new
             {
-                source = Transaction.CreateInternalOutcome(transactionAmount, sourceAccount, destinationAccount),
-                destination = Transaction.CreateInternalIncome(transactionAmount, destinationAccount, sourceAccount)
+                source = Transaction.CreateInternalOutcome(transactionAmount, sourceAccount, destinationAccount, transactionDateTime),
+                destination = Transaction.CreateInternalIncome(transactionAmount, destinationAccount, sourceAccount, transactionDateTime)
             };
 
             sourceAccount.AddTransaction(transactions.source);
