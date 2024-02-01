@@ -1,8 +1,13 @@
-import {Collapse, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Collapse, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@mui/material";
 import SortableTableCell from "./SortableTableCell";
 import {useState} from "react";
 import {Transaction} from "../../../../models/transactions/transaction";
 import formatDate from "../../../../utils/dateFormatter";
+import {useNavigate} from "react-router-dom";
+import {observer} from "mobx-react-lite";
+import {useStore} from "../../../../stores/store";
+import {TransactionEntity} from "../../../../models/transactionEntities/transactionEntity";
+import {Account} from "../../../../models/accounts/account";
 
 interface TransactionsTableGroupProps {
     groupedTransactions: Record<string, Transaction[]>
@@ -10,10 +15,11 @@ interface TransactionsTableGroupProps {
     groupKey: string
 }
 
-export function TransactionsTableGroup({groupedTransactions, groupCriterion, groupKey}: TransactionsTableGroupProps) {
+export default observer(function TransactionsTableGroup({groupedTransactions, groupCriterion, groupKey}: TransactionsTableGroupProps) {
     const [sortBy, setSortBy] = useState<string | null>(null);
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-
+    const navigate = useNavigate()
+    const {accountStore, transactionEntityStore} = useStore()
 
     const handleSort = (column: string) => {
         if (column === sortBy) {
@@ -57,7 +63,7 @@ export function TransactionsTableGroup({groupedTransactions, groupCriterion, gro
                             </TableCell>
                         }
                         {
-                            groupCriterion === 'sender/recipient' ||
+                            groupCriterion === 'entity' ||
                             <TableCell align={'center'}>
                                 Sender / Recipient
                             </TableCell>
@@ -72,30 +78,48 @@ export function TransactionsTableGroup({groupedTransactions, groupCriterion, gro
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {sortTransactionGroup(groupedTransactions[groupKey]).map((transaction) => (
-                        <TableRow key={transaction.transactionId}>
-                            <TableCell />
-                            <TableCell align={'center'}>
-                                {transaction.transactionAmount.amount} {transaction.transactionAmount.currency}
-                            </TableCell>
-                            {groupCriterion === 'category' || <TableCell align={'center'}>{transaction.category}</TableCell>}
-                            {
-                                groupCriterion === 'sender/recipient' ||
+                    {sortTransactionGroup(groupedTransactions[groupKey]).map((transaction) => {
+                        const entityQueryParams = {variant: 1, id: transaction.fromAccountId} ||
+                            {variant: 1, id: transaction.toAccountId} ||
+                            {variant: 2, id: transaction.senderId} ||
+                            {variant: 2, id: transaction.recipientId}
+                        let account: Account | undefined
+                        let transactionEntity: TransactionEntity | undefined
+
+                        switch(entityQueryParams.variant){
+                            case 1:
+                                account = accountStore.getAccount(entityQueryParams.id!)
+                                break
+                            case 2:
+                                transactionEntity = transactionEntityStore.getTransactionEntity(entityQueryParams.id!)
+                                break
+                            default:
+                                break
+                        }
+
+                        return (
+                            <TableRow key={transaction.transactionId}>
+                                <TableCell />
                                 <TableCell align={'center'}>
-                                    {
-                                        transaction.fromAccountId ||
-                                        transaction.toAccountId ||
-                                        transaction.senderId ||
-                                        transaction.recipientId ||
-                                        '-'
-                                    }
+                                    {transaction.transactionAmount.amount} {transaction.transactionAmount.currency}
                                 </TableCell>
-                            }
-                            <TableCell align={'center'}>{formatDate(transaction.transactionDateUtc)}</TableCell>
-                        </TableRow>
-                    ))}
+                                {groupCriterion === 'category' || <TableCell align={'center'}>{transaction.category}</TableCell>}
+                                {
+                                    groupCriterion === 'entity' ||
+                                    <TableCell align={'center'}>
+                                        <Typography onClick={() =>
+                                            (account?.accountId && navigate(`/accounts/${account.accountId}`)) ||
+                                            (transactionEntity?.transactionEntityId && navigate(`/settings/transaction-entities/${transactionEntity.transactionEntityId}`))}
+                                        >
+                                            {transactionEntity?.name || account?.name || '-'}
+                                        </Typography>
+                                    </TableCell>
+                                }
+                                <TableCell align={'center'}>{formatDate(transaction.transactionDateUtc)}</TableCell>
+                            </TableRow>
+                        )})}
                 </TableBody>
             </Table>
         </TableContainer>
     );
-}
+})

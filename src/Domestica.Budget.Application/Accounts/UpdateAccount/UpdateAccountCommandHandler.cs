@@ -28,6 +28,13 @@ namespace Domestica.Budget.Application.Accounts.UpdateAccount
                 return Result.Failure<Account>(Error.NotFound($"Account with ID: {request.AccountUpdateData.AccountId} not found"));
             }
 
+            var isUniqueName = (await _accountRepository.BrowseUserAccounts()).All(a => a.Name.Value.ToLower() != request.AccountUpdateData.Name.ToLower());
+
+            if (!isUniqueName)
+            {
+                return Result.Failure<Account>(Error.InvalidRequest($"Account with name {request.AccountUpdateData.Name} already exist"));
+            }
+
             account.UpdateAccount(new(request.AccountUpdateData.Name), request.AccountUpdateData.Balance);
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;

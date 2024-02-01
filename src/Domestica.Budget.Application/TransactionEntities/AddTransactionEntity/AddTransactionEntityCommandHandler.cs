@@ -20,6 +20,13 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
 
         public async Task<Result<TransactionEntity>> Handle(AddTransactionEntityCommand request, CancellationToken cancellationToken)
         {
+            var isNameUnique = (await _transactionEntityRepository.BrowseUserTransactionEntitiesAsync()).All(te => te.Name.Value.ToLower() != request.Name.ToLower());
+
+            if (!isNameUnique)
+            {
+                return Result.Failure<TransactionEntity>(Error.InvalidRequest($"Transaction entity with name {request.Name} already exist"));
+            }
+
             TransactionEntity newTransactionEntity;
 
             switch (request.Type)

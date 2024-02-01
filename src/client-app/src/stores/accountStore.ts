@@ -49,4 +49,8 @@ export default class AccountStore {
             this.setLoading(false);
         }
     }
+
+    getAccount(accountId: string) {
+        return this.accountsRegistry.get(accountId)
+    }
 }

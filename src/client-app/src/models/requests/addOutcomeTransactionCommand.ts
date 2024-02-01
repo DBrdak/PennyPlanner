@@ -5,4 +5,5 @@ export interface AddOutcomeTransactionCommand {
     recipientId: string | null
     transactionAmount: number
     category: string | null
+    transactionDateTime: Date
 }

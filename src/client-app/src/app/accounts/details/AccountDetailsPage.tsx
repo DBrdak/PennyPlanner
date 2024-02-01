@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import AppOverlay from "../../../components/appOverlay/AppOverlay";
 import {useStore} from "../../../stores/store";
 import {observer} from "mobx-react-lite";
@@ -21,29 +21,52 @@ const useAccount = () => {
     const { accountStore } = useStore();
     const { accountId } = useParams<{ accountId: string }>();
     const [account, setAccount] = useState<Account | undefined>();
+    const navigate = useNavigate()
 
     useEffect(() => {
         const loadAccounts = async () => {
             await accountStore.loadAccounts();
         };
 
-        const findAccount = () => accountStore.accounts.find(a => a.accountId === accountId);
-
-        if (accountStore.accounts.length < 1) {
-            loadAccounts().then(() => setAccount(findAccount()));
+        if (accountStore.accounts.length < 1 && accountId) {
+            loadAccounts().then(() => setAccount(accountStore.getAccount(accountId)));
+        } else if(accountId) {
+            setAccount(accountStore.getAccount(accountId));
         } else {
-            setAccount(findAccount());
+            navigate('/not-found')
         }
     }, [accountStore, accountId]);
 
     return account;
 };
 
+const useTransactionEntities = (account: Account | undefined) => {
+    const {transactionEntityStore} = useStore()
+
+    useEffect(() => {
+        const loadTransactionEntities = async () => await transactionEntityStore.loadTransactionEntities()
+
+        if(account) {
+            const requiredTransactionEntities = Array.from(new Set([
+                ...account.transactions.flatMap(t => t.senderId),
+                ...account.transactions.flatMap(t => t.recipientId)
+            ]))
+
+            if(transactionEntityStore.transactionEntities.length < requiredTransactionEntities.length) {
+                loadTransactionEntities()
+            }
+        }
+
+    }, [account, transactionEntityStore])
+}
+
 export default observer(function AccountDetailsPage() {
     const [groupBy, setGroupBy] = useState('day')
     const [collapsedGroups, setCollapsedGroups] = useState<string[]>([])
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
     const account = useAccount();
+
+    useTransactionEntities(account)
 
     const resetCollapse = () => collapsedGroups.length > 0 && setCollapsedGroups([])
 
@@ -73,7 +96,7 @@ export default observer(function AccountDetailsPage() {
                                 <MenuItem key={1} value={'day'}>Day</MenuItem>
                                 <MenuItem key={2} value={'month'}>Month</MenuItem>
                                 <MenuItem key={3} value={'year'}>Year</MenuItem>
-                                <MenuItem key={4} value={'sender/recipient'}>Sender/Recipient</MenuItem>
+                                <MenuItem key={4} value={'entity'}>Entity</MenuItem>
                                 <MenuItem key={5} value={'category'}>Category</MenuItem>
                             </Select>
                         </FormControl>

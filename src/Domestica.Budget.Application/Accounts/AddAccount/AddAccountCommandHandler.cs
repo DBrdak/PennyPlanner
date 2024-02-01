@@ -21,6 +21,13 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
 
         public async Task<Result<Account>> Handle(AddAccountCommand request, CancellationToken cancellationToken)
         {
+            var isUniqueName = (await _accountRepository.BrowseUserAccounts()).All(a => a.Name.Value.ToLower() != request.NewAccountData.Name.ToLower());
+
+            if (!isUniqueName)
+            {
+                return Result.Failure<Account>(Error.InvalidRequest($"Account with name {request.NewAccountData.Name} already exist"));
+            }
+
             Account? newAccount;
 
             switch (request.NewAccountData.Type)
@@ -38,7 +45,7 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
 
             if (newAccount is null)
             {
-                return Result.Failure<Account>(Error.InvalidRequest("Account type not supported"));
+                return Result.Failure<Account>(Error.InvalidRequest("Problem while creating new account"));
             }
 
             await _accountRepository.AddAsync(newAccount, cancellationToken);

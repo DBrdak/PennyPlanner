@@ -10,6 +10,7 @@ import {AddInternalTransactionCommand} from "../models/requests/addInternalTrans
 import {AddIncomeTransactionCommand} from "../models/requests/addIncomeTransactionCommand";
 import {AddOutcomeTransactionCommand} from "../models/requests/addOutcomeTransactionCommand";
 import {Account} from "../models/accounts/account";
+import {TransactionEntity} from "../models/transactionEntities/transactionEntity";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -84,7 +85,7 @@ const budgetPlans = {
 }
 
 const transactionEntities = {
-    getTransactionEntities: () => axios.get('/transaction-entities').then(responseBody),
+    getTransactionEntities: () => axios.get<TransactionEntity[]>('/transaction-entities').then(responseBody),
     createTransactionEntity: (command: AddTransactionEntityCommand) =>
         axios.post('/transaction-entities', command).then(responseBody),
     updateTransactionEntity: (transactionEntityId: string, data: string) =>

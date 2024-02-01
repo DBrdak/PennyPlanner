@@ -29,7 +29,10 @@ export default observer(function AddAccount() {
     const {accountStore} = useStore()
 
     const validationSchema = yup.object({
-        name: string().required('Pass account name'),
+        name: string()
+            .required('Pass account name')
+            .max(30, 'Account name should be shorter than 30 characters')
+            .matches(RegExp('^[a-zA-Z0-9\\s]*$'), {message: "Special characters are not allowed in account name"}),
         type: string().required().oneOf(['Transactional', 'Savings'], 'Invalid account type'),
         initialBalance: number().required('Pass initial account balance')
     })

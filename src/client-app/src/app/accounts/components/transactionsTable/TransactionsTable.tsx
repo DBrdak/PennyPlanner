@@ -2,10 +2,11 @@ import {Box, Collapse, Paper, Stack, TableCell, TableRow, Typography} from "@mui
 import {Transaction} from "../../../../models/transactions/transaction";
 import {Fragment, useState} from "react";
 import theme from "../../../theme";
-import {TransactionsTableGroup} from "./TransactionsTableGroup";
+import TransactionsTableGroup from "./TransactionsTableGroup";
 import formatDate from "../../../../utils/dateFormatter";
 import {ExpandLess, ExpandLessTwoTone, ExpandMoreTwoTone} from "@mui/icons-material";
 import TransactionsTableGroupHeader from "./TransactionsTableGroupHeader";
+import {useNavigate} from "react-router-dom";
 
 interface TransactionsTableProps {
     transactions: Transaction[]
@@ -16,6 +17,7 @@ interface TransactionsTableProps {
 
 export function TransactionsTable({ transactions, groupCriterion, collapsedGroups, setCollapsedGroups }: TransactionsTableProps) {
     const [hoveredGroup, setHoveredGroup] = useState<string | null>(null);
+    const navigate = useNavigate()
 
     const groupBy = (transactions: Transaction[], criterion: string): Record<string, Transaction[]> => {
         const groupedTransactions: Record<string, Transaction[]> = {};
@@ -33,20 +35,23 @@ export function TransactionsTable({ transactions, groupCriterion, collapsedGroup
                 case 'year':
                     key = formatDate(transaction.transactionDateUtc).slice(6, 10)
                     break
-                case 'sender/recipient':
+                case 'entity':
                     criterion = 'recipientId' || 'senderId' || 'fromAccountId' || 'toAccountId'
                     key = transaction[criterion as keyof Transaction] as string || 'Private'
                     break
-                default:
+                case 'category':
                     key = transaction[criterion as keyof Transaction] as string || 'Unknown'
+                    break
+                default:
+                    navigate('/not-found')
                     break
             }
 
-            if (!groupedTransactions[key]) {
+            if (key && !groupedTransactions[key]) {
                 groupedTransactions[key] = [];
             }
 
-            groupedTransactions[key].push(transaction);
+            key && groupedTransactions[key].push(transaction);
         });
 
         return groupedTransactions;

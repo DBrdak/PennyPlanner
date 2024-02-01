@@ -5,4 +5,5 @@ export interface AddIncomeTransactionCommand {
     senderId: string | null
     transactionAmount: number
     category: string | null
+    transactionDateTime: Date
 }
