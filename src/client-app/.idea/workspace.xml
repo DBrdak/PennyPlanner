@@ -5,18 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Account Details Transaction List Completed">
-      <change afterPath="$PROJECT_DIR$/src/stores/transactionEntityStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/accounts/components/AccountDetailsComponent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/accounts/components/EditAccountComponent.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/agent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/agent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/AccountTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/AccountTile.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTable.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTableGroup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTableGroup.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTableGroupHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTableGroupHeader.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/accounts/details/AccountDetailsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/details/AccountDetailsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/new/AddAccount.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/new/AddAccount.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/requests/addIncomeTransactionCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/addIncomeTransactionCommand.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/requests/addInternalTransactionCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/addInternalTransactionCommand.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/requests/addOutcomeTransactionCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/addOutcomeTransactionCommand.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/accountStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/accountStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/new/AddAccount.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/new/AddAccountPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/Routes.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +131,7 @@
       <workItem from="1706516036064" duration="35510000" />
       <workItem from="1706632785704" duration="11495000" />
       <workItem from="1706724865145" duration="25896000" />
-      <workItem from="1706806686146" duration="3497000" />
+      <workItem from="1706806686146" duration="14036000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>

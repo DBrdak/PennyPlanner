@@ -7,7 +7,7 @@ import SignUpPage from "../app/register/SignUpPage";
 import AccountsPage from "../app/accounts/AccountsPage";
 import BudgetPlansPage from "../app/budget-plans/BudgetPlansPage";
 import HomePage from "../app/home/HomePage";
-import AddAccount from "../app/accounts/new/AddAccount";
+import AddAccountPage from "../app/accounts/new/AddAccountPage";
 import AccountDetailsPage from "../app/accounts/details/AccountDetailsPage";
 import GoalsPage from "../app/goals/GoalsPage";
 import StatisticsPage from "../app/statistics/StatisticsPage";
@@ -30,7 +30,7 @@ export const routes: RouteObject[] = [
       {path: '/budget-plans', element: <BudgetPlansPage />},
 
       {path: '/accounts', element: <AccountsPage />},
-      {path: '/accounts/new', element: <AddAccount />},
+      {path: '/accounts/new', element: <AddAccountPage />},
       {path: '/accounts/:accountId', element: <AccountDetailsPage />},
       {path: '/accounts/total', element: <TotalAccountsDetailsPage />},
 

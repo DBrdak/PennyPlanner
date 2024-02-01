@@ -1,4 +1,15 @@
-import {Collapse, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@mui/material";
+import {
+    Button,
+    Collapse,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography
+} from "@mui/material";
 import SortableTableCell from "./SortableTableCell";
 import {useState} from "react";
 import {Transaction} from "../../../../models/transactions/transaction";
@@ -8,6 +19,7 @@ import {observer} from "mobx-react-lite";
 import {useStore} from "../../../../stores/store";
 import {TransactionEntity} from "../../../../models/transactionEntities/transactionEntity";
 import {Account} from "../../../../models/accounts/account";
+import theme from "../../../theme";
 
 interface TransactionsTableGroupProps {
     groupedTransactions: Record<string, Transaction[]>
@@ -44,9 +56,9 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
     };
 
     return (
-        <TableContainer sx={{overflow: 'auto'}}>
+        <TableContainer sx={{overflow: 'hidden'}}>
             <Table>
-                <TableHead sx={{backgroundColor: '#121212'}}>
+                <TableHead sx={{backgroundColor: '#121212', position: 'sticky', top: 0, zIndex: 1}}>
                     <TableRow>
                         <TableCell />
                         <SortableTableCell
@@ -57,15 +69,15 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                             onSort={handleSort}
                         />
                         {
-                            groupCriterion === 'category' ||
+                            groupCriterion !== 'category' &&
                             <TableCell align={'center'}>
-                                Category
+                                <strong>Category</strong>
                             </TableCell>
                         }
                         {
-                            groupCriterion === 'entity' ||
+                            groupCriterion !== 'entity' &&
                             <TableCell align={'center'}>
-                                Sender / Recipient
+                                <strong>Entity</strong>
                             </TableCell>
                         }
                         <SortableTableCell
@@ -79,43 +91,50 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                 </TableHead>
                 <TableBody>
                     {sortTransactionGroup(groupedTransactions[groupKey]).map((transaction) => {
-                        const entityQueryParams = {variant: 1, id: transaction.fromAccountId} ||
-                            {variant: 1, id: transaction.toAccountId} ||
-                            {variant: 2, id: transaction.senderId} ||
-                            {variant: 2, id: transaction.recipientId}
+                        const entityQueryParams =
+                            (transaction.fromAccountId && {variant: 1, id: transaction.fromAccountId}) ||
+                            (transaction.toAccountId && {variant: 1, id: transaction.toAccountId}) ||
+                            (transaction.senderId && {variant: 2, id: transaction.senderId}) ||
+                            (transaction.recipientId && {variant: 2, id: transaction.recipientId})
+
                         let account: Account | undefined
                         let transactionEntity: TransactionEntity | undefined
 
-                        switch(entityQueryParams.variant){
-                            case 1:
-                                account = accountStore.getAccount(entityQueryParams.id!)
-                                break
-                            case 2:
-                                transactionEntity = transactionEntityStore.getTransactionEntity(entityQueryParams.id!)
-                                break
-                            default:
-                                break
+                        if(entityQueryParams) {
+                            switch (entityQueryParams?.variant) {
+                                case 1:
+                                    account = accountStore.getAccount(entityQueryParams.id!)
+                                    break
+                                case 2:
+                                    transactionEntity = transactionEntityStore.getTransactionEntity(entityQueryParams.id!)
+                                    break
+                                default:
+                                    break
+                            }
                         }
 
                         return (
                             <TableRow key={transaction.transactionId}>
-                                <TableCell />
-                                <TableCell align={'center'}>
-                                    {transaction.transactionAmount.amount} {transaction.transactionAmount.currency}
+                                <TableCell width={'5%'} align={'center'} />
+                                <TableCell width={'20%'} align={'center'} sx={{color: transaction.transactionAmount.amount >= 0 ?
+                                        theme.palette.success.light : theme.palette.error.light}}>
+                                    {transaction.transactionAmount.amount.toFixed(2)} {transaction.transactionAmount.currency}
                                 </TableCell>
-                                {groupCriterion === 'category' || <TableCell align={'center'}>{transaction.category}</TableCell>}
+                                {groupCriterion !== 'category' && <TableCell width={'20%'} align={'center'}>{transaction.category}</TableCell>}
                                 {
-                                    groupCriterion === 'entity' ||
-                                    <TableCell align={'center'}>
-                                        <Typography onClick={() =>
-                                            (account?.accountId && navigate(`/accounts/${account.accountId}`)) ||
-                                            (transactionEntity?.transactionEntityId && navigate(`/settings/transaction-entities/${transactionEntity.transactionEntityId}`))}
-                                        >
+                                    groupCriterion !== 'entity' &&
+                                    <TableCell width={'20%'} align={'center'}>
+                                        <Button color={'inherit'} sx={{borderRadius: '4px'}}
+                                            onClick={() =>
+                                                (account?.accountId &&
+                                                    navigate(`/accounts/${account.accountId}`)) ||
+                                                (transactionEntity?.transactionEntityId &&
+                                                    navigate(`/settings/transaction-entities/${transactionEntity.transactionEntityId}`))}>
                                             {transactionEntity?.name || account?.name || '-'}
-                                        </Typography>
+                                        </Button>
                                     </TableCell>
                                 }
-                                <TableCell align={'center'}>{formatDate(transaction.transactionDateUtc)}</TableCell>
+                                <TableCell width={'35%'} align={'center'}>{formatDate(transaction.transactionDateUtc)}</TableCell>
                             </TableRow>
                         )})}
                 </TableBody>

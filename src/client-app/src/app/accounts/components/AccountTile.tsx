@@ -51,7 +51,7 @@ export function AccountTile({account}: AccountTileProps) {
                     </Typography>
                 </Stack>
                 <Divider sx={{backgroundColor: theme.palette.background.paper}} />
-                <AccountBalanceDisplay isMobile={isMobile} account={account} />
+                <AccountBalanceDisplay isMobile={isMobile} account={account}/>
             </Stack>
         </TilePaper>
     );

@@ -34,6 +34,9 @@ export default function TransactionsTableGroupHeader({
                 marginTop: '4px',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
+                position: 'sticky',
+                top: 0,
+                zIndex: 100
             }}
         >
             {isCollapsed ? (
@@ -47,7 +50,9 @@ export default function TransactionsTableGroupHeader({
             ) : (
                 <ExpandMoreTwoTone fontSize={'large'} />
             )}
-            <Typography variant={'h5'}>{groupKey}</Typography>
+            <Typography variant={'h5'}>
+                {groupKey}
+            </Typography>
             {isCollapsed ? (
                 isHovered ? (
                     <ExpandMoreTwoTone fontSize={'large'} />

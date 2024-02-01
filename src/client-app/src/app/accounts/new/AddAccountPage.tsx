@@ -22,7 +22,7 @@ import * as yup from 'yup'
 import {number, string} from "yup";
 
 
-export default observer(function AddAccount() {
+export default observer(function AddAccountPage() {
     const navigate = useNavigate()
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
     const isUwhd = useMediaQuery(theme.breakpoints.up('xl'))
