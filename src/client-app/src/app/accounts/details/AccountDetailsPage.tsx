@@ -41,8 +41,16 @@ const useAccount = () => {
 
 export default observer(function AccountDetailsPage() {
     const [groupBy, setGroupBy] = useState('day')
+    const [collapsedGroups, setCollapsedGroups] = useState<string[]>([])
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
     const account = useAccount();
+
+    const resetCollapse = () => collapsedGroups.length > 0 && setCollapsedGroups([])
+
+    const handleGroupChange = (groupKey: string) => {
+        setGroupBy(groupKey)
+        resetCollapse()
+    }
 
     return (
         <AppOverlay>
@@ -53,7 +61,7 @@ export default observer(function AccountDetailsPage() {
                     margin: 0,
                     backgroundColor: theme.palette.background.paper,
                     borderRadius: '20px',
-                    overflow:'auto'
+                    overflow:'hidden'
                 }}>
                     <Grid item xs={12} sx={{textAlign: 'center'}}>
                         <Typography variant={'h4'} sx={{userSelect: 'none'}}>
@@ -61,7 +69,7 @@ export default observer(function AccountDetailsPage() {
                         </Typography>
                         <FormControl>
                             <InputLabel>Group By</InputLabel>
-                            <Select fullWidth value={groupBy} onChange={(e) => setGroupBy(e.target.value)}>
+                            <Select fullWidth value={groupBy} onChange={(e) => handleGroupChange(e.target.value)}>
                                 <MenuItem key={1} value={'day'}>Day</MenuItem>
                                 <MenuItem key={2} value={'month'}>Month</MenuItem>
                                 <MenuItem key={3} value={'year'}>Year</MenuItem>
@@ -69,7 +77,12 @@ export default observer(function AccountDetailsPage() {
                                 <MenuItem key={5} value={'category'}>Category</MenuItem>
                             </Select>
                         </FormControl>
-                        <TransactionsTable transactions={account.transactions} groupCriterion={groupBy} />
+                        <TransactionsTable
+                            transactions={account.transactions}
+                            groupCriterion={groupBy}
+                            collapsedGroups={collapsedGroups}
+                            setCollapsedGroups={setCollapsedGroups}
+                        />
                     </Grid>
                 </Grid>
             }

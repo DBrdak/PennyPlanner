@@ -51,7 +51,7 @@ const theme = createTheme({
                     width: '10px',
                 },
                 '*::-webkit-scrollbar-track': {
-                    background: '#f5f5f5',
+                    background: 'transparent',
                 },
                 '*::-webkit-scrollbar-thumb': {
                     backgroundColor: '#888',

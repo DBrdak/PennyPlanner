@@ -1,31 +1,21 @@
-import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
+import {Box, Collapse, Paper, Stack, TableCell, TableRow, Typography} from "@mui/material";
 import {Transaction} from "../../../../models/transactions/transaction";
 import {Fragment, useState} from "react";
 import theme from "../../../theme";
-import SortableTableCell from "./SortableTableCell";
+import {TransactionsTableGroup} from "./TransactionsTableGroup";
+import formatDate from "../../../../utils/dateFormatter";
+import {ExpandLess, ExpandLessTwoTone, ExpandMoreTwoTone} from "@mui/icons-material";
+import TransactionsTableGroupHeader from "./TransactionsTableGroupHeader";
 
 interface TransactionsTableProps {
-    transactions: Transaction[];
+    transactions: Transaction[]
     groupCriterion: string
+    collapsedGroups: string[]
+    setCollapsedGroups: (groupKeys: string[]) => void
 }
 
-
-export function TransactionsTable({transactions, groupCriterion}: TransactionsTableProps) {
-    const [sortBy, setSortBy] = useState<string | null>(null);
-    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-
-    const formatDate = (dateString: Date) => {
-        const date = new Date(dateString)
-        const options: Intl.DateTimeFormatOptions = {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-        };
-
-        return date.toLocaleString('pl-PL', options);
-    };
+export function TransactionsTable({ transactions, groupCriterion, collapsedGroups, setCollapsedGroups }: TransactionsTableProps) {
+    const [hoveredGroup, setHoveredGroup] = useState<string | null>(null);
 
     const groupBy = (transactions: Transaction[], criterion: string): Record<string, Transaction[]> => {
         const groupedTransactions: Record<string, Transaction[]> = {};
@@ -62,98 +52,43 @@ export function TransactionsTable({transactions, groupCriterion}: TransactionsTa
         return groupedTransactions;
     };
 
-    const handleSort = (column: string) => {
-        if (column === sortBy) {
-            setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+
+    const groupedTransactions = groupBy(transactions, groupCriterion);
+
+    const handleGroupCollapse = (groupKey: string) => {
+        if(collapsedGroups.some(x => x === groupKey)) {
+            const newCollapsedGroups = collapsedGroups.filter(x => x !== groupKey)
+            setCollapsedGroups(newCollapsedGroups)
         } else {
-            setSortBy(column);
-            setSortOrder('asc');
+            setCollapsedGroups([...collapsedGroups, groupKey])
         }
+    }
+
+    const handleGroupHover = (groupKey: string) => {
+        setHoveredGroup(groupKey);
     };
 
-    const sortedTransactions = [...transactions].sort((a, b) => {
-        if (sortBy === 'amount') {
-            return sortOrder === 'asc'
-                ? a.transactionAmount.amount - b.transactionAmount.amount
-                : b.transactionAmount.amount - a.transactionAmount.amount;
-        } else if (sortBy === 'date') {
-            return sortOrder === 'asc'
-                ? new Date(a.transactionDateUtc).getTime() -
-                new Date(b.transactionDateUtc).getTime()
-                : new Date(b.transactionDateUtc).getTime() -
-                new Date(a.transactionDateUtc).getTime();
-        }
-        return 0;
-    });
-
-    const groupedTransactions = groupBy(sortedTransactions, groupCriterion);
+    const isGroupHovered = (groupKey: string) => hoveredGroup === groupKey;
+    const isGroupCollapsed = (groupKey: string) => collapsedGroups.some(x => x === groupKey)
 
     return (
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell />
-                    <SortableTableCell
-                        label="Amount"
-                        column="amount"
-                        sortOrder={sortOrder}
-                        sortBy={sortBy}
-                        onSort={handleSort}
+        <Box sx={{width: '100%', height: '50%', overflow: 'auto'}}>
+            {Object.keys(groupedTransactions).map((groupKey) => (
+                <Box key={groupKey}>
+                    <TransactionsTableGroupHeader
+                        key={groupKey}
+                        groupKey={groupKey}
+                        isCollapsed={isGroupCollapsed(groupKey)}
+                        isHovered={isGroupHovered(groupKey)}
+                        onClick={() => handleGroupCollapse(groupKey)}
+                        onMouseEnter={() => handleGroupHover(groupKey)}
+                        onMouseLeave={() => handleGroupHover('')}
                     />
-                    {
-                        groupCriterion === 'category' ||
-                            <TableCell align={'center'}>
-                                Category
-                            </TableCell>
-                    }
-                    {
-                        groupCriterion === 'sender/recipient' ||
-                            <TableCell align={'center'}>
-                                Sender / Recipient
-                            </TableCell>
-                    }
-                    <SortableTableCell
-                        label="Transaction Date"
-                        column="date"
-                        sortOrder={sortOrder}
-                        sortBy={sortBy}
-                        onSort={handleSort}
-                    />
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {Object.keys(groupedTransactions).map((groupKey) => (
-                    <Fragment key={groupKey}>
-                        <TableRow sx={{ backgroundColor: theme.palette.background.default }}>
-                            <TableCell colSpan={5} align={'center'} sx={{ borderBottom: 'none' }}>
-                                <strong>{groupKey}</strong>
-                            </TableCell>
-                        </TableRow>
-                        {groupedTransactions[groupKey].map((transaction) => (
-                            <TableRow key={transaction.transactionId}>
-                                <TableCell />
-                                <TableCell align={'center'}>
-                                    {transaction.transactionAmount.amount} {transaction.transactionAmount.currency}
-                                </TableCell>
-                                {groupCriterion === 'category' || <TableCell align={'center'}>{transaction.category}</TableCell>}
-                                {
-                                    groupCriterion === 'sender/recipient' ||
-                                    <TableCell align={'center'}>
-                                        {
-                                            transaction.fromAccountId ||
-                                            transaction.toAccountId ||
-                                            transaction.senderId ||
-                                            transaction.recipientId ||
-                                            '-'
-                                        }
-                                    </TableCell>
-                                }
-                                <TableCell align={'center'}>{formatDate(transaction.transactionDateUtc)}</TableCell>
-                            </TableRow>
-                        ))}
-                    </Fragment>
-                ))}
-            </TableBody>
-        </Table>
+                    <Collapse in={!isGroupCollapsed(groupKey)}>
+                        <TransactionsTableGroup groupedTransactions={groupedTransactions} groupCriterion={groupCriterion} groupKey={groupKey} />
+                    </Collapse>
+                </Box>
+            ))}
+        </Box>
     );
 }
