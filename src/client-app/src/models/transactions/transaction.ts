@@ -1,6 +1,7 @@
 import {Money} from "../shared/money";
 
 export interface Transaction {
+    transactionId: string
     accountId?: string | null
     fromAccountId?: string | null
     toAccountId?: string | null

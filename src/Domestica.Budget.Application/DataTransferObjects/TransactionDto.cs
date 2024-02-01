@@ -13,6 +13,7 @@ namespace Domestica.Budget.Application.DataTransferObjects
 {
     public sealed record TransactionDto
     {
+        public string TransactionId { get; init; }
         public string? AccountId { get; init; }
         public string? FromAccountId { get; init; }
         public string? ToAccountId { get; init; }
@@ -30,7 +31,8 @@ namespace Domestica.Budget.Application.DataTransferObjects
             string? recipientId,
             MoneyDto transactionAmount,
             string category,
-            DateTime transactionDateUtc)
+            DateTime transactionDateUtc,
+            string transactionId)
         {
             AccountId = accountId;
             FromAccountId = fromAccountId;
@@ -40,12 +42,13 @@ namespace Domestica.Budget.Application.DataTransferObjects
             TransactionAmount = transactionAmount;
             Category = category;
             TransactionDateUtc = transactionDateUtc;
+            TransactionId = transactionId;
         }
 
         [JsonConstructor]
-        private TransactionDto()
+        private TransactionDto(string transactionId)
         {
-            
+            TransactionId = transactionId;
         }
 
         internal static TransactionDto FromDomainObject(Transaction domainObject)
@@ -60,7 +63,8 @@ namespace Domestica.Budget.Application.DataTransferObjects
                 domainObject.RecipientId?.Value.ToString(),
                 transactionAmount,
                 domainObject.Category.Value,
-                domainObject.TransactionDateUtc);
+                domainObject.TransactionDateUtc,
+                domainObject.Id.Value.ToString());
         }
     }
 }

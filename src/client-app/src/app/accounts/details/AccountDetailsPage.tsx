@@ -2,11 +2,20 @@ import {useParams} from "react-router-dom";
 import AppOverlay from "../../../components/appOverlay/AppOverlay";
 import {useStore} from "../../../stores/store";
 import {observer} from "mobx-react-lite";
-import {CircularProgress, Grid, Paper, Typography, useMediaQuery} from "@mui/material";
+import {
+    CircularProgress,
+    FormControl,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Select,
+    Typography,
+    useMediaQuery
+} from "@mui/material";
 import theme from "../../theme";
 import {useEffect, useState} from "react";
 import {Account} from "../../../models/accounts/account";
-import {runInAction} from "mobx";
+import {TransactionsTable} from "../components/transactionsTable/TransactionsTable";
 
 const useAccount = () => {
     const { accountStore } = useStore();
@@ -31,6 +40,7 @@ const useAccount = () => {
 };
 
 export default observer(function AccountDetailsPage() {
+    const [groupBy, setGroupBy] = useState('day')
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
     const account = useAccount();
 
@@ -49,6 +59,17 @@ export default observer(function AccountDetailsPage() {
                         <Typography variant={'h4'} sx={{userSelect: 'none'}}>
                             {account.name}
                         </Typography>
+                        <FormControl>
+                            <InputLabel>Group By</InputLabel>
+                            <Select fullWidth value={groupBy} onChange={(e) => setGroupBy(e.target.value)}>
+                                <MenuItem key={1} value={'day'}>Day</MenuItem>
+                                <MenuItem key={2} value={'month'}>Month</MenuItem>
+                                <MenuItem key={3} value={'year'}>Year</MenuItem>
+                                <MenuItem key={4} value={'sender/recipient'}>Sender/Recipient</MenuItem>
+                                <MenuItem key={5} value={'category'}>Category</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <TransactionsTable transactions={account.transactions} groupCriterion={groupBy} />
                     </Grid>
                 </Grid>
             }
