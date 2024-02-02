@@ -1,70 +1,59 @@
-import {useNavigate, useParams} from "react-router-dom";
 import AppOverlay from "../../../components/appOverlay/AppOverlay";
 import {useStore} from "../../../stores/store";
 import {observer} from "mobx-react-lite";
 import {
     CircularProgress,
-    FormControl,
     Grid,
-    InputLabel,
-    MenuItem,
-    Select,
     useMediaQuery
 } from "@mui/material";
 import theme from "../../theme";
 import {useEffect, useState} from "react";
-import {Account} from "../../../models/accounts/account";
 import TransactionsTable from "../components/transactionsTable/TransactionsTable";
-import {Transaction} from "../../../models/transactions/transaction";
-import formatDate from "../../../utils/dateFormatter";
-import {AccountDetailsComponent} from "../components/AccountDetailsComponent";
+import AccountDetailsComponent from "../components/AccountDetailsComponent";
 import EditAccountComponent from "../components/EditAccountComponent";
 import useTransactionEntities from "../../../utils/hooks/useTransactionEntities";
 import useAccount from "../../../utils/hooks/useAccount";
 import groupBy from "../../../utils/transactionsGroupBy";
+import {Account} from "../../../models/accounts/account";
+import {useNavigate, useParams} from "react-router-dom";
+import {deflateRaw} from "zlib";
 
-interface  AccountDetailsPageProps {
-    editMode: boolean
-}
-
-export default observer(function AccountDetailsPage({editMode}: AccountDetailsPageProps) {
+export default observer(function AccountDetailsPage() {
+    const navigate = useNavigate()
+    const { accountId } = useParams<{ accountId: string }>();
+    const [editMode, setEditMode] = useState(false)
     const [groupCriterion, setGroupCriterion] = useState('day')
     const [collapsedGroups, setCollapsedGroups] = useState<string[]>([])
-    const [account, setAccount] = useState<Account | undefined>()
-    const [groupedTransactions, setGroupedTransactions] = useState<Record<string, Transaction[]>>()
     const {accountStore} = useStore()
+    const [account, setAccount] = useState<Account>()
     const transactionEntities = useTransactionEntities(account)
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
-    const { accountId } = useParams<{ accountId: string }>();
-    const navigate = useNavigate()
-
-    const resetCollapse = () => collapsedGroups.length > 0 && setCollapsedGroups([])
 
     useEffect(() => {
-        const loadAccounts = async () => {
-            await accountStore.loadAccounts();
-        };
+        const loadAccounts = async () => await accountStore.loadAccounts()
 
-        const getAccount = (accountId: string) => accountStore.getAccount(accountId)
-
-        if (accountStore.accounts.length < 1 && accountId) {
-            loadAccounts().then(() => setAccount(accountStore.getAccount(accountId)));
-        } else if(accountId && getAccount(accountId)) {
-            setAccount(getAccount(accountId));
+        if (accountId && accountStore.getAccount(accountId)) {
+            setAccount(accountStore.getAccount(accountId))
+        } else if(accountId && !accountStore.getAccount(accountId)){
+            loadAccounts().then(() => setAccount(accountStore.getAccount(accountId)))
         } else {
             navigate('/not-found')
         }
-        account && setGroupedTransactions(groupBy(account.transactions, groupCriterion))
-    }, [account, accountId, accountStore, groupCriterion, groupedTransactions, navigate])
+    }, [accountId, accountStore, navigate])
+
+    const resetCollapse = () => collapsedGroups.length > 0 && setCollapsedGroups([])
 
     const handleGroupChange = (groupKey: string) => {
         setGroupCriterion(groupKey)
         resetCollapse()
     }
 
+    const groupedTransactions = account &&
+        groupBy(account.transactions, groupCriterion)
+
     return (
         <AppOverlay>
-            {!account || transactionEntities.length < 1 || !groupedTransactions || accountStore.loading ?
+            {!(transactionEntities.length > 0 && groupedTransactions && !accountStore.loading && account) ?
                 <CircularProgress color={'secondary'} />
                 :
                 <Grid container sx={{
@@ -79,10 +68,12 @@ export default observer(function AccountDetailsPage({editMode}: AccountDetailsPa
                         <AccountDetailsComponent
                             account={account}
                             groupDropdownProps={{groupCriterion: groupCriterion, handleGroupChange: handleGroupChange}}
+                            setEditMode={setEditMode}
                         /> :
                         <EditAccountComponent
                             account={account}
                             groupDropdownProps={{groupCriterion: groupCriterion, handleGroupChange: handleGroupChange}}
+                            setEditMode={setEditMode}
                             setAccount={setAccount}
                         />
                     }

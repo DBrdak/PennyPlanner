@@ -64,9 +64,9 @@ export default class AccountStore {
     async updateAccount(accountData: AccountUpdateData) {
         this.setLoading(true);
         try {
-            const account =await agent.accounts.updateAccount(accountData)
-            this.replaceAccount(account)
-            return account
+            await agent.accounts.updateAccount(accountData)
+            await this.loadAccounts()
+            return this.getAccount(accountData.accountId)
         } catch (e) {
             console.error(e);
         } finally {

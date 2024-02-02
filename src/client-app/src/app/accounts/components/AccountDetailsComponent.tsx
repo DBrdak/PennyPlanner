@@ -2,19 +2,18 @@ import {Button, Grid, Stack, Typography} from "@mui/material";
 import AccountDetailsPage from "../details/AccountDetailsPage";
 import {Account} from "../../../models/accounts/account";
 import GroupDropdown, {GroupDropdownProps} from "./GroupDropdown";
-import {Fragment} from "react";
-import {useNavigate} from "react-router-dom";
+import {observer} from "mobx-react-lite";
 
 
 interface AccountDetailsComponentProps {
     account: Account
     groupDropdownProps: GroupDropdownProps
+    setEditMode: (state: boolean) => void
 }
 
 
-export function AccountDetailsComponent({account, groupDropdownProps}: AccountDetailsComponentProps) {
-    const navigate = useNavigate()
-
+export default observer(function AccountDetailsComponent({account, groupDropdownProps,setEditMode}: AccountDetailsComponentProps) {
+    console.log(account)
     return (
         <>
             <Grid item xs={12} sx={{display: 'flex', alignItems:'center', justifyContent: 'center'}}>
@@ -43,7 +42,7 @@ export function AccountDetailsComponent({account, groupDropdownProps}: AccountDe
                         Account Balance
                     </Typography>
                     <Typography variant={"h4"} sx={{ userSelect: "none" }}>
-                        {account.balance.amount.toFixed(2)} {account.balance.currency}
+                        {account.balance.amount.toFixed(2)}
                     </Typography>
                 </Stack>
             </Grid>
@@ -52,7 +51,7 @@ export function AccountDetailsComponent({account, groupDropdownProps}: AccountDe
                     variant="contained"
                     color="primary"
                     sx={{ width: '60%', maxWidth: '500px', height: '3rem'}}
-                    onClick={() => navigate(`/accounts/${account.accountId}/edit`)}
+                    onClick={() => setEditMode(true)}
                 >
                     Edit Account
                 </Button>
@@ -60,4 +59,4 @@ export function AccountDetailsComponent({account, groupDropdownProps}: AccountDe
             <GroupDropdown groupCriterion={groupDropdownProps.groupCriterion} handleGroupChange={groupDropdownProps.handleGroupChange} />
         </>
     );
-}
+})

@@ -4,28 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Account Edit Init">
-      <change afterPath="$PROJECT_DIR$/src/app/accounts/components/GroupDropdown.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/hooks/useAccount.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/hooks/useTransactionEntities.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/transactionsGroupBy.ts" afterDir="false" />
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Account Edit Bug">
       <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/Accounts.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/Accounts.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/BudgetPlans.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/BudgetPlans.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/TransactionEntities.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/TransactionEntities.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/Transactions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/Transactions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/UpdateAccount/UpdateAccountCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/UpdateAccount/UpdateAccountCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/UpdateTransactionEntity/UpdateTransactionEntityCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/UpdateTransactionEntity/UpdateTransactionEntityCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/Account.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/Account.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/agent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/agent.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/accounts/components/AccountDetailsComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/AccountDetailsComponent.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/accounts/components/EditAccountComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/EditAccountComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTableGroup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTableGroup.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/accounts/details/AccountDetailsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/details/AccountDetailsPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/accounts/new/AddAccountPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/new/AddAccountPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MyTextInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MyTextInput.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/requests/accountUpdateData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/accountUpdateData.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/Routes.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/stores/accountStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/accountStore.ts" afterDir="false" />
     </list>
@@ -145,7 +134,7 @@
       <workItem from="1706632785704" duration="11495000" />
       <workItem from="1706724865145" duration="25896000" />
       <workItem from="1706806686146" duration="14212000" />
-      <workItem from="1706870860197" duration="17098000" />
+      <workItem from="1706870860197" duration="26283000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
@@ -231,7 +220,14 @@
       <option name="project" value="LOCAL" />
       <updated>1706821027308</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Account Edit Bug">
+      <created>1706899882176</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1706899882176</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -261,6 +257,7 @@
     <MESSAGE value="Account Details Init" />
     <MESSAGE value="Account Details Transaction List Completed" />
     <MESSAGE value="Account Edit Init" />
-    <option name="LAST_COMMIT_MESSAGE" value="Account Edit Init" />
+    <MESSAGE value="Account Edit Bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Account Edit Bug" />
   </component>
 </project>

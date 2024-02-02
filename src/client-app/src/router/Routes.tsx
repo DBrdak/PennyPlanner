@@ -31,8 +31,7 @@ export const routes: RouteObject[] = [
 
       {path: '/accounts', element: <AccountsPage />},
       {path: '/accounts/new', element: <AddAccountPage />},
-      {path: '/accounts/:accountId', element: <AccountDetailsPage editMode={false} />},
-      {path: '/accounts/:accountId/edit', element: <AccountDetailsPage editMode={true} />},
+      {path: '/accounts/:accountId', element: <AccountDetailsPage />},
       {path: '/accounts/total', element: <TotalAccountsDetailsPage />},
 
       {path: '/goals', element: <GoalsPage />},

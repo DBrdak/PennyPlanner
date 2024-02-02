@@ -37,7 +37,7 @@ namespace Domestica.Budget.API.Endpoints
                     var result = await sender.Send(command, cancellationToken);
 
                     return result.IsSuccess ?
-                        Results.Ok(result.Value) :
+                        Results.Ok() :
                         Results.BadRequest(result.Error);
                 });
 
@@ -53,7 +53,7 @@ namespace Domestica.Budget.API.Endpoints
                     var result = await sender.Send(command, cancellationToken);
 
                     return result.IsSuccess ?
-                        Results.Ok(result.Value) :
+                        Results.Ok() :
                         Results.BadRequest(result.Error);
                 });
 
