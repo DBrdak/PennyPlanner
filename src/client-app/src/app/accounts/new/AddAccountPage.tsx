@@ -92,6 +92,7 @@ export default observer(function AddAccountPage() {
                                     <MyTextInput
                                         name={'initialBalance'}
                                         placeholder={'Initial Account Balance'}
+                                        type={'number'}
                                         showErrors
                                     />
                                     <ButtonGroup sx={{alignItems:'center', justifyContent: 'center'}}>

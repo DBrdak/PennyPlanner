@@ -14,7 +14,7 @@ namespace Domestica.Budget.Domain.Accounts
 {
     public abstract class Account : Entity<AccountId>
     {
-        public IReadOnlyCollection<Transaction> Transactions => _transactions;
+        public IReadOnlyCollection<Transaction> Transactions => _transactions.OrderByDescending(t => t.TransactionDateUtc).ToList();
         private readonly List<Transaction> _transactions;
         public AccountName Name { get; private set; }
         [NotMapped]

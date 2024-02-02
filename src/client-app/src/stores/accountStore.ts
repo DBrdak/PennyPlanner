@@ -2,6 +2,7 @@ import {makeAutoObservable, runInAction} from "mobx";
 import {Account} from "../models/accounts/account";
 import agent from "../api/agent";
 import {NewAccountData} from "../models/requests/newAccountData";
+import {AccountUpdateData} from "../models/requests/accountUpdateData";
 
 export default class AccountStore {
     private accountsRegistry: Map<string, Account> = new Map<string, Account>()
@@ -23,6 +24,15 @@ export default class AccountStore {
         this.accountsRegistry.set(account.accountId, account)
     }
 
+    private removeAccount(accountId: string) {
+        this.accountsRegistry.delete(accountId)
+    }
+
+    private replaceAccount(newAccountData: Account) {
+        this.removeAccount(newAccountData.accountId)
+        this.setAccount(newAccountData)
+    }
+
     async loadAccounts() {
         this.setLoading(true);
         try {
@@ -41,8 +51,22 @@ export default class AccountStore {
     async addAccount(accountData: NewAccountData) {
         this.setLoading(true);
         try {
-            await agent.accounts.createAccount(accountData);
-            this.accountsRegistry.clear();
+            const account = await agent.accounts.createAccount(accountData)
+            this.accountsRegistry.clear()
+            return account
+        } catch (e) {
+            console.error(e)
+        } finally {
+            this.setLoading(false)
+        }
+    }
+
+    async updateAccount(accountData: AccountUpdateData) {
+        this.setLoading(true);
+        try {
+            const account =await agent.accounts.updateAccount(accountData)
+            this.replaceAccount(account)
+            return account
         } catch (e) {
             console.error(e);
         } finally {

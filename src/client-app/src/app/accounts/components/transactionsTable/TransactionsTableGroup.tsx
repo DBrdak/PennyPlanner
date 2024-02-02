@@ -124,8 +124,8 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                                 {
                                     groupCriterion !== 'entity' &&
                                     <TableCell width={'20%'} align={'center'}>
-                                        <Button color={'inherit'} sx={{borderRadius: '4px'}}
-                                            onClick={() =>
+                                        <Button disabled={!account?.accountId && !transactionEntity?.transactionEntityId} color={'inherit'} sx={{borderRadius: '4px'}}
+                                                onClick={() =>
                                                 (account?.accountId &&
                                                     navigate(`/accounts/${account.accountId}`)) ||
                                                 (transactionEntity?.transactionEntityId &&

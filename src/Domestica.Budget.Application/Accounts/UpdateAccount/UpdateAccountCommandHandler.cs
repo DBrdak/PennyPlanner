@@ -28,7 +28,9 @@ namespace Domestica.Budget.Application.Accounts.UpdateAccount
                 return Result.Failure<Account>(Error.NotFound($"Account with ID: {request.AccountUpdateData.AccountId} not found"));
             }
 
-            var isUniqueName = (await _accountRepository.BrowseUserAccounts()).All(a => a.Name.Value.ToLower() != request.AccountUpdateData.Name.ToLower());
+            var isUniqueName = (await _accountRepository.BrowseUserAccounts())
+                .All(a => a.Name.Value.ToLower() != request.AccountUpdateData.Name.ToLower() ||
+                          a.Id.Value.ToString() == request.AccountUpdateData.AccountId);
 
             if (!isUniqueName)
             {

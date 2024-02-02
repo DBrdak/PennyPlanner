@@ -25,7 +25,8 @@ namespace Domestica.Budget.Application.TransactionEntities.UpdateTransactionEnti
                 return Result.Failure<TransactionEntity>(Error.NotFound("Transaction entity not found"));
             }
 
-            var isNameUnique = (await _transactionEntityRepository.BrowseUserTransactionEntitiesAsync()).All(te => te.Name.Value.ToLower() != request.NewName.ToLower());
+            var isNameUnique = (await _transactionEntityRepository.BrowseUserTransactionEntitiesAsync())
+                .All(te => te.Name.Value.ToLower() != request.NewName.ToLower() || te.Id.Value.ToString() == request.Id);
 
             if (!isNameUnique)
             {

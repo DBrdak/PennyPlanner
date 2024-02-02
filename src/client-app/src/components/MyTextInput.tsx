@@ -65,7 +65,7 @@ const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, showErr
 
     return (
     showErrors ? (
-        <FormControl error={meta.touched && !!meta.error} fullWidth>
+        <FormControl error={meta.touched && !!meta.error} fullWidth style={style}>
             <Tooltip title={meta.touched && meta.error ? meta.error : ''} placement="right">
                 <TextField
                     {...field}
@@ -76,13 +76,12 @@ const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, showErr
                     type={type}
                     variant="outlined"
                     error={meta.touched && !!meta.error}
-                    InputProps={inputProps} 
-                    style={style}
+                    InputProps={inputProps}
                 />
             </Tooltip>
         </FormControl>
     ) : (
-        <FormControl error={meta.touched && !!meta.error} fullWidth>
+        <FormControl error={meta.touched && !!meta.error} fullWidth style={style}>
             <TextField
                 {...field}
                 {...props}
@@ -92,8 +91,7 @@ const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, showErr
                 label={props.label ? props.label : props.placeholder}
                 variant="outlined"
                 error={meta.touched && !!meta.error}
-                InputProps={inputProps} 
-                style={style}
+                InputProps={inputProps}
             />
         </FormControl>
     )

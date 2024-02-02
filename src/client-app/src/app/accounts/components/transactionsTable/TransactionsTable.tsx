@@ -34,7 +34,7 @@ export default observer(function TransactionsTable({ groupedTransactions, groupC
     const isGroupCollapsed = (groupKey: string) => collapsedGroups.some(x => x === groupKey)
 
     return (
-        <Box sx={{width: '100%', height: '100%', overflow: 'auto'}}>
+        <Box sx={{width: '100%',  height: '100%', overflow: 'auto'}}>
             {Object.keys(groupedTransactions).map((groupKey) => {
                 let groupKeyName
 

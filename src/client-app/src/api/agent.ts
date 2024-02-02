@@ -11,6 +11,8 @@ import {AddIncomeTransactionCommand} from "../models/requests/addIncomeTransacti
 import {AddOutcomeTransactionCommand} from "../models/requests/addOutcomeTransactionCommand";
 import {Account} from "../models/accounts/account";
 import {TransactionEntity} from "../models/transactionEntities/transactionEntity";
+import {BudgetPlan} from "../models/budgetPlans/budgetPlan";
+import {Transaction} from "../models/transactions/transaction";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -70,38 +72,38 @@ const requests = {
 
 const accounts = {
     getAccounts: () => axios.get<Account[]>('/accounts').then(responseBody),
-    createAccount: (data: NewAccountData) => axios.post('/accounts', data).then(responseBody),
-    updateAccount: (data: AccountUpdateData) => axios.put('/accounts', data).then(responseBody),
+    createAccount: (data: NewAccountData) => axios.post<Account>('/accounts', data).then(responseBody),
+    updateAccount: (data: AccountUpdateData) => axios.put<Account>(`/accounts/${data.accountId}`, data).then(responseBody),
     deleteAccount: (accountId: string) => axios.delete(`/accounts/${accountId}`),
 }
 
 const budgetPlans = {
     getBudgetPlans: () => axios.get('/budget-plans').then(responseBody),
-    createBudgetPlan: (period: DateTimeRange) => axios.post('/budget-plans', period).then(responseBody),
+    createBudgetPlan: (period: DateTimeRange) => axios.post<BudgetPlan>('/budget-plans', period).then(responseBody),
     updateBudgetPlan: (budgetPlanId: string, categories: BudgetedTransactionCategoryValues[]) =>
-        axios.put(`/budget-plans/${budgetPlanId}`, categories).then(responseBody),
+        axios.put<BudgetPlan>(`/budget-plans/${budgetPlanId}`, categories).then(responseBody),
     updateBudgetPlanCategory: (budgetPlanId: string, budgetPlanCategory: string, values: UpdateBudgetPlanCategoryValues) =>
-        axios.put(`/budget-plans/${budgetPlanId}/${budgetPlanCategory}`, values).then(responseBody),
+        axios.put<BudgetPlan>(`/budget-plans/${budgetPlanId}/${budgetPlanCategory}`, values).then(responseBody),
 }
 
 const transactionEntities = {
     getTransactionEntities: () => axios.get<TransactionEntity[]>('/transaction-entities').then(responseBody),
     createTransactionEntity: (command: AddTransactionEntityCommand) =>
-        axios.post('/transaction-entities', command).then(responseBody),
+        axios.post<TransactionEntity>('/transaction-entities', command).then(responseBody),
     updateTransactionEntity: (transactionEntityId: string, data: string) =>
-        axios.put(`/transaction-entities/${transactionEntityId}`, data).then(responseBody),
+        axios.put<TransactionEntity>(`/transaction-entities/${transactionEntityId}`, data).then(responseBody),
     deleteTransactionEntity: (transactionEntityId: string) =>
         axios.delete(`/transaction-entities/${transactionEntityId}`).then(responseBody),
 }
 
 const transactions = {
-    getTransactions: () => axios.get('/transactions').then(responseBody),
+    getTransactions: () => axios.get<Transaction[]>('/transactions').then(responseBody),
     createInternalTransaction: (command: AddInternalTransactionCommand) =>
-        axios.post('/transactions/internal', command).then(responseBody),
+        axios.post<Transaction>('/transactions/internal', command).then(responseBody),
     createIncomeTransaction: (command: AddIncomeTransactionCommand) =>
-        axios.post('/transactions/income', command).then(responseBody),
+        axios.post<Transaction>('/transactions/income', command).then(responseBody),
     createOutcomeTransaction: (command: AddOutcomeTransactionCommand) =>
-        axios.post('/transactions/outcome', command).then(responseBody),
+        axios.post<Transaction>('/transactions/outcome', command).then(responseBody),
     deleteTransaction: (transactionId: string) => axios.delete(`/transactions/${transactionId}`).then(responseBody),
 }
 
