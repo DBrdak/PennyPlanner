@@ -11,9 +11,10 @@ interface TransactionsTableProps {
     groupCriterion: string
     collapsedGroups: string[]
     setCollapsedGroups: (groupKeys: string[]) => void
+    editMode: boolean
 }
 
-export default observer(function TransactionsTable({ groupedTransactions, groupCriterion, collapsedGroups, setCollapsedGroups }: TransactionsTableProps) {
+export default observer(function TransactionsTable({ groupedTransactions, groupCriterion, collapsedGroups, setCollapsedGroups, editMode }: TransactionsTableProps) {
     const [hoveredGroup, setHoveredGroup] = useState<string | null>(null);
     const {transactionEntityStore} = useStore()
 
@@ -55,8 +56,11 @@ export default observer(function TransactionsTable({ groupedTransactions, groupC
                             onMouseLeave={() => handleGroupHover('')}
                         />
                         <Collapse in={!isGroupCollapsed(groupKey)}>
-                            <TransactionsTableGroup groupedTransactions={groupedTransactions}
-                                                    groupCriterion={groupCriterion} groupKey={groupKey}/>
+                            <TransactionsTableGroup
+                                groupedTransactions={groupedTransactions}
+                                groupCriterion={groupCriterion} groupKey={groupKey}
+                                editMode={editMode}
+                            />
                         </Collapse>
                     </Box>
                     )

@@ -13,7 +13,7 @@ interface AccountDetailsComponentProps {
 
 
 export default observer(function AccountDetailsComponent({account, groupDropdownProps,setEditMode}: AccountDetailsComponentProps) {
-    console.log(account)
+
     return (
         <>
             <Grid item xs={12} sx={{display: 'flex', alignItems:'center', justifyContent: 'center'}}>
@@ -56,7 +56,9 @@ export default observer(function AccountDetailsComponent({account, groupDropdown
                     Edit Account
                 </Button>
             </Grid>
-            <GroupDropdown groupCriterion={groupDropdownProps.groupCriterion} handleGroupChange={groupDropdownProps.handleGroupChange} />
+            <Grid item xs={12} md={6} marginBottom={3} sx={{display: 'flex', alignItems:'center', justifyContent: 'center'}}>
+                <GroupDropdown groupCriterion={groupDropdownProps.groupCriterion} handleGroupChange={groupDropdownProps.handleGroupChange} />
+            </Grid>
         </>
     );
 })

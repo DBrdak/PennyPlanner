@@ -1,5 +1,16 @@
 import {Account} from "../../../models/accounts/account";
-import {Box, Button, ButtonGroup, Grid, Stack, Typography, useMediaQuery} from "@mui/material";
+import {
+    Box,
+    Button,
+    ButtonGroup,
+    Dialog, DialogActions,
+    DialogContent,
+    DialogTitle,
+    Grid,
+    Stack,
+    Typography,
+    useMediaQuery
+} from "@mui/material";
 import {Form, Formik} from "formik";
 import * as Yup from 'yup'
 import {AccountUpdateData} from "../../../models/requests/accountUpdateData";
@@ -10,6 +21,9 @@ import {observer} from "mobx-react-lite";
 import {useStore} from "../../../stores/store";
 import GroupDropdown, {GroupDropdownProps} from "./GroupDropdown";
 import {useNavigate} from "react-router-dom";
+import {deflateRaw} from "zlib";
+import React, {useEffect, useState} from "react";
+import {toast} from "react-toastify";
 
 interface EditAccountComponentProps {
     account: Account
@@ -21,7 +35,7 @@ interface EditAccountComponentProps {
 export default observer(function EditAccountComponent({ account, groupDropdownProps, setEditMode, setAccount}: EditAccountComponentProps) {
     const initialValues = new AccountUpdateData(account)
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
-    const {accountStore} = useStore()
+    const {accountStore, transactionStore} = useStore()
     const navigate = useNavigate()
 
     const validationSchema = Yup.object({
@@ -34,11 +48,21 @@ export default observer(function EditAccountComponent({ account, groupDropdownPr
 
     const updateAccount = async (values: AccountUpdateData) => await accountStore.updateAccount(values)
 
+    const removeTransactions = async () => await transactionStore.removeTransactions()
+
     const handleFormSubmit = (values: AccountUpdateData) => {
-        updateAccount(values).then(a => {
-            setAccount(a)
+        if(initialValues === values && transactionStore.transactionsIdToRemove.length === 0) {
+            toast.warn('Nothing to update')
             setEditMode(false)
+            return
+        }
+        initialValues !== values && updateAccount(values).then(a => {
+            setAccount(a)
         })
+        transactionStore.transactionsIdToRemove.length > 0 && removeTransactions().then(() => {
+            accountStore.loadAccounts().then(() => setAccount(accountStore.getAccount(values.accountId)))
+        })
+        setEditMode(false)
     }
 
     return (
@@ -100,12 +124,14 @@ export default observer(function EditAccountComponent({ account, groupDropdownPr
                                         sx={{width: '50%'}}
                                         variant="outlined"
                                         color='error'
-                                        onClick={() => setEditMode(false)}
+                                        onClick={() => {
+                                            transactionStore.clearTransactionIdToRemove()
+                                            setEditMode(false)
+                                        }}
                                     >
                                         Cancel
                                     </Button>
                                     <Button
-                                        disabled={!isValid || initialValues === values}
                                         sx={{width: '50%'}}
                                         variant="contained"
                                         color="success"
@@ -115,7 +141,9 @@ export default observer(function EditAccountComponent({ account, groupDropdownPr
                                     </Button>
                                 </ButtonGroup>
                             </Grid>
-                            <GroupDropdown groupCriterion={groupDropdownProps.groupCriterion} handleGroupChange={groupDropdownProps.handleGroupChange} />
+                            <Grid item xs={12} md={6} marginBottom={3} sx={{display: 'flex', alignItems:'center', justifyContent: 'center'}}>
+                                <GroupDropdown groupCriterion={groupDropdownProps.groupCriterion} handleGroupChange={groupDropdownProps.handleGroupChange} />
+                            </Grid>
                         </Grid>
                     </Form>
                 )}

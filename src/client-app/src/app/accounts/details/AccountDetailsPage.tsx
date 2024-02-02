@@ -17,6 +17,7 @@ import groupBy from "../../../utils/transactionsGroupBy";
 import {Account} from "../../../models/accounts/account";
 import {useNavigate, useParams} from "react-router-dom";
 import {deflateRaw} from "zlib";
+import {TotalAccountsDetails} from "../components/TotalAccountsDetails";
 
 export default observer(function AccountDetailsPage() {
     const navigate = useNavigate()
@@ -24,10 +25,26 @@ export default observer(function AccountDetailsPage() {
     const [editMode, setEditMode] = useState(false)
     const [groupCriterion, setGroupCriterion] = useState('day')
     const [collapsedGroups, setCollapsedGroups] = useState<string[]>([])
-    const {accountStore} = useStore()
+    const {accountStore, transactionStore, transactionEntityStore} = useStore()
     const [account, setAccount] = useState<Account>()
     const transactionEntities = useTransactionEntities(account)
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
+
+    const aggregateAccounts = (accounts: Account[]) => {
+        return new Account(
+            '',
+            'Total',
+            {
+                amount: accounts
+                .flatMap(a => a.transactions)
+                    .reduce((total, transaction) => total + transaction.transactionAmount.amount, 0),
+                currency: accounts[0].balance.currency
+            },
+            accounts.flatMap(a => a.transactions)
+                .sort((a, b) => Number(new Date(b.transactionDateUtc)) - Number(new Date(a.transactionDateUtc))),
+            'Total'
+        )
+    }
 
     useEffect(() => {
         const loadAccounts = async () => await accountStore.loadAccounts()
@@ -37,7 +54,11 @@ export default observer(function AccountDetailsPage() {
         } else if(accountId && !accountStore.getAccount(accountId)){
             loadAccounts().then(() => setAccount(accountStore.getAccount(accountId)))
         } else {
-            navigate('/not-found')
+            loadAccounts().then(() => {
+                accountStore.accounts.length > 0 ?
+                    setAccount(aggregateAccounts(accountStore.accounts)) :
+                    navigate('/accounts')
+            })
         }
     }, [accountId, accountStore, navigate])
 
@@ -53,7 +74,7 @@ export default observer(function AccountDetailsPage() {
 
     return (
         <AppOverlay>
-            {!(transactionEntities.length > 0 && groupedTransactions && !accountStore.loading && account) ?
+            {!(transactionEntities.length > 0 && groupedTransactions && !accountStore.loading && account && !transactionStore.loading && !transactionEntityStore.loading) ?
                 <CircularProgress color={'secondary'} />
                 :
                 <Grid container sx={{
@@ -64,18 +85,23 @@ export default observer(function AccountDetailsPage() {
                     borderRadius: '20px',
                     overflow: isMobile ? 'auto' : 'hidden',
                 }}>
-                    {!editMode ?
-                        <AccountDetailsComponent
+                    {!accountId ?
+                        <TotalAccountsDetails
                             account={account}
                             groupDropdownProps={{groupCriterion: groupCriterion, handleGroupChange: handleGroupChange}}
-                            setEditMode={setEditMode}
                         /> :
-                        <EditAccountComponent
-                            account={account}
-                            groupDropdownProps={{groupCriterion: groupCriterion, handleGroupChange: handleGroupChange}}
-                            setEditMode={setEditMode}
-                            setAccount={setAccount}
-                        />
+                        !editMode ?
+                            <AccountDetailsComponent
+                                account={account}
+                                groupDropdownProps={{groupCriterion: groupCriterion, handleGroupChange: handleGroupChange}}
+                                setEditMode={setEditMode}
+                            /> :
+                            <EditAccountComponent
+                                account={account}
+                                groupDropdownProps={{groupCriterion: groupCriterion, handleGroupChange: handleGroupChange}}
+                                setEditMode={setEditMode}
+                                setAccount={setAccount}
+                            />
                     }
                     <Grid item xs={12} sx={{overflow: 'hidden', maxHeight: '50%'}}>
                         <TransactionsTable
@@ -83,6 +109,7 @@ export default observer(function AccountDetailsPage() {
                             collapsedGroups={collapsedGroups}
                             setCollapsedGroups={setCollapsedGroups}
                             groupedTransactions={groupedTransactions}
+                            editMode={editMode}
                         />
                     </Grid>
                 </Grid>

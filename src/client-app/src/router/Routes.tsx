@@ -14,7 +14,6 @@ import StatisticsPage from "../app/statistics/StatisticsPage";
 import SettingsPage from "../app/settings/SettingsPage";
 import UserPage from "../app/user/UserPage";
 import WelcomePage from "../app/welcome/WelcomePage";
-import {TotalAccountsDetailsPage} from "../app/accounts/details/TotalAccountsDetailsPage";
 
 export const routes: RouteObject[] = [
   {
@@ -32,7 +31,7 @@ export const routes: RouteObject[] = [
       {path: '/accounts', element: <AccountsPage />},
       {path: '/accounts/new', element: <AddAccountPage />},
       {path: '/accounts/:accountId', element: <AccountDetailsPage />},
-      {path: '/accounts/total', element: <TotalAccountsDetailsPage />},
+      {path: '/accounts/total', element: <AccountDetailsPage />},
 
       {path: '/goals', element: <GoalsPage />},
 

@@ -1,5 +1,5 @@
 import {
-    Button,
+    Button, Checkbox,
     Collapse,
     Paper,
     Table,
@@ -20,18 +20,28 @@ import {useStore} from "../../../../stores/store";
 import {TransactionEntity} from "../../../../models/transactionEntities/transactionEntity";
 import {Account} from "../../../../models/accounts/account";
 import theme from "../../../theme";
+import {DeleteTwoTone} from "@mui/icons-material";
 
 interface TransactionsTableGroupProps {
     groupedTransactions: Record<string, Transaction[]>
     groupCriterion: string
     groupKey: string
+    editMode: boolean
 }
 
-export default observer(function TransactionsTableGroup({groupedTransactions, groupCriterion, groupKey}: TransactionsTableGroupProps) {
+export default observer(function TransactionsTableGroup({groupedTransactions, groupCriterion, groupKey, editMode}: TransactionsTableGroupProps) {
     const [sortBy, setSortBy] = useState<string | null>(null);
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const navigate = useNavigate()
-    const {accountStore, transactionEntityStore} = useStore()
+    const {accountStore, transactionEntityStore, transactionStore} = useStore()
+
+    const handleCheckboxClick = (transactionId: string) => {
+        if(transactionStore.transactionsIdToRemove.some(id => id === transactionId)){
+            transactionStore.removeTransactionIdToRemove(transactionId)
+        } else {
+            transactionStore.setTransactionIdToRemove(transactionId)
+        }
+    };
 
     const handleSort = (column: string) => {
         if (column === sortBy) {
@@ -115,7 +125,18 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
 
                         return (
                             <TableRow key={transaction.transactionId}>
-                                <TableCell width={'5%'} align={'center'} />
+                                <TableCell width={'5%'} align={'center'}>
+                                    {
+                                        editMode &&
+                                        <Checkbox
+                                            icon={<DeleteTwoTone />}
+                                            checkedIcon={<DeleteTwoTone color={'error'} />}
+                                            color={'error'}
+                                            checked={transactionStore.transactionsIdToRemove.some(id => id === transaction.transactionId)}
+                                            onChange={() => handleCheckboxClick(transaction.transactionId)}
+                                        />
+                                    }
+                                </TableCell>
                                 <TableCell width={'20%'} align={'center'} sx={{color: transaction.transactionAmount.amount >= 0 ?
                                         theme.palette.success.light : theme.palette.error.light}}>
                                     {transaction.transactionAmount.amount.toFixed(2)} {transaction.transactionAmount.currency}
