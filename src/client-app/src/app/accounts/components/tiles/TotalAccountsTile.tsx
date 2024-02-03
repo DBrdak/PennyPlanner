@@ -4,7 +4,7 @@ import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {Divider, Stack, Typography, useMediaQuery} from "@mui/material";
 import theme from "../../../theme";
 import {useNavigate} from "react-router-dom";
-import {AccountBalanceDisplay} from "../details/AccountBalanceDisplay";
+import {AccountBalanceDisplay} from "./AccountBalanceDisplay";
 
 export default observer(function TotalAccountsTile() {
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))

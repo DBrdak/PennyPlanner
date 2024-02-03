@@ -5,32 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Account Page Completed">
-      <change afterPath="$PROJECT_DIR$/src/components/ConfirmModal.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/hooks/useTitle.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/Account.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/Account.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/home/components/tiles/AddTransactionTile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/home/components/tiles/BudgetPreviewTile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/home/components/tiles/GoalsPreviewTile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/home/components/tiles/TransactionsViewTile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/formatters/numberFormatter.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/AccountsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/AccountsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/AccountBalanceDisplay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/details/AccountBalanceDisplay.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/AccountDetailsComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/details/AccountDetailsComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/AccountTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/tiles/AccountTile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/EditAccountComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/edit/EditAccountComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/GroupDropdown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/GroupDropdown.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/NewAccountTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/tiles/NewAccountTile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/TotalAccountsDetails.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/TotalAccountsTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/tiles/TotalAccountsTile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/details/AccountDetailsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/details/AccountDetailsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/budget-plans/BudgetPlansPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/budget-plans/BudgetPlansPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/goals/GoalsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/goals/GoalsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/details/AccountBalanceDisplay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/tiles/AccountBalanceDisplay.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/details/AccountDetailsComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/details/AccountDetailsComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/tiles/AccountTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/tiles/AccountTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/tiles/NewAccountTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/tiles/NewAccountTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/tiles/TotalAccountsTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/tiles/TotalAccountsTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTableGroup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTableGroup.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/home/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/HomePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/login/SignInPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/login/SignInPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/settings/SettingsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/SettingsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/statistics/StatisticsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/statistics/StatisticsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/UserPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/UserPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MyTextInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MyTextInput.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NotFoundPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NotFoundPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tilesLayout/TilePaper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tilesLayout/TilePaper.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/accountStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/accountStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/dateFormatter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/formatters/dateFormatter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/transactionsGroupBy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/transactionsGroupBy.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,11 +77,11 @@
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\router" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components\tiles" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\utils\formatters" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components\transactionsTable" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components\details" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components\tiles" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components\edit" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components\total" />
     </key>
   </component>
   <component name="RunManager" selected="npm.start">
@@ -149,7 +138,7 @@
       <workItem from="1706724865145" duration="25896000" />
       <workItem from="1706806686146" duration="14212000" />
       <workItem from="1706870860197" duration="32368000" />
-      <workItem from="1706950798695" duration="9005000" />
+      <workItem from="1706950798695" duration="11120000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
@@ -256,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1706918077248</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Account Page Completed">
+      <created>1706963319099</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1706963319099</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

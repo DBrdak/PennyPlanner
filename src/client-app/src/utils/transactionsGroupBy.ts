@@ -1,5 +1,5 @@
 import {Transaction} from "../models/transactions/transaction";
-import formatDate from "./dateFormatter";
+import formatDate from "./formatters/dateFormatter";
 
 const groupBy = (transactions: Transaction[], criterion: string): Record<string, Transaction[]> => {
     const groupedTransactions: Record<string, Transaction[]> = {};

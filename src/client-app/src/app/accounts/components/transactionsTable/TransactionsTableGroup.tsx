@@ -13,7 +13,7 @@ import {
 import SortableTableCell from "./SortableTableCell";
 import {useState} from "react";
 import {Transaction} from "../../../../models/transactions/transaction";
-import formatDate from "../../../../utils/dateFormatter";
+import formatDate from "../../../../utils/formatters/dateFormatter";
 import {useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../../stores/store";
@@ -21,6 +21,7 @@ import {TransactionEntity} from "../../../../models/transactionEntities/transact
 import {Account} from "../../../../models/accounts/account";
 import theme from "../../../theme";
 import {DeleteTwoTone} from "@mui/icons-material";
+import formatNumber from "../../../../utils/formatters/numberFormatter";
 
 interface TransactionsTableGroupProps {
     groupedTransactions: Record<string, Transaction[]>
@@ -139,7 +140,7 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                                 </TableCell>
                                 <TableCell width={'20%'} align={'center'} sx={{color: transaction.transactionAmount.amount >= 0 ?
                                         theme.palette.success.light : theme.palette.error.light}}>
-                                    {transaction.transactionAmount.amount.toFixed(2)} {transaction.transactionAmount.currency}
+                                    {formatNumber(transaction.transactionAmount.amount)} {transaction.transactionAmount.currency}
                                 </TableCell>
                                 {groupCriterion !== 'category' && <TableCell width={'20%'} align={'center'}>{transaction.category}</TableCell>}
                                 {

@@ -3,6 +3,7 @@ import AccountDetailsPage from "../../details/AccountDetailsPage";
 import {Account} from "../../../../models/accounts/account";
 import GroupDropdown, {GroupDropdownProps} from "../transactionsTable/GroupDropdown";
 import {observer} from "mobx-react-lite";
+import formatNumber from "../../../../utils/formatters/numberFormatter";
 
 
 interface AccountDetailsComponentProps {
@@ -42,7 +43,7 @@ export default observer(function AccountDetailsComponent({account, groupDropdown
                         Account Balance
                     </Typography>
                     <Typography variant={"h4"} sx={{ userSelect: "none" }}>
-                        {account.balance.amount.toFixed(2)} {account.balance.currency}
+                        {formatNumber(account.balance.amount)} {account.balance.currency}
                     </Typography>
                 </Stack>
             </Grid>

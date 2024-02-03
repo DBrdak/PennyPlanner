@@ -5,6 +5,7 @@ import {calculateBalanceForCurrentMonth, calculateBalanceForToday} from "../../.
 import {useNavigate} from "react-router-dom";
 import {Transaction} from "../../../../models/transactions/transaction";
 import {transaction} from "mobx";
+import formatNumber from "../../../../utils/formatters/numberFormatter";
 
 interface AccountBalanceDisplayProps {
     isMobile: boolean
@@ -38,7 +39,7 @@ export function AccountBalanceDisplay({isMobile, account, transactions, currency
                 textOverflow: 'nowrap'
             }}
         >
-            {balance > 0 ? `+${balance}` : balance} {account ? account.balance.currency : currency}
+            {balance > 0 ? `+${formatNumber(balance)}` : formatNumber(balance)} {account ? account.balance.currency : currency}
         </Typography>
     );
 
@@ -87,7 +88,7 @@ export function AccountBalanceDisplay({isMobile, account, transactions, currency
                     color: theme.palette.text.primary,
                     textAlign: 'center',
                 }}>
-                    {balance} {account ? account.balance.currency : currency}
+                    {formatNumber(balance)} {account ? account.balance.currency : currency}
                 </Typography>
             </Stack>
             <Divider orientation={'vertical'} variant={'middle'} sx={{backgroundColor: theme.palette.background.paper}} />

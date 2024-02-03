@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import theme from "../../../theme";
 import {Account} from "../../../../models/accounts/account";
 import CenteredStack from "../../../../components/CenteredStack";
-import {AccountBalanceDisplay} from "../details/AccountBalanceDisplay";
+import {AccountBalanceDisplay} from "./AccountBalanceDisplay";
 
 export interface AccountTileProps {
     account: Account
