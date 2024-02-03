@@ -1,4 +1,4 @@
-import {Account} from "../../../models/accounts/account";
+import {Account} from "../../../../models/accounts/account";
 import {
     Box,
     Button,
@@ -6,24 +6,26 @@ import {
     Dialog, DialogActions,
     DialogContent,
     DialogTitle,
-    Grid,
+    Grid, IconButton, InputAdornment,
     Stack,
     Typography,
     useMediaQuery
 } from "@mui/material";
 import {Form, Formik} from "formik";
 import * as Yup from 'yup'
-import {AccountUpdateData} from "../../../models/requests/accountUpdateData";
+import {AccountUpdateData} from "../../../../models/requests/accountUpdateData";
 import {bool, number, string} from "yup";
-import MyTextInput from "../../../components/MyTextInput";
-import theme from "../../theme";
+import MyTextInput from "../../../../components/MyTextInput";
+import theme from "../../../theme";
 import {observer} from "mobx-react-lite";
-import {useStore} from "../../../stores/store";
-import GroupDropdown, {GroupDropdownProps} from "./GroupDropdown";
+import {useStore} from "../../../../stores/store";
+import GroupDropdown, {GroupDropdownProps} from "../transactionsTable/GroupDropdown";
 import {useNavigate} from "react-router-dom";
 import {deflateRaw} from "zlib";
 import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
+import {Delete, DeleteTwoTone, Undo} from "@mui/icons-material";
+import ConfirmModal from "../../../../components/ConfirmModal";
 
 interface EditAccountComponentProps {
     account: Account
@@ -35,7 +37,7 @@ interface EditAccountComponentProps {
 export default observer(function EditAccountComponent({ account, groupDropdownProps, setEditMode, setAccount}: EditAccountComponentProps) {
     const initialValues = new AccountUpdateData(account)
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
-    const {accountStore, transactionStore} = useStore()
+    const {accountStore, transactionStore, modalStore} = useStore()
     const navigate = useNavigate()
 
     const validationSchema = Yup.object({
@@ -56,13 +58,36 @@ export default observer(function EditAccountComponent({ account, groupDropdownPr
             setEditMode(false)
             return
         }
+        if(transactionStore.transactionsIdToRemove.length > 0) {
+            modalStore.openModal(
+                <ConfirmModal text={`You are about to delete ${transactionStore.transactionsIdToRemove.length} transactions from the account ${account.name}. Are you sure you want to proceed?`}
+                              onConfirm={ () =>
+                                  removeTransactions().then(() => {
+                                      accountStore.loadAccounts().then(() => setAccount(accountStore.getAccount(values.accountId)))
+                                      setEditMode && setEditMode(false)
+                                  })
+                              }
+                              important
+                />
+            )
+        }
         initialValues !== values && updateAccount(values).then(a => {
             setAccount(a)
+            setEditMode && setEditMode(false)
         })
-        transactionStore.transactionsIdToRemove.length > 0 && removeTransactions().then(() => {
-            accountStore.loadAccounts().then(() => setAccount(accountStore.getAccount(values.accountId)))
-        })
-        setEditMode(false)
+    }
+
+    function handleDelete() {
+        modalStore.openModal(
+            <ConfirmModal text={`You are about to delete ${account.name}. Are you sure you want to proceed?`}
+                          onConfirm={ () =>
+                              accountStore.deleteAccount(account.accountId).then(() =>
+                                  navigate('/accounts')
+                              )
+                          }
+                          important
+            />
+        )
     }
 
     return (
@@ -75,8 +100,31 @@ export default observer(function EditAccountComponent({ account, groupDropdownPr
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            flexDirection: 'column'
+                            flexDirection: 'column',
+                              position: 'relative'
                     }}>
+                        <IconButton onClick={() => navigate('/accounts')}
+                            sx={{
+                                position: 'absolute',
+                                top: '1px', left: '1px',
+                                width: '5rem',
+                                height: '5rem'
+                        }}>
+                            <Undo fontSize={'large'} />
+                        </IconButton>
+                        <IconButton onClick={handleDelete}
+                            sx={{
+                                position: 'absolute',
+                                top: '1px',
+                                right: '1px',
+                                width: '5rem',
+                                height: '5rem',
+                                flexDirection: 'column',
+                                color: theme.palette.error.main,
+                        }}>
+                            <DeleteTwoTone fontSize={'large'} />
+                            <Typography variant={'caption'}>Delete</Typography>
+                        </IconButton>
                         <Grid container>
                             <Grid item xs={12} marginBottom={3} sx={{display: 'flex', alignItems:'center', justifyContent: 'center'}}>
                                 <Stack sx={{justifyContent: 'center', alignItems: 'center', width:'100%'}}>
@@ -111,6 +159,7 @@ export default observer(function EditAccountComponent({ account, groupDropdownPr
                                         placeholder={''}
                                         name={'balance'}
                                         type={'number'}
+                                        inputProps={{endAdornment: <InputAdornment position="end">{account.balance.currency}</InputAdornment>}}
                                     />
                                 </Stack>
                             </Grid>

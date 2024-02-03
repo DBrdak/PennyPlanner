@@ -1,21 +1,16 @@
-import {observer} from "mobx-react-lite";
-import {useStore} from "../../../stores/store";
-import TilePaper from "../../../components/tilesLayout/TilePaper";
-import {Divider, Stack, Typography, useMediaQuery} from "@mui/material";
-import theme from "../../theme";
-import {AccountBalanceDisplay} from "./AccountBalanceDisplay";
+import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {useNavigate} from "react-router-dom";
-import {Account} from "../../../models/accounts/account";
+import {Divider, Stack, Typography, useMediaQuery} from "@mui/material";
+import theme from "../../../theme";
+import {AddCardTwoTone} from "@mui/icons-material";
+import {AccountBalanceDisplay} from "../details/AccountBalanceDisplay";
 
-export default observer(function TotalAccountsTile() {
+export function NewAccountTile() {
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
-    const {accountStore} = useStore()
     const navigate = useNavigate()
-    const transactions = accountStore.accounts.flatMap(a => a.transactions)
-    const currency = transactions[0]?.transactionAmount.currency
 
     return (
-        <TilePaper onClick={() => navigate(`/accounts/total`)} colors={'magenta'}>
+        <TilePaper onClick={() => navigate('/accounts/new')} colors={'cyan'}>
             <Stack spacing={isMobile ? 2 : 5}
                    sx={{
                        p: '1vw',
@@ -39,12 +34,18 @@ export default observer(function TotalAccountsTile() {
                         color: theme.palette.text.primary,
                         textAlign: 'center',
                     }}>
-                        Total
+                        New Account
+                    </Typography>
+                    <Typography sx={{
+                        userSelect:'none',
+                        lineHeight: '1',
+                        color: theme.palette.text.primary,
+                        textAlign: 'center',
+                    }}>
+                        <AddCardTwoTone sx={{fontSize: '4rem'}} />
                     </Typography>
                 </Stack>
-                <Divider sx={{backgroundColor: theme.palette.background.paper}} />
-                <AccountBalanceDisplay isMobile={isMobile} transactions={transactions} currency={currency} />
             </Stack>
         </TilePaper>
     );
-})
+}

@@ -3,6 +3,7 @@ import {Account} from "../models/accounts/account";
 import agent from "../api/agent";
 import {NewAccountData} from "../models/requests/newAccountData";
 import {AccountUpdateData} from "../models/requests/accountUpdateData";
+import {toast} from "react-toastify";
 
 export default class AccountStore {
     private accountsRegistry: Map<string, Account> = new Map<string, Account>()
@@ -26,11 +27,6 @@ export default class AccountStore {
 
     private removeAccount(accountId: string) {
         this.accountsRegistry.delete(accountId)
-    }
-
-    private replaceAccount(newAccountData: Account) {
-        this.removeAccount(newAccountData.accountId)
-        this.setAccount(newAccountData)
     }
 
     async loadAccounts() {
@@ -71,6 +67,18 @@ export default class AccountStore {
             console.error(e);
         } finally {
             this.setLoading(false);
+        }
+    }
+
+    async deleteAccount(accountId: string) {
+        this.setLoading(true)
+        try {
+            await agent.accounts.deleteAccount(accountId)
+            this.removeAccount(accountId)
+        } catch (e) {
+            console.log(e)
+        } finally {
+            this.setLoading(false)
         }
     }
 

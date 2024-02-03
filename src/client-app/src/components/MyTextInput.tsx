@@ -33,7 +33,13 @@ const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, showErr
         let value = e.target.value.replace(',', '.');
 
         if (type === 'number') {
-            value = value.replace(/[^0-9.]/g, '');
+            value = value.replace(/[^0-9.-]/g, '')
+
+            const dots = value.split('.').length - 1
+
+            if (dots > 1) {
+                value = value.slice(0, value.lastIndexOf('.'))
+            }
         }
 
         if (value !== '0') {
@@ -92,6 +98,7 @@ const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, showErr
                 variant="outlined"
                 error={meta.touched && !!meta.error}
                 InputProps={inputProps}
+
             />
         </FormControl>
     )

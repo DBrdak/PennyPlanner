@@ -1,10 +1,10 @@
 import {Box, Divider, Fade, Grid, Grow, Stack, Typography, useMediaQuery} from "@mui/material";
-import TilePaper from "../../../components/tilesLayout/TilePaper";
+import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {useNavigate} from "react-router-dom";
-import theme from "../../theme";
-import {Account} from "../../../models/accounts/account";
-import CenteredStack from "../../../components/CenteredStack";
-import {AccountBalanceDisplay} from "./AccountBalanceDisplay";
+import theme from "../../../theme";
+import {Account} from "../../../../models/accounts/account";
+import CenteredStack from "../../../../components/CenteredStack";
+import {AccountBalanceDisplay} from "../details/AccountBalanceDisplay";
 
 export interface AccountTileProps {
     account: Account

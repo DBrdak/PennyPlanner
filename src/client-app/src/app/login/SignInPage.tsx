@@ -6,7 +6,7 @@ import {
     TextField,
     Divider,
     Stack,
-    ButtonGroup, useMediaQuery,
+    ButtonGroup, useMediaQuery, InputAdornment, IconButton,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -15,6 +15,8 @@ import {router} from "../../router/Routes";
 import {useNavigate} from "react-router-dom";
 import MainContainer from "../../components/MainContainer";
 import theme from "../theme";
+import useTitle from "../../utils/hooks/useTitle";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Insert email'),
@@ -25,6 +27,9 @@ const SignInPage: React.FC = () => {
     // TODO Implement logging and registering logic
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
     const navigate = useNavigate()
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    useTitle('Login')
 
     const formik = useFormik({
         initialValues: {
@@ -62,7 +67,7 @@ const SignInPage: React.FC = () => {
 
                                 <TextField
                                     label="Password"
-                                    type="password"
+                                    type={showPassword ? 'text' : "password"}
                                     variant='outlined'
                                     fullWidth
                                     margin="normal"

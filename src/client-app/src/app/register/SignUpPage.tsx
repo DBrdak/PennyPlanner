@@ -16,11 +16,14 @@ import * as Yup from "yup";
 import MyTextInput from "../../components/MyTextInput";
 import {SignupValues} from "../../models/forms/signUpValues";
 import MainContainer from "../../components/MainContainer";
+import useTitle from "../../utils/hooks/useTitle";
 
 
 
 const SignUpPage: React.FC = () => {
     const navigate = useNavigate()
+
+    useTitle('Register')
 
     const initialValues: SignupValues = {
         email: '',

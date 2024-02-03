@@ -1,7 +1,7 @@
 import {Button, Grid, Stack, Typography} from "@mui/material";
-import AccountDetailsPage from "../details/AccountDetailsPage";
-import {Account} from "../../../models/accounts/account";
-import GroupDropdown, {GroupDropdownProps} from "./GroupDropdown";
+import AccountDetailsPage from "../../details/AccountDetailsPage";
+import {Account} from "../../../../models/accounts/account";
+import GroupDropdown, {GroupDropdownProps} from "../transactionsTable/GroupDropdown";
 import {observer} from "mobx-react-lite";
 
 
@@ -42,7 +42,7 @@ export default observer(function AccountDetailsComponent({account, groupDropdown
                         Account Balance
                     </Typography>
                     <Typography variant={"h4"} sx={{ userSelect: "none" }}>
-                        {account.balance.amount.toFixed(2)}
+                        {account.balance.amount.toFixed(2)} {account.balance.currency}
                     </Typography>
                 </Stack>
             </Grid>

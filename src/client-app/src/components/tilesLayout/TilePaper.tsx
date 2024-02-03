@@ -4,7 +4,8 @@ import theme from "../../app/theme";
 import {useEffect, useState} from "react";
 
 interface TilePaperProps {
-    colors?: string | null
+    colors?: string
+    disabled?: boolean
 }
 
 const randomGradient = (colors?: string | null) => {
@@ -13,8 +14,8 @@ const randomGradient = (colors?: string | null) => {
     if(colors === 'cyan'){
         return `linear-gradient(to bottom right, ${theme.palette.secondary.dark}, ${theme.palette.secondary.dark})`;
     }
-    if(colors === 'magenta'){
-        return `linear-gradient(to bottom right, ${theme.palette.primary.main}, ${theme.palette.primary.main})`;
+    if(colors === 'achromatic'){
+        return `linear-gradient(to bottom, ${theme.palette.background.default}, ${theme.palette.background.paper})`;
     }
     if (randomNumber % 19 === 0) {
         return `linear-gradient(to bottom right, ${theme.palette.primary.dark}, ${theme.palette.secondary.light})`;
@@ -40,7 +41,7 @@ const randomGradient = (colors?: string | null) => {
 }
 
 const TilePaper = styled(MuiPaper)<TilePaperProps>(
-    ({ theme, colors }) => {
+    ({ theme, colors, disabled }) => {
         const [isMounted, setIsMounted] = useState(false)
 
         useEffect(() => {
@@ -62,17 +63,19 @@ const TilePaper = styled(MuiPaper)<TilePaperProps>(
             alignItems: "start",
             paddingTop: "3%",
             height: "100%",
-            cursor: "pointer",
+            cursor: !disabled ? "pointer" : 'auto',
             transform: isMounted ? "scale(1)" : "scale(0)",
             transition: "transform 0.5s ease",
-            "&:hover": {
-                transform: isMounted ? "translate(-1.5%, -1.5%)" : "scale(0)",
-                boxShadow: "8px 8px 15px rgba(0, 0, 0, 0.6)",
-            },
-            "&:active": {
-                transform: "scale(0.9)",
-                boxShadow: "0 0 100px rgba(0, 0, 0, 0.6) inset",
-            },
+            ...(!disabled && {
+                '&:hover': {
+                    transform: isMounted ? 'translate(-1.5%, -1.5%)' : 'scale(0)',
+                    boxShadow: '8px 8px 15px rgba(0, 0, 0, 0.6)',
+                },
+                '&:active': {
+                    transform: 'scale(0.9)',
+                    boxShadow: '0 0 100px rgba(0, 0, 0, 0.6) inset',
+                },
+            }),
         }
     }
 )

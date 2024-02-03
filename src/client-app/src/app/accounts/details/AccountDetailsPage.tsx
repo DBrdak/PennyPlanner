@@ -9,15 +9,13 @@ import {
 import theme from "../../theme";
 import {useEffect, useState} from "react";
 import TransactionsTable from "../components/transactionsTable/TransactionsTable";
-import AccountDetailsComponent from "../components/AccountDetailsComponent";
-import EditAccountComponent from "../components/EditAccountComponent";
+import AccountDetailsComponent from "../components/details/AccountDetailsComponent";
+import EditAccountComponent from "../components/edit/EditAccountComponent";
 import useTransactionEntities from "../../../utils/hooks/useTransactionEntities";
-import useAccount from "../../../utils/hooks/useAccount";
 import groupBy from "../../../utils/transactionsGroupBy";
 import {Account} from "../../../models/accounts/account";
 import {useNavigate, useParams} from "react-router-dom";
-import {deflateRaw} from "zlib";
-import {TotalAccountsDetails} from "../components/TotalAccountsDetails";
+import useTitle from "../../../utils/hooks/useTitle";
 
 export default observer(function AccountDetailsPage() {
     const navigate = useNavigate()
@@ -30,21 +28,7 @@ export default observer(function AccountDetailsPage() {
     const transactionEntities = useTransactionEntities(account)
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
 
-    const aggregateAccounts = (accounts: Account[]) => {
-        return new Account(
-            '',
-            'Total',
-            {
-                amount: accounts
-                .flatMap(a => a.transactions)
-                    .reduce((total, transaction) => total + transaction.transactionAmount.amount, 0),
-                currency: accounts[0].balance.currency
-            },
-            accounts.flatMap(a => a.transactions)
-                .sort((a, b) => Number(new Date(b.transactionDateUtc)) - Number(new Date(a.transactionDateUtc))),
-            'Total'
-        )
-    }
+    useTitle(undefined, account?.name)
 
     useEffect(() => {
         const loadAccounts = async () => await accountStore.loadAccounts()
@@ -54,12 +38,9 @@ export default observer(function AccountDetailsPage() {
         } else if(accountId && !accountStore.getAccount(accountId)){
             loadAccounts().then(() => setAccount(accountStore.getAccount(accountId)))
         } else {
-            loadAccounts().then(() => {
-                accountStore.accounts.length > 0 ?
-                    setAccount(aggregateAccounts(accountStore.accounts)) :
-                    navigate('/accounts')
-            })
+            navigate('/accounts')
         }
+
     }, [accountId, accountStore, navigate])
 
     const resetCollapse = () => collapsedGroups.length > 0 && setCollapsedGroups([])
@@ -85,12 +66,7 @@ export default observer(function AccountDetailsPage() {
                     borderRadius: '20px',
                     overflow: isMobile ? 'auto' : 'hidden',
                 }}>
-                    {!accountId ?
-                        <TotalAccountsDetails
-                            account={account}
-                            groupDropdownProps={{groupCriterion: groupCriterion, handleGroupChange: handleGroupChange}}
-                        /> :
-                        !editMode ?
+                    {!editMode ?
                             <AccountDetailsComponent
                                 account={account}
                                 groupDropdownProps={{groupCriterion: groupCriterion, handleGroupChange: handleGroupChange}}
@@ -103,7 +79,7 @@ export default observer(function AccountDetailsPage() {
                                 setAccount={setAccount}
                             />
                     }
-                    <Grid item xs={12} sx={{overflow: 'hidden', maxHeight: '50%'}}>
+                    <Grid item xs={12} sx={{overflow: 'hidden', maxHeight: '60%'}}>
                         <TransactionsTable
                             groupCriterion={groupCriterion}
                             collapsedGroups={collapsedGroups}

@@ -31,7 +31,10 @@ namespace Domestica.Budget.Domain.Accounts
             Currency = currency;
             _transactions = new();
 
-            TransactionService.CreatePrivateTransaction(new (initialBalance, currency), this);
+            if (initialBalance != 0)
+            {
+                TransactionService.CreatePrivateTransaction(new(initialBalance, currency), this);
+            }
         }
 
         public void UpdateAccount(AccountName name, decimal balance)
