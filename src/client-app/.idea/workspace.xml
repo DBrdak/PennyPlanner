@@ -4,22 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Account Page Completed">
-      <change afterPath="$PROJECT_DIR$/src/app/home/components/tiles/AddTransactionTile.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/home/components/tiles/BudgetPreviewTile.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/home/components/tiles/GoalsPreviewTile.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/home/components/tiles/TransactionsViewTile.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/formatters/numberFormatter.ts" afterDir="false" />
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="home page init">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/details/AccountBalanceDisplay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/tiles/AccountBalanceDisplay.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/details/AccountDetailsComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/details/AccountDetailsComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/tiles/AccountTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/tiles/AccountTile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/tiles/NewAccountTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/tiles/NewAccountTile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/tiles/TotalAccountsTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/tiles/TotalAccountsTile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTableGroup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTableGroup.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/home/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/HomePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/dateFormatter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/formatters/dateFormatter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/transactionsGroupBy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/transactionsGroupBy.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/tiles/AddTransactionTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/tiles/AddTransactionTile.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,22 +31,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ReactCreateComponentLastSelected": "functionDeclarationComponent",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "init-develop",
-    "last_opened_file_path": "D:/Programownie/Projekty/Domestica/Domestica.Budget/src/client-app/src/components",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\Programownie\\Projekty\\Domestica\\Domestica.Budget\\src\\client-app\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ReactCreateComponentLastSelected&quot;: &quot;functionDeclarationComponent&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;init-develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Programownie/Projekty/Domestica/Domestica.Budget/src/client-app/src/components&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Programownie\\Projekty\\Domestica\\Domestica.Budget\\src\\client-app\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -138,7 +125,8 @@
       <workItem from="1706724865145" duration="25896000" />
       <workItem from="1706806686146" duration="14212000" />
       <workItem from="1706870860197" duration="32368000" />
-      <workItem from="1706950798695" duration="11120000" />
+      <workItem from="1706950798695" duration="12047000" />
+      <workItem from="1707018975777" duration="2118000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
@@ -252,7 +240,14 @@
       <option name="project" value="LOCAL" />
       <updated>1706963319099</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="home page init">
+      <created>1706965705441</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1706965705441</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -286,6 +281,7 @@
     <MESSAGE value="Account Edit Bug Fix" />
     <MESSAGE value="Transaction Remove Feature Added" />
     <MESSAGE value="Account Page Completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Account Page Completed" />
+    <MESSAGE value="home page init" />
+    <option name="LAST_COMMIT_MESSAGE" value="home page init" />
   </component>
 </project>
