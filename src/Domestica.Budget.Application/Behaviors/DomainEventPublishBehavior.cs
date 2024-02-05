@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
+﻿using System.Reflection;
 using CommonAbstractions.DB.Entities;
 using CommonAbstractions.DB.Messaging;
 using MediatR;

@@ -1,6 +1,4 @@
 ﻿using Domestica.Budget.Domain.Accounts;
-using Domestica.Budget.Domain.Accounts.SavingsAccounts;
-using Domestica.Budget.Domain.Accounts.TransactionalAccounts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domestica.Budget.Infrastructure.Repositories

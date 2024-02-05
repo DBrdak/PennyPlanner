@@ -4,7 +4,6 @@ using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
 using Domestica.Budget.Application.TransactionEntities.GetTransactionEntities;
 using Domestica.Budget.Application.TransactionEntities.RemoveTransactionEntity;
 using Domestica.Budget.Application.TransactionEntities.UpdateTransactionEntity;
-using Domestica.Budget.Domain.TransactionEntities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;

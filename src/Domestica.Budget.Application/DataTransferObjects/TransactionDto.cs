@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using Domestica.Budget.Domain.Accounts;
-using Domestica.Budget.Domain.Shared;
-using Domestica.Budget.Domain.TransactionEntities;
+﻿using System.Text.Json.Serialization;
 using Domestica.Budget.Domain.Transactions;
 
 namespace Domestica.Budget.Application.DataTransferObjects

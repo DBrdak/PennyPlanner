@@ -1,7 +1,6 @@
 ﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Domain.Accounts;
-using Money.DB;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.Accounts.UpdateAccount

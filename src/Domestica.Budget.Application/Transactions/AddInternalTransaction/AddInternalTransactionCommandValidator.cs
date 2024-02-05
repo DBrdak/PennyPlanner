@@ -1,6 +1,4 @@
-﻿using Domestica.Budget.Domain.Transactions;
-using FluentValidation;
-using Money.DB;
+﻿using FluentValidation;
 
 namespace Domestica.Budget.Application.Transactions.AddInternalTransaction
 {

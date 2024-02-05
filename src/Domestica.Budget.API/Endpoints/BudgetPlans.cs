@@ -5,8 +5,6 @@ using Domestica.Budget.Application.BudgetPlans.CreateBudgetPlan;
 using Domestica.Budget.Application.BudgetPlans.GetBudgetPlans;
 using Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories;
 using Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory;
-using Domestica.Budget.Domain.BudgetPlans;
-using Domestica.Budget.Domain.Transactions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;

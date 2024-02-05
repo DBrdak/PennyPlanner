@@ -2,10 +2,7 @@
 using System.Text.Json.Serialization;
 using CommonAbstractions.DB.Entities;
 using Domestica.Budget.Domain.Transactions;
-using Exceptions.DB;
-using Money.DB;
 using Currency = Money.DB.Currency;
-using Money = Money.DB.Money;
 using Transaction = Domestica.Budget.Domain.Transactions.Transaction;
 
 #pragma warning disable CS8618

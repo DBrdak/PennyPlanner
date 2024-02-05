@@ -1,5 +1,4 @@
-﻿using CommonAbstractions.DB.Entities;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Domestica.Budget.Domain.TransactionEntities
 {

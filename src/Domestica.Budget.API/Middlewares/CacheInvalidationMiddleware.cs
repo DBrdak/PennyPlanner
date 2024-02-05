@@ -1,6 +1,4 @@
-﻿using StackExchange.Redis;
-using System.Security.Claims;
-using Domestica.Budget.API.Cache;
+﻿using Domestica.Budget.API.Cache;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Domestica.Budget.API.Middlewares

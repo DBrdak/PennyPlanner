@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domestica.Budget.Domain.Transactions;
+﻿using Domestica.Budget.Domain.Transactions;
 using FluentValidation;
 
 namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory

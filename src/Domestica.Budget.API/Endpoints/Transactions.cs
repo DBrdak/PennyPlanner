@@ -8,7 +8,6 @@ using Domestica.Budget.Application.Transactions.RemoveTransaction;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
-using Responses.DB;
 
 namespace Domestica.Budget.API.Endpoints
 {

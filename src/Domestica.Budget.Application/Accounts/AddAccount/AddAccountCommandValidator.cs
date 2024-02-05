@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Money.DB;
 
 namespace Domestica.Budget.Application.Accounts.AddAccount
 {

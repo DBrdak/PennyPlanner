@@ -4,15 +4,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using System.Buffers;
 using System.Text.Json;
 using CancellationToken = System.Threading.CancellationToken;
-using System.Buffers;
-using System.Text.Json;
 using Responses.DB;
-using System;
-using System.Text.Json.Serialization;
-using System.Text.Json.Serialization.Metadata;
-using Domestica.Budget.Application.Accounts.AddAccount;
-using Domestica.Budget.Application.DataTransferObjects;
-using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Domestica.Budget.API.Cache;
@@ -20,7 +12,7 @@ namespace Domestica.Budget.API.Cache;
 internal static class ResponseCaching
 {
     internal static DistributedCacheEntryOptions DefaultExpiration = new DistributedCacheEntryOptions
-    { AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60) };
+    { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5) };
 
     internal static async Task<Result<T>> GetCachedResponseAsync<T>(this IDistributedCache cache, CacheKey key, ISender sender, IQuery<T> query, CancellationToken cancellationToken = default)
     {

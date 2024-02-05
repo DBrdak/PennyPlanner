@@ -1,5 +1,4 @@
-﻿using System.IO.Compression;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using CommonAbstractions.DB.Entities;
 using Microsoft.EntityFrameworkCore;
 

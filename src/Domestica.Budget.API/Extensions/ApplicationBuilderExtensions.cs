@@ -1,14 +1,11 @@
-﻿using System.Text.Json;
-using Carter;
+﻿using Carter;
 using Domestica.Budget.API.Middlewares;
 using Domestica.Budget.Application;
-using Domestica.Budget.Domain.Shared;
 using Domestica.Budget.Infrastructure;
 using HealthChecks.ApplicationStatus.DependencyInjection;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using StackExchange.Redis;
 
 namespace Domestica.Budget.API.Extensions
 {

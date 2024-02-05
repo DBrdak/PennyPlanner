@@ -2,7 +2,6 @@
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.TransactionEntities;
-using Domestica.Budget.Domain.TransactionEntities.TransactionRecipients;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
 using Domestica.Budget.Domain.Transactions;
 using Money.DB;

@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Domestica.Budget.Application.Behaviors;
+﻿using Domestica.Budget.Application.Behaviors;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
