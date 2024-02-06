@@ -1,4 +1,3 @@
-import {Money} from "../shared/money";
 
 export interface AddIncomeTransactionCommand {
     destinationAccountId: string | null

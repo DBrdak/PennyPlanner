@@ -3,7 +3,6 @@ import {Account} from "../models/accounts/account";
 import agent from "../api/agent";
 import {NewAccountData} from "../models/requests/newAccountData";
 import {AccountUpdateData} from "../models/requests/accountUpdateData";
-import {toast} from "react-toastify";
 
 export default class AccountStore {
     private accountsRegistry: Map<string, Account> = new Map<string, Account>()

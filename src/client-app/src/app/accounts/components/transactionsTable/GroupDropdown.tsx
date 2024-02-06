@@ -1,4 +1,4 @@
-import {FormControl, Grid, InputLabel, MenuItem, Select} from "@mui/material";
+import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 
 export interface GroupDropdownProps{
     groupCriterion: string

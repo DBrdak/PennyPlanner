@@ -1,4 +1,4 @@
-import {Button, ButtonGroup, Container, Typography, useMediaQuery, useTheme} from "@mui/material";
+import {Button, ButtonGroup, Typography, useMediaQuery, useTheme} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import '../../styles/index.css'
 import GradientContainer from "./GradientContainer";

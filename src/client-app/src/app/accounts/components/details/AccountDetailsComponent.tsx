@@ -1,5 +1,4 @@
 import {Button, Grid, Stack, Typography} from "@mui/material";
-import AccountDetailsPage from "../../details/AccountDetailsPage";
 import {Account} from "../../../../models/accounts/account";
 import GroupDropdown, {GroupDropdownProps} from "../transactionsTable/GroupDropdown";
 import {observer} from "mobx-react-lite";

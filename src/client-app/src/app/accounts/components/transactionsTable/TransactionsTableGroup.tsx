@@ -1,14 +1,11 @@
 import {
     Button, Checkbox,
-    Collapse,
-    Paper,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
     TableRow,
-    Typography
 } from "@mui/material";
 import SortableTableCell from "./SortableTableCell";
 import {useState} from "react";

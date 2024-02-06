@@ -1,4 +1,3 @@
-import {Account} from "../../models/accounts/account";
 import {Transaction} from "../../models/transactions/transaction";
 
 export const calculateBalanceForToday = (transactions: Transaction[]): number => {

@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios"
-import {Bounce, toast} from "react-toastify"
+import {toast} from "react-toastify"
 import { router } from "../router/Routes"
 import {NewAccountData} from "../models/requests/newAccountData";
 import {AddTransactionEntityCommand} from "../models/requests/addTransactionEntityCommand";
@@ -11,7 +11,6 @@ import {AddIncomeTransactionCommand} from "../models/requests/addIncomeTransacti
 import {AddOutcomeTransactionCommand} from "../models/requests/addOutcomeTransactionCommand";
 import {Account} from "../models/accounts/account";
 import {TransactionEntity} from "../models/transactionEntities/transactionEntity";
-import {BudgetPlan} from "../models/budgetPlans/budgetPlan";
 import {Transaction} from "../models/transactions/transaction";
 
 const sleep = (delay: number) => {

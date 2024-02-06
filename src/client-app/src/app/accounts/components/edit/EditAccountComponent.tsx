@@ -1,11 +1,7 @@
 import {Account} from "../../../../models/accounts/account";
 import {
-    Box,
     Button,
     ButtonGroup,
-    Dialog, DialogActions,
-    DialogContent,
-    DialogTitle,
     Grid, IconButton, InputAdornment,
     Stack,
     Typography,
@@ -14,17 +10,16 @@ import {
 import {Form, Formik} from "formik";
 import * as Yup from 'yup'
 import {AccountUpdateData} from "../../../../models/requests/accountUpdateData";
-import {bool, number, string} from "yup";
+import {number, string} from "yup";
 import MyTextInput from "../../../../components/MyTextInput";
 import theme from "../../../theme";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../../stores/store";
 import GroupDropdown, {GroupDropdownProps} from "../transactionsTable/GroupDropdown";
 import {useNavigate} from "react-router-dom";
-import {deflateRaw} from "zlib";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {toast} from "react-toastify";
-import {Delete, DeleteTwoTone, Undo} from "@mui/icons-material";
+import {DeleteTwoTone, Undo} from "@mui/icons-material";
 import ConfirmModal from "../../../../components/ConfirmModal";
 
 interface EditAccountComponentProps {

@@ -2,9 +2,7 @@ import {Divider, Stack, Typography} from "@mui/material";
 import theme from "../../../theme";
 import {Account} from "../../../../models/accounts/account";
 import {calculateBalanceForCurrentMonth, calculateBalanceForToday} from "../../../../utils/calculators/balanceCalculator";
-import {useNavigate} from "react-router-dom";
 import {Transaction} from "../../../../models/transactions/transaction";
-import {transaction} from "mobx";
 import formatNumber from "../../../../utils/formatters/numberFormatter";
 
 interface AccountBalanceDisplayProps {

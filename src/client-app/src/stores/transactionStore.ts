@@ -1,7 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {Simulate} from "react-dom/test-utils";
 import agent from "../api/agent";
-import {deflateRaw} from "zlib";
 
 export default class TransactionStore {
     transactionsIdToRemove: string[] = []

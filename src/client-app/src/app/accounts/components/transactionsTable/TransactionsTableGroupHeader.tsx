@@ -1,6 +1,5 @@
 import {Stack, Typography} from "@mui/material";
 import {ExpandLessTwoTone, ExpandMoreTwoTone} from "@mui/icons-material";
-import {useState} from "react";
 
 interface TransactionsTableGroupHeaderProps {
     groupKey: string;

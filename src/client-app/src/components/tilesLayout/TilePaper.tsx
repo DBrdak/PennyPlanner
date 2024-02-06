@@ -1,4 +1,4 @@
-import {styled, useMediaQuery} from "@mui/material";
+import {styled} from "@mui/material";
 import MuiPaper from "@mui/material/Paper";
 import theme from "../../app/theme";
 import {useEffect, useState} from "react";

@@ -1,9 +1,8 @@
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {useNavigate} from "react-router-dom";
-import {Divider, Stack, Typography, useMediaQuery} from "@mui/material";
+import {Stack, Typography, useMediaQuery} from "@mui/material";
 import theme from "../../../theme";
 import {AddCardTwoTone} from "@mui/icons-material";
-import {AccountBalanceDisplay} from "./AccountBalanceDisplay";
 
 export function NewAccountTile() {
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))

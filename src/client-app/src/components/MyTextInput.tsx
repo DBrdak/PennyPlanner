@@ -5,8 +5,7 @@ import {
     Tooltip,
     FilledInputProps,
     InputProps,
-    OutlinedInputProps,
-    InputLabel
+    OutlinedInputProps
 } from '@mui/material';
 import { useField } from 'formik';
 import { observer } from 'mobx-react-lite';

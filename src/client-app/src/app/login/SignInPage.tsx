@@ -6,7 +6,7 @@ import {
     TextField,
     Divider,
     Stack,
-    ButtonGroup, useMediaQuery, InputAdornment, IconButton,
+    ButtonGroup, useMediaQuery
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -16,7 +16,6 @@ import {useNavigate} from "react-router-dom";
 import MainContainer from "../../components/MainContainer";
 import theme from "../theme";
 import useTitle from "../../utils/hooks/useTitle";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Insert email'),
