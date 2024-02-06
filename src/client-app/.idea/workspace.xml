@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="home page init">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/home/components/tiles/AddTransactionTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/tiles/AddTransactionTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/tiles/AccountsPreviewTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/tiles/AccountsPreviewTile.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,6 +126,7 @@
       <workItem from="1706870860197" duration="32368000" />
       <workItem from="1706950798695" duration="12047000" />
       <workItem from="1707018975777" duration="2118000" />
+      <workItem from="1707170360469" duration="400000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
