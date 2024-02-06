@@ -17,9 +17,6 @@ namespace Domestica.Budget.API.Extensions
                 .AddApplicationStatus()
                 .AddNpgSql(configuration.GetConnectionString("Database") ?? string.Empty);
 
-            services.AddStackExchangeRedisCache(options =>
-                    options.Configuration = configuration.GetConnectionString("Cache"));
-
             services.AddInfrastructure(configuration);
             services.AddApplication();
             services.AddCarter();
@@ -70,7 +67,6 @@ namespace Domestica.Budget.API.Extensions
 
         public static void AddMiddlewares(this IApplicationBuilder app)
         {
-            app.UseMiddleware<CacheInvalidationMiddleware>();
             app.UseMiddleware<MonitoringMiddleware>();
             app.UseMiddleware<ExceptionMiddleware>();
         }

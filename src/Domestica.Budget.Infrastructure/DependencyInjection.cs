@@ -1,4 +1,5 @@
 ﻿using CommonAbstractions.DB;
+using Domestica.Budget.Application.Caching;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.BudgetPlans;
 using Domestica.Budget.Domain.TransactionEntities;
@@ -32,6 +33,9 @@ namespace Domestica.Budget.Infrastructure
                 options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
             });
 
+            services.AddStackExchangeRedisCache(options =>
+                options.Configuration = configuration.GetConnectionString("Cache"));
+
             services.AddScoped<IAccountRepository, AccountRepository>();
 
             services.AddScoped<ITransactionEntityRepository, TransactionEntityRepository>();
@@ -39,6 +43,8 @@ namespace Domestica.Budget.Infrastructure
             services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             services.AddScoped<IBudgetPlanRepository, BudgetPlanRepository>();
+
+            services.AddScoped<ICacheRepository, CacheRepository>();
 
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
         }

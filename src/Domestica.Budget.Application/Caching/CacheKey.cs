@@ -1,16 +1,21 @@
-﻿namespace Domestica.Budget.API.Cache
+﻿using Domestica.Budget.Domain.Accounts;
+using Domestica.Budget.Domain.BudgetPlans;
+using Domestica.Budget.Domain.TransactionEntities;
+using Domestica.Budget.Domain.Transactions;
+
+namespace Domestica.Budget.Application.Caching
 {
-    internal sealed record CacheKey
+    public sealed record CacheKey
     {
         public string Collection { get; init; }
         public string? UserId { get; init; }
 
         private CacheKey(string collection, string? userId) => (Collection, UserId) = (collection, userId);
 
-        internal static CacheKey Accounts(string? userId) => new CacheKey("accounts", userId);
-        internal static CacheKey BudgetPlans(string? userId) => new CacheKey("budget-plans", userId);
-        internal static CacheKey TransactionEntities(string? userId) => new CacheKey("transaction-entities", userId);
-        internal static CacheKey Transactions(string? userId) => new CacheKey("transactions", userId);
+        internal static CacheKey Accounts(string? userId) => new (nameof(Account), userId);
+        internal static CacheKey BudgetPlans(string? userId) => new (nameof(BudgetPlan), userId);
+        internal static CacheKey TransactionEntities(string? userId) => new (nameof(TransactionEntity), userId);
+        internal static CacheKey Transactions(string? userId) => new (nameof(Transaction), userId);
 
         internal static IReadOnlyCollection<CacheKey> All(string? userId) =>
             new[]
