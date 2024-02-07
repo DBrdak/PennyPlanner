@@ -3,7 +3,6 @@ import {TilesLayout} from "../../components/tilesLayout/TilesLayout";
 import {observer} from "mobx-react-lite";
 import useTitle from "../../utils/hooks/useTitle";
 import Tile from "../../models/layout/tile";
-import {AddTransactionTile} from "./components/tiles/AddTransactionTile";
 import {TransactionsViewTile} from "./components/tiles/TransactionsViewTile";
 import {BudgetPreviewTile} from "./components/tiles/BudgetPreviewTile";
 import {GoalsPreviewTile} from "./components/tiles/GoalsPreviewTile";
@@ -16,10 +15,7 @@ export default observer(function HomePage() {
 
     const tiles: Tile[] = [
         {
-            cols: 4, height: '25%', content: <TransactionsViewTile />
-        },
-        {
-            cols: 4, height: '25%', content: <AddTransactionTile />
+            cols: 8, height: '25%', content: <TransactionsViewTile />
         },
         {
             cols: 4, height: '25%', content: <BudgetPreviewTile />

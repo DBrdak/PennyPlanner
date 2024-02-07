@@ -9,7 +9,7 @@ import {
     Typography, Box,
 } from '@mui/material';
 import {
-    AccountBalanceTwoTone, AccountBoxTwoTone, AssessmentTwoTone, CalendarMonthTwoTone,
+    AccountBalanceWalletTwoTone, AccountBoxTwoTone, AssessmentTwoTone, CalendarMonthTwoTone,
     ChevronLeftTwoTone,
     ChevronRightTwoTone, EditNoteTwoTone, EmojiEventsTwoTone, HomeTwoTone,
 } from "@mui/icons-material";
@@ -24,6 +24,7 @@ import {useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../stores/store";
 import DashboardSection from "../../models/layout/dashboardSection";
+ import AddTransactionButton from "./AddTransactionButton";
 
 interface AppOverlayProps {
     children: React.ReactNode,
@@ -42,8 +43,8 @@ export const dashboardSections: DashboardSection[] = [
     },
     {
         title: 'Accounts',
-        icon: <AccountBalanceTwoTone color={'primary'} fontSize={'large'} />,
-        activeIcon: <AccountBalanceTwoTone sx={{color: theme.palette.secondary.main}} fontSize={'large'} />
+        icon: <AccountBalanceWalletTwoTone color={'primary'} fontSize={'large'} />,
+        activeIcon: <AccountBalanceWalletTwoTone sx={{color: theme.palette.secondary.main}} fontSize={'large'} />
     },
     {
         title: 'Goals',
@@ -90,7 +91,7 @@ const AppOverlay = ({children}: AppOverlayProps) => {
     const userSectionIndex = dashboardSections.findIndex(s => s.title === 'User')
 
     return (
-        <Box sx={{height: '100svh', overflow: 'hidden'}}>
+        <Box sx={{height: '100svh', overflow: 'hidden', position: 'relative'}}>
             <AppBar>
                 <Toolbar style={{
                     height: '100%',
@@ -203,6 +204,7 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                     {children}
                 </Box>
             </Box>
+            <AddTransactionButton />
         </Box>
     );
 };

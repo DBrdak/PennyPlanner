@@ -14,6 +14,10 @@ import StatisticsPage from "../app/statistics/StatisticsPage";
 import SettingsPage from "../app/settings/SettingsPage";
 import UserPage from "../app/user/UserPage";
 import WelcomePage from "../app/welcome/WelcomePage";
+import {TransactionsPage} from "../app/transactions/TransactionsPage";
+import {AddIncomePage} from "../app/transactions/income/AddIncomePage";
+import {AddOutcomePage} from "../app/transactions/outcome/AddOutcomePage";
+import {AddInternalTransactionPage} from "../app/transactions/internal/AddInternalTransactionPage";
 
 export const routes: RouteObject[] = [
   {
@@ -25,6 +29,11 @@ export const routes: RouteObject[] = [
       {path: '/register', element: <SignUpPage />},
 
       {path: '/home', element: <HomePage />},
+
+      {path: '/transactions', element: <TransactionsPage />},
+      {path: '/transactions/income', element: <AddIncomePage />},
+      {path: '/transactions/outcome', element: <AddOutcomePage />},
+      {path: '/transactions/internal', element: <AddInternalTransactionPage />},
 
       {path: '/budget-plans', element: <BudgetPlansPage />},
 
