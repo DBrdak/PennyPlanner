@@ -14,7 +14,7 @@ export default observer(function TotalAccountsTile() {
     const currency = transactions[0]?.transactionAmount.currency
 
     return (
-        <TilePaper disabled colors={'achromatic'}>
+        <TilePaper disabled disableborder>
             <Stack spacing={isMobile ? 2 : 5}
                    sx={{
                        p: '1vw',

@@ -96,7 +96,7 @@ export default observer(function EditAccountComponent({ account, groupDropdownPr
                             justifyContent: 'center',
                             alignItems: 'center',
                             flexDirection: 'column',
-                              position: 'relative'
+                            position: 'relative'
                     }}>
                         <IconButton onClick={() => navigate('/accounts')}
                             sx={{

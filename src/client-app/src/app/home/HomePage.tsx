@@ -7,7 +7,6 @@ import {AddTransactionTile} from "./components/tiles/AddTransactionTile";
 import {TransactionsViewTile} from "./components/tiles/TransactionsViewTile";
 import {BudgetPreviewTile} from "./components/tiles/BudgetPreviewTile";
 import {GoalsPreviewTile} from "./components/tiles/GoalsPreviewTile";
-import {StatisticsPreviewTile} from "./components/tiles/StatisticsPreviewTile";
 import {AccountsPreviewTile} from "./components/tiles/AccountsPreviewTile";
 import {TransactionEntitiesPreviewTile} from "./components/tiles/TransactionEntitiesPreviewTile";
 
@@ -17,7 +16,7 @@ export default observer(function HomePage() {
 
     const tiles: Tile[] = [
         {
-            cols: 8, height: '750%', content: <TransactionsViewTile />
+            cols: 4, height: '25%', content: <TransactionsViewTile />
         },
         {
             cols: 4, height: '25%', content: <AddTransactionTile />
@@ -29,9 +28,6 @@ export default observer(function HomePage() {
             cols: 4, height: '25%', content: <GoalsPreviewTile />
         },
         {
-            cols: 4, height: '25%', content: <StatisticsPreviewTile />
-        },
-        {
             cols: 4, height: '25%', content: <AccountsPreviewTile />
         },
         {
@@ -41,8 +37,7 @@ export default observer(function HomePage() {
 
     return (
         <AppOverlay>
-            <TilesLayout tiles={[
-            ]} />
+            <TilesLayout tiles={tiles} />
         </AppOverlay>
     );
 })

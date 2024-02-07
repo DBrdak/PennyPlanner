@@ -31,7 +31,7 @@ export function AccountTile({account}: AccountTileProps) {
             >
                 <Stack direction={'column'} spacing={2}>
                     <Typography sx={{
-                        fontSize: isMobile ? '2rem' : '2.5rem',
+                        fontSize:  '2.5rem',
                         fontWeight: '700',
                         userSelect:'none',
                         lineHeight: '1',

@@ -9,7 +9,7 @@ export function NewAccountTile() {
     const navigate = useNavigate()
 
     return (
-        <TilePaper onClick={() => navigate('/accounts/new')} colors={'cyan'}>
+        <TilePaper onClick={() => navigate('/accounts/new')} invert>
             <Stack spacing={isMobile ? 2 : 5}
                    sx={{
                        p: '1vw',

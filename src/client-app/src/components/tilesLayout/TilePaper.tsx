@@ -4,44 +4,13 @@ import theme from "../../app/theme";
 import {useEffect, useState} from "react";
 
 interface TilePaperProps {
-    colors?: string
+    disableborder?: boolean
     disabled?: boolean
-}
-
-const randomGradient = (colors?: string | null) => {
-    const randomNumber = Math.floor(Math.random() * 100)
-
-    if(colors === 'cyan'){
-        return `linear-gradient(to bottom right, ${theme.palette.secondary.dark}, ${theme.palette.secondary.dark})`;
-    }
-    if(colors === 'achromatic'){
-        return `linear-gradient(to bottom, ${theme.palette.background.default}, ${theme.palette.background.paper})`;
-    }
-    if (randomNumber % 19 === 0) {
-        return `linear-gradient(to bottom right, ${theme.palette.primary.dark}, ${theme.palette.secondary.light})`;
-    } else if (randomNumber % 17 === 0) {
-        return `linear-gradient(to bottom left, ${theme.palette.primary.light}, ${theme.palette.secondary.dark})`;
-    } else if (randomNumber % 13 === 0) {
-        return `linear-gradient(to top right, ${theme.palette.primary.main}, ${theme.palette.secondary.light})`;
-    } else if (randomNumber % 11 === 0) {
-        return `linear-gradient(to left, ${theme.palette.primary.dark}, ${theme.palette.secondary.main})`;
-    } else if (randomNumber % 7 === 0) {
-        return `linear-gradient(to right, ${theme.palette.primary.light}, ${theme.palette.secondary.dark})`;
-    } else if (randomNumber % 6 === 0) {
-        return `linear-gradient(to bottom left, ${theme.palette.primary.main}, ${theme.palette.secondary.light})`;
-    } else if (randomNumber % 5 === 0) {
-        return `linear-gradient(to top right, ${theme.palette.primary.dark}, ${theme.palette.secondary.dark})`;
-    } else if (randomNumber % 3 === 0) {
-        return `linear-gradient(to bottom right, ${theme.palette.primary.light}, ${theme.palette.secondary.main})`;
-    } else if (randomNumber % 2 === 0) {
-        return `linear-gradient(to top left, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`;
-    } else {
-        return `linear-gradient(to top, ${theme.palette.primary.light}, ${theme.palette.secondary.dark})`;
-    }
+    invert?: boolean
 }
 
 const TilePaper = styled(MuiPaper)<TilePaperProps>(
-    ({ theme, colors, disabled }) => {
+    ({ theme, disableborder, disabled, invert }) => {
         const [isMounted, setIsMounted] = useState(false)
 
         useEffect(() => {
@@ -56,17 +25,25 @@ const TilePaper = styled(MuiPaper)<TilePaperProps>(
             minHeight: '12rem',
             position: "relative",
             overflow: "hidden",
-            background: randomGradient(colors),
+            background: `linear-gradient(to bottom, ${theme.palette.background.default}, ${theme.palette.background.paper})`,
             display: "flex",
-            borderRadius: "20px",
             justifyContent: "center",
             alignItems: "start",
             paddingTop: "3%",
             height: "100%",
-            cursor: !disabled ? "pointer" : 'auto',
             transform: isMounted ? "scale(1)" : "scale(0)",
             transition: "transform 0.5s ease",
+            ...(!disableborder && {
+                border: 'thin solid transparent',
+                borderImage: `linear-gradient(to bottom left, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                borderImageSlice: 1,
+            }),
+            ...(invert && {
+                background: `linear-gradient(to bottom left, ${theme.palette.primary.dark}, ${theme.palette.secondary.main})`,
+                border: 'none'
+            }),
             ...(!disabled && {
+                cursor: "pointer",
                 '&:hover': {
                     transform: isMounted ? 'translate(-1.5%, -1.5%)' : 'scale(0)',
                     boxShadow: '8px 8px 15px rgba(0, 0, 0, 0.6)',
@@ -77,6 +54,7 @@ const TilePaper = styled(MuiPaper)<TilePaperProps>(
                 },
             }),
         }
+
     }
 )
 
