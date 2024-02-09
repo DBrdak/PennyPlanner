@@ -26,7 +26,7 @@ namespace Domestica.Budget.Infrastructure.Configurations
 
             builder.HasOne(t => t.Category)
                 .WithMany()
-                .HasForeignKey(t => t.CategoryId);
+                .HasPrincipalKey(category => category.Id);
         }
     }
 }

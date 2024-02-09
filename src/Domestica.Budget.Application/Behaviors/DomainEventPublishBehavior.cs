@@ -27,7 +27,7 @@ namespace Domestica.Budget.Application.Behaviors
 
             var domainEvents = RetriveDomainEvents(response);
 
-            if (domainEvents is null)
+            if (domainEvents is null || domainEvents.Count < 1)
             {
                 return response;
             }

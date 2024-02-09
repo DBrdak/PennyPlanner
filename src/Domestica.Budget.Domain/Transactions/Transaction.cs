@@ -20,7 +20,6 @@ namespace Domestica.Budget.Domain.Transactions
         public TransactionEntityId? SenderId { get; init; } // Income Transaction
         public TransactionEntityId? RecipientId { get; init; } // Outcome Transaction
         public Money.DB.Money TransactionAmount { get; init; }
-        public TransactionCategoryId? CategoryId { get; init; }
         public TransactionCategory? Category { get; init; }
         [JsonConverter(typeof(DateTimeConverter))]
         public DateTime TransactionDateUtc { get; init; }
@@ -45,7 +44,7 @@ namespace Domestica.Budget.Domain.Transactions
             RecipientId = recipient?.Id;
             TransactionAmount = transactionAmount;
             TransactionDateUtc = transactionDateTime.ToUniversalTime();
-            CategoryId = category?.Id;
+            //CategoryId = category?.Id;
             Category = category;
 
             RaiseDomainEvent(new TransactionCreatedDomainEvent(this));

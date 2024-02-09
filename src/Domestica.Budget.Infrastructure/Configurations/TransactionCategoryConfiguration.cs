@@ -1,6 +1,7 @@
 ﻿using Domestica.Budget.Domain.Accounts.SavingsAccounts;
 using Domestica.Budget.Domain.Accounts.TransactionalAccounts;
 using Domestica.Budget.Domain.TransactionCategories;
+using Domestica.Budget.Domain.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,6 +20,10 @@ namespace Domestica.Budget.Infrastructure.Configurations
 
             builder.Property(transactionCategory => transactionCategory.Value)
                 .HasConversion(value => value.Value, value => new TransactionCategoryValue(value));
+
+            builder.HasMany<Transaction>()
+                .WithOne(t => t.Category)
+                .HasPrincipalKey(transactionCategory => transactionCategory.Id);
 
             builder.HasDiscriminator<string>("transaction_category_type")
                 .HasValue<IncomeTransactionCategory>(nameof(IncomeTransactionCategory))

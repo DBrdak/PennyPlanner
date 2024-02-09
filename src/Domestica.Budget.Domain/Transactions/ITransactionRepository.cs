@@ -17,5 +17,6 @@ namespace Domestica.Budget.Domain.Transactions
             CancellationToken cancellationToken);
         void Remove(Transaction transaction);
         Task<List<Transaction>> BrowseUserTransactions(CancellationToken cancellationToken);
+        Task AddAsync(Transaction transaction, CancellationToken cancellationToken);
     }
 }

@@ -40,7 +40,7 @@ namespace Domestica.Budget.Application.TransactionCategories.AddTransactionCateg
                 return Result.Failure<TransactionCategory>(Error.InvalidRequest("Transaction category name must be unique"));
             }
 
-            await _transactionCategoryRepository.AddAsync(transactionCategory);
+            await _transactionCategoryRepository.AddAsync(transactionCategory, cancellationToken);
 
             var isSuccess = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 

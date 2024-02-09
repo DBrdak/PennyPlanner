@@ -20,15 +20,17 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
         private readonly ITransactionEntityRepository _transactionEntityRepository;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ITransactionCategoryRepository _categoryRepository;
+        private readonly ITransactionRepository _transactionRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public AddOutcomeTransactionCommandHandler(IAccountRepository accountRepository, ITransactionEntityRepository transactionEntityRepository, IUnitOfWork unitOfWork, IServiceScopeFactory serviceScopeFactory, ITransactionCategoryRepository categoryRepository)
+        public AddOutcomeTransactionCommandHandler(IAccountRepository accountRepository, ITransactionEntityRepository transactionEntityRepository, IUnitOfWork unitOfWork, IServiceScopeFactory serviceScopeFactory, ITransactionCategoryRepository categoryRepository, ITransactionRepository transactionRepository)
         {
             _accountRepository = accountRepository;
             _transactionEntityRepository = transactionEntityRepository;
             _unitOfWork = unitOfWork;
             _serviceScopeFactory = serviceScopeFactory;
             _categoryRepository = categoryRepository;
+            _transactionRepository = transactionRepository;
         }
 
         public async Task<Result<Transaction>> Handle(AddOutcomeTransactionCommand request, CancellationToken cancellationToken)
@@ -47,7 +49,8 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
 
             var category = await _categoryRepository.GetByValueAsync<OutcomeTransactionCategory>(
                 new(request.CategoryValue),
-                cancellationToken);
+                cancellationToken) ??
+                           new(new(request.CategoryValue));
 
             if (recipient is null)
             {
@@ -61,18 +64,6 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
                 recipient = recipientCreateResult.Value as TransactionRecipient;
             }
 
-            if (category is null)
-            {
-                var categoryCreateResult = await CreateCategory(request.CategoryValue);
-
-                if (categoryCreateResult.IsFailure)
-                {
-                    return Result.Failure<Transaction>(categoryCreateResult.Error);
-                }
-
-                category = categoryCreateResult.Value as OutcomeTransactionCategory;
-            }
-
             // TODO fetch currency from user
             var currency = Currency.Usd;
 
@@ -82,6 +73,8 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
                 recipient!,
                 category!,
                 request.TransactionDateTime);
+
+            await _transactionRepository.AddAsync(createdTransaction, cancellationToken);
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
@@ -100,15 +93,6 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
             var recipientCreateResult = await mediator.Send(command);
 
             return recipientCreateResult;
-        }
-        private async Task<Result<TransactionCategory>> CreateCategory(string categoryValue)
-        {
-            using var scope = _serviceScopeFactory.CreateScope();
-            var mediator = scope.ServiceProvider.GetRequiredService<ISender>();
-            var command = new AddTransactionCategoryCommand(categoryValue, TransactionCategoryType.Outcome.Value);
-            var categoryCreateResult = await mediator.Send(command);
-
-            return categoryCreateResult;
         }
     }
 }
