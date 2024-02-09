@@ -1,8 +1,8 @@
 
 export interface AddOutcomeTransactionCommand {
-    sourceAccountId: string | null
-    recipientId: string | null
+    sourceAccountId: string
+    recipientName: string
     transactionAmount: number
-    category: string | null
+    category: string
     transactionDateTime: Date
 }

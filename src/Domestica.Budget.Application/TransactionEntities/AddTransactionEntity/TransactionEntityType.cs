@@ -14,10 +14,10 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
         }
 
     public static TransactionEntityType FromString(string value) =>
-            value switch
+            value.ToLower() switch
             {
-                "Sender" => Sender,
-                "Recipient" => Recipient,
+                "sender" => Sender,
+                "recipient" => Recipient,
                 _ => throw new DomainException<TransactionEntityType>($"Unknown transaction entity type: {value}")
             };
 

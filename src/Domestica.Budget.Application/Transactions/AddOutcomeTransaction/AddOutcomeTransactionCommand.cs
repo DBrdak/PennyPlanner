@@ -5,9 +5,9 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
 {
     public sealed record AddOutcomeTransactionCommand(
         string SourceAccountId,
-        string RecipientId,
+        string RecipientName,
         decimal TransactionAmount,
-        string Category,
+        string CategoryValue,
         DateTime TransactionDateTime) : ICommand<Transaction>
     {
     }

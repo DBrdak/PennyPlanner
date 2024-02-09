@@ -1,4 +1,5 @@
 ﻿using Domestica.Budget.Domain.Accounts;
+using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities.TransactionRecipients;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
 
@@ -10,7 +11,7 @@ namespace Domestica.Budget.Domain.Transactions
             Money.DB.Money transactionAmount,
             Account destinationAccount,
             TransactionSender sender,
-            IncomingTransactionCategory category,
+            IncomeTransactionCategory category,
             DateTime transactionDateTime)
         {
             var transaction = Transaction.CreateIncome(transactionAmount, destinationAccount, sender, category, transactionDateTime);
@@ -25,7 +26,7 @@ namespace Domestica.Budget.Domain.Transactions
             Money.DB.Money transactionAmount,
             Account sourceAccount,
             TransactionRecipient recipient,
-            OutgoingTransactionCategory category,
+            OutcomeTransactionCategory category,
             DateTime transactionDateTime)
         {
             var transaction = Transaction.CreateOutcome(transactionAmount, sourceAccount, recipient, category, transactionDateTime);

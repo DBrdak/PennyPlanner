@@ -1,9 +1,14 @@
 ﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
+using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
+using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
 using Domestica.Budget.Domain.Accounts;
+using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
 using Domestica.Budget.Domain.Transactions;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Money.DB;
 using Responses.DB;
 
@@ -13,13 +18,17 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
     {
         private readonly IAccountRepository _accountRepository;
         private readonly ITransactionEntityRepository _transactionEntityRepository;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly ITransactionCategoryRepository _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public AddIncomeTransactionCommandHandler(IAccountRepository accountRepository, IUnitOfWork unitOfWork, ITransactionEntityRepository transactionEntityRepository)
+        public AddIncomeTransactionCommandHandler(IAccountRepository accountRepository, IUnitOfWork unitOfWork, ITransactionEntityRepository transactionEntityRepository, IServiceScopeFactory serviceScopeFactory, ITransactionCategoryRepository categoryRepository)
         {
             _accountRepository = accountRepository;
             _unitOfWork = unitOfWork;
             _transactionEntityRepository = transactionEntityRepository;
+            _serviceScopeFactory = serviceScopeFactory;
+            _categoryRepository = categoryRepository;
         }
 
         public async Task<Result<Transaction>> Handle(AddIncomeTransactionCommand request, CancellationToken cancellationToken)
@@ -31,14 +40,37 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
                 return Result.Failure<Transaction>(Error.NotFound($"Account with ID: {request.DestinationAccountId} not found"));
             }
 
-            var sender = await _transactionEntityRepository.GetByIdIncludeAsync(
-                new(Guid.Parse(request.SenderId)),
-                te => te.Transactions,
+            var sender = await _transactionEntityRepository.GetByNameIncludeAsync<TransactionSender, IEnumerable<Transaction>>(
+                new(request.SenderName),
+                s => s.Transactions,
                 cancellationToken) as TransactionSender;
+
+            var category = await _categoryRepository.GetByValueAsync<IncomeTransactionCategory>(
+                new(request.CategoryValue),
+                cancellationToken);
 
             if (sender is null)
             {
-                return Result.Failure<Transaction>(Error.NotFound($"Sender with ID: {request.SenderId} not found"));
+                var senderCreateResult = await CreateSender(request.SenderName);
+
+                if (senderCreateResult.IsFailure)
+                {
+                    return Result.Failure<Transaction>(senderCreateResult.Error);
+                }
+
+                sender = senderCreateResult.Value as TransactionSender;
+            }
+
+            if (category is null)
+            {
+                var categoryCreateResult = await CreateCategory(request.CategoryValue);
+
+                if (categoryCreateResult.IsFailure)
+                {
+                    return Result.Failure<Transaction>(categoryCreateResult.Error);
+                }
+
+                category = categoryCreateResult.Value as IncomeTransactionCategory;
             }
 
             // TODO fetch currency from user
@@ -47,8 +79,8 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
             var createdTransaction = TransactionService.CreateIncomingTransaction(
                 new (request.TransactionAmount, currency),
                 destinationAccount,
-                sender,
-                IncomingTransactionCategory.FromValue(request.Category),
+                sender!,
+                category!, 
                 request.TransactionDateTime);
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
@@ -59,6 +91,26 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
             }
 
             return Result.Failure<Transaction>(Error.TaskFailed("Problem while adding income transaction"));
+        }
+
+        private async Task<Result<TransactionCategory>> CreateCategory(string categoryValue)
+        {
+            using var scope = _serviceScopeFactory.CreateScope();
+            var mediator = scope.ServiceProvider.GetRequiredService<ISender>();
+            var command = new AddTransactionCategoryCommand(categoryValue, TransactionCategoryType.Income.Value);
+            var categoryCreateResult = await mediator.Send(command);
+
+            return categoryCreateResult;
+        }
+
+        private async Task<Result<TransactionEntity>> CreateSender(string senderName)
+        {
+            using var scope = _serviceScopeFactory.CreateScope();
+            var mediator = scope.ServiceProvider.GetRequiredService<ISender>();
+            var command = new AddTransactionEntityCommand(senderName, TransactionEntityType.Sender.Value);
+            var senderCreateResult = await mediator.Send(command);
+
+            return senderCreateResult;
         }
     }
 }

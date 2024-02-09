@@ -13,6 +13,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
             return await DbContext.Set<Account>()
                 .Include(a => a.Transactions)
+                .ThenInclude(t => t.Category)
                 .Where(/*a => a.UserId == userId*/ x=> true)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);

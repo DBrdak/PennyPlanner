@@ -1,5 +1,4 @@
-﻿using Domestica.Budget.Domain.Transactions;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
 {
@@ -7,11 +6,6 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
     {
         public AddIncomeTransactionValidator()
         {
-            RuleFor(x => x.Category)
-                .Must(
-                    category => IncomingTransactionCategory.All.Any(
-                        incomingTransactionCategory => incomingTransactionCategory.Value == category))
-                .WithMessage("Invalid transaction category");
         }
     }
 }

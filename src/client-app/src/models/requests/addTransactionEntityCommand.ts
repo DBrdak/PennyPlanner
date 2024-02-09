@@ -1,4 +1,4 @@
 export interface AddTransactionEntityCommand {
-    name: string | null
-    type: string | null
+    name: string
+    type: string
 }

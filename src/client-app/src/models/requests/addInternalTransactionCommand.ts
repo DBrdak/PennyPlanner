@@ -1,7 +1,7 @@
 
 export interface AddInternalTransactionCommand {
-    fromAccountId: string | null
-    toAccountId: string | null
+    fromAccountId: string
+    toAccountId: string
     transactionAmount: number
     transactionDateTime: Date
 }

@@ -1,6 +1,7 @@
 ﻿using CommonAbstractions.DB.Entities;
 using DateKit.DB;
 using Domestica.Budget.Domain.BudgetPlans.DomainEvents;
+using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.Transactions;
 using Exceptions.DB;
 

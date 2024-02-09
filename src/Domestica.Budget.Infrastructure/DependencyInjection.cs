@@ -2,6 +2,7 @@
 using Domestica.Budget.Application.Caching;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.BudgetPlans;
+using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.Transactions;
 using Domestica.Budget.Infrastructure.Repositories;
@@ -43,6 +44,8 @@ namespace Domestica.Budget.Infrastructure
             services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             services.AddScoped<IBudgetPlanRepository, BudgetPlanRepository>();
+
+            services.AddScoped<ITransactionCategoryRepository, TransactionCategoryRepository>();
 
             services.AddScoped<ICacheRepository, CacheRepository>();
 

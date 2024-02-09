@@ -4,11 +4,11 @@ namespace Domestica.Budget.Application.DataTransferObjects
 {
     public sealed record BudgetedTransactionCategoryDto
     {
-        public string Category { get; init; }
+        public TransactionCategoryDto Category { get; init; }
         public MoneyDto BudgetedAmount { get; init; }
         public MoneyDto ActualAmount { get; init; }
 
-        private BudgetedTransactionCategoryDto(string Category,
+        private BudgetedTransactionCategoryDto(TransactionCategoryDto Category,
             MoneyDto BudgetedAmount,
             MoneyDto ActualAmount)
         {
@@ -28,7 +28,7 @@ namespace Domestica.Budget.Application.DataTransferObjects
             var budgetedAmount = MoneyDto.FromDomainObject(domainObject.BudgetedAmount);
             var actualAmount = MoneyDto.FromDomainObject(domainObject.ActualAmount);
 
-            return new (domainObject.Category.Value, budgetedAmount, actualAmount);
+            return new(TransactionCategoryDto.FromDomainObject(domainObject.Category)!, budgetedAmount, actualAmount);
         }
 
     }

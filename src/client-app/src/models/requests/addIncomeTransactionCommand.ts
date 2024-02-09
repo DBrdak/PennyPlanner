@@ -1,8 +1,17 @@
 
 export interface AddIncomeTransactionCommand {
-    destinationAccountId: string | null
-    senderId: string | null
+    destinationAccountId: string
+    senderName: string
     transactionAmount: number
-    category: string | null
+    category: string
     transactionDateTime: Date
+}
+
+export class AddIncomeTransactionCommand implements AddIncomeTransactionCommand {
+    constructor() {
+        this.destinationAccountId = ''
+        this.senderName = ''
+        this.transactionAmount = 0
+        this.category = ''
+    }
 }

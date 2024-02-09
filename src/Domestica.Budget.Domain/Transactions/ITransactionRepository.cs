@@ -1,5 +1,6 @@
 ﻿using DateKit.DB;
 using Domestica.Budget.Domain.Accounts;
+using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 
 namespace Domestica.Budget.Domain.Transactions

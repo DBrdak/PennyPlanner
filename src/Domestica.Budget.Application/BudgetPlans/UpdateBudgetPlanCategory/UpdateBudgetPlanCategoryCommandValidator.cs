@@ -1,5 +1,4 @@
-﻿using Domestica.Budget.Domain.Transactions;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
 {
@@ -7,12 +6,6 @@ namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
     {
         public UpdateBudgetPlanCategoryCommandValidator()
         {
-            RuleFor(x => x.Category)
-                .Must(
-                    category => TransactionCategory.All.Any(
-                        transactionCategory => transactionCategory.Value == category))
-                .WithMessage("Invalid transaction category");
-
             RuleFor(x => x)
                 .Must(x => x.Values.NewBudgetAmount is not null || x.Values.IsBudgetToReset)
                 .WithMessage("Specify whether you want to reset category or update budgeted amount");

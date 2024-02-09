@@ -15,7 +15,12 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
                 .WithMessage("Special characters are not allowed in transaction entity name");
 
             RuleFor(x => x.Type)
-                .Must(type => TransactionEntityType.All.Any(transactionEntityType => transactionEntityType.Value == type))
+                .Must(
+                    type => TransactionEntityType.All.Any(
+                        transactionEntityType => string.Equals(
+                            transactionEntityType.Value,
+                            type,
+                            StringComparison.CurrentCultureIgnoreCase)))
                 .WithMessage("Invalid transaction entity type");
         }
     }

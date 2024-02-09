@@ -30,17 +30,17 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
 
             Account? newAccount;
 
-            switch (request.NewAccountData.Type)
+            if (request.NewAccountData.Type == AccountType.Savings.Value)
             {
-                case "Savings":
-                    newAccount = CreateAccount<SavingsAccount>(request.NewAccountData);
-
-                    break;
-                case "Transactional":
-                    newAccount = CreateAccount<TransactionalAccount>(request.NewAccountData);
-                    break;
-                default:
-                    return Result.Failure<Account>(Error.InvalidRequest("Account type not supported"));
+                newAccount = CreateAccount<SavingsAccount>(request.NewAccountData);
+            }
+            else if (request.NewAccountData.Type == AccountType.Transactional.Value)
+            {
+                newAccount = CreateAccount<TransactionalAccount>(request.NewAccountData);
+            }
+            else
+            {
+                return Result.Failure<Account>(Error.InvalidRequest("Account type not supported"));
             }
 
             if (newAccount is null)

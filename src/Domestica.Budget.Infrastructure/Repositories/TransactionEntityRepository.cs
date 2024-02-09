@@ -1,4 +1,6 @@
-﻿using Domestica.Budget.Domain.TransactionEntities;
+﻿using System.Linq.Expressions;
+using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
+using Domestica.Budget.Domain.TransactionEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domestica.Budget.Infrastructure.Repositories
@@ -7,6 +9,18 @@ namespace Domestica.Budget.Infrastructure.Repositories
     {
         public TransactionEntityRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
+        }
+
+        public async Task<TEntity?> GetByNameIncludeAsync<TEntity, TProperty>(
+            TransactionEntityName name,
+            Expression<Func<TransactionEntity, TProperty>> includeExpression,
+            CancellationToken cancellationToken = default) where TEntity : TransactionEntity
+        {
+            return await DbContext.Set<TransactionEntity>()
+            .Include(te => te.Transactions)
+            .FirstOrDefaultAsync(
+                    te => te.Name == name && te is TEntity,
+                    cancellationToken /*te.UserId == userId*/) as TEntity;
         }
 
         public async Task<List<TransactionEntity>> BrowseUserTransactionEntitiesAsync()

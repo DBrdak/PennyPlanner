@@ -41,8 +41,8 @@ const TransactionButtons: React.FC = () => {
                 onMouseLeave={handleClose}
                 sx={{
                     position: 'fixed',
-                    bottom: theme.spacing(2),
-                    right: theme.spacing(2),
+                    bottom: theme.spacing(3),
+                    right: theme.spacing(4),
                 }}
             >
                 {actions.map((action) => (

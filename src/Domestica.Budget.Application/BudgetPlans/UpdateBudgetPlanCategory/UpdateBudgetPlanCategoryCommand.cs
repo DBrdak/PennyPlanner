@@ -5,7 +5,7 @@ namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
 {
     public sealed record UpdateBudgetPlanCategoryCommand(
         string BudgetPlanId,
-        string Category,
+        string CategoryId,
         UpdateBudgetPlanCategoryValues Values) : ICommand<BudgetPlan>
     {
     }

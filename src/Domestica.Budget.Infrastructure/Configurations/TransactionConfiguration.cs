@@ -24,8 +24,9 @@ namespace Domestica.Budget.Infrastructure.Configurations
                         .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
                 });
 
-            builder.Property(transaction => transaction.Category)
-                .HasConversion(category => category.Value, value => TransactionCategory.FromValue(value));
+            builder.HasOne(t => t.Category)
+                .WithMany()
+                .HasForeignKey(t => t.CategoryId);
         }
     }
 }

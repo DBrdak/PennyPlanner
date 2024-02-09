@@ -1,5 +1,4 @@
 ﻿using Carter;
-using Domestica.Budget.Application.Caching;
 using Domestica.Budget.Application.Transactions.AddIncomeTransaction;
 using Domestica.Budget.Application.Transactions.AddInternalTransaction;
 using Domestica.Budget.Application.Transactions.AddOutcomeTransaction;
