@@ -25,9 +25,8 @@ namespace Domestica.Budget.Application.DataTransferObjects
         }
 
         [JsonConstructor]
-        private TransactionCategoryDto(string transactionCategoryType)
+        private TransactionCategoryDto()
         {
-            Type = transactionCategoryType;
         }
 
 

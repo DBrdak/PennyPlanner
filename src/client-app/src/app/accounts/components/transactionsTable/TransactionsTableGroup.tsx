@@ -139,7 +139,12 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                                         theme.palette.success.light : theme.palette.error.light}}>
                                     {formatNumber(transaction.transactionAmount.amount)} {transaction.transactionAmount.currency}
                                 </TableCell>
-                                {groupCriterion !== 'category' && <TableCell width={'20%'} align={'center'}>{transaction.category}</TableCell>}
+                                {
+                                    groupCriterion !== 'category' &&
+                                        <TableCell width={'20%'} align={'center'}>
+                                            {transaction.category ? transaction.category.value : '-'}
+                                        </TableCell>
+                                }
                                 {
                                     groupCriterion !== 'entity' &&
                                     <TableCell width={'20%'} align={'center'}>

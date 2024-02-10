@@ -9,6 +9,6 @@ export interface Transaction {
     senderId?: string | null
     recipientId?: string | null
     transactionAmount: Money
-    category: TransactionCategory
+    category?: TransactionCategory
     transactionDateUtc: Date
 }

@@ -43,6 +43,15 @@ export function TransactionsPreviewTile({transactions, accounts, transactionEnti
             accounts.find(a => a.accountId === transaction.accountId)?.name
     }
 
+    const getFromTo = (transaction: Transaction) => {
+        const from = getFrom(transaction)
+        const to = getTo(transaction)
+
+        return from === to ?
+            'Adjustment' :
+            `${from} ➡ ${to}`
+    }
+
     useEffect(() => {
         const interval = setInterval(() => {
             const nextPageIndex = (currentPageIndex + 1) % Math.ceil(transactions.length / 9);
@@ -66,13 +75,13 @@ export function TransactionsPreviewTile({transactions, accounts, transactionEnti
             </TilePaper>
             :
             <TilePaper sx={{boxShadow: 'inset 0px 0px 10vw rgba(0, 0, 0, 1)'}}>
-                <Typography sx={{
+                <Typography variant={'h3'} sx={{
                     position: 'absolute',
                     left: '2vw',
                     bottom: '1.5vw',
                     userSelect: 'none'
                 }}>
-                    <Typography variant={'h3'}>Transactions</Typography>
+                    Transactions
                 </Typography>
                 <Grid container padding={'2% 4%'}>
                     <Grid item xs={12}>
@@ -84,10 +93,10 @@ export function TransactionsPreviewTile({transactions, accounts, transactionEnti
                                             {formatNumber(transaction.transactionAmount.amount)} {transaction.transactionAmount.currency}
                                         </TableCell>
                                         <TableCell align={'center'}>
-                                            {transaction.category}
+                                            {transaction.category ? transaction.category.value : '-'}
                                         </TableCell>
                                         <TableCell align={'center'}>
-                                            {getFrom(transaction)} {'➡'} {getTo(transaction)}
+                                            {getFromTo(transaction)}
                                         </TableCell>
                                         <TableCell align={'center'}>
                                             {formatDate(transaction.transactionDateUtc)}
