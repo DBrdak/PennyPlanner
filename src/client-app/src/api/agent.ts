@@ -95,6 +95,14 @@ const transactionEntities = {
         axios.delete(`/transaction-entities/${transactionEntityId}`).then(responseBody),
 }
 
+const transactionCategories = {
+    getTransactionCategories: () => axios.get<TransactionEntity[]>('/transaction-categories').then(responseBody),
+    createTransactionCategory: (command: AddTransactionCategoryCommand) =>
+        axios.post('/transaction-categories', command).then(responseBody),
+    deleteTransactionCategory: (transactionCategoryId: string) =>
+        axios.delete(`/transaction-categories/${transactionCategoryId}`).then(responseBody),
+}
+
 const transactions = {
     getTransactions: () => axios.get<Transaction[]>('/transactions').then(responseBody),
     createInternalTransaction: (command: AddInternalTransactionCommand) =>
@@ -110,7 +118,8 @@ const agent = {
     accounts,
     budgetPlans,
     transactionEntities,
-    transactions
+    transactionCategories,
+    transactions,
 }
 
 export default agent;

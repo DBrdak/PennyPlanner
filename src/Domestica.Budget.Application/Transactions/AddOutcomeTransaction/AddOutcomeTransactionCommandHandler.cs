@@ -20,7 +20,6 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
         private readonly ITransactionEntityRepository _transactionEntityRepository;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ITransactionCategoryRepository _categoryRepository;
-        private readonly ITransactionRepository _transactionRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public AddOutcomeTransactionCommandHandler(IAccountRepository accountRepository, ITransactionEntityRepository transactionEntityRepository, IUnitOfWork unitOfWork, IServiceScopeFactory serviceScopeFactory, ITransactionCategoryRepository categoryRepository, ITransactionRepository transactionRepository)
@@ -30,7 +29,6 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
             _unitOfWork = unitOfWork;
             _serviceScopeFactory = serviceScopeFactory;
             _categoryRepository = categoryRepository;
-            _transactionRepository = transactionRepository;
         }
 
         public async Task<Result<Transaction>> Handle(AddOutcomeTransactionCommand request, CancellationToken cancellationToken)
@@ -45,7 +43,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
             var recipient = await _transactionEntityRepository.GetByNameIncludeAsync<TransactionRecipient, IEnumerable<Transaction>>(
                 new(request.RecipientName),
                 te => te.Transactions,
-                cancellationToken) as TransactionRecipient;
+                cancellationToken);
 
             var category = await _categoryRepository.GetByValueAsync<OutcomeTransactionCategory>(
                 new(request.CategoryValue),
@@ -73,8 +71,6 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
                 recipient!,
                 category!,
                 request.TransactionDateTime);
-
-            await _transactionRepository.AddAsync(createdTransaction, cancellationToken);
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 

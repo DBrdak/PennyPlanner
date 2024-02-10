@@ -1,4 +1,5 @@
 import {Money} from "../shared/money";
+import {TransactionCategory} from "../transactionCategories/transactionCategory";
 
 export interface Transaction {
     transactionId: string
@@ -8,6 +9,6 @@ export interface Transaction {
     senderId?: string | null
     recipientId?: string | null
     transactionAmount: Money
-    category: string
+    category: TransactionCategory
     transactionDateUtc: Date
 }
