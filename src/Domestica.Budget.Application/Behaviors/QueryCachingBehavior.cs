@@ -1,7 +1,9 @@
 ﻿using Domestica.Budget.Application.Caching;
 using Domestica.Budget.Application.Messaging;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Responses.DB;
+using Serilog.Context;
 
 namespace Domestica.Budget.Application.Behaviors
 {
@@ -11,19 +13,62 @@ namespace Domestica.Budget.Application.Behaviors
         where TResponse : Result
     {
         private readonly ICacheRepository _cacheRepository;
+        private readonly ILogger<QueryCachingBehavior<TRequest, TResponse>> _logger;
 
-        public QueryCachingBehavior(ICacheRepository cacheRepository)
+        public QueryCachingBehavior(ICacheRepository cacheRepository, ILogger<QueryCachingBehavior<TRequest, TResponse>> logger)
         {
             _cacheRepository = cacheRepository;
+            _logger = logger;
         }
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            return await _cacheRepository.GetCachedResponseAsync(
+            using (LogContext.PushProperty("Caching", "QueryCaching"))
+            {
+                LogQueryCachingStart(request);
+
+                var cachedQuery = await _cacheRepository.GetCachedResponseAsync(
+                    request.CacheKey.ToString(),
+                    _ => next(),
+                    request.Expiration,
+                    cancellationToken);
+
+                if (cachedQuery.IsFailure)
+                {
+                    LogQueryCachingFailure(request, cachedQuery);
+                }
+                else
+                {
+                    LogQueryCachingSuccess(request);
+                }
+
+                return cachedQuery;
+            }
+        }
+
+        private void LogQueryCachingStart(TRequest request)
+        {
+            _logger.LogInformation(
+                "Query caching started for query: {query} with key: {key}",
+                request.GetType().FullName,
+                request.CacheKey.ToString());
+        }
+
+        private void LogQueryCachingSuccess(TRequest request)
+        {
+            _logger.LogInformation(
+                "Query caching succeded for query: {query} with key: {key}",
+                request.GetType().FullName,
+                request.CacheKey.ToString());
+        }
+
+        private void LogQueryCachingFailure(TRequest request, TResponse cachedQuery)
+        {
+            _logger.LogWarning(
+                "Query caching failed for query: {query} with key: {key} error: {error}",
+                request.GetType().FullName,
                 request.CacheKey.ToString(),
-                _ => next(),
-                request.Expiration,
-                cancellationToken);
+                cachedQuery.Error);
         }
     }
 }

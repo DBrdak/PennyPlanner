@@ -1,6 +1,5 @@
 ﻿using Serilog.Context;
 using System.Diagnostics;
-using Domestica.Budget.API.Logging;
 using Serilog;
 using MediatR;
 
@@ -38,7 +37,7 @@ namespace Domestica.Budget.API.Middlewares
 
         private void LogRequestExecutionTime(HttpRequest request, long elapsedMilliseconds)
         {
-            using (LogContext.PushProperty("LogType", LogTypes.RequestExecutionTimeLog))
+            using (LogContext.PushProperty("RequestExecutionTime", elapsedMilliseconds))
             {
                 switch (elapsedMilliseconds > longRunningRequestThreshold)
                 {

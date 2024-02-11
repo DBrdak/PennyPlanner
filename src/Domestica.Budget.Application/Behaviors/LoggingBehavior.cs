@@ -2,12 +2,15 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Responses.DB;
+using Serilog;
+using Serilog.Context;
 
 namespace Domestica.Budget.Application.Behaviors
 {
     public sealed class LoggingBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
-        where TResponse : Result
+        where TRequest : IBaseRequest
+        where TResponse : Result 
     {
         private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
 
@@ -18,58 +21,37 @@ namespace Domestica.Budget.Application.Behaviors
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Handling {typeof(TRequest).Name}");
-
-            var response = await next();
-
-            var errorMessage = RetriveResultErrorMessage(response);
-
-            if (errorMessage is null)
+            using (LogContext.PushProperty("RequestHandler", typeof(TRequest).FullName))
             {
-                _logger.LogInformation($"Successfully handled {typeof(TRequest).Name}");
+                LogHandleStart();
+
+                var response = await next();
+
+                if (response.IsSuccess)
+                {
+                    LogHandleSuccess();
+                    return response;
+                }
+
+                LogHandleFailure(response);
+
                 return response;
             }
-
-            _logger.LogWarning($"Failed to handle {typeof(TRequest).Name}: {errorMessage}");
-
-            return response;
         }
 
-        private static string? RetriveResultErrorMessage(object obj)
+        private void LogHandleFailure(TResponse response)
         {
-            var isSuccessProperty = GetProperty(obj, "IsSuccess");
-
-            if (isSuccessProperty is null)
-            {
-                return null;
-            }
-
-            var isSuccess = (bool)GetValueFromProperty(obj, isSuccessProperty);
-
-            if (isSuccess)
-            {
-                return null;
-            }
-
-            var errorProperty = GetProperty(obj, "Error");
-
-            if (errorProperty is null)
-            {
-                return null;
-            }
-
-            var error = GetValueFromProperty(obj, errorProperty);
-
-            if (error is null)
-            {
-                return null;
-            }
-
-            return error.ToString();
+            _logger.LogWarning("Failed to handle {request}: {error}", typeof(TRequest).Name, response.Error);
         }
 
-        private static PropertyInfo? GetProperty(object obj, string propName) => obj.GetType().GetProperty(propName);
+        private void LogHandleSuccess()
+        {
+            _logger.LogInformation($"Successfully handled {typeof(TRequest).Name}");
+        }
 
-        private static object? GetValueFromProperty(object obj, PropertyInfo property) => property.GetValue(obj);
+        private void LogHandleStart()
+        {
+            _logger.LogInformation($"Handling {typeof(TRequest).Name}");
+        }
     }
 }
