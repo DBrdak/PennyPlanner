@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 using CommonAbstractions.DB.Entities;
 using CommonAbstractions.DB.Messaging;
 using MediatR;
@@ -8,16 +9,15 @@ using Serilog.Context;
 
 namespace Domestica.Budget.Application.Behaviors
 {
-    public class DomainEventPublishBehavior<TRequest, TResponse, TEntity>
+    public class DomainEventPublishBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IBaseCommand
-        where TEntity : IEntity
-        where TResponse : Result<TEntity>
+        where TResponse : Result
     {
         private readonly IPublisher _publisher;
-        private readonly ILogger<DomainEventPublishBehavior<TRequest, TResponse, TEntity>> _logger;
+        private readonly ILogger<DomainEventPublishBehavior<TRequest, TResponse>> _logger;
 
-        public DomainEventPublishBehavior(IPublisher publisher, ILogger<DomainEventPublishBehavior<TRequest, TResponse, TEntity>> logger)
+        public DomainEventPublishBehavior(IPublisher publisher, ILogger<DomainEventPublishBehavior<TRequest, TResponse>> logger)
         {
             _publisher = publisher;
             _logger = logger;
@@ -32,9 +32,9 @@ namespace Domestica.Budget.Application.Behaviors
                 return response;
             }
 
-            var domainEvents = response.Value.GetDomainEvents();
+            var domainEvents = RetriveDomainEvents(response);
 
-            if (domainEvents.Count < 1)
+            if (domainEvents is null || domainEvents.Count < 1)
             {
                 return response;
             }
@@ -79,5 +79,42 @@ namespace Domestica.Budget.Application.Behaviors
             _logger.LogInformation(
                 $"The process of publishing domain events has started, {domainEvents.Count} domain events are up to be published");
         }
+
+        private static List<IDomainEvent>? RetriveDomainEvents(object obj)
+        {
+            var value = GetProperty(obj, "Value");
+
+            if (value is null)
+            {
+                return null;
+            }
+
+            if (!value.GetType().IsArray)
+            {
+                return GetDomainEvents(value);
+            }
+
+            List<IDomainEvent> domainEvents = new();
+                
+            foreach (var val in value as Array ?? new object[] { })
+            {
+                var entityDomainEvents = GetDomainEvents(val);
+                    
+                if (entityDomainEvents is null)
+                {
+                    continue;
+                }
+
+                domainEvents.AddRange(entityDomainEvents);
+            }
+
+            return domainEvents;
+
+        }
+
+        private static List<IDomainEvent>? GetDomainEvents(object value) =>
+            value.GetType().GetMethod("GetDomainEvents")?.Invoke(value, null) as List<IDomainEvent>;
+
+        private static object? GetProperty(object obj, string propName) => obj.GetType().GetProperty(propName)?.GetValue(obj);
     }
 }

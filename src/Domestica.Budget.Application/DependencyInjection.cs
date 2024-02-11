@@ -14,7 +14,7 @@ namespace Domestica.Budget.Application
                 config =>
                 {
                     config.RegisterServicesFromAssemblyContaining<ApplicationAssemblyReference>();
-                    config.AddOpenBehavior(typeof(DomainEventPublishBehavior<,,>));
+                    config.AddOpenBehavior(typeof(DomainEventPublishBehavior<,>));
                     config.AddOpenBehavior(typeof(LoggingBehavior<,>));
                     config.AddOpenBehavior(typeof(ValidationBehavior<,>));
                     config.AddOpenBehavior(typeof(QueryCachingBehavior<,>));
