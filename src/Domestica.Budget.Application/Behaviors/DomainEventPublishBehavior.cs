@@ -9,6 +9,7 @@ using Serilog.Context;
 
 namespace Domestica.Budget.Application.Behaviors
 {
+
     public class DomainEventPublishBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IBaseCommand
@@ -27,12 +28,7 @@ namespace Domestica.Budget.Application.Behaviors
         {
             var response = await next();
 
-            if (response.IsFailure)
-            {
-                return response;
-            }
-
-            var domainEvents = RetriveDomainEvents(response);
+            var domainEvents = GetDomainEvents(response);
 
             if (domainEvents is null || domainEvents.Count < 1)
             {
@@ -80,9 +76,14 @@ namespace Domestica.Budget.Application.Behaviors
                 $"The process of publishing domain events has started, {domainEvents.Count} domain events are up to be published");
         }
 
-        private static List<IDomainEvent>? RetriveDomainEvents(object obj)
+        private static List<IDomainEvent>? GetDomainEvents(Result result)
         {
-            var value = GetProperty(obj, "Value");
+            if (result.IsFailure)
+            {
+                return null;
+            }
+
+            var value = GetProperty(result, "Value");
 
             if (value is null)
             {
