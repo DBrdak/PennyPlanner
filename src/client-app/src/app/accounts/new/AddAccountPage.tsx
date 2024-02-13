@@ -5,7 +5,7 @@ import {
     Button,
     ButtonGroup,
     FormControl,
-    Grid,
+    Grid, InputAdornment,
     InputLabel, MenuItem,
     Select,
     Stack,
@@ -20,6 +20,7 @@ import {useNavigate} from "react-router-dom";
 import {NewAccountData} from "../../../models/requests/newAccountData";
 import * as yup from 'yup'
 import {number, string} from "yup";
+import React from "react";
 
 
 export default observer(function AddAccountPage() {
@@ -94,6 +95,7 @@ export default observer(function AddAccountPage() {
                                         placeholder={'Initial Account Balance'}
                                         type={'number'}
                                         showErrors
+                                        inputProps={{endAdornment: <InputAdornment position="end">USD</InputAdornment>} /*TODO fetch user currency*/}
                                     />
                                     <ButtonGroup sx={{alignItems:'center', justifyContent: 'center'}}>
                                         <Button fullWidth

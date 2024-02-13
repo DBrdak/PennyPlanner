@@ -13,9 +13,9 @@ import * as Yup from 'yup';
 import CenteredStack from "../../components/CenteredStack";
 import {router} from "../../router/Routes";
 import {useNavigate} from "react-router-dom";
-import MainContainer from "../../components/MainContainer";
 import theme from "../theme";
 import useTitle from "../../utils/hooks/useTitle";
+import GradientContainer from "../welcome/GradientContainer";
 
 const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Insert email'),
@@ -24,7 +24,6 @@ const validationSchema = Yup.object({
 
 const SignInPage: React.FC = () => {
     // TODO Implement logging and registering logic
-    const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = React.useState(false);
 
@@ -42,7 +41,7 @@ const SignInPage: React.FC = () => {
     });
 
     return (
-        <MainContainer>
+        <GradientContainer sx={{userSelect: 'none'}}>
             <Stack style={{minWidth: '600px'}}>
                 <Typography variant="h4" align="center" gutterBottom>
                     Your Logo
@@ -126,7 +125,7 @@ const SignInPage: React.FC = () => {
                     </Stack>
                 </Paper>
             </Stack>
-        </MainContainer>
+        </GradientContainer>
     );
 };
 

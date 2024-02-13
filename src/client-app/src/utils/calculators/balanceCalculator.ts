@@ -27,7 +27,7 @@ const isSameDay = (date1: Date, date2: Date): boolean => {
 };
 
 const calculateBalance = (transactions: Transaction[]): number => {
-    return transactions.reduce((balance, transaction) => {
+    return transactions.slice(1).reduce((balance, transaction) => {
         return Number((balance + transaction.transactionAmount.amount).toFixed(2));
     }, 0);
 };

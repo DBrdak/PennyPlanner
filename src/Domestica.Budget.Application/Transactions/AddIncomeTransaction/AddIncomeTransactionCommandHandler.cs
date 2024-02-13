@@ -47,7 +47,7 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
 
             var category = await _categoryRepository.GetByValueAsync<IncomeTransactionCategory>(
                 new(request.CategoryValue),
-                cancellationToken);
+                cancellationToken) ?? new(new(request.CategoryValue));
 
             if (sender is null)
             {
@@ -59,18 +59,6 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
                 }
 
                 sender = senderCreateResult.Value as TransactionSender;
-            }
-
-            if (category is null)
-            {
-                var categoryCreateResult = await CreateCategory(request.CategoryValue);
-
-                if (categoryCreateResult.IsFailure)
-                {
-                    return Result.Failure<Transaction>(categoryCreateResult.Error);
-                }
-
-                category = categoryCreateResult.Value as IncomeTransactionCategory;
             }
 
             // TODO fetch currency from user
@@ -91,16 +79,6 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
             }
 
             return Result.Failure<Transaction>(Error.TaskFailed("Problem while adding income transaction"));
-        }
-
-        private async Task<Result<TransactionCategory>> CreateCategory(string categoryValue)
-        {
-            using var scope = _serviceScopeFactory.CreateScope();
-            var mediator = scope.ServiceProvider.GetRequiredService<ISender>();
-            var command = new AddTransactionCategoryCommand(categoryValue, TransactionCategoryType.Income.Value);
-            var categoryCreateResult = await mediator.Send(command);
-
-            return categoryCreateResult;
         }
 
         private async Task<Result<TransactionEntity>> CreateSender(string senderName)

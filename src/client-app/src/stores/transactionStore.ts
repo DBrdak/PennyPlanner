@@ -2,6 +2,9 @@ import {makeAutoObservable} from "mobx";
 import agent from "../api/agent";
 import {Transaction} from "../models/transactions/transaction";
 import {store, useStore} from "./store";
+import {AddIncomeTransactionCommand} from "../models/requests/addIncomeTransactionCommand";
+import {AddOutcomeTransactionCommand} from "../models/requests/addOutcomeTransactionCommand";
+import {AddInternalTransactionCommand} from "../models/requests/addInternalTransactionCommand";
 
 export default class TransactionStore {
     private transactionsRegistry: Map<string, Transaction> = new Map<string, Transaction>()
@@ -69,6 +72,23 @@ export default class TransactionStore {
                 console.log(id)
                 await agent.transactions.deleteTransaction(id)
                 this.removeTransactionIdToRemove(id)
+            }
+        } catch (e) {
+            console.log(e)
+        } finally {
+            this.setLoading(false)
+        }
+    }
+
+    async addTransaction(command: AddIncomeTransactionCommand | AddOutcomeTransactionCommand | AddInternalTransactionCommand) {
+        this.setLoading(true)
+        try {
+            if (command instanceof AddIncomeTransactionCommand) {
+                await agent.transactions.createIncomeTransaction(command)
+            } else if (command instanceof AddOutcomeTransactionCommand) {
+                await agent.transactions.createOutcomeTransaction(command)
+            } else {
+                await agent.transactions.createInternalTransaction(command)
             }
         } catch (e) {
             console.log(e)

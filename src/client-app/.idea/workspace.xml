@@ -5,11 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Home Page Transactions Tile">
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/TransactionCategoryDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/DataTransferObjects/TransactionCategoryDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/transactions/income/AddIncomeForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/stores/categoryStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddOutcomeTransaction/AddOutcomeTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddOutcomeTransaction/AddOutcomeTransactionCommandHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTableGroup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/transactionsTable/TransactionsTableGroup.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/home/components/tiles/TransactionsPreviewTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/tiles/TransactionsPreviewTile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/transactions/transaction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/transactions/transaction.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/agent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/agent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/login/SignInPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/login/SignInPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/transactions/income/AddIncomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/income/AddIncomePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MainContainer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/requests/addIncomeTransactionCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/addIncomeTransactionCommand.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/calculators/balanceCalculator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/calculators/balanceCalculator.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,6 +141,7 @@
       <workItem from="1707170360469" duration="400000" />
       <workItem from="1707230277000" duration="975000" />
       <workItem from="1707312172489" duration="29516000" />
+      <workItem from="1707768904208" duration="6170000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>

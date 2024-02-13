@@ -1,3 +1,6 @@
+import {TransactionCategory} from "../transactionCategories/transactionCategory";
+import {TransactionEntity} from "../transactionEntities/transactionEntity";
+import {Account} from "../accounts/account";
 
 export interface AddIncomeTransactionCommand {
     destinationAccountId: string
@@ -13,5 +16,6 @@ export class AddIncomeTransactionCommand implements AddIncomeTransactionCommand 
         this.senderName = ''
         this.transactionAmount = 0
         this.category = ''
+        this.transactionDateTime = new Date()
     }
 }

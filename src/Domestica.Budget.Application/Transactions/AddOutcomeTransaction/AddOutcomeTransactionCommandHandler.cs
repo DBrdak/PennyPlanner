@@ -47,8 +47,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
 
             var category = await _categoryRepository.GetByValueAsync<OutcomeTransactionCategory>(
                 new(request.CategoryValue),
-                cancellationToken) ??
-                           new(new(request.CategoryValue));
+                cancellationToken) ?? new(new(request.CategoryValue));
 
             if (recipient is null)
             {

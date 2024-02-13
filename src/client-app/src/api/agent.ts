@@ -12,6 +12,7 @@ import {AddOutcomeTransactionCommand} from "../models/requests/addOutcomeTransac
 import {Account} from "../models/accounts/account";
 import {TransactionEntity} from "../models/transactionEntities/transactionEntity";
 import {Transaction} from "../models/transactions/transaction";
+import {TransactionCategory} from "../models/transactionCategories/transactionCategory";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -96,7 +97,8 @@ const transactionEntities = {
 }
 
 const transactionCategories = {
-    getTransactionCategories: () => axios.get<TransactionEntity[]>('/transaction-categories').then(responseBody),
+    getTransactionCategories: () =>
+        axios.get<TransactionCategory[]>('/transaction-categories').then(responseBody),
     createTransactionCategory: (command: AddTransactionCategoryCommand) =>
         axios.post('/transaction-categories', command).then(responseBody),
     deleteTransactionCategory: (transactionCategoryId: string) =>

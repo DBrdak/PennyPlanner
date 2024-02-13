@@ -4,6 +4,7 @@ import LayoutStore from "./layoutStore";
 import AccountStore from "./accountStore";
 import TransactionEntityStore from "./transactionEntityStore";
 import TransactionStore from "./transactionStore";
+import CategoryStore from "./categoryStore";
 
 interface Store {
   modalStore: ModalStore
@@ -11,6 +12,7 @@ interface Store {
   accountStore: AccountStore
   transactionEntityStore: TransactionEntityStore
   transactionStore: TransactionStore
+  categoryStore: CategoryStore
 }
 
 export const store: Store = {
@@ -18,7 +20,8 @@ export const store: Store = {
   layoutStore: new LayoutStore(),
   accountStore: new AccountStore(),
   transactionEntityStore: new TransactionEntityStore(),
-  transactionStore: new TransactionStore()
+  transactionStore: new TransactionStore(),
+  categoryStore: new CategoryStore(),
 }
 
 export const StoreContext = createContext(store);
