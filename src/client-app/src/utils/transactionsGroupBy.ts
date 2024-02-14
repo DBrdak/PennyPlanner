@@ -37,6 +37,9 @@ const groupBy = (transactions: Transaction[], criterion: string): Record<string,
             case 'category':
                 key = (transaction['category' as keyof Transaction] as TransactionCategory)?.transactionCategoryId || 'Adjustments'
                 break
+            case 'account':
+                key = (transaction['accountId' as keyof Transaction] as string)
+                break
         }
 
         if (key && !groupedTransactions[key]) {

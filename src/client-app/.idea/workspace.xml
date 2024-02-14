@@ -4,20 +4,44 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Home Page Transactions Tile">
-      <change afterPath="$PROJECT_DIR$/src/app/transactions/income/AddIncomeForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/stores/categoryStore.ts" afterDir="false" />
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Validation Settings Added">
+      <change afterPath="$PROJECT_DIR$/src/app/settings/components/tiles/CustomizeTile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/settings/components/tiles/RecurringTransactionsTile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/settings/components/tiles/TransactionCategoriesTile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/settings/components/tiles/TransactionEntitiesTile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/transactions/components/NoAccountMessage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/MyDateTimePicker.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/AddTransactionCategory/AddTransactionCategoryCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/AddTransactionCategory/AddTransactionCategoryCommandValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/AddTransactionEntity/AddTransactionEntityCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/AddTransactionEntity/AddTransactionEntityCommandValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/UpdateTransactionEntity/UpdateTransactionEntityCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/UpdateTransactionEntity/UpdateTransactionEntityCommandValidator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandValidator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddOutcomeTransaction/AddOutcomeTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddOutcomeTransaction/AddOutcomeTransactionCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddOutcomeTransaction/AddOutcomeTransactionValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddOutcomeTransaction/AddOutcomeTransactionValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionEntities/ITransactionEntityRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionEntities/ITransactionEntityRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Configurations/AccountConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Configurations/AccountConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/AccountRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/AccountRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/Repository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/Repository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/agent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/agent.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/login/SignInPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/login/SignInPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/edit/EditAccountComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/edit/EditAccountComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/details/AccountDetailsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/details/AccountDetailsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/new/AddAccountPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/new/AddAccountPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/settings/SettingsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/SettingsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/transactions/TransactionsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/TransactionsPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/transactions/income/AddIncomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/income/AddIncomePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MainContainer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/requests/addIncomeTransactionCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/addIncomeTransactionCommand.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/calculators/balanceCalculator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/calculators/balanceCalculator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/transactions/income/components/AddIncomeForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/income/components/AddIncomeForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/transactions/internal/AddInternalTransactionPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/internal/AddInternalTransactionPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/transactions/internal/components/AddInternalTransactionForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/internal/components/AddInternalTransactionForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/transactions/outcome/AddOutcomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/outcome/AddOutcomePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/transactions/outcome/components/AddOutcomeForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/outcome/components/AddOutcomeForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/FadeContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/FadeContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/transactionsTable/GroupDropdown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transactionsTable/GroupDropdown.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/transactionsTable/TransactionsTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transactionsTable/TransactionsTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/layoutStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/layoutStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/transactionStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/transactionStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/transactionsGroupBy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/transactionsGroupBy.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,11 +99,11 @@
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\router" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\transactions\outcome\components" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\transactions\internal\components" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\transactions\income\components" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\models\transactionCategories" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components\tiles" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\utils\formatters" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components\transactionsTable" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components\details" />
     </key>
   </component>
   <component name="RunManager" selected="npm.start">
@@ -141,7 +165,8 @@
       <workItem from="1707170360469" duration="400000" />
       <workItem from="1707230277000" duration="975000" />
       <workItem from="1707312172489" duration="29516000" />
-      <workItem from="1707768904208" duration="6170000" />
+      <workItem from="1707768904208" duration="34049000" />
+      <workItem from="1707926977030" duration="7010000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
@@ -297,7 +322,42 @@
       <option name="project" value="LOCAL" />
       <updated>1707354877372</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Income Transaction Add feature">
+      <created>1707798576228</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1707798576228</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Transactions Add feature">
+      <created>1707875803271</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1707875803271</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Cache Refactor">
+      <created>1707875833244</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1707875833244</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Before Settings Page">
+      <created>1707879211695</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1707879211695</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Validation Settings Added">
+      <created>1707934988192</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1707934988192</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -315,7 +375,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Dashboard initialized" />
     <MESSAGE value="Accounts Patge Init" />
     <MESSAGE value="Tile Layout" />
     <MESSAGE value="Account Page 1 complete" />
@@ -336,6 +395,11 @@
     <MESSAGE value="Account Page re-styled" />
     <MESSAGE value="Transactions Page Init" />
     <MESSAGE value="Home Page Transactions Tile" />
-    <option name="LAST_COMMIT_MESSAGE" value="Home Page Transactions Tile" />
+    <MESSAGE value="Income Transaction Add feature" />
+    <MESSAGE value="Transactions Add feature" />
+    <MESSAGE value="Cache Refactor" />
+    <MESSAGE value="Before Settings Page" />
+    <MESSAGE value="Validation Settings Added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Validation Settings Added" />
   </component>
 </project>

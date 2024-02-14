@@ -1,5 +1,6 @@
-import {keyframes, styled} from "@mui/material";
+import {keyframes, styled, useMediaQuery} from "@mui/material";
 import MuiBox from "@mui/material/Box";
+import theme from "../app/theme";
 
 const fadeIn = keyframes`
             0% { opacity: 0; }

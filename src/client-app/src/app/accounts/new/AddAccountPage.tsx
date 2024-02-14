@@ -21,6 +21,7 @@ import {NewAccountData} from "../../../models/requests/newAccountData";
 import * as yup from 'yup'
 import {number, string} from "yup";
 import React from "react";
+import ValidationConstants from "../../../utils/constants/validationConstants";
 
 
 export default observer(function AddAccountPage() {
@@ -33,7 +34,7 @@ export default observer(function AddAccountPage() {
         name: string()
             .required('Pass account name')
             .max(30, 'Account name should be shorter than 30 characters')
-            .matches(RegExp('^[a-zA-Z0-9][a-zA-Z0-9\\s]*[a-zA-Z0-9]$'), {message: "Special characters are not allowed in account name"}),
+            .matches(ValidationConstants.noSpecialCharactersPattern, {message: "Special characters are not allowed in account name"}),
         type: string().required().oneOf(['Transactional', 'Savings'], 'Invalid account type'),
         initialBalance: number().required('Pass initial account balance')
     })

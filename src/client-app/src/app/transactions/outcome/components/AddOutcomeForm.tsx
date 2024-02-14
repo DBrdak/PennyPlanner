@@ -20,6 +20,8 @@ import {Cancel} from "@mui/icons-material";
 import {DateTimePicker, LocalizationProvider, MobileDateTimePicker} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import MyDateTimePicker from "../../../../components/MyDateTimePicker";
+import ValidationConstants from "../../../../utils/constants/validationConstants";
 
 interface AddOutcomeFormProps {
     recipients: string[];
@@ -42,7 +44,7 @@ export function AddOutcomeForm({recipients, handleFormSubmit, accounts, categori
             .string()
             .required('Category is required')
             .max(30, 'Transaction category name must be between 1 and 30 characters')
-            .matches(/^[a-zA-Z0-9\s]*$/, 'Special characters are not allowed in Transaction category name'),
+            .matches(ValidationConstants.noSpecialCharactersPattern, 'Special characters are not allowed in Transaction category name'),
         transactionAmount: Yup
             .number()
             .required("Amount of transaction is required")
@@ -55,7 +57,7 @@ export function AddOutcomeForm({recipients, handleFormSubmit, accounts, categori
             .string()
             .required('Recipient is required')
             .max(30, 'Transaction entity name must be between 1 and 30 characters')
-            .matches(/^[a-zA-Z0-9\s]*$/, 'Special characters are not allowed in transaction entity name')
+            .matches(ValidationConstants.noSpecialCharactersPattern, 'Special characters are not allowed in transaction entity name')
     })
 
     function submit(values: AddOutcomeTransactionCommand, resetForm: () => void) {
@@ -141,25 +143,15 @@ export function AddOutcomeForm({recipients, handleFormSubmit, accounts, categori
                             </Select>
                         </FormControl>
                     )}
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        {isMobile
-                            ? <MobileDateTimePicker
-                                name={'transactionDateTime'}
-                                label="Transaction Date Time"
-                                value={dayjs(values.transactionDateTime)}
-                                onChange={(value) => setValues({...values, transactionDateTime: value ? value.toDate() : new Date()})}
-                                sx={{minWidth: '60%', maxWidth: '400px'}}
-                            />
-                            : <DateTimePicker
-                                maxDateTime={dayjs(new Date())}
-                                name={'transactionDateTime'}
-                                label="Transaction Date Time"
-                                value={dayjs(values.transactionDateTime)}
-                                onChange={(value) => setValues({...values, transactionDateTime: value ? value.toDate() : new Date()})}
-                                sx={{minWidth: '60%', maxWidth: '400px'}}
-                            />
-                        }
-                    </LocalizationProvider>
+                    <MyDateTimePicker
+                        name={'transactionDateTime'}
+                        label="Transaction Date Time"
+                        maxDateTime={new Date()}
+                        isMobile={isMobile}
+                        values={values}
+                        setValues={setValues}
+                        sx={{minWidth: '60%', maxWidth: '400px'}}
+                    />
                     <MyTextInput
                         type='number'
                         name='transactionAmount'

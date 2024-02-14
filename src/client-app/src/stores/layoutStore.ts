@@ -11,7 +11,7 @@ export default class LayoutStore {
         this.setActiveSectionIndexByPath(initialPathname);
     }
 
-    private setActiveSectionIndexByPath(path: string) {
+    setActiveSectionIndexByPath(path: string) {
         const sectionPaths = [
             { path: '/home', index: 0 },
             { path: '/budget-plans', index: 1 },

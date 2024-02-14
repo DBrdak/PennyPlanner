@@ -1,4 +1,4 @@
-import {Box, Collapse} from "@mui/material";
+import {Box, CircularProgress, Collapse} from "@mui/material";
 import {Transaction} from "../../models/transactions/transaction";
 import {useState} from "react";
 import TransactionsTableGroup from "./TransactionsTableGroup";
@@ -16,7 +16,7 @@ interface TransactionsTableProps {
 
 export default observer(function TransactionsTable({ groupedTransactions, groupCriterion, collapsedGroups, setCollapsedGroups, editMode }: TransactionsTableProps) {
     const [hoveredGroup, setHoveredGroup] = useState<string | null>(null);
-    const {transactionEntityStore, categoryStore} = useStore()
+    const {transactionEntityStore, accountStore, categoryStore} = useStore()
 
     const handleGroupCollapse = (groupKey: string) => {
         if(collapsedGroups.some(x => x === groupKey)) {
@@ -43,6 +43,8 @@ export default observer(function TransactionsTable({ groupedTransactions, groupC
                     groupKeyName = transactionEntityStore.getTransactionEntity(groupKey)?.name || groupKey
                 } else if (groupCriterion === 'category') {
                     groupKeyName = categoryStore.getCategory(groupKey)?.value || groupKey
+                } else if (groupCriterion === 'account') {
+                    groupKeyName = accountStore.getAccount(groupKey)?.name || groupKey
                 } else {
                     groupKeyName = groupKey
                 }

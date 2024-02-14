@@ -2,16 +2,20 @@ import AppOverlay from "../../../components/appOverlay/AppOverlay";
 import useTitle from "../../../utils/hooks/useTitle";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../stores/store";
-import {useEffect, useState} from "react";
-import {CircularProgress, Grid, Typography} from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {CircularProgress, Grid, IconButton, Typography} from "@mui/material";
 import theme from "../../theme";
 import {AddInternalTransactionCommand} from "../../../models/requests/addInternalTransactionCommand";
 import {AddInternalTransactionForm} from "./components/AddInternalTransactionForm";
 import NewInternalTransactionsTable from "./components/NewInternalTransactionsTable";
+import {NoAccountMessage} from "../components/NoAccountMessage";
+import {Undo} from "@mui/icons-material";
+import {useNavigate} from "react-router-dom";
 
 export default observer (function AddInternalTransactionPage() {
     const {accountStore, transactionStore} = useStore()
     const [newTransactions, setNewTransactions] = useState<AddInternalTransactionCommand[]>([])
+    const navigate = useNavigate()
     useTitle('Internal')
 
     useEffect(() => {
@@ -39,16 +43,24 @@ export default observer (function AddInternalTransactionPage() {
                 borderRadius: '20px',
                 overflow: 'auto',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                position: 'relative'
             }}>
                 {
                     accountStore.loading  ?
                         <CircularProgress/> :
-                        accountStore.accounts.length < 0 ?
-                            <Typography variant={'h3'}>
-                                Please add account first
-                            </Typography> :
+                        accountStore.accounts.length < 1 ?
+                            <NoAccountMessage /> :
                             <>
+                                <IconButton onClick={() => navigate('/transactions')}
+                                            sx={{
+                                                position: 'absolute',
+                                                top: '1px', left: '1px',
+                                                width: '5rem',
+                                                height: '5rem'
+                                            }}>
+                                    <Undo fontSize={'large'} />
+                                </IconButton>
                                 <Grid item xs={12} md={6} sx={{height: '100%'}}>
                                     <AddInternalTransactionForm
                                         accounts={accountStore.accounts}

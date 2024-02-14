@@ -1,19 +1,23 @@
 import AppOverlay from "../../../components/appOverlay/AppOverlay";
 import theme from "../../theme";
-import {CircularProgress, Grid, Typography} from "@mui/material"
+import {CircularProgress, Grid, IconButton, Typography} from "@mui/material"
 import {AddIncomeForm} from "./components/AddIncomeForm";
 import {useStore} from "../../../stores/store";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {AddIncomeTransactionCommand} from "../../../models/requests/addIncomeTransactionCommand";
 import useTitle from "../../../utils/hooks/useTitle";
 import {observer} from "mobx-react-lite";
 import NewIncomesTable from "./components/NewIncomesTable";
+import {NoAccountMessage} from "../components/NoAccountMessage";
+import {Undo} from "@mui/icons-material";
+import {useNavigate} from "react-router-dom";
 
 export default observer(function AddIncomePage() {
     const {accountStore, transactionEntityStore, transactionStore, categoryStore} = useStore()
     const [senderNames, setSenderNames] = useState<string[]>([])
     const [categoryValues, setCategoryValues] = useState<string[]>([])
     const [newIncomes, setNewIncomes] = useState<AddIncomeTransactionCommand[]>([])
+    const navigate = useNavigate()
     useTitle('Income')
 
     useEffect(() => {
@@ -52,16 +56,24 @@ export default observer(function AddIncomePage() {
                 borderRadius: '20px',
                 overflow: 'auto',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                position: 'relative'
             }}>
                 {
                     accountStore.loading  || transactionEntityStore.loading || categoryStore.loading ?
                         <CircularProgress/> :
-                        accountStore.accounts.length < 0 ?
-                            <Typography variant={'h3'}>
-                                Please add account first
-                            </Typography> :
+                        accountStore.accounts.length < 1 ?
+                            <NoAccountMessage /> :
                             <>
+                                <IconButton onClick={() => navigate('/transactions')}
+                                            sx={{
+                                                position: 'absolute',
+                                                top: '1px', left: '1px',
+                                                width: '5rem',
+                                                height: '5rem'
+                                            }}>
+                                    <Undo fontSize={'large'} />
+                                </IconButton>
                                 <Grid item xs={12} md={6} sx={{height: '100%'}}>
                                     <AddIncomeForm
                                         accounts={accountStore.accounts}

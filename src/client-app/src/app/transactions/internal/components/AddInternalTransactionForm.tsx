@@ -18,6 +18,7 @@ import MyTextInput from "../../../../components/MyTextInput";
 import {DateTimePicker, LocalizationProvider, MobileDateTimePicker} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import MyDateTimePicker from "../../../../components/MyDateTimePicker";
 
 interface AddInternalTransactionFormProps {
     handleFormSubmit: (values: AddInternalTransactionCommand) => Promise<void>
@@ -93,25 +94,15 @@ export function AddInternalTransactionForm({accounts, handleFormSubmit}: AddInte
                             ))}
                         </Select>
                     </FormControl>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        {isMobile
-                            ? <MobileDateTimePicker
-                                name={'transactionDateTime'}
-                                label="Transaction Date Time"
-                                value={dayjs(values.transactionDateTime)}
-                                onChange={(value) => setValues({...values, transactionDateTime: value ? value.toDate() : new Date()})}
-                                sx={{minWidth: '60%', maxWidth: '400px'}}
-                            />
-                            : <DateTimePicker
-                                maxDateTime={dayjs(new Date())}
-                                name={'transactionDateTime'}
-                                label="Transaction Date Time"
-                                value={dayjs(values.transactionDateTime)}
-                                onChange={(value) => setValues({...values, transactionDateTime: value ? value.toDate() : new Date()})}
-                                sx={{minWidth: '60%', maxWidth: '400px'}}
-                            />
-                        }
-                    </LocalizationProvider>
+                    <MyDateTimePicker
+                        name={'transactionDateTime'}
+                        label="Transaction Date Time"
+                        maxDateTime={new Date()}
+                        isMobile={isMobile}
+                        values={values}
+                        setValues={setValues}
+                        sx={{minWidth: '60%', maxWidth: '400px'}}
+                    />
                     <MyTextInput
                         type='number'
                         name='transactionAmount'

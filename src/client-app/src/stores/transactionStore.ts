@@ -50,13 +50,7 @@ export default class TransactionStore {
     async loadTransactions() {
         this.setLoading(true)
         try {
-            let transactions = store.accountStore.accounts.length > 0 &&
-                store.accountStore.accounts.flatMap(a => a.transactions)
-
-            if(!transactions) {
-                transactions = await agent.transactions.getTransactions()
-            }
-
+            const transactions = await agent.transactions.getTransactions()
             this.transactionsRegistry.clear()
             transactions.forEach(t => this.setTransaction(t))
         } catch (e){

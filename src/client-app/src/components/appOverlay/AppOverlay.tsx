@@ -1,4 +1,4 @@
- import React from 'react';
+ import React, {useEffect} from 'react';
 import {
     Toolbar,
     List,
@@ -20,11 +20,12 @@ import '../../styles/index.css'
 import DrawerNavButton from "./DrawerNavButton";
 import DrawerListItem from "./DrawerListItem";
 import DrawerButton from "./DrawerButton";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../stores/store";
 import DashboardSection from "../../models/layout/dashboardSection";
  import AddTransactionButton from "./AddTransactionButton";
+ import {router} from "../../router/Routes";
 
 interface AppOverlayProps {
     children: React.ReactNode,
@@ -72,6 +73,11 @@ export const dashboardSections: DashboardSection[] = [
 const AppOverlay = ({children}: AppOverlayProps) => {
     const {layoutStore} = useStore();
     const navigate = useNavigate();
+    const currentLocation = useLocation()
+
+    useEffect(() => {
+        layoutStore.setActiveSectionIndexByPath(currentLocation.pathname)
+    }, [currentLocation, layoutStore])
 
     const handleDrawerClick = () => {
         layoutStore.setDrawerState();
@@ -79,8 +85,8 @@ const AppOverlay = ({children}: AppOverlayProps) => {
 
     function handleSectionChange(index: number) {
         layoutStore.setActiveSectionIndex(index)
-        const section = dashboardSections[index].title;
-        const sectionPath = section.replace(' ', '-').toLowerCase();
+        const sectionTitle = dashboardSections[index].title;
+        const sectionPath = sectionTitle.replace(' ', '-').toLowerCase();
         navigate(`/${sectionPath}`);
     }
 
@@ -199,8 +205,8 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                         padding: '3%',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        display: 'flex' }}
-                >
+                        display: 'flex'
+                    }}>
                     {children}
                 </Box>
             </Box>

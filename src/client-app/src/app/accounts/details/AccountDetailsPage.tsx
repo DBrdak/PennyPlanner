@@ -57,13 +57,11 @@ export default observer(function AccountDetailsPage() {
 
     return (
         <AppOverlay>
-            {!(transactionEntities.length > 0 &&
-                groupedTransactions &&
+            {!(groupedTransactions &&
                 !accountStore.loading &&
                 account &&
                 !transactionStore.loading &&
                 !transactionEntityStore.loading &&
-                categories.length > 0 &&
                 !categoryStore.loading) ?
                 <CircularProgress color={'secondary'} />
                 :

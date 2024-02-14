@@ -21,6 +21,7 @@ import React from "react";
 import {toast} from "react-toastify";
 import {DeleteTwoTone, Undo} from "@mui/icons-material";
 import ConfirmModal from "../../../../components/ConfirmModal";
+import ValidationConstants from "../../../../utils/constants/validationConstants";
 
 interface EditAccountComponentProps {
     account: Account
@@ -39,7 +40,7 @@ export default observer(function EditAccountComponent({ account, groupDropdownPr
         name: string()
             .required('Pass account name')
             .max(30, 'Account name should be shorter than 30 characters')
-            .matches(RegExp('^[a-zA-Z0-9][a-zA-Z0-9\\s]*[a-zA-Z0-9]$'), {message: "Special characters are not allowed in account name"}),
+            .matches(ValidationConstants.noSpecialCharactersPattern, {message: "Special characters are not allowed in account name"}),
         balance: number().required('Balance is required')
     })
 

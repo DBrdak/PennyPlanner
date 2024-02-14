@@ -1,19 +1,23 @@
 import AppOverlay from "../../../components/appOverlay/AppOverlay";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../stores/store";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import useTitle from "../../../utils/hooks/useTitle";
-import {CircularProgress, Grid, Typography} from "@mui/material";
+import {Button, CircularProgress, Grid, IconButton, Typography} from "@mui/material";
 import theme from "../../theme";
 import {AddOutcomeTransactionCommand} from "../../../models/requests/addOutcomeTransactionCommand";
 import NewOutcomesTable from "./components/NewOutcomesTable";
 import {AddOutcomeForm} from "./components/AddOutcomeForm";
+import {ArrowForward, Undo} from "@mui/icons-material";
+import {NoAccountMessage} from "../components/NoAccountMessage";
+import {useNavigate} from "react-router-dom";
 
 export default observer (function AddOutcomePage() {
     const {accountStore, transactionEntityStore, transactionStore, categoryStore} = useStore()
     const [recipientNames, setRecipientNames] = useState<string[]>([])
     const [categoryValues, setCategoryValues] = useState<string[]>([])
     const [newOutcomes, setNewOutcomes] = useState<AddOutcomeTransactionCommand[]>([])
+    const navigate = useNavigate()
     useTitle('Outcome')
 
     useEffect(() => {
@@ -52,16 +56,24 @@ export default observer (function AddOutcomePage() {
                 borderRadius: '20px',
                 overflow: 'auto',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                position: 'relative'
             }}>
                 {
                     accountStore.loading  || transactionEntityStore.loading || categoryStore.loading ?
                         <CircularProgress/> :
-                        accountStore.accounts.length < 0 ?
-                            <Typography variant={'h3'}>
-                                Please add account first
-                            </Typography> :
+                        accountStore.accounts.length < 1 ?
+                            <NoAccountMessage /> :
                             <>
+                                <IconButton onClick={() => navigate('/transactions')}
+                                            sx={{
+                                                position: 'absolute',
+                                                top: '1px', left: '1px',
+                                                width: '5rem',
+                                                height: '5rem'
+                                            }}>
+                                    <Undo fontSize={'large'} />
+                                </IconButton>
                                 <Grid item xs={12} md={6} sx={{height: '100%'}}>
                                     <AddOutcomeForm
                                         accounts={accountStore.accounts}

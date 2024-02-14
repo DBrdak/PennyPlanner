@@ -3,9 +3,10 @@ import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 export interface GroupDropdownProps{
     groupCriterion: string
     handleGroupChange: (group: string) => void
+    noAccount?: boolean
 }
 
-export default function GroupDropdown({groupCriterion, handleGroupChange}: GroupDropdownProps) {
+export default function GroupDropdown({groupCriterion, handleGroupChange, noAccount}: GroupDropdownProps) {
 
 
     return (
@@ -19,6 +20,7 @@ export default function GroupDropdown({groupCriterion, handleGroupChange}: Group
                 <MenuItem key={4} value={'entity'}>Entity</MenuItem>
                 <MenuItem key={5} value={'category'}>Category</MenuItem>
                 <MenuItem key={6} value={'type'}>Type</MenuItem>
+                {noAccount && <MenuItem key={7} value={'account'}>Account</MenuItem>}
             </Select>
         </FormControl>
     )
