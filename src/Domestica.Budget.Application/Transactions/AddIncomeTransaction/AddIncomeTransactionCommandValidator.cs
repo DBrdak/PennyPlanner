@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Domestica.Budget.Application.Settings.ValidationSettings;
+using FluentValidation;
 
 namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
 {
@@ -9,9 +10,9 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
             RuleFor(x => x.CategoryValue)
                 .NotEmpty()
                 .WithMessage("Category is required")
-                .MaximumLength(30)
+                .MaximumLength(TransactionCategoryValidationSettings.TransactionCategoryNameMaxLength)
                 .WithMessage("Transaction category name must be between 1 and 30 characters")
-                .Matches("^[a-zA-Z0-9\\s]*$")
+                .Matches(TransactionCategoryValidationSettings.TransactionCategoryNamePattern)
                 .WithMessage("Special characters are not allowed in Transaction category name");
 
             RuleFor(x => x.TransactionAmount)
@@ -27,9 +28,9 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
             RuleFor(x => x.SenderName)
                 .NotEmpty()
                 .WithMessage("Sender is required")
-                .MaximumLength(30)
+                .MaximumLength(TransactionEntityValidationSettings.TransactionEntityNameMaxLength)
                 .WithMessage("Transaction entity name must be between 1 and 30 characters")
-                .Matches("^[a-zA-Z0-9\\s]*$")
+                .Matches(TransactionEntityValidationSettings.TransactionEntityNamePattern)
                 .WithMessage("Special characters are not allowed in transaction entity name");
 
             RuleFor(x => x.TransactionDateTime)

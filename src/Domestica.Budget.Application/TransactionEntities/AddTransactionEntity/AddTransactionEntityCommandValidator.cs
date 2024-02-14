@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Domestica.Budget.Application.Settings.ValidationSettings;
+using FluentValidation;
 
 namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
 {
@@ -9,9 +10,9 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
             RuleFor(x => x.Name)
                 .NotEmpty()
                 .WithMessage("Name of transaction entity is required")
-                .MaximumLength(30)
+                .MaximumLength(TransactionEntityValidationSettings.TransactionEntityNameMaxLength)
                 .WithMessage("Transaction entity name must be between 1 and 30 characters")
-                .Matches("^[a-zA-Z0-9\\s]*$")
+                .Matches(TransactionEntityValidationSettings.TransactionEntityNamePattern)
                 .WithMessage("Special characters are not allowed in transaction entity name");
 
             RuleFor(x => x.Type)

@@ -75,7 +75,7 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
 
             if (sender!.Transactions.Count == 1)
             {
-                _transactionEntityRepository.Update(sender, cancellationToken);
+                _transactionEntityRepository.Update(sender);
                 isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
             }
 

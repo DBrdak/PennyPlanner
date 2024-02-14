@@ -76,7 +76,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
 
             if (recipient!.Transactions.Count == 1)
             {
-                _transactionEntityRepository.Update(recipient, cancellationToken);
+                _transactionEntityRepository.Update(recipient);
                 isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
             }
 

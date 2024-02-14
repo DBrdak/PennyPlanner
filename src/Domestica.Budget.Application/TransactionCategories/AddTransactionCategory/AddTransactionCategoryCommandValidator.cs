@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Domestica.Budget.Application.Settings.ValidationSettings;
+using FluentValidation;
 
 namespace Domestica.Budget.Application.TransactionCategories.AddTransactionCategory
 {
@@ -9,9 +10,9 @@ namespace Domestica.Budget.Application.TransactionCategories.AddTransactionCateg
             RuleFor(x => x.Value)
                 .NotEmpty()
                 .WithMessage("Transaction category name is required")
-                .MaximumLength(30)
+                .MaximumLength(TransactionCategoryValidationSettings.TransactionCategoryNameMaxLength)
                 .WithMessage("Transaction category name must be between 1 and 30 characters")
-                .Matches("^[a-zA-Z0-9\\s]*$")
+                .Matches(TransactionCategoryValidationSettings.TransactionCategoryNamePattern)
                 .WithMessage("Special characters are not allowed in Transaction category name");
 
             RuleFor(x => x.Type)
