@@ -16,7 +16,7 @@ interface TransactionsTableProps {
 
 export default observer(function TransactionsTable({ groupedTransactions, groupCriterion, collapsedGroups, setCollapsedGroups, editMode }: TransactionsTableProps) {
     const [hoveredGroup, setHoveredGroup] = useState<string | null>(null);
-    const {transactionEntityStore} = useStore()
+    const {transactionEntityStore, categoryStore} = useStore()
 
     const handleGroupCollapse = (groupKey: string) => {
         if(collapsedGroups.some(x => x === groupKey)) {
@@ -39,8 +39,10 @@ export default observer(function TransactionsTable({ groupedTransactions, groupC
             {Object.keys(groupedTransactions).map((groupKey) => {
                 let groupKeyName
 
-                if(groupCriterion === 'entity') {
+                if (groupCriterion === 'entity') {
                     groupKeyName = transactionEntityStore.getTransactionEntity(groupKey)?.name || groupKey
+                } else if (groupCriterion === 'category') {
+                    groupKeyName = categoryStore.getCategory(groupKey)?.value || groupKey
                 } else {
                     groupKeyName = groupKey
                 }

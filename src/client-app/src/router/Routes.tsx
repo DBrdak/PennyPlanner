@@ -14,10 +14,10 @@ import StatisticsPage from "../app/statistics/StatisticsPage";
 import SettingsPage from "../app/settings/SettingsPage";
 import UserPage from "../app/user/UserPage";
 import WelcomePage from "../app/welcome/WelcomePage";
-import {TransactionsPage} from "../app/transactions/TransactionsPage";
-import {AddIncomePage} from "../app/transactions/income/AddIncomePage";
-import {AddOutcomePage} from "../app/transactions/outcome/AddOutcomePage";
-import {AddInternalTransactionPage} from "../app/transactions/internal/AddInternalTransactionPage";
+import TransactionsPage from "../app/transactions/TransactionsPage";
+import AddIncomePage from "../app/transactions/income/AddIncomePage";
+import AddOutcomePage from "../app/transactions/outcome/AddOutcomePage";
+import AddInternalTransactionPage from "../app/transactions/internal/AddInternalTransactionPage";
 
 export const routes: RouteObject[] = [
   {

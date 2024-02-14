@@ -1,21 +1,17 @@
-import {TransactionCategory} from "../transactionCategories/transactionCategory";
-import {TransactionEntity} from "../transactionEntities/transactionEntity";
-import {Account} from "../accounts/account";
-
 export interface AddIncomeTransactionCommand {
     destinationAccountId: string
     senderName: string
     transactionAmount: number
-    category: string
+    categoryValue: string
     transactionDateTime: Date
 }
 
 export class AddIncomeTransactionCommand implements AddIncomeTransactionCommand {
-    constructor() {
-        this.destinationAccountId = ''
-        this.senderName = ''
-        this.transactionAmount = 0
-        this.category = ''
-        this.transactionDateTime = new Date()
+    constructor(values?: AddIncomeTransactionCommand) {
+        this.destinationAccountId = values?.destinationAccountId || ''
+        this.senderName = values?.senderName || ''
+        this.transactionAmount = values?.transactionAmount || 0
+        this.categoryValue = values?.categoryValue || ''
+        this.transactionDateTime = values?.transactionDateTime || new Date()
     }
 }

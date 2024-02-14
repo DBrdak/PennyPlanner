@@ -33,4 +33,8 @@ export default class CategoryStore {
             this.setLoading(false)
         }
     }
+
+    getCategory(categoryId: string) {
+        return this.categoriresRegistry.get(categoryId)
+    }
 }

@@ -16,7 +16,7 @@ namespace Domestica.Budget.Domain.Accounts
         public AccountName Name { get; private set; }
         [NotMapped]
         public global::Money.DB.Money Balance => new(_transactions.Sum(transaction => transaction.TransactionAmount.Amount), Currency);
-        public Currency Currency { get; private set; }
+        public Currency Currency { get; private set; } //TODO remove when define user currency 
 
         [JsonConstructor]
         protected Account()

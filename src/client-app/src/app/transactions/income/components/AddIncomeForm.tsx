@@ -1,32 +1,29 @@
 import {Form, Formik} from "formik";
-import {AddIncomeTransactionCommand} from "../../../models/requests/addIncomeTransactionCommand";
+import {AddIncomeTransactionCommand} from "../../../../models/requests/addIncomeTransactionCommand";
 import {
-    Autocomplete,
     Button,
     FormControl, IconButton,
     InputAdornment,
     InputLabel,
     MenuItem,
     Select,
-    TextField,
     useMediaQuery
 } from "@mui/material";
 import * as Yup from "yup";
-import {TransactionCategory} from "../../../models/transactionCategories/transactionCategory";
-import {TransactionEntity} from "../../../models/transactionEntities/transactionEntity";
-import {Account} from "../../../models/accounts/account";
+import {Account} from "../../../../models/accounts/account";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DateTimePicker, LocalizationProvider, MobileDateTimePicker} from "@mui//x-date-pickers";
 import dayjs from "dayjs";
-import theme from "../../theme";
-import MyTextInput from "../../../components/MyTextInput";
+import theme from "../../../theme";
+import MyTextInput from "../../../../components/MyTextInput";
 import React, {useState} from "react";
 import {Cancel} from "@mui/icons-material";
+import {decimal_MAX} from "../../../../utils/constants/numeric";
 
 interface AddIncomeFormProps {
     accounts: Account[]
-    categories: TransactionCategory[]
-    senders: TransactionEntity[]
+    categories: string[]
+    senders: string[]
     handleFormSubmit: (values: AddIncomeTransactionCommand) => void
 }
 
@@ -36,34 +33,55 @@ export function AddIncomeForm({ accounts, categories, senders, handleFormSubmit 
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
     const validationSchema = Yup.object({
+        transactionDateTime: Yup
+            .date()
+            .required("Date of transaction is required")
+            .max(new Date(Number(new Date()) + 10), 'Select past date'),
+        categoryValue: Yup
+            .string()
+            .required('Category is required')
+            .max(30, 'Transaction category name must be between 1 and 30 characters')
+            .matches(/^[a-zA-Z0-9\s]*$/, 'Special characters are not allowed in Transaction category name'),
+        transactionAmount: Yup
+            .number()
+            .required("Amount of transaction is required")
+            .positive('Transaction amount must be positive')
+            .lessThan(decimal_MAX, 'Transaction amount is too large'),
         destinationAccountId: Yup
             .string()
             .required("Please specify the account receiving the transaction"),
         senderName: Yup
             .string()
-            .required("Please specify the entity sending the transaction"),
-        transactionAmount: Yup
-            .number()
-            .required("Amount of transaction is required")
-            .positive("Amount of transaction must be grater than zero"),
-        category: Yup
-            .string()
-            .required("Category of transaction is required"),
-        transactionDateTime: Yup
-            .date()
-            .required("Date of transaction is required")
-            .max(new Date(), 'Select past date')
+            .required('Sender is required')
+            .max(30, 'Transaction entity name must be between 1 and 30 characters')
+            .matches(/^[a-zA-Z0-9\s]*$/, 'Special characters are not allowed in transaction entity name')
     })
+
+    function submit(values: AddIncomeTransactionCommand, resetForm: () => void) {
+        handleFormSubmit(values);
+        resetForm();
+        setNewCategoryMode(false)
+        setNewSenderMode(false)
+    }
 
     return (
         <Formik
             validationSchema={validationSchema}
             initialValues={new AddIncomeTransactionCommand()}
             onSubmit={handleFormSubmit}
+            validateOnMount
         >
-            {({ values, resetForm, handleChange, isValid }) => (
-                <Form autoComplete='off' style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: 10 }}>
-                    <FormControl sx={{ minWidth: '30%', maxWidth: '400px' }}>
+            {({ values, setValues, resetForm, handleChange, isValid }) => (
+                <Form autoComplete='off' style={{
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    gap: 20
+                }}>
+                    <FormControl sx={{ minWidth: '60%', maxWidth: '400px' }}>
                         <InputLabel>Account</InputLabel>
                         <Select
                             name='destinationAccountId'
@@ -80,11 +98,11 @@ export function AddIncomeForm({ accounts, categories, senders, handleFormSubmit 
                         <MyTextInput
                             placeholder='Sender'
                             name='senderName'
-                            style={{ minWidth: '30%', maxWidth: '400px' }}
+                            style={{ minWidth: '60%', maxWidth: '400px' }}
                             inputProps={{ endAdornment: <IconButton onClick={() => setNewSenderMode(false)}><Cancel /></IconButton> }}
                         />
                     ) : (
-                        <FormControl sx={{ minWidth: '30%', maxWidth: '400px' }}>
+                        <FormControl sx={{ minWidth: '60%', maxWidth: '400px' }}>
                             <InputLabel>Sender</InputLabel>
                             <Select
                                 name='senderName'
@@ -92,8 +110,8 @@ export function AddIncomeForm({ accounts, categories, senders, handleFormSubmit 
                                 onChange={handleChange}
                                 label='Sender'
                             >
-                                {senders.map((sender, index) => (
-                                    <MenuItem key={index} value={sender.name}>{sender.name}</MenuItem>
+                                {senders.map((senderName, index) => (
+                                    <MenuItem key={index} value={senderName}>{senderName}</MenuItem>
                                 ))}
                                 <MenuItem key='newSender' value='' onClick={() => setNewSenderMode(true)}>New Sender</MenuItem>
                             </Select>
@@ -102,21 +120,21 @@ export function AddIncomeForm({ accounts, categories, senders, handleFormSubmit 
                     {newCategoryMode ? (
                         <MyTextInput
                             placeholder='Category'
-                            name='category'
-                            style={{ minWidth: '30%', maxWidth: '400px' }}
+                            name='categoryValue'
+                            style={{ minWidth: '60%', maxWidth: '400px' }}
                             inputProps={{ endAdornment: <IconButton onClick={() => setNewCategoryMode(false)}><Cancel /></IconButton> }}
                         />
                     ) : (
-                        <FormControl sx={{ minWidth: '30%', maxWidth: '400px' }}>
+                        <FormControl sx={{ minWidth: '60%', maxWidth: '400px' }}>
                             <InputLabel>Category</InputLabel>
                             <Select
-                                name='category'
-                                value={values.category}
+                                name='categoryValue'
+                                value={values.categoryValue}
                                 onChange={handleChange}
                                 label='Category'
                             >
-                                {categories.map((category, index) => (
-                                    <MenuItem key={index} value={category.value}>{category.value}</MenuItem>
+                                {categories.map((categoryValue, index) => (
+                                    <MenuItem key={index} value={categoryValue}>{categoryValue}</MenuItem>
                                 ))}
                                 <MenuItem key='newCategory' value='' onClick={() => setNewCategoryMode(true)}>New Category</MenuItem>
                             </Select>
@@ -128,15 +146,16 @@ export function AddIncomeForm({ accounts, categories, senders, handleFormSubmit 
                                 name={'transactionDateTime'}
                                 label="Transaction Date Time"
                                 value={dayjs(values.transactionDateTime)}
-                                onChange={handleChange}
-                                sx={{minWidth: '30%', maxWidth: '400px'}}
+                                onChange={(value) => setValues({...values, transactionDateTime: value ? value.toDate() : new Date()})}
+                                sx={{minWidth: '60%', maxWidth: '400px'}}
                             />
                             : <DateTimePicker
+                                maxDateTime={dayjs(new Date())}
                                 name={'transactionDateTime'}
                                 label="Transaction Date Time"
                                 value={dayjs(values.transactionDateTime)}
-                                onChange={handleChange}
-                                sx={{minWidth: '30%', maxWidth: '400px'}}
+                                onChange={(value) => setValues({...values, transactionDateTime: value ? value.toDate() : new Date()})}
+                                sx={{minWidth: '60%', maxWidth: '400px'}}
                             />
                         }
                     </LocalizationProvider>
@@ -144,19 +163,18 @@ export function AddIncomeForm({ accounts, categories, senders, handleFormSubmit 
                         type='number'
                         name='transactionAmount'
                         placeholder='Amount'
-                        style={{ minWidth: '30%', maxWidth: '400px' }}
-                        inputProps={{ endAdornment: <InputAdornment position='end'>USD</InputAdornment> }} // TODO: Fetch user currency
+                        maxValue={decimal_MAX}
+                        minValue={0}
+                        showErrors
+                        style={{ minWidth: '60%', maxWidth: '400px' }}
+                        inputProps={{ endAdornment: <InputAdornment position='end'>USD</InputAdornment>}} // TODO: Fetch user currency
                     />
                     <Button
                         variant='contained'
                         disabled={!isValid}
-                        onClick={() => {
-                            console.log(values)
-                            handleFormSubmit(values);
-                            resetForm();
-                        }}
+                        onClick={() => submit(values, resetForm)}
                     >
-                        Add Transaction
+                        Add Income
                     </Button>
                 </Form>
             )}

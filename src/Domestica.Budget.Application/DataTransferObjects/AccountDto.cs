@@ -45,7 +45,9 @@ namespace Domestica.Budget.Application.DataTransferObjects
                 throw new ArgumentException("Unknown account type");
             }
 
-            var transactions = account.Transactions.Select(TransactionDto.FromDomainObject);
+            var transactions = account.Transactions
+                .Select(TransactionDto.FromDomainObject)
+                .OrderByDescending(t => t.TransactionDateUtc);
 
             var balance = MoneyDto.FromDomainObject(account.Balance);
 

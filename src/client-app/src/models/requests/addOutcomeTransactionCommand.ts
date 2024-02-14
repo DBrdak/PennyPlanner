@@ -3,16 +3,16 @@ export interface AddOutcomeTransactionCommand {
     sourceAccountId: string
     recipientName: string
     transactionAmount: number
-    category: string
+    categoryValue: string
     transactionDateTime: Date
 }
 
 export class AddOutcomeTransactionCommand implements AddOutcomeTransactionCommand {
-    constructor() {
-        this.sourceAccountId = ''
-        this.recipientName = ''
-        this.transactionAmount = 0
-        this.category = ''
-        this.transactionDateTime = new Date()
+    constructor(values?: AddOutcomeTransactionCommand) {
+        this.sourceAccountId = values?.sourceAccountId || ''
+        this.recipientName = values?.recipientName || ''
+        this.transactionAmount = values?.transactionAmount || 0
+        this.categoryValue = values?.categoryValue || ''
+        this.transactionDateTime = values?.transactionDateTime || new Date()
     }
 }

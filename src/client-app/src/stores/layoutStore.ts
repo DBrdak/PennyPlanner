@@ -20,6 +20,7 @@ export default class LayoutStore {
             { path: '/statistics', index: 4 },
             { path: '/settings', index: 5 },
             { path: '/user', index: 6 },
+            {path: '/transactions', index: 7}
         ];
 
         const matchingSection = sectionPaths.find((section) =>

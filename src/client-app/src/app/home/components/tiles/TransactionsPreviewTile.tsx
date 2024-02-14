@@ -2,9 +2,6 @@ import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {Transaction} from "../../../../models/transactions/transaction";
 import {
     Grid,
-    LinearProgress,
-    List,
-    ListItem,
     Table,
     TableBody,
     TableCell,
@@ -28,8 +25,7 @@ interface TransactionsPreviewTileProps {
 
 export function TransactionsPreviewTile({transactions, accounts, transactionEntities}: TransactionsPreviewTileProps) {
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
-    const [transactionsPage, setTransactionsPage] = useState<Transaction[]>(transactions.slice(0, 9))
-    const [currentPageIndex, setCurrentPageIndex] = useState(0)
+    const isShortScreen = useMediaQuery('(max-height: 900px)')
 
     const getFrom = (transaction: Transaction) => {
         return accounts.find(a => a.accountId === transaction.fromAccountId)?.name ||
@@ -52,21 +48,6 @@ export function TransactionsPreviewTile({transactions, accounts, transactionEnti
             `${from} ➡ ${to}`
     }
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            const nextPageIndex = (currentPageIndex + 1) % Math.ceil(transactions.length / 9);
-
-            const startIndex = nextPageIndex * 9;
-            const endIndex = Math.min(startIndex + 8, transactions.length - 1);
-
-            setTransactionsPage(transactions.slice(startIndex, endIndex + 1));
-
-            setCurrentPageIndex(nextPageIndex);
-        }, 5000);
-
-        return () => clearInterval(interval);
-    }, [currentPageIndex, transactions])
-
     // TODO Display crucial info about transactions and on click navigate to list with all transactions with filtering
     return (
         isMobile ?
@@ -87,7 +68,7 @@ export function TransactionsPreviewTile({transactions, accounts, transactionEnti
                     <Grid item xs={12}>
                         <Table sx={{userSelect: 'none'}}>
                             <TableBody>
-                                {transactionsPage.map(transaction => (
+                                {transactions.slice(0, window.innerHeight / 200).map(transaction => (
                                     <TableRow key={transaction.transactionId}>
                                         <TableCell align={'center'}>
                                             {formatNumber(transaction.transactionAmount.amount)} {transaction.transactionAmount.currency}

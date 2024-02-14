@@ -1,10 +1,11 @@
 import {makeAutoObservable} from "mobx";
 import agent from "../api/agent";
 import {Transaction} from "../models/transactions/transaction";
-import {store, useStore} from "./store";
+import {store} from "./store";
 import {AddIncomeTransactionCommand} from "../models/requests/addIncomeTransactionCommand";
 import {AddOutcomeTransactionCommand} from "../models/requests/addOutcomeTransactionCommand";
 import {AddInternalTransactionCommand} from "../models/requests/addInternalTransactionCommand";
+import {toast} from "react-toastify";
 
 export default class TransactionStore {
     private transactionsRegistry: Map<string, Transaction> = new Map<string, Transaction>()
@@ -84,11 +85,13 @@ export default class TransactionStore {
         this.setLoading(true)
         try {
             if (command instanceof AddIncomeTransactionCommand) {
-                await agent.transactions.createIncomeTransaction(command)
+                await agent.transactions.createIncomeTransaction(command as AddIncomeTransactionCommand)
             } else if (command instanceof AddOutcomeTransactionCommand) {
-                await agent.transactions.createOutcomeTransaction(command)
+                await agent.transactions.createOutcomeTransaction(command as AddOutcomeTransactionCommand)
+            } else if (command instanceof AddInternalTransactionCommand) {
+                await agent.transactions.createInternalTransaction(command as AddInternalTransactionCommand)
             } else {
-                await agent.transactions.createInternalTransaction(command)
+                toast.error('Invalid transaction type')
             }
         } catch (e) {
             console.log(e)

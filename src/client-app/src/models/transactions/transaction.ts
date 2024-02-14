@@ -3,7 +3,7 @@ import {TransactionCategory} from "../transactionCategories/transactionCategory"
 
 export interface Transaction {
     transactionId: string
-    accountId?: string | null
+    accountId: string
     fromAccountId?: string | null
     toAccountId?: string | null
     senderId?: string | null

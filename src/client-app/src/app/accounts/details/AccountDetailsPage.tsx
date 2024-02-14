@@ -16,6 +16,7 @@ import groupBy from "../../../utils/transactionsGroupBy";
 import {Account} from "../../../models/accounts/account";
 import {useNavigate, useParams} from "react-router-dom";
 import useTitle from "../../../utils/hooks/useTitle";
+import useCategories from "../../../utils/hooks/useCategories";
 
 export default observer(function AccountDetailsPage() {
     const navigate = useNavigate()
@@ -23,9 +24,10 @@ export default observer(function AccountDetailsPage() {
     const [editMode, setEditMode] = useState(false)
     const [groupCriterion, setGroupCriterion] = useState('day')
     const [collapsedGroups, setCollapsedGroups] = useState<string[]>([])
-    const {accountStore, transactionStore, transactionEntityStore} = useStore()
+    const {accountStore, categoryStore, transactionStore, transactionEntityStore} = useStore()
     const [account, setAccount] = useState<Account>()
     const transactionEntities = useTransactionEntities(account)
+    const categories = useCategories(account)
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
 
     useTitle(undefined, account?.name)
@@ -55,7 +57,14 @@ export default observer(function AccountDetailsPage() {
 
     return (
         <AppOverlay>
-            {!(transactionEntities.length > 0 && groupedTransactions && !accountStore.loading && account && !transactionStore.loading && !transactionEntityStore.loading) ?
+            {!(transactionEntities.length > 0 &&
+                groupedTransactions &&
+                !accountStore.loading &&
+                account &&
+                !transactionStore.loading &&
+                !transactionEntityStore.loading &&
+                categories.length > 0 &&
+                !categoryStore.loading) ?
                 <CircularProgress color={'secondary'} />
                 :
                 <Grid container sx={{

@@ -1,4 +1,3 @@
-
 export interface AddInternalTransactionCommand {
     fromAccountId: string
     toAccountId: string
@@ -7,10 +6,10 @@ export interface AddInternalTransactionCommand {
 }
 
 export class AddInternalTransactionCommand implements AddInternalTransactionCommand {
-    constructor() {
-        this.fromAccountId = ''
-        this.toAccountId = ''
-        this.transactionAmount = 0
-        this.transactionDateTime = new Date()
+    constructor(values?: AddInternalTransactionCommand) {
+        this.fromAccountId = values?.fromAccountId || ''
+        this.toAccountId = values?.toAccountId || ''
+        this.transactionAmount = values?.transactionAmount || 0
+        this.transactionDateTime = values?.transactionDateTime || new Date()
     }
 }

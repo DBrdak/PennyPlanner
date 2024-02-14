@@ -70,15 +70,15 @@ const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, showErr
 
     return (
     showErrors ? (
-        <FormControl error={meta.touched && !!meta.error} fullWidth style={style}>
+        <FormControl error={meta.touched && !!meta.error} style={style}>
             <Tooltip title={meta.touched && meta.error ? meta.error : ''} placement="right">
                 <TextField
                     {...field}
                     {...props}
                     disabled={disabled}
                     onChange={handleChange}
-                    label={props.label}
                     type={type}
+                    label={props.label ? props.label : props.placeholder}
                     variant="outlined"
                     error={meta.touched && !!meta.error}
                     InputProps={inputProps}

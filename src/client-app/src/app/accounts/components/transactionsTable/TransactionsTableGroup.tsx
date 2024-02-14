@@ -142,21 +142,26 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                                 {
                                     groupCriterion !== 'category' &&
                                         <TableCell width={'20%'} align={'center'}>
-                                            {transaction.category ? transaction.category.value : '-'}
+                                            <Button disabled={!transaction.category?.transactionCategoryId} color={'inherit'} sx={{borderRadius: '4px'}}
+                                                    onClick={() =>
+                                                        (transaction.category?.transactionCategoryId &&
+                                                            navigate(`/statistics/transaction-categories/${transaction.category.transactionCategoryId}`))}>
+                                                {transaction.category ? transaction.category.value : '-'}
+                                            </Button>
                                         </TableCell>
                                 }
                                 {
                                     groupCriterion !== 'entity' &&
-                                    <TableCell width={'20%'} align={'center'}>
-                                        <Button disabled={!account?.accountId && !transactionEntity?.transactionEntityId} color={'inherit'} sx={{borderRadius: '4px'}}
-                                                onClick={() =>
-                                                (account?.accountId &&
-                                                    navigate(`/accounts/${account.accountId}`)) ||
-                                                (transactionEntity?.transactionEntityId &&
-                                                    navigate(`/settings/transaction-entities/${transactionEntity.transactionEntityId}`))}>
-                                            {transactionEntity?.name || account?.name || '-'}
-                                        </Button>
-                                    </TableCell>
+                                        <TableCell width={'20%'} align={'center'}>
+                                            <Button disabled={!account?.accountId && !transactionEntity?.transactionEntityId} color={'inherit'} sx={{borderRadius: '4px'}}
+                                                    onClick={() =>
+                                                    (account?.accountId &&
+                                                        navigate(`/accounts/${account.accountId}`)) ||
+                                                    (transactionEntity?.transactionEntityId &&
+                                                        navigate(`/statistics/transaction-entities/${transactionEntity.transactionEntityId}`))}>
+                                                {transactionEntity?.name || account?.name || '-'}
+                                            </Button>
+                                        </TableCell>
                                 }
                                 <TableCell width={'35%'} align={'center'}>{formatDate(transaction.transactionDateUtc)}</TableCell>
                             </TableRow>

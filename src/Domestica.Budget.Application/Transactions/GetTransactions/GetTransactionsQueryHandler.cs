@@ -18,7 +18,10 @@ namespace Domestica.Budget.Application.Transactions.GetTransactions
         {
             var transactions = await _transactionRepository.BrowseUserTransactions(cancellationToken);
 
-            return transactions.Select(TransactionDto.FromDomainObject).ToList();
+            return transactions
+                .Select(TransactionDto.FromDomainObject)
+                .OrderByDescending(t => t.TransactionDateUtc)
+                .ToList();
         }
     }
 }

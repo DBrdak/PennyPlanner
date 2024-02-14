@@ -1,18 +1,20 @@
 import AppOverlay from "../../../components/appOverlay/AppOverlay";
 import theme from "../../theme";
 import {CircularProgress, Grid} from "@mui/material"
-import * as Yup from 'yup'
-import {AddIncomeForm} from "./AddIncomeForm";
+import {AddIncomeForm} from "./components/AddIncomeForm";
 import {useStore} from "../../../stores/store";
 import {useEffect, useState} from "react";
-import {TransactionEntity} from "../../../models/transactionEntities/transactionEntity";
-import {TransactionCategory} from "../../../models/transactionCategories/transactionCategory";
 import {AddIncomeTransactionCommand} from "../../../models/requests/addIncomeTransactionCommand";
+import useTitle from "../../../utils/hooks/useTitle";
+import {observer} from "mobx-react-lite";
+import NewIncomesTable from "./components/NewIncomesTable";
 
-export function AddIncomePage() {
+export default observer(function AddIncomePage() {
     const {accountStore, transactionEntityStore, transactionStore, categoryStore} = useStore()
-    const [senders, setSenders] = useState<TransactionEntity[]>([])
-    const [categories, setCategories] = useState<TransactionCategory[]>([])
+    const [senderNames, setSenderNames] = useState<string[]>([])
+    const [categoryValues, setCategoryValues] = useState<string[]>([])
+    const [newIncomes, setNewIncomes] = useState<AddIncomeTransactionCommand[]>([])
+    useTitle('Income')
 
     useEffect(() => {
         const loadAll = async () => {
@@ -22,15 +24,21 @@ export function AddIncomePage() {
         }
 
         loadAll().then(() => {
-            setSenders(transactionEntityStore.transactionEntities
-                .filter(te => te.transactionEntityType.toLowerCase() === "sender"))
-            setCategories(categoryStore.categories
-                .filter(c => c.type.toLowerCase() === 'income'))
+            setSenderNames(transactionEntityStore.transactionEntities
+                .filter(te => te.transactionEntityType.toLowerCase() === "sender").map(te => te.name))
+            setCategoryValues(categoryStore.categories
+                .filter(c => c.type.toLowerCase() === 'income').map(c => c.value))
         })
-    }, [])
+    }, [accountStore, categoryStore, transactionEntityStore, transactionStore])
 
     async function handleFormSubmit(values: AddIncomeTransactionCommand) {
-        await transactionStore.addTransaction(values)
+        await transactionStore.addTransaction(new AddIncomeTransactionCommand(values)).then(() => {
+            !senderNames.some(name => name === values.senderName) &&
+            setSenderNames([...senderNames, values.senderName])
+            !categoryValues.some(value => value === values.categoryValue) &&
+            setCategoryValues([...categoryValues, values.categoryValue])
+            setNewIncomes([...newIncomes, values])
+        })
     }
 
     return (
@@ -43,18 +51,29 @@ export function AddIncomePage() {
                 backgroundColor: theme.palette.background.paper,
                 borderRadius: '20px',
                 overflow: 'auto',
+                justifyContent: 'center',
+                alignItems: 'center'
             }}>
                 {
-                    accountStore.loading || accountStore.accounts.length < 1  || transactionEntityStore.loading || categoryStore.loading ?
+                    accountStore.loading  || transactionEntityStore.loading || categoryStore.loading ?
                         <CircularProgress/> :
-                        <AddIncomeForm
-                            accounts={accountStore.accounts}
-                            senders={senders}
-                            categories={categories}
-                            handleFormSubmit={handleFormSubmit}
-                        />
+                        <>
+                            <Grid item xs={12} md={6} sx={{height: '100%'}}>
+                                <AddIncomeForm
+                                    accounts={accountStore.accounts}
+                                    senders={senderNames}
+                                    categories={categoryValues}
+                                    handleFormSubmit={handleFormSubmit}
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={6} sx={{height: '100%'}}>
+                                <NewIncomesTable
+                                    newIncomes={newIncomes}
+                                />
+                            </Grid>
+                        </>
                 }
             </Grid>
         </AppOverlay>
     );
-}
+})
