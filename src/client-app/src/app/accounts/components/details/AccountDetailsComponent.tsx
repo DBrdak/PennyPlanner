@@ -1,6 +1,6 @@
 import {Button, Grid, IconButton, Stack, Typography} from "@mui/material";
 import {Account} from "../../../../models/accounts/account";
-import GroupDropdown, {GroupDropdownProps} from "../transactionsTable/GroupDropdown";
+import GroupDropdown, {GroupDropdownProps} from "../../../../components/transactionsTable/GroupDropdown";
 import {observer} from "mobx-react-lite";
 import formatNumber from "../../../../utils/formatters/numberFormatter";
 import {Undo} from "@mui/icons-material";

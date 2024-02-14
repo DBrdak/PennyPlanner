@@ -12,10 +12,9 @@ import {
 import theme from "../../../theme";
 import formatNumber from "../../../../utils/formatters/numberFormatter";
 import formatDate from "../../../../utils/formatters/dateFormatter";
-import {ArrowRight} from "@mui/icons-material";
 import {TransactionEntity} from "../../../../models/transactionEntities/transactionEntity";
 import {Account} from "../../../../models/accounts/account";
-import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 interface TransactionsPreviewTileProps {
     transactions: Transaction[]
@@ -25,7 +24,7 @@ interface TransactionsPreviewTileProps {
 
 export function TransactionsPreviewTile({transactions, accounts, transactionEntities}: TransactionsPreviewTileProps) {
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
-    const isShortScreen = useMediaQuery('(max-height: 900px)')
+    const navigate = useNavigate()
 
     const getFrom = (transaction: Transaction) => {
         return accounts.find(a => a.accountId === transaction.fromAccountId)?.name ||
@@ -51,11 +50,17 @@ export function TransactionsPreviewTile({transactions, accounts, transactionEnti
     // TODO Display crucial info about transactions and on click navigate to list with all transactions with filtering
     return (
         isMobile ?
-            <TilePaper sx={{display:'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <TilePaper onClick={() => navigate('/transactions')} sx={{
+                display:'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
                 <Typography variant={'h3'}>Transactions</Typography>
             </TilePaper>
             :
-            <TilePaper sx={{boxShadow: 'inset 0px 0px 10vw rgba(0, 0, 0, 1)'}}>
+            <TilePaper onClick={() => navigate('/transactions')} sx={{
+                boxShadow: 'inset 0px 0px 10vw rgba(0, 0, 0, 1)'
+            }}>
                 <Typography variant={'h3'} sx={{
                     position: 'absolute',
                     left: '2vw',

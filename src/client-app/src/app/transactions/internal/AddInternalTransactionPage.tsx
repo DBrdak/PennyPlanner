@@ -3,7 +3,7 @@ import useTitle from "../../../utils/hooks/useTitle";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../stores/store";
 import {useEffect, useState} from "react";
-import {CircularProgress, Grid} from "@mui/material";
+import {CircularProgress, Grid, Typography} from "@mui/material";
 import theme from "../../theme";
 import {AddInternalTransactionCommand} from "../../../models/requests/addInternalTransactionCommand";
 import {AddInternalTransactionForm} from "./components/AddInternalTransactionForm";
@@ -44,19 +44,23 @@ export default observer (function AddInternalTransactionPage() {
                 {
                     accountStore.loading  ?
                         <CircularProgress/> :
-                        <>
-                            <Grid item xs={12} md={6} sx={{height: '100%'}}>
-                                <AddInternalTransactionForm
-                                    accounts={accountStore.accounts}
-                                    handleFormSubmit={handleFormSubmit}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6} sx={{height: '100%'}}>
-                                <NewInternalTransactionsTable
-                                    newTransactions={newTransactions}
-                                />
-                            </Grid>
-                        </>
+                        accountStore.accounts.length < 0 ?
+                            <Typography variant={'h3'}>
+                                Please add account first
+                            </Typography> :
+                            <>
+                                <Grid item xs={12} md={6} sx={{height: '100%'}}>
+                                    <AddInternalTransactionForm
+                                        accounts={accountStore.accounts}
+                                        handleFormSubmit={handleFormSubmit}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={6} sx={{height: '100%'}}>
+                                    <NewInternalTransactionsTable
+                                        newTransactions={newTransactions}
+                                    />
+                                </Grid>
+                            </>
                 }
             </Grid>
         </AppOverlay>

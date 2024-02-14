@@ -73,6 +73,12 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
+            if (sender!.Transactions.Count == 1)
+            {
+                _transactionEntityRepository.Update(sender, cancellationToken);
+                isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
+            }
+
             if (isSuccessful)
             {
                 return Result.Success(createdTransaction);

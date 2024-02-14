@@ -1,10 +1,10 @@
 import {Box, Collapse} from "@mui/material";
-import {Transaction} from "../../../../models/transactions/transaction";
+import {Transaction} from "../../models/transactions/transaction";
 import {useState} from "react";
 import TransactionsTableGroup from "./TransactionsTableGroup";
 import TransactionsTableGroupHeader from "./TransactionsTableGroupHeader";
 import {observer} from "mobx-react-lite";
-import {useStore} from "../../../../stores/store";
+import {useStore} from "../../stores/store";
 
 interface TransactionsTableProps {
     groupedTransactions: Record<string, Transaction[]>

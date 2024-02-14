@@ -9,16 +9,16 @@ import {
 } from "@mui/material";
 import SortableTableCell from "./SortableTableCell";
 import {useState} from "react";
-import {Transaction} from "../../../../models/transactions/transaction";
-import formatDate from "../../../../utils/formatters/dateFormatter";
+import {Transaction} from "../../models/transactions/transaction";
+import formatDate from "../../utils/formatters/dateFormatter";
 import {useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
-import {useStore} from "../../../../stores/store";
-import {TransactionEntity} from "../../../../models/transactionEntities/transactionEntity";
-import {Account} from "../../../../models/accounts/account";
-import theme from "../../../theme";
+import {useStore} from "../../stores/store";
+import {TransactionEntity} from "../../models/transactionEntities/transactionEntity";
+import {Account} from "../../models/accounts/account";
+import theme from "../../app/theme";
 import {DeleteTwoTone} from "@mui/icons-material";
-import formatNumber from "../../../../utils/formatters/numberFormatter";
+import formatNumber from "../../utils/formatters/numberFormatter";
 
 interface TransactionsTableGroupProps {
     groupedTransactions: Record<string, Transaction[]>

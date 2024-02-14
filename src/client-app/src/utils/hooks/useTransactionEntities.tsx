@@ -2,7 +2,7 @@ import {Account} from "../../models/accounts/account";
 import {useStore} from "../../stores/store";
 import {useEffect} from "react";
 
-const useTransactionEntities = (account: Account | undefined) => {
+const useTransactionEntities = (account?: Account) => {
     const {transactionEntityStore} = useStore()
 
     useEffect(() => {
@@ -17,6 +17,8 @@ const useTransactionEntities = (account: Account | undefined) => {
             if(transactionEntityStore.transactionEntities.length < requiredTransactionEntities.length) {
                 loadTransactionEntities()
             }
+        } else {
+            loadTransactionEntities()
         }
 
     }, [account, transactionEntityStore])

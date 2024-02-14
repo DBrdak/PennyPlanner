@@ -3,7 +3,7 @@ import {observer} from "mobx-react-lite";
 import {useStore} from "../../../stores/store";
 import {useEffect, useState} from "react";
 import useTitle from "../../../utils/hooks/useTitle";
-import {CircularProgress, Grid} from "@mui/material";
+import {CircularProgress, Grid, Typography} from "@mui/material";
 import theme from "../../theme";
 import {AddOutcomeTransactionCommand} from "../../../models/requests/addOutcomeTransactionCommand";
 import NewOutcomesTable from "./components/NewOutcomesTable";
@@ -57,21 +57,25 @@ export default observer (function AddOutcomePage() {
                 {
                     accountStore.loading  || transactionEntityStore.loading || categoryStore.loading ?
                         <CircularProgress/> :
-                        <>
-                            <Grid item xs={12} md={6} sx={{height: '100%'}}>
-                                <AddOutcomeForm
-                                    accounts={accountStore.accounts}
-                                    recipients={recipientNames}
-                                    categories={categoryValues}
-                                    handleFormSubmit={handleFormSubmit}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6} sx={{height: '100%'}}>
-                                <NewOutcomesTable
-                                    newOutcomes={newOutcomes}
-                                />
-                            </Grid>
-                        </>
+                        accountStore.accounts.length < 0 ?
+                            <Typography variant={'h3'}>
+                                Please add account first
+                            </Typography> :
+                            <>
+                                <Grid item xs={12} md={6} sx={{height: '100%'}}>
+                                    <AddOutcomeForm
+                                        accounts={accountStore.accounts}
+                                        recipients={recipientNames}
+                                        categories={categoryValues}
+                                        handleFormSubmit={handleFormSubmit}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={6} sx={{height: '100%'}}>
+                                    <NewOutcomesTable
+                                        newOutcomes={newOutcomes}
+                                    />
+                                </Grid>
+                            </>
                 }
             </Grid>
         </AppOverlay>

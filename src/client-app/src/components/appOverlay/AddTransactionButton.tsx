@@ -7,10 +7,13 @@ import {
 } from '@mui/icons-material';
 import theme from "../../app/theme";
 import {useNavigate} from "react-router-dom";
+import {observer} from "mobx-react-lite";
+import {useStore} from "../../stores/store";
 
 const TransactionButtons: React.FC = () => {
     const navigate = useNavigate()
     const [open, setOpen] = React.useState(false);
+    const {layoutStore} = useStore()
     const actions = [
         { icon: <South color={'success'} />, name: 'Income', path: '/transactions/income' },
         { icon: <North color={'error'} />, name: 'Outcome', path: '/transactions/outcome' },
@@ -28,6 +31,7 @@ const TransactionButtons: React.FC = () => {
     const handleAction = (path: string) => {
         setOpen(false);
         navigate(path);
+        layoutStore.setActiveSectionIndex(7)
     };
 
     return (
@@ -58,4 +62,4 @@ const TransactionButtons: React.FC = () => {
     );
 };
 
-export default TransactionButtons;
+export default observer(TransactionButtons);

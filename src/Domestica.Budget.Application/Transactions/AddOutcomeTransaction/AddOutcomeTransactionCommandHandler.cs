@@ -11,6 +11,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Money.DB;
 using Responses.DB;
+using System.Reflection;
 
 namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
 {
@@ -72,6 +73,12 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
                 request.TransactionDateTime);
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
+
+            if (recipient!.Transactions.Count == 1)
+            {
+                _transactionEntityRepository.Update(recipient, cancellationToken);
+                isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
+            }
 
             if (isSuccessful)
             {

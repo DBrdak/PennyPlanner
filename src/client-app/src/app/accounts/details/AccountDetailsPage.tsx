@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import theme from "../../theme";
 import {useEffect, useState} from "react";
-import TransactionsTable from "../components/transactionsTable/TransactionsTable";
+import TransactionsTable from "../../../components/transactionsTable/TransactionsTable";
 import AccountDetailsComponent from "../components/details/AccountDetailsComponent";
 import EditAccountComponent from "../components/edit/EditAccountComponent";
 import useTransactionEntities from "../../../utils/hooks/useTransactionEntities";

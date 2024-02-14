@@ -15,7 +15,7 @@ import MyTextInput from "../../../../components/MyTextInput";
 import theme from "../../../theme";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../../stores/store";
-import GroupDropdown, {GroupDropdownProps} from "../transactionsTable/GroupDropdown";
+import GroupDropdown, {GroupDropdownProps} from "../../../../components/transactionsTable/GroupDropdown";
 import {useNavigate} from "react-router-dom";
 import React from "react";
 import {toast} from "react-toastify";

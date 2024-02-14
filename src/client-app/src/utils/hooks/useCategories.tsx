@@ -2,7 +2,7 @@ import {Account} from "../../models/accounts/account";
 import {useStore} from "../../stores/store";
 import {useEffect} from "react";
 
-const useCategories = (account: Account | undefined) => {
+const useCategories = (account?: Account) => {
     const {categoryStore} = useStore()
 
     useEffect(() => {
@@ -16,6 +16,8 @@ const useCategories = (account: Account | undefined) => {
             if(categoryStore.categories.length < requiredCategories.length) {
                 loadCategories()
             }
+        } else {
+            loadCategories()
         }
 
     }, [account, categoryStore])

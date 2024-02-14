@@ -1,6 +1,6 @@
 import AppOverlay from "../../../components/appOverlay/AppOverlay";
 import theme from "../../theme";
-import {CircularProgress, Grid} from "@mui/material"
+import {CircularProgress, Grid, Typography} from "@mui/material"
 import {AddIncomeForm} from "./components/AddIncomeForm";
 import {useStore} from "../../../stores/store";
 import {useEffect, useState} from "react";
@@ -57,21 +57,25 @@ export default observer(function AddIncomePage() {
                 {
                     accountStore.loading  || transactionEntityStore.loading || categoryStore.loading ?
                         <CircularProgress/> :
-                        <>
-                            <Grid item xs={12} md={6} sx={{height: '100%'}}>
-                                <AddIncomeForm
-                                    accounts={accountStore.accounts}
-                                    senders={senderNames}
-                                    categories={categoryValues}
-                                    handleFormSubmit={handleFormSubmit}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6} sx={{height: '100%'}}>
-                                <NewIncomesTable
-                                    newIncomes={newIncomes}
-                                />
-                            </Grid>
-                        </>
+                        accountStore.accounts.length < 0 ?
+                            <Typography variant={'h3'}>
+                                Please add account first
+                            </Typography> :
+                            <>
+                                <Grid item xs={12} md={6} sx={{height: '100%'}}>
+                                    <AddIncomeForm
+                                        accounts={accountStore.accounts}
+                                        senders={senderNames}
+                                        categories={categoryValues}
+                                        handleFormSubmit={handleFormSubmit}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={6} sx={{height: '100%'}}>
+                                    <NewIncomesTable
+                                        newIncomes={newIncomes}
+                                    />
+                                </Grid>
+                            </>
                 }
             </Grid>
         </AppOverlay>
