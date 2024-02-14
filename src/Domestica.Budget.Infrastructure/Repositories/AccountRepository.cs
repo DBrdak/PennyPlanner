@@ -23,6 +23,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
             return await DbContext.Set<Account>()
                 .Include(a => a.Transactions)
+                .ThenInclude(t => t.Category)
                 .FirstOrDefaultAsync( /*a => a.UserId == userId*/
                     a => a.Id == accountId,
                     cancellationToken);

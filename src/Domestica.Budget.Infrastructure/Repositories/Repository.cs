@@ -45,6 +45,11 @@ namespace Domestica.Budget.Infrastructure.Repositories
         public void Remove(TEntity entity)
         {
             DbContext.Set<TEntity>().Remove(entity);
+        } 
+        
+        public void Update(TEntity entity)
+        {
+            DbContext.Update(entity);
         }
     }
 }

@@ -20,5 +20,6 @@ namespace Domestica.Budget.Domain.TransactionEntities
         Task AddAsync(TransactionEntity entity, CancellationToken cancellationToken);
         //Task<IEnumerable<TransactionEntity>> BrowseForUserAsync(User user);
         void Remove(TransactionEntity transactionEntity);
+        void Update(TransactionEntity transactionEntity);
     }
 }

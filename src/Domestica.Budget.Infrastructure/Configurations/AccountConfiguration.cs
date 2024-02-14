@@ -29,7 +29,7 @@ namespace Domestica.Budget.Infrastructure.Configurations
                 .WithOne()
                 .HasPrincipalKey(account => account.Id)
                 .HasForeignKey(transaction => transaction.AccountId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany<Transaction>()
                 .WithOne()
