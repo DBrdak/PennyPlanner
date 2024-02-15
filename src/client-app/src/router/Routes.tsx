@@ -18,6 +18,10 @@ import TransactionsPage from "../app/transactions/TransactionsPage";
 import AddIncomePage from "../app/transactions/income/AddIncomePage";
 import AddOutcomePage from "../app/transactions/outcome/AddOutcomePage";
 import AddInternalTransactionPage from "../app/transactions/internal/AddInternalTransactionPage";
+import CustomizePage from "../app/settings/customize/CustomizePage";
+import RecurringTransactionsPage from "../app/settings/recurringTransactions/RecurringTransactionsPage";
+import TransactionEntitiesPage from "../app/settings/transactionEntities/TransactionEntitiesPage";
+import TransactionCategoriesPage from "../app/settings/transactionCategories/TransactionCategoriesPage";
 
 export const routes: RouteObject[] = [
   {
@@ -47,6 +51,10 @@ export const routes: RouteObject[] = [
       {path: '/statistics', element: <StatisticsPage  />},
 
       {path: '/settings', element: <SettingsPage  />},
+      {path: '/settings/transaction-categories', element: <TransactionCategoriesPage  />},
+      {path: '/settings/transaction-entities', element: <TransactionEntitiesPage  />},
+      {path: '/settings/recurring-transactions', element: <RecurringTransactionsPage  />},
+      {path: '/settings/customize', element: <CustomizePage  />},
 
       {path: '/user', element: <UserPage />},
 

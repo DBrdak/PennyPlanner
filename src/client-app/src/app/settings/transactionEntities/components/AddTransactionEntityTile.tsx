@@ -1,0 +1,5 @@
+export function AddTransactionEntityTile() {
+    return (
+        <></>
+    );
+}

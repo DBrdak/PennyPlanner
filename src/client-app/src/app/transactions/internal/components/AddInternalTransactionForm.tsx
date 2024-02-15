@@ -63,10 +63,10 @@ export function AddInternalTransactionForm({accounts, handleFormSubmit}: AddInte
                     width: '100%',
                     height: '100%',
                     display: 'flex',
-                    justifyContent: 'space-evenly',
+                    justifyContent: 'center',
                     alignItems: 'center',
                     flexDirection: 'column',
-                    gap: 20
+                    gap: theme.spacing(5)
                 }}>
                     <FormControl sx={{ minWidth: '60%', maxWidth: '400px' }}>
                         <InputLabel>From Account</InputLabel>
@@ -114,6 +114,7 @@ export function AddInternalTransactionForm({accounts, handleFormSubmit}: AddInte
                         inputProps={{ endAdornment: <InputAdornment position='end'>USD</InputAdornment>}} // TODO: Fetch user currency
                     />
                     <Button
+                        sx={{minWidth: '60%', maxWidth: '400px', borderRadius: '5px'}}
                         variant='contained'
                         disabled={!isValid}
                         onClick={() => submit(values, resetForm)}
