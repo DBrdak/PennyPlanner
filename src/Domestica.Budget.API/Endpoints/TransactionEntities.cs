@@ -39,12 +39,10 @@ namespace Domestica.Budget.API.Endpoints
                 "transaction-entities/{transactionEntityId}",
                 async (
                     [FromRoute] string transactionEntityId,
-                    [FromBody] string newName,
+                    UpdateTransactionEntityCommand command,
                     ISender sender,
                     CancellationToken cancellationToken) =>
                 {
-                    var command = new UpdateTransactionEntityCommand(transactionEntityId, newName);
-
                     var result = await sender.Send(command, cancellationToken);
 
                     return result.IsSuccess ?

@@ -2,6 +2,7 @@
 using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
 using Domestica.Budget.Application.TransactionCategories.DeleteTransactionCategory;
 using Domestica.Budget.Application.TransactionCategories.GetTransactionCategories;
+using Domestica.Budget.Application.TransactionCategories.UpdateTransactionCategory;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -23,6 +24,20 @@ namespace Domestica.Budget.API.Endpoints
 
             app.MapPost("transaction-categories",
                 async (ISender sender, AddTransactionCategoryCommand command, CancellationToken cancellationToken) =>
+                {
+                    var result = await sender.Send(command, cancellationToken);
+
+                    return result.IsSuccess ?
+                        Results.Ok() :
+                        Results.BadRequest(result.Error);
+                });
+
+            app.MapPut(
+                "transaction-categories/{transactionCategoryId}",
+                async (
+                    ISender sender,
+                    UpdateTransactionCategoryCommand command,
+                    CancellationToken cancellationToken) =>
                 {
                     var result = await sender.Send(command, cancellationToken);
 

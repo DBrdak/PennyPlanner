@@ -23,7 +23,8 @@ namespace Domestica.Budget.Infrastructure.Configurations
 
             builder.HasMany<Transaction>()
                 .WithOne(t => t.Category)
-                .HasPrincipalKey(transactionCategory => transactionCategory.Id);
+                .HasPrincipalKey(transactionCategory => transactionCategory.Id)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasDiscriminator<string>("transaction_category_type")
                 .HasValue<IncomeTransactionCategory>(nameof(IncomeTransactionCategory))

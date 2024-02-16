@@ -52,13 +52,12 @@ namespace Domestica.Budget.Application.TransactionCategories.DeleteTransactionCa
 
         private async Task<bool> IsCategoryUsed(TransactionCategoryId id, CancellationToken cancellationToken)
         {
-            var isCategoryUsedByTransactions = (await _transactionRepository.BrowseUserTransactions(cancellationToken)).Any(
-                x => x.Category?.Id == id);
+            var isCategoryUsedByBudgetPlans = (await _budgetPlanRepository
+                    .BrowseUserBudgetPlansAsync(cancellationToken))
+                        .SelectMany(bp => bp.BudgetedTransactionCategories)
+                            .Any(bpc => bpc.CategoryId == id);
 
-            var isCategoryUsedByBudgetPlans = (await _budgetPlanRepository.BrowseUserBudgetPlansAsync(cancellationToken)).SelectMany(bp => bp.BudgetedTransactionCategories)
-                .Any(bpc => bpc.CategoryId == id);
-
-            return isCategoryUsedByBudgetPlans || isCategoryUsedByTransactions;
+            return isCategoryUsedByBudgetPlans;
         }
     }
 }

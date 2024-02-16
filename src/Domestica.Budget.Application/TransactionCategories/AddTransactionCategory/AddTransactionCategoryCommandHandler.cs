@@ -20,11 +20,11 @@ namespace Domestica.Budget.Application.TransactionCategories.AddTransactionCateg
         {
             TransactionCategory transactionCategory;
 
-            if (request.Type == TransactionCategoryType.Income.Value)
+            if (string.Equals(request.Type, TransactionCategoryType.Income.Value, StringComparison.CurrentCultureIgnoreCase))
             {
                 transactionCategory = new IncomeTransactionCategory(new(request.Value));
             }
-            else if (request.Type == TransactionCategoryType.Outcome.Value)
+            else if (string.Equals(request.Type, TransactionCategoryType.Outcome.Value, StringComparison.CurrentCultureIgnoreCase))
             {
                 transactionCategory = new OutcomeTransactionCategory(new(request.Value));
             }

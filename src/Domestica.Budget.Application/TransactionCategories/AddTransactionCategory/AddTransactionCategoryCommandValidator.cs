@@ -16,7 +16,11 @@ namespace Domestica.Budget.Application.TransactionCategories.AddTransactionCateg
                 .WithMessage("Special characters are not allowed in Transaction category name");
 
             RuleFor(x => x.Type)
-                .Must(type => TransactionCategoryType.All.Any(tcType => tcType.Value == type))
+                .Must(type => TransactionCategoryType.All.Any(
+                        tcType => string.Equals(
+                            tcType.Value,
+                            type,
+                            StringComparison.CurrentCultureIgnoreCase)))
                 .WithMessage("Invalid Transaction category type");
         }
     }

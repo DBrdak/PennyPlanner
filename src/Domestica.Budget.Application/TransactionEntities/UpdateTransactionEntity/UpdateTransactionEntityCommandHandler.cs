@@ -42,7 +42,7 @@ namespace Domestica.Budget.Application.TransactionEntities.UpdateTransactionEnti
                 return Result.Success(transactionEntity);
             }
 
-            return Result.Failure<TransactionEntity>(Error.TaskFailed($"Problem while updating transaction entity name with ID: {transactionEntity.Id}"));
+            return Result.Failure<TransactionEntity>(Error.TaskFailed($"Problem while updating transaction entity name with ID: {request.Id}"));
         }
     }
 }

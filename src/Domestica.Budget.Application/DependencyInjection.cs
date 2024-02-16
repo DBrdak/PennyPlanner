@@ -1,6 +1,7 @@
 ﻿using Domestica.Budget.Application.Behaviors;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Responses.DB;
 
 namespace Domestica.Budget.Application
 {

@@ -31,7 +31,8 @@ namespace Domestica.Budget.Infrastructure
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
+                options.UseNpgsql(connectionString, o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
+                    .UseSnakeCaseNamingConvention();
             });
 
             services.AddStackExchangeRedisCache(options =>
