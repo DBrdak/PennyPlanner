@@ -1,18 +1,17 @@
-import {Box, Button, CircularProgress, Grid, IconButton, Typography} from "@mui/material";
+import {CircularProgress, Grid} from "@mui/material";
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
-import theme from "../../../theme";
-import {AddTwoTone, DeleteTwoTone, EditTwoTone} from "@mui/icons-material";
+import {AddTwoTone} from "@mui/icons-material";
 import {useState} from "react";
-import {AddTransactionEntityCommand} from "../../../../models/requests/addTransactionEntityCommand";
-import {AddTransactionEntityForm} from "./AddTransactionEntityForm";
+import {AddTransactionCategoryCommand} from "../../../../models/requests/addTransactionCategoryCommand";
+import {AddTransactionCategoryForm} from "./AddTransactionCategoryForm";
 
-interface AddTransactionEntityTileProps {
-    onCreate: (command: AddTransactionEntityCommand) => void
-    type: 'sender' | 'recipient'
+interface AddTransactionCategoryTileProps {
+    onCreate: (command: AddTransactionCategoryCommand) => void
+    type: 'income' | 'outcome'
     loading: boolean
 }
 
-export function AddTransactionEntityTile({onCreate, type, loading}: AddTransactionEntityTileProps) {
+export function AddTransactionCategoryTile({onCreate, type, loading}: AddTransactionCategoryTileProps) {
     const [createMode, setCreateMode] = useState(false)
 
     return (
@@ -32,7 +31,7 @@ export function AddTransactionEntityTile({onCreate, type, loading}: AddTransacti
                         <CircularProgress />
                         :
                         createMode ?
-                            <AddTransactionEntityForm
+                            <AddTransactionCategoryForm
                                 type={type}
                                 onSubmit={(command) => {
                                     setCreateMode(false)

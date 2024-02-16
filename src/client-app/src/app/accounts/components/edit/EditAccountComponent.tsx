@@ -75,7 +75,7 @@ export default observer(function EditAccountComponent({ account, groupDropdownPr
 
     function handleDelete() {
         modalStore.openModal(
-            <ConfirmModal text={`You are about to delete ${account.name}. Are you sure you want to proceed?`}
+            <ConfirmModal text={`You are about to delete ${account.name}. All related transactions will be deleted. Are you sure you want to proceed?`}
                           onConfirm={ () =>
                               accountStore.deleteAccount(account.accountId).then(() =>
                                   navigate('/accounts')

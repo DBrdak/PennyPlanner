@@ -11,7 +11,8 @@ export function TransactionEntitiesTile() {
         <TilePaper onClick={() => navigate('/settings/transaction-entities')} sx={{
             alignItems: 'center',
             flexDirection: 'column',
-            gap: theme.spacing(2)
+            gap: theme.spacing(2),
+            userSelect: 'none'
         }}>
             <PeopleAltTwoTone color={'primary'} sx={{fontSize: theme.spacing(10)}} />
             <Typography variant={'h4'}>

@@ -1,44 +1,42 @@
-import {TransactionEntity} from "../../../../models/transactionEntities/transactionEntity";
-import {Form, Formik, FormikValues} from "formik";
-import {NewAccountData} from "../../../../models/requests/newAccountData";
+import {TransactionCategory} from "../../../../models/transactionCategories/transactionCategory";
+import {Form, Formik} from "formik";
 import React from "react";
 import * as yup from 'yup'
 import ValidationConstants from "../../../../utils/constants/validationConstants";
 import {Box, IconButton, Typography} from "@mui/material";
 import theme from "../../../theme";
-import {Clear, DeleteTwoTone, DoneTwoTone, EditTwoTone} from "@mui/icons-material";
+import {Clear, DeleteTwoTone, DoneTwoTone} from "@mui/icons-material";
 import MyTextInput from "../../../../components/MyTextInput";
-import ConfirmModal from "../../../../components/ConfirmModal";
 
-interface UpdateTransactionEntityFormProps {
-    onDelete: (transactionEntityId: string) => void
+interface UpdateTransactionCategoryFormProps {
+    onDelete: (transactionCategoryId: string) => void
     onExit: () => void
-    onSubmit: (transactionEntityId: string, newName: string) => void
-    transactionEntity: TransactionEntity
+    onSubmit: (transactionCategoryId: string, newValue: string) => void
+    transactionCategory: TransactionCategory
 }
 
-export function UpdateTransactionEntityForm({transactionEntity, onExit, onDelete, onSubmit}: UpdateTransactionEntityFormProps) {
+export function UpdateTransactionCategoryForm({transactionCategory, onExit, onDelete, onSubmit}: UpdateTransactionCategoryFormProps) {
 
     const validationSchema = yup.object({
-        newName: yup.string()
-            .required('Name is required')
-            .max(30, 'Transaction entity name must be between 1 and 30 characters')
-            .matches(ValidationConstants.noSpecialCharactersPattern, 'Special characters are not allowed in transaction entity name')
-            .notOneOf([transactionEntity.name], "New name must differ from current name")
+        newValue: yup.string()
+            .required('Value is required')
+            .max(30, 'Transaction category name must be between 1 and 30 characters')
+            .matches(ValidationConstants.noSpecialCharactersPattern, 'Special characters are not allowed in transaction category name')
+            .notOneOf([transactionCategory.value], "New value must differ from current value")
     })
 
     return (
         <Formik
-            initialValues={{newName: transactionEntity.name}}
-            onSubmit={(values) => onSubmit(transactionEntity.transactionEntityId, values.newName)}
+            initialValues={{newValue: transactionCategory.value}}
+            onSubmit={(values) => onSubmit(transactionCategory.transactionCategoryId, values.newValue)}
             validationSchema={validationSchema}
             validateOnMount
         >
             {({handleSubmit, setValues, values, isValid, handleChange}) => (
                 <Form style={{}} className='ui form' onSubmit={handleSubmit} autoComplete='off'>
                     <MyTextInput
-                        name={'newName'}
-                        placeholder={'New Name'}
+                        name={'newValue'}
+                        placeholder={'New Value'}
                         type={'text'}
                         showErrors
                         inputProps={{endAdornment:
@@ -47,8 +45,8 @@ export function UpdateTransactionEntityForm({transactionEntity, onExit, onDelete
                                 sx={{borderRadius: 0}}
                                 color={'success'}
                                 onClick={() => {
-                                    onExit()
                                     handleSubmit()
+                                    onExit()
                                 }}
                             >
                                 <DoneTwoTone fontSize={'large'} />
@@ -56,9 +54,9 @@ export function UpdateTransactionEntityForm({transactionEntity, onExit, onDelete
                             }}
                     />
                     <Typography variant={'subtitle1'} textAlign={'center'} color={
-                        transactionEntity.transactionEntityType.toLowerCase() === 'sender' ? 'primary' : 'secondary'
+                        transactionCategory.type.toLowerCase() === 'income' ? 'primary' : 'secondary'
                     }>
-                        {transactionEntity.transactionEntityType}
+                        {transactionCategory.type}
                     </Typography>
                     <Box sx={{
                         position: 'absolute',
@@ -69,7 +67,7 @@ export function UpdateTransactionEntityForm({transactionEntity, onExit, onDelete
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>
-                        <IconButton color={'error'} sx={{width: '50%', borderRadius: 0}} onClick={() => onDelete(transactionEntity.transactionEntityId)}>
+                        <IconButton color={'error'} sx={{width: '50%', borderRadius: 0}} onClick={() => onDelete(transactionCategory.transactionCategoryId)}>
                             <DeleteTwoTone fontSize={'large'} />
                         </IconButton>
                         <IconButton color={'inherit'} sx={{width: '50%', borderRadius: 0}} onClick={() => onExit()}>

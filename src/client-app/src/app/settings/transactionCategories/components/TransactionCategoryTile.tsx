@@ -1,30 +1,28 @@
-import {TransactionEntity} from "../../../../models/transactionEntities/transactionEntity";
 import {Box, CircularProgress, Grid, IconButton, Typography} from "@mui/material";
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {useState} from "react";
 import {Delete, DeleteTwoTone, EditTwoTone} from "@mui/icons-material";
 import theme from "../../../theme";
 import {Formik} from "formik";
-import {UpdateTransactionEntityForm} from "./UpdateTransactionEntityForm";
-import {runInAction} from "mobx";
+import {UpdateTransactionCategoryForm} from "./UpdateTransactionCategoryForm";
+import {TransactionCategory} from "../../../../models/transactionCategories/transactionCategory";
 
-interface TransactionEntityTileProps {
-    transactionEntity: TransactionEntity
-    onDelete: (transactionEntityId: string) => void
-    onEdit: (transactionEntityId: string, newName: string) => void
+interface TransactionCategoryTileProps {
+    transactionCategory: TransactionCategory
+    onDelete: (transactionCategoryId: string) => void
+    onEdit: (transactionCategoryId: string, newValue: string) => void
     loading: boolean
 }
 
-export function TransactionEntityTile({transactionEntity, onDelete, onEdit, loading}: TransactionEntityTileProps) {
+export function TransactionCategoryTile({transactionCategory, onDelete, onEdit, loading}: TransactionCategoryTileProps) {
     const [editMode, setEditMode] = useState(false)
 
     return (
         <Grid item xs={12} md={6} lg={3} sx={{
             minHeight: '200px',
             height: '33%',
-            marginBottom: 3,
-            transition: 'opacity 0.5s ease',
-        }}>
+            marginBottom: 3}
+        }>
             <TilePaper disabled sx={{
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -36,8 +34,8 @@ export function TransactionEntityTile({transactionEntity, onDelete, onEdit, load
                         <CircularProgress />
                         :
                         editMode ?
-                            <UpdateTransactionEntityForm
-                                transactionEntity={transactionEntity}
+                            <UpdateTransactionCategoryForm
+                                transactionCategory={transactionCategory}
                                 onDelete={onDelete}
                                 onExit={() => setEditMode(false)}
                                 onSubmit={onEdit}
@@ -45,12 +43,12 @@ export function TransactionEntityTile({transactionEntity, onDelete, onEdit, load
                             :
                             <>
                                 <Typography variant={'h3'}>
-                                    {transactionEntity.name}
+                                    {transactionCategory.value}
                                 </Typography>
                                 <Typography variant={'subtitle1'} color={
-                                    transactionEntity.transactionEntityType.toLowerCase() === 'sender' ? 'primary' : 'secondary'
+                                    transactionCategory.type.toLowerCase() === 'income' ? 'primary' : 'secondary'
                                 }>
-                                    {transactionEntity.transactionEntityType}
+                                    {transactionCategory.type}
                                 </Typography>
                                 <Box sx={{
                                     position: 'absolute',
@@ -61,7 +59,9 @@ export function TransactionEntityTile({transactionEntity, onDelete, onEdit, load
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                 }}>
-                                    <IconButton color={'error'} sx={{width: '50%', borderRadius: 0}} onClick={() => onDelete(transactionEntity.transactionEntityId)}>
+                                    <IconButton color={'error'} sx={{width: '50%', borderRadius: 0}} onClick={() => {
+                                        onDelete(transactionCategory.transactionCategoryId)
+                                    }}>
                                         <DeleteTwoTone fontSize={'large'} />
                                     </IconButton>
                                     <IconButton color={'inherit'} sx={{width: '50%', borderRadius: 0}} onClick={() => setEditMode(true)}>

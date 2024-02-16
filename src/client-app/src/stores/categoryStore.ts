@@ -1,9 +1,10 @@
-import { makeAutoObservable } from "mobx"
+import {makeAutoObservable, runInAction} from "mobx"
 import {TransactionCategory} from "../models/transactionCategories/transactionCategory";
 import agent from "../api/agent";
+import {AddTransactionCategoryCommand} from "../models/requests/addTransactionCategoryCommand";
 
 export default class CategoryStore {
-    private categoriresRegistry: Map<string, TransactionCategory> = new Map<string, TransactionCategory>()
+    private categoriesRegistry: Map<string, TransactionCategory> = new Map<string, TransactionCategory>()
     loading: boolean = false
 
     constructor() {
@@ -11,7 +12,7 @@ export default class CategoryStore {
     }
 
     get categories() {
-        return Array.from(this.categoriresRegistry.values())
+        return Array.from(this.categoriesRegistry.values())
     }
 
     private setLoading(state: boolean) {
@@ -19,14 +20,17 @@ export default class CategoryStore {
     }
 
     private setCategory(category: TransactionCategory) {
-        this.categoriresRegistry.set(category.transactionCategoryId, category)
+        this.categoriesRegistry.set(category.transactionCategoryId, category)
     }
 
     async loadCategories() {
         this.setLoading(true)
         try {
             const categories = await agent.transactionCategories.getTransactionCategories()
-            categories.forEach(c => this.setCategory(c))
+            runInAction(() => {
+                this.categoriesRegistry.clear();
+                categories.forEach(c => this.setCategory(c))
+            });
         } catch (e) {
             console.log(e)
         } finally {
@@ -34,7 +38,46 @@ export default class CategoryStore {
         }
     }
 
+    async addTransactionCategory(command: AddTransactionCategoryCommand) {
+        this.setLoading(true);
+        try {
+            await agent.transactionCategories.createTransactionCategory(command).then(async () => {
+                await this.loadCategories()
+            })
+        } catch (e) {
+            console.error(e);
+        } finally {
+            this.setLoading(false);
+        }
+    }
+
+    async deleteTransactionCategory(id: string) {
+        this.setLoading(true);
+        try {
+            await agent.transactionCategories.deleteTransactionCategory(id).then(async () => {
+                await this.loadCategories()
+            })
+        } catch (e) {
+            console.error(e);
+        } finally {
+            this.setLoading(false);
+        }
+    }
+
+    async updateTransactionCategory(id: string, newName: string) {
+        this.setLoading(true);
+        try {
+            await agent.transactionCategories.updateTransactionCategory(id, newName).then(async () => {
+                await this.loadCategories()
+            })
+        } catch (e) {
+            console.error(e);
+        } finally {
+            this.setLoading(false);
+        }
+    }
+
     getCategory(categoryId: string) {
-        return this.categoriresRegistry.get(categoryId)
+        return this.categoriesRegistry.get(categoryId)
     }
 }

@@ -103,7 +103,7 @@ export default observer (function TransactionsPage() {
                                 collapsedGroups={collapsedGroups}
                                 setCollapsedGroups={setCollapsedGroups}
                                 groupedTransactions={groupedTransactions}
-                                editMode={editMode}
+                                editMode={true}
                             />
                         </Grid>
                     </>

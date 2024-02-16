@@ -8,14 +8,18 @@ export function CustomizeTile() {
     const navigate = useNavigate()
 
     return (
-        <TilePaper onClick={() => navigate('/settings/customize')} sx={{
+        <TilePaper disabled /*onClick={() => navigate('/settings/customize')}*/ sx={{
             alignItems: 'center',
             flexDirection: 'column',
-            gap: theme.spacing(2)
+            gap: theme.spacing(2),
+            userSelect: 'none'
         }}>
             <TuneTwoTone color={'primary'} sx={{fontSize: theme.spacing(10)}} />
             <Typography variant={'h4'}>
                 Customize
+            </Typography>
+            <Typography variant={'subtitle1'} color={'palegoldenrod'}>
+                Available soon!
             </Typography>
         </TilePaper>
     );

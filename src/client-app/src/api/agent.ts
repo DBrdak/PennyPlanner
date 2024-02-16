@@ -13,6 +13,7 @@ import {Account} from "../models/accounts/account";
 import {TransactionEntity} from "../models/transactionEntities/transactionEntity";
 import {Transaction} from "../models/transactions/transaction";
 import {TransactionCategory} from "../models/transactionCategories/transactionCategory";
+import {AddTransactionCategoryCommand} from "../models/requests/addTransactionCategoryCommand";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -32,8 +33,9 @@ axios.interceptors.response.use(async(response) => {
         return response
     }, (error) => {
         if (error) {
-            const errorMessage = error.response.data.error.name
+            const errorMessage = error.response.data.error.name || error.response.data.name
             const errorMessages = errorMessage.split('\n')
+            console.log(error)
             switch(error.response.status) {
                 case 400:
                     errorMessages.forEach(toast.error)
@@ -45,12 +47,13 @@ axios.interceptors.response.use(async(response) => {
                     else toast.error('Unauthorized')
                     break;
                 case 403:
-                    toast.error(errorMessage);
+                    errorMessages.forEach(toast.error)
                     return Promise.reject();
                 case 404:
                     if(error.response.config.method === 'get' && error.response.data.errors.hasOwnProperty('id')){
                         router.navigate('/not-found');
                     }
+                    errorMessages.forEach(toast.error)
                     return Promise.reject();
                 case 500:
                     router.navigate('/server-error');
@@ -58,7 +61,6 @@ axios.interceptors.response.use(async(response) => {
             }
         }
 
-        // Pass the error to the next handler
         return Promise.reject(error);
     }
 );
@@ -72,48 +74,51 @@ const requests = {
 
 const accounts = {
     getAccounts: () => axios.get<Account[]>('/accounts').then(responseBody),
-    createAccount: (data: NewAccountData) => axios.post('/accounts', data).then(responseBody),
-    updateAccount: (data: AccountUpdateData) => axios.put(`/accounts/${data.accountId}`, data).then(responseBody),
+    createAccount: (data: NewAccountData) => axios.post('/accounts', data),
+    updateAccount: (data: AccountUpdateData) => axios.put(`/accounts/${data.accountId}`, data),
     deleteAccount: (accountId: string) => axios.delete(`/accounts/${accountId}`),
 }
 
 const budgetPlans = {
     getBudgetPlans: () => axios.get('/budget-plans').then(responseBody),
-    createBudgetPlan: (period: DateTimeRange) => axios.post('/budget-plans', period).then(responseBody),
+    createBudgetPlan: (period: DateTimeRange) => axios.post('/budget-plans', period),
     updateBudgetPlan: (budgetPlanId: string, categories: BudgetedTransactionCategoryValues[]) =>
-        axios.put(`/budget-plans/${budgetPlanId}`, categories).then(responseBody),
+        axios.put(`/budget-plans/${budgetPlanId}`, categories),
     updateBudgetPlanCategory: (budgetPlanId: string, budgetPlanCategory: string, values: UpdateBudgetPlanCategoryValues) =>
-        axios.put(`/budget-plans/${budgetPlanId}/${budgetPlanCategory}`, values).then(responseBody),
+        axios.put(`/budget-plans/${budgetPlanId}/${budgetPlanCategory}`, values),
 }
 
 const transactionEntities = {
     getTransactionEntities: () => axios.get<TransactionEntity[]>('/transaction-entities').then(responseBody),
     createTransactionEntity: (command: AddTransactionEntityCommand) =>
-        axios.post('/transaction-entities', command).then(responseBody),
-    updateTransactionEntity: (transactionEntityId: string, data: string) =>
-        axios.put(`/transaction-entities/${transactionEntityId}`, data).then(responseBody),
+        axios.post('/transaction-entities', command),
+    updateTransactionEntity: (transactionEntityId: string, newName: string) =>
+        axios.put(`/transaction-entities/${transactionEntityId}`, {id: transactionEntityId, newName: newName})
+            ,
     deleteTransactionEntity: (transactionEntityId: string) =>
-        axios.delete(`/transaction-entities/${transactionEntityId}`).then(responseBody),
+        axios.delete(`/transaction-entities/${transactionEntityId}`),
 }
 
 const transactionCategories = {
     getTransactionCategories: () =>
         axios.get<TransactionCategory[]>('/transaction-categories').then(responseBody),
     createTransactionCategory: (command: AddTransactionCategoryCommand) =>
-        axios.post('/transaction-categories', command).then(responseBody),
+        axios.post('/transaction-categories', command),
+    updateTransactionCategory: (categoryId: string, newValue: string) =>
+        axios.post(`/transaction-categories/${categoryId}`, {transactionCategoryId: categoryId, newValue: newValue}),
     deleteTransactionCategory: (transactionCategoryId: string) =>
-        axios.delete(`/transaction-categories/${transactionCategoryId}`).then(responseBody),
+        axios.delete(`/transaction-categories/${transactionCategoryId}`),
 }
 
 const transactions = {
     getTransactions: () => axios.get<Transaction[]>('/transactions').then(responseBody),
     createInternalTransaction: (command: AddInternalTransactionCommand) =>
-        axios.post('/transactions/internal', command).then(responseBody),
+        axios.post('/transactions/internal', command),
     createIncomeTransaction: (command: AddIncomeTransactionCommand) =>
-        axios.post('/transactions/income', command).then(responseBody),
+        axios.post('/transactions/income', command),
     createOutcomeTransaction: (command: AddOutcomeTransactionCommand) =>
-        axios.post('/transactions/outcome', command).then(responseBody),
-    deleteTransaction: (transactionId: string) => axios.delete(`/transactions/${transactionId}`).then(responseBody),
+        axios.post('/transactions/outcome', command),
+    deleteTransaction: (transactionId: string) => axios.delete(`/transactions/${transactionId}`),
 }
 
 const agent = {

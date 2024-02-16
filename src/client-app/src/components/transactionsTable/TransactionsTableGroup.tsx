@@ -11,7 +11,7 @@ import SortableTableCell from "./SortableTableCell";
 import {useState} from "react";
 import {Transaction} from "../../models/transactions/transaction";
 import formatDate from "../../utils/formatters/dateFormatter";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../stores/store";
 import {TransactionEntity} from "../../models/transactionEntities/transactionEntity";
@@ -31,6 +31,7 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
     const [sortBy, setSortBy] = useState<string | null>(null);
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const navigate = useNavigate()
+    const location = useLocation()
     const {accountStore, transactionEntityStore, transactionStore} = useStore()
 
     const handleCheckboxClick = (transactionId: string) => {
@@ -69,6 +70,12 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                 <TableHead sx={{backgroundColor: '#121212', position: 'sticky', top: 0, zIndex: 1}}>
                     <TableRow>
                         <TableCell />
+                        {
+                            location.pathname.startsWith('/transactions') && groupCriterion !== 'account' &&
+                                <TableCell align={'center'}>
+                                    <strong>Account</strong>
+                                </TableCell>
+                        }
                         <SortableTableCell
                             label="Amount"
                             column="amount"
@@ -78,15 +85,15 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                         />
                         {
                             groupCriterion !== 'category' &&
-                            <TableCell align={'center'}>
-                                <strong>Category</strong>
-                            </TableCell>
+                                <TableCell align={'center'}>
+                                    <strong>Category</strong>
+                                </TableCell>
                         }
                         {
                             groupCriterion !== 'entity' &&
-                            <TableCell align={'center'}>
-                                <strong>Entity</strong>
-                            </TableCell>
+                                <TableCell align={'center'}>
+                                    <strong>Entity</strong>
+                                </TableCell>
                         }
                         <SortableTableCell
                             label="Transaction Date"
@@ -99,6 +106,8 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                 </TableHead>
                 <TableBody>
                     {sortTransactionGroup(groupedTransactions[groupKey]).map((transaction) => {
+                        const baseAccount = accountStore.getAccount(transaction.accountId)
+
                         const entityQueryParams =
                             (transaction.fromAccountId && {variant: 1, id: transaction.fromAccountId}) ||
                             (transaction.toAccountId && {variant: 1, id: transaction.toAccountId}) ||
@@ -123,7 +132,7 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
 
                         return (
                             <TableRow key={transaction.transactionId}>
-                                <TableCell width={'5%'} align={'center'}>
+                                <TableCell align={'center'}>
                                     {
                                         editMode &&
                                         <Checkbox
@@ -135,13 +144,19 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                                         />
                                     }
                                 </TableCell>
-                                <TableCell width={'20%'} align={'center'} sx={{color: transaction.transactionAmount.amount >= 0 ?
+                                {
+                                    location.pathname.startsWith('/transactions') && groupCriterion !== 'account' &&
+                                        <TableCell align={'center'}>
+                                            {baseAccount?.name || '-'}
+                                        </TableCell>
+                                }
+                                <TableCell align={'center'} sx={{color: transaction.transactionAmount.amount >= 0 ?
                                         theme.palette.success.light : theme.palette.error.light}}>
                                     {formatNumber(transaction.transactionAmount.amount)} {transaction.transactionAmount.currency}
                                 </TableCell>
                                 {
                                     groupCriterion !== 'category' &&
-                                        <TableCell width={'20%'} align={'center'}>
+                                        <TableCell align={'center'}>
                                             <Button disabled={!transaction.category?.transactionCategoryId} color={'inherit'} sx={{borderRadius: '4px'}}
                                                     onClick={() =>
                                                         (transaction.category?.transactionCategoryId &&
@@ -152,7 +167,7 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                                 }
                                 {
                                     groupCriterion !== 'entity' &&
-                                        <TableCell width={'20%'} align={'center'}>
+                                        <TableCell align={'center'}>
                                             <Button disabled={!account?.accountId && !transactionEntity?.transactionEntityId} color={'inherit'} sx={{borderRadius: '4px'}}
                                                     onClick={() =>
                                                     (account?.accountId &&
@@ -163,7 +178,7 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                                             </Button>
                                         </TableCell>
                                 }
-                                <TableCell width={'35%'} align={'center'}>{formatDate(transaction.transactionDateUtc)}</TableCell>
+                                <TableCell align={'center'}>{formatDate(transaction.transactionDateUtc)}</TableCell>
                             </TableRow>
                         )})}
                 </TableBody>
