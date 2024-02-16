@@ -3,7 +3,7 @@ import useTitle from "../../utils/hooks/useTitle";
 import {observer} from "mobx-react-lite";
 import React, {useEffect, useState} from "react";
 import {useStore} from "../../stores/store";
-import {Button, ButtonGroup, Grid, IconButton, Typography, useMediaQuery} from "@mui/material";
+import {Button, ButtonGroup, CircularProgress, Grid, IconButton, Typography, useMediaQuery} from "@mui/material";
 import theme from "../theme";
 import TransactionsTable from "../../components/transactionsTable/TransactionsTable";
 import {useNavigate, useParams} from "react-router-dom";
@@ -12,20 +12,17 @@ import useTransactionEntities from "../../utils/hooks/useTransactionEntities";
 import useCategories from "../../utils/hooks/useCategories";
 import groupBy from "../../utils/transactionsGroupBy";
 import GroupDropdown from "../../components/transactionsTable/GroupDropdown";
-import {North, South, SyncAlt as SyncAltIcon, SyncAlt} from "@mui/icons-material";
+import {North, South, SyncAlt as SyncAltIcon, SyncAlt, Undo} from "@mui/icons-material";
 import useAccount from "../../utils/hooks/useAccount";
 
 export default observer (function TransactionsPage() {
     useTitle('Transactions')
-    const {layoutStore} = useStore()
     const navigate = useNavigate()
-    const { accountId } = useParams<{ accountId: string }>();
-    const [editMode, setEditMode] = useState(false)
     const [groupCriterion, setGroupCriterion] = useState('day')
     const [collapsedGroups, setCollapsedGroups] = useState<string[]>([])
     const {accountStore, categoryStore, transactionStore, transactionEntityStore} = useStore()
-    const transactionEntities = useTransactionEntities()
-    const categories = useCategories()
+    useTransactionEntities()
+    useCategories()
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
     const buttons =[
         { icon: <South color={'success'} />, name: 'Income', path: '/transactions/income' },
@@ -61,10 +58,21 @@ export default observer (function TransactionsPage() {
                 margin: 0,
                 backgroundColor: theme.palette.background.paper,
                 borderRadius: '20px',
-                overflow:'auto'
+                overflow:'auto',
+                position: 'relative'
             }}>
                 {groupedTransactions &&
                     <>
+
+                        <IconButton onClick={() => navigate('/home')}
+                                    sx={{
+                                        position: 'absolute',
+                                        top: '1px', left: '1px',
+                                        width: '5rem',
+                                        height: '5rem'
+                                    }}>
+                            <Undo fontSize={'large'} />
+                        </IconButton>
                         <Grid item xs={12} md={6} sx={{
                             display: 'flex',
                             alignItems:'center',
@@ -98,13 +106,24 @@ export default observer (function TransactionsPage() {
                             </ButtonGroup>
                         </Grid>
                         <Grid item xs={12} sx={{overflow: 'hidden', maxHeight: '70%'}}>
-                            <TransactionsTable
-                                groupCriterion={groupCriterion}
-                                collapsedGroups={collapsedGroups}
-                                setCollapsedGroups={setCollapsedGroups}
-                                groupedTransactions={groupedTransactions}
-                                editMode={true}
-                            />
+                            {
+                                transactionStore.loading ?
+                                    <Grid item xs={12} sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                        <CircularProgress />
+                                    </Grid>
+                                :
+                                <TransactionsTable
+                                    groupCriterion={groupCriterion}
+                                    collapsedGroups={collapsedGroups}
+                                    setCollapsedGroups={setCollapsedGroups}
+                                    groupedTransactions={groupedTransactions}
+                                    editMode={true}
+                                />
+                            }
                         </Grid>
                     </>
                 }

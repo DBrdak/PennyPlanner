@@ -1,11 +1,11 @@
 import {
-    Button, Checkbox,
+    Button, Checkbox, IconButton,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
-    TableRow,
+    TableRow, Typography,
 } from "@mui/material";
 import SortableTableCell from "./SortableTableCell";
 import {useState} from "react";
@@ -64,17 +64,35 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
         });
     };
 
+    const handleDelete = () => {
+        transactionStore.removeTransactions()
+    }
+
     return (
         <TableContainer sx={{overflow: 'hidden'}}>
             <Table>
                 <TableHead sx={{backgroundColor: '#121212', position: 'sticky', top: 0, zIndex: 1}}>
                     <TableRow>
-                        <TableCell />
                         {
-                            location.pathname.startsWith('/transactions') && groupCriterion !== 'account' &&
-                                <TableCell align={'center'}>
-                                    <strong>Account</strong>
-                                </TableCell>
+                            location.pathname.startsWith('/transactions') && groupCriterion !== 'account' ?
+                                <>
+                                    <TableCell align={'center'} padding={'none'}>
+                                        <IconButton color={'error'} onClick={handleDelete} sx={{
+                                            width: '100%',
+                                            height: '100%',
+                                            borderRadius: 0,
+                                            flexDirection: 'column'
+                                        }}>
+                                            <DeleteTwoTone />
+                                            <Typography variant={'caption'}>Execute Delete</Typography>
+                                        </IconButton>
+                                    </TableCell>
+                                    <TableCell align={'center'}>
+                                        <strong>Account</strong>
+                                    </TableCell>
+                                </>
+                                :
+                                <TableCell />
                         }
                         <SortableTableCell
                             label="Amount"

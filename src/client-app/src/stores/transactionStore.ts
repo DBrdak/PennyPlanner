@@ -65,8 +65,10 @@ export default class TransactionStore {
         try {
             for (const id of this.transactionsIdToRemove) {
                 console.log(id)
-                await agent.transactions.deleteTransaction(id)
-                this.removeTransactionIdToRemove(id)
+                await agent.transactions.deleteTransaction(id).then(() => {
+                    this.removeTransactionIdToRemove(id)
+                    this.loadTransactions()
+                })
             }
         } catch (e) {
             console.log(e)
