@@ -8,6 +8,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
         string RecipientName,
         decimal TransactionAmount,
         string CategoryValue,
+        string SubcategoryValue,
         DateTime TransactionDateTime) : ICommand<Transaction>
     {
     }

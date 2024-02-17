@@ -35,6 +35,16 @@ namespace Domestica.Budget.Infrastructure.Repositories
             return await DbContext.Set<TEntity>()
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
+        }        
+
+        public async Task<IEnumerable<TEntity>> BrowseAllIncludeAsync<TProperty>(
+            Expression<Func<TEntity, TProperty>> includeExpression, 
+            CancellationToken cancellationToken = default)
+        {
+            return await DbContext.Set<TEntity>()
+                .Include(includeExpression)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
         }
 
         public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)

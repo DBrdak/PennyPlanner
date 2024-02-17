@@ -3,6 +3,7 @@ using System;
 using Domestica.Budget.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Domestica.Budget.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240216195500_accountRefactor")]
+    partial class accountRefactor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,30 +120,6 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Domestica.Budget.Domain.TransactionSubcategories.TransactionSubcategory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("category_id");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("value");
-
-                    b.HasKey("Id")
-                        .HasName("pk_transaction_subcategories");
-
-                    b.HasIndex("CategoryId")
-                        .HasDatabaseName("ix_transaction_subcategories_category_id");
-
-                    b.ToTable("transaction_subcategories", (string)null);
-                });
-
             modelBuilder.Entity("Domestica.Budget.Domain.Transactions.Transaction", b =>
                 {
                     b.Property<Guid>("Id")
@@ -170,10 +149,6 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     b.Property<Guid?>("SenderId")
                         .HasColumnType("uuid")
                         .HasColumnName("sender_id");
-
-                    b.Property<Guid?>("SubcategoryId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("subcategory_id");
 
                     b.Property<Guid?>("ToAccountId")
                         .HasColumnType("uuid")
@@ -207,9 +182,6 @@ namespace Domestica.Budget.Infrastructure.Migrations
 
                     b.HasIndex("SenderId")
                         .HasDatabaseName("ix_transactions_sender_id");
-
-                    b.HasIndex("SubcategoryId")
-                        .HasDatabaseName("ix_transactions_subcategory_id");
 
                     b.HasIndex("ToAccountId")
                         .HasDatabaseName("ix_transactions_to_account_id");
@@ -260,6 +232,36 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     b.HasBaseType("Domestica.Budget.Domain.TransactionEntities.TransactionEntity");
 
                     b.HasDiscriminator().HasValue("TransactionSender");
+                });
+
+            modelBuilder.Entity("Domestica.Budget.Domain.Accounts.Account", b =>
+                {
+                    b.OwnsOne("Money.DB.Money", "Balance", b1 =>
+                        {
+                            b1.Property<Guid>("AccountId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("id");
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("numeric")
+                                .HasColumnName("balance_amount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("balance_currency");
+
+                            b1.HasKey("AccountId");
+
+                            b1.ToTable("accounts");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AccountId")
+                                .HasConstraintName("fk_accounts_accounts_id");
+                        });
+
+                    b.Navigation("Balance")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domestica.Budget.Domain.BudgetPlans.BudgetPlan", b =>
@@ -394,18 +396,6 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     b.Navigation("BudgetedTransactionCategories");
                 });
 
-            modelBuilder.Entity("Domestica.Budget.Domain.TransactionSubcategories.TransactionSubcategory", b =>
-                {
-                    b.HasOne("Domestica.Budget.Domain.TransactionCategories.TransactionCategory", "Category")
-                        .WithMany("Subcategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired()
-                        .HasConstraintName("fk_transaction_subcategories_transaction_categories_category_id");
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("Domestica.Budget.Domain.Transactions.Transaction", b =>
                 {
                     b.HasOne("Domestica.Budget.Domain.Accounts.Account", null)
@@ -442,12 +432,6 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("fk_transactions_transaction_entities_transaction_entity_id11");
-
-                    b.HasOne("Domestica.Budget.Domain.TransactionSubcategories.TransactionSubcategory", "Subcategory")
-                        .WithMany()
-                        .HasForeignKey("SubcategoryId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .HasConstraintName("fk_transactions_transaction_subcategory_subcategory_temp_id");
 
                     b.HasOne("Domestica.Budget.Domain.Accounts.Account", null)
                         .WithMany()
@@ -487,8 +471,6 @@ namespace Domestica.Budget.Infrastructure.Migrations
 
                     b.Navigation("Category");
 
-                    b.Navigation("Subcategory");
-
                     b.Navigation("TransactionAmount")
                         .IsRequired();
                 });
@@ -501,11 +483,6 @@ namespace Domestica.Budget.Infrastructure.Migrations
             modelBuilder.Entity("Domestica.Budget.Domain.BudgetPlans.BudgetPlan", b =>
                 {
                     b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("Domestica.Budget.Domain.TransactionCategories.TransactionCategory", b =>
-                {
-                    b.Navigation("Subcategories");
                 });
 
             modelBuilder.Entity("Domestica.Budget.Domain.TransactionEntities.TransactionEntity", b =>

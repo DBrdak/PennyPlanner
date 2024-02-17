@@ -5,6 +5,7 @@ using Domestica.Budget.Domain.BudgetPlans;
 using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.Transactions;
+using Domestica.Budget.Domain.TransactionSubcategories;
 using Domestica.Budget.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -47,6 +48,8 @@ namespace Domestica.Budget.Infrastructure
             services.AddScoped<IBudgetPlanRepository, BudgetPlanRepository>();
 
             services.AddScoped<ITransactionCategoryRepository, TransactionCategoryRepository>();
+
+            services.AddScoped<ITransactionSubcategoryRepository, TransactionSubcategoryRepository>();
 
             services.AddScoped<ICacheRepository, CacheRepository>();
 

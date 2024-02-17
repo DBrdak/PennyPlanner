@@ -1,4 +1,5 @@
-﻿using CommonAbstractions.DB;
+﻿using System.Diagnostics.CodeAnalysis;
+using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
 using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Money.DB;
 using Responses.DB;
 using System.Reflection;
+using Domestica.Budget.Domain.TransactionSubcategories;
 
 namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
 {
@@ -21,15 +23,17 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
         private readonly ITransactionEntityRepository _transactionEntityRepository;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ITransactionCategoryRepository _categoryRepository;
+        private readonly ITransactionSubcategoryRepository _subcategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public AddOutcomeTransactionCommandHandler(IAccountRepository accountRepository, ITransactionEntityRepository transactionEntityRepository, IUnitOfWork unitOfWork, IServiceScopeFactory serviceScopeFactory, ITransactionCategoryRepository categoryRepository, ITransactionRepository transactionRepository)
+        public AddOutcomeTransactionCommandHandler(IAccountRepository accountRepository, ITransactionEntityRepository transactionEntityRepository, IUnitOfWork unitOfWork, IServiceScopeFactory serviceScopeFactory, ITransactionCategoryRepository categoryRepository, ITransactionRepository transactionRepository, ITransactionSubcategoryRepository subcategoryRepository)
         {
             _accountRepository = accountRepository;
             _transactionEntityRepository = transactionEntityRepository;
             _unitOfWork = unitOfWork;
             _serviceScopeFactory = serviceScopeFactory;
             _categoryRepository = categoryRepository;
+            _subcategoryRepository = subcategoryRepository;
         }
 
         public async Task<Result<Transaction>> Handle(AddOutcomeTransactionCommand request, CancellationToken cancellationToken)
@@ -46,9 +50,11 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
                 te => te.Transactions,
                 cancellationToken);
 
-            var category = await _categoryRepository.GetByValueAsync<OutcomeTransactionCategory>(
-                new(request.CategoryValue),
-                cancellationToken) ?? new(new(request.CategoryValue));
+            var category = await GetOrCreateCategory(request, cancellationToken);
+
+            var subcategory = await GetOrCreateSubcategory(request, cancellationToken, category);
+
+            category.AddSubcategory(subcategory);
 
             if (recipient is null)
             {
@@ -69,14 +75,15 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
                 new(request.TransactionAmount, currency),
                 sourceAccount,
                 recipient!,
-                category!,
+                category,
+                subcategory,
                 request.TransactionDateTime);
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
-            if (recipient!.Transactions.Count == 1)
+            if (IsNewRecipient(recipient))
             {
-                _transactionEntityRepository.Update(recipient);
+                _transactionEntityRepository.Update(recipient!);
                 isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
             }
 
@@ -87,6 +94,29 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
 
             return Result.Failure<Transaction>(Error.TaskFailed("Problem while adding outcome transaction"));
         }
+
+        private async Task<TransactionSubcategory> GetOrCreateSubcategory(AddOutcomeTransactionCommand request, CancellationToken cancellationToken, OutcomeTransactionCategory category)
+        {
+            return await _subcategoryRepository.GetByValueAsync(
+                       new(request.SubcategoryValue),
+                       category,
+                       cancellationToken) ??
+                   new (new(request.SubcategoryValue), category);
+        }
+
+        private async Task<OutcomeTransactionCategory> GetOrCreateCategory(AddOutcomeTransactionCommand request, CancellationToken cancellationToken)
+        {
+            return await _categoryRepository.GetByValueAsync<OutcomeTransactionCategory>(
+                       new(request.CategoryValue),
+                       cancellationToken) ??
+                   new(new(request.CategoryValue));
+        }
+
+        private static bool IsNewRecipient(TransactionRecipient? recipient)
+        {
+            return recipient!.Transactions.Count == 1;
+        }
+
         private async Task<Result<TransactionEntity>> CreateRecipient(string recipientName)
         {
             using var scope = _serviceScopeFactory.CreateScope();

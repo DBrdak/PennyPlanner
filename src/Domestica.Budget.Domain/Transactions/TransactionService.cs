@@ -2,6 +2,8 @@
 using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities.TransactionRecipients;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
+using Domestica.Budget.Domain.TransactionSubcategories;
+using Exceptions.DB;
 
 namespace Domestica.Budget.Domain.Transactions
 {
@@ -12,9 +14,12 @@ namespace Domestica.Budget.Domain.Transactions
             Account destinationAccount,
             TransactionSender sender,
             IncomeTransactionCategory category,
+            TransactionSubcategory subcategory,
             DateTime transactionDateTime)
         {
-            var transaction = Transaction.CreateIncome(transactionAmount, destinationAccount, sender, category, transactionDateTime);
+            ValidateSubcategory(category, subcategory);
+
+            var transaction = Transaction.CreateIncome(transactionAmount, destinationAccount, sender, subcategory, transactionDateTime);
 
             destinationAccount.AddTransaction(transaction);
             sender.AddTransaction(transaction);
@@ -27,9 +32,12 @@ namespace Domestica.Budget.Domain.Transactions
             Account sourceAccount,
             TransactionRecipient recipient,
             OutcomeTransactionCategory category,
+            TransactionSubcategory subcategory,
             DateTime transactionDateTime)
         {
-            var transaction = Transaction.CreateOutcome(transactionAmount, sourceAccount, recipient, category, transactionDateTime);
+            ValidateSubcategory(category, subcategory);
+
+            var transaction = Transaction.CreateOutcome(transactionAmount, sourceAccount, recipient, subcategory, transactionDateTime);
 
             sourceAccount.AddTransaction(transaction);
             recipient.AddTransaction(transaction);
@@ -73,6 +81,18 @@ namespace Domestica.Budget.Domain.Transactions
                     var equalizingOutcomeTransaction = Transaction.CreatePrivateOutcome(transactionAmount, account);
                     account.AddTransaction(equalizingOutcomeTransaction);
                     break;
+            }
+        }
+
+        private static void ValidateSubcategory(
+            TransactionCategory category,
+            TransactionSubcategory subcategory)
+        {
+            var subcategoryInCategory = category.Subcategories.Any(sc => sc.Id == subcategory.Id);
+
+            if (subcategoryInCategory is false)
+            {
+                throw new DomainException<Transaction>($"Subcategory {subcategory.Value.Value} doesn't exist in category {category.Value.Value}");
             }
         }
     }

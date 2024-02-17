@@ -16,9 +16,11 @@ namespace Domestica.Budget.Application.TransactionCategories.GetTransactionCateg
 
         public async Task<Result<IEnumerable<TransactionCategoryDto>>> Handle(GetTransactionCategoriesQuery request, CancellationToken cancellationToken)
         {
-            var transactionCategories = (await _transactionCategoryRepository.BrowseAllAsync(cancellationToken)).ToList();
+            var transactionCategories = await _transactionCategoryRepository.BrowseAllIncludeAsync(
+                c => c.Subcategories,
+                cancellationToken);
 
-            var dtos = transactionCategories.Select(TransactionCategoryDto.FromDomainObject);
+            var dtos = transactionCategories.ToList().Select(TransactionCategoryDto.FromDomainObject);
 
             return Result.Create(dtos)!;
         }

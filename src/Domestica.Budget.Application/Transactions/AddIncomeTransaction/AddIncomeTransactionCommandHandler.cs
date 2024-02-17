@@ -2,11 +2,13 @@
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
 using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
+using Domestica.Budget.Application.Transactions.AddOutcomeTransaction;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
 using Domestica.Budget.Domain.Transactions;
+using Domestica.Budget.Domain.TransactionSubcategories;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Money.DB;
@@ -20,15 +22,17 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
         private readonly ITransactionEntityRepository _transactionEntityRepository;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ITransactionCategoryRepository _categoryRepository;
+        private readonly ITransactionSubcategoryRepository _subcategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public AddIncomeTransactionCommandHandler(IAccountRepository accountRepository, IUnitOfWork unitOfWork, ITransactionEntityRepository transactionEntityRepository, IServiceScopeFactory serviceScopeFactory, ITransactionCategoryRepository categoryRepository)
+        public AddIncomeTransactionCommandHandler(IAccountRepository accountRepository, IUnitOfWork unitOfWork, ITransactionEntityRepository transactionEntityRepository, IServiceScopeFactory serviceScopeFactory, ITransactionCategoryRepository categoryRepository, ITransactionSubcategoryRepository subcategoryRepository)
         {
             _accountRepository = accountRepository;
             _unitOfWork = unitOfWork;
             _transactionEntityRepository = transactionEntityRepository;
             _serviceScopeFactory = serviceScopeFactory;
             _categoryRepository = categoryRepository;
+            _subcategoryRepository = subcategoryRepository;
         }
 
         public async Task<Result<Transaction>> Handle(AddIncomeTransactionCommand request, CancellationToken cancellationToken)
@@ -45,9 +49,11 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
                 s => s.Transactions,
                 cancellationToken) as TransactionSender;
 
-            var category = await _categoryRepository.GetByValueAsync<IncomeTransactionCategory>(
-                new(request.CategoryValue),
-                cancellationToken) ?? new(new(request.CategoryValue));
+            var category = await GetOrCreateCategory(request, cancellationToken);
+
+            var subcategory = await GetOrCreateSubcategory(request, cancellationToken, category);
+
+            category.AddSubcategory(subcategory);
 
             if (sender is null)
             {
@@ -68,12 +74,13 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
                 new (request.TransactionAmount, currency),
                 destinationAccount,
                 sender!,
-                category!, 
+                category,
+                subcategory,
                 request.TransactionDateTime);
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
-            if (sender!.Transactions.Count == 1)
+            if (IsNewSender(sender))
             {
                 _transactionEntityRepository.Update(sender);
                 isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
@@ -85,6 +92,28 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
             }
 
             return Result.Failure<Transaction>(Error.TaskFailed("Problem while adding income transaction"));
+        }
+
+        private async Task<TransactionSubcategory> GetOrCreateSubcategory(AddIncomeTransactionCommand request, CancellationToken cancellationToken, IncomeTransactionCategory category)
+        {
+            return await _subcategoryRepository.GetByValueAsync(
+                       new(request.SubcategoryValue),
+                       category,
+                       cancellationToken) ??
+                   new(new(request.SubcategoryValue), category);
+        }
+
+        private async Task<IncomeTransactionCategory> GetOrCreateCategory(AddIncomeTransactionCommand request, CancellationToken cancellationToken)
+        {
+            return await _categoryRepository.GetByValueAsync<IncomeTransactionCategory>(
+                       new(request.CategoryValue),
+                       cancellationToken) ??
+                   new(new(request.CategoryValue));
+        }
+
+        private static bool IsNewSender(TransactionSender? sender)
+        {
+            return sender!.Transactions.Count == 1;
         }
 
         private async Task<Result<TransactionEntity>> CreateSender(string senderName)

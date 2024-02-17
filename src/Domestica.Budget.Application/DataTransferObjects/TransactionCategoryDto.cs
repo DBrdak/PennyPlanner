@@ -8,6 +8,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
 using Domestica.Budget.Domain.TransactionCategories;
+using Domestica.Budget.Domain.TransactionSubcategories;
 
 namespace Domestica.Budget.Application.DataTransferObjects
 {
@@ -16,12 +17,14 @@ namespace Domestica.Budget.Application.DataTransferObjects
         public string TransactionCategoryId { get; init; }
         public string Value { get; init; }
         public string Type { get; init; }
+        public List<TransactionSubcategoryDto> Subcategories { get; init; }
 
-        private TransactionCategoryDto(string transactionCategoryId, string value, string transactionCategoryType)
+        private TransactionCategoryDto(string transactionCategoryId, string value, string transactionCategoryType, List<TransactionSubcategoryDto> subcategories)
         {
             TransactionCategoryId = transactionCategoryId;
             Value = value;
             Type = transactionCategoryType;
+            Subcategories = subcategories;
         }
 
         [JsonConstructor]
@@ -34,12 +37,20 @@ namespace Domestica.Budget.Application.DataTransferObjects
         {
             if (domainObject is OutcomeTransactionCategory)
             {
-                return new(domainObject.Id.Value.ToString(), domainObject.Value.Value, TransactionCategoryType.Outcome.Value);
+                return new(
+                    domainObject.Id.Value.ToString(),
+                    domainObject.Value.Value,
+                    TransactionCategoryType.Outcome.Value,
+                    domainObject.Subcategories.Select(TransactionSubcategoryDto.FromDomainObject).ToList());
             }
 
             if (domainObject is IncomeTransactionCategory)
             {
-                return new(domainObject.Id.Value.ToString(), domainObject.Value.Value, TransactionCategoryType.Income.Value);
+                return new(
+                    domainObject.Id.Value.ToString(),
+                    domainObject.Value.Value,
+                    TransactionCategoryType.Income.Value,
+                    domainObject.Subcategories.Select(TransactionSubcategoryDto.FromDomainObject).ToList());
             }
 
             return null;

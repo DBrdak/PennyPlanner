@@ -7,6 +7,7 @@ using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.TransactionEntities.TransactionRecipients;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
 using Domestica.Budget.Domain.Transactions.DomainEvents;
+using Domestica.Budget.Domain.TransactionSubcategories;
 
 #pragma warning disable CS8618
 
@@ -21,6 +22,7 @@ namespace Domestica.Budget.Domain.Transactions
         public TransactionEntityId? RecipientId { get; init; } // Outcome Transaction
         public Money.DB.Money TransactionAmount { get; init; }
         public TransactionCategory? Category { get; init; }
+        public TransactionSubcategory? Subcategory { get; init; }
         [JsonConverter(typeof(DateTimeConverter))]
         public DateTime TransactionDateUtc { get; init; }
 
@@ -34,7 +36,7 @@ namespace Domestica.Budget.Domain.Transactions
             TransactionSender? sender,
             TransactionRecipient? recipient,
             Money.DB.Money transactionAmount,
-            TransactionCategory? category,
+            TransactionSubcategory? subcategory,
             DateTime transactionDateTime) : base(new TransactionId())
         {
             AccountId = account.Id;
@@ -44,8 +46,8 @@ namespace Domestica.Budget.Domain.Transactions
             RecipientId = recipient?.Id;
             TransactionAmount = transactionAmount;
             TransactionDateUtc = transactionDateTime.ToUniversalTime();
-            //CategoryId = category?.Id;
-            Category = category;
+            Category = subcategory?.Category;
+            Subcategory = subcategory;
 
             RaiseDomainEvent(new TransactionCreatedDomainEvent(this));
         }
@@ -54,25 +56,25 @@ namespace Domestica.Budget.Domain.Transactions
             Money.DB.Money transactionAmount,
             Account toAccount,
             TransactionSender sender,
-            IncomeTransactionCategory category,
+            TransactionSubcategory subcategory,
             DateTime transactionDateTime)
         {
-            return new(toAccount, null, null, sender, null, transactionAmount, category, transactionDateTime);
+            return new(toAccount, null, null, sender, null, transactionAmount, subcategory, transactionDateTime);
         }
 
         internal static Transaction CreateOutcome(
             Money.DB.Money transactionAmount,
             Account fromAccount,
             TransactionRecipient recipient,
-            OutcomeTransactionCategory category,
+            TransactionSubcategory subcategory,
             DateTime transactionDateTime)
         {
             if (transactionAmount.Amount > 0)
             {
-                return new(fromAccount, null, null, null, recipient, -transactionAmount, category, transactionDateTime);
+                return new(fromAccount, null, null, null, recipient, -transactionAmount, subcategory, transactionDateTime);
             }
 
-            return new(fromAccount, null, null, null, recipient, transactionAmount, category, transactionDateTime);
+            return new(fromAccount, null, null, null, recipient, transactionAmount, subcategory, transactionDateTime);
         }
 
         internal static Transaction CreateInternalIncome(
