@@ -2,7 +2,7 @@ import {CircularProgress, Grid} from "@mui/material";
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {AddTwoTone} from "@mui/icons-material";
 import {useState} from "react";
-import {AddTransactionCategoryCommand} from "../../../../models/requests/addTransactionCategoryCommand";
+import {AddTransactionCategoryCommand} from "../../../../models/requests/categories/addTransactionCategoryCommand";
 import {AddTransactionCategoryForm} from "./AddTransactionCategoryForm";
 
 interface AddTransactionCategoryTileProps {

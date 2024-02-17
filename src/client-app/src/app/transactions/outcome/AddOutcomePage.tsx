@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import useTitle from "../../../utils/hooks/useTitle";
 import {Button, CircularProgress, Grid, IconButton, Typography} from "@mui/material";
 import theme from "../../theme";
-import {AddOutcomeTransactionCommand} from "../../../models/requests/addOutcomeTransactionCommand";
+import {AddOutcomeTransactionCommand} from "../../../models/requests/transactions/addOutcomeTransactionCommand";
 import NewOutcomesTable from "./components/NewOutcomesTable";
 import {AddOutcomeForm} from "./components/AddOutcomeForm";
 import {ArrowForward, Undo} from "@mui/icons-material";

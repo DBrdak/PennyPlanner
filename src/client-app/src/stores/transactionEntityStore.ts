@@ -1,7 +1,7 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import {TransactionEntity} from "../models/transactionEntities/transactionEntity";
 import agent from "../api/agent";
-import {AddTransactionEntityCommand} from "../models/requests/addTransactionEntityCommand";
+import {AddTransactionEntityCommand} from "../models/requests/transactionEntities/addTransactionEntityCommand";
 
 export default class TransactionEntityStore {
     private transactionEntitiesRegistry: Map<string, TransactionEntity> = new Map<string, TransactionEntity>()

@@ -27,7 +27,7 @@ namespace Domestica.Budget.Infrastructure.Configurations
             builder.HasOne(subcategory => subcategory.Category)
                 .WithMany(category => category.Subcategories)
                 .HasForeignKey(subcategory => subcategory.CategoryId) 
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

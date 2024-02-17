@@ -1,5 +1,5 @@
 import {Account} from "../../../../models/accounts/account";
-import {AddInternalTransactionCommand} from "../../../../models/requests/addInternalTransactionCommand";
+import {AddInternalTransactionCommand} from "../../../../models/requests/transactions/addInternalTransactionCommand";
 import React from "react";
 import {
     Button,

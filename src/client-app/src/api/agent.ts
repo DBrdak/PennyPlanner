@@ -1,19 +1,20 @@
 import axios, {AxiosResponse} from "axios"
 import {toast} from "react-toastify"
 import { router } from "../router/Routes"
-import {NewAccountData} from "../models/requests/newAccountData";
-import {AddTransactionEntityCommand} from "../models/requests/addTransactionEntityCommand";
-import {AccountUpdateData} from "../models/requests/accountUpdateData";
-import {BudgetedTransactionCategoryValues} from "../models/requests/budgetedTransactionCategoryValues";
-import {UpdateBudgetPlanCategoryValues} from "../models/requests/updateBudgetPlanCategoryValues";
-import {AddInternalTransactionCommand} from "../models/requests/addInternalTransactionCommand";
-import {AddIncomeTransactionCommand} from "../models/requests/addIncomeTransactionCommand";
-import {AddOutcomeTransactionCommand} from "../models/requests/addOutcomeTransactionCommand";
+import {NewAccountData} from "../models/requests/accounts/newAccountData";
+import {AddTransactionEntityCommand} from "../models/requests/transactionEntities/addTransactionEntityCommand";
+import {AccountUpdateData} from "../models/requests/accounts/accountUpdateData";
+import {BudgetedTransactionCategoryValues} from "../models/requests/budgetPlans/budgetedTransactionCategoryValues";
+import {UpdateBudgetPlanCategoryValues} from "../models/requests/budgetPlans/updateBudgetPlanCategoryValues";
+import {AddInternalTransactionCommand} from "../models/requests/transactions/addInternalTransactionCommand";
+import {AddIncomeTransactionCommand} from "../models/requests/transactions/addIncomeTransactionCommand";
+import {AddOutcomeTransactionCommand} from "../models/requests/transactions/addOutcomeTransactionCommand";
 import {Account} from "../models/accounts/account";
 import {TransactionEntity} from "../models/transactionEntities/transactionEntity";
 import {Transaction} from "../models/transactions/transaction";
 import {TransactionCategory} from "../models/transactionCategories/transactionCategory";
-import {AddTransactionCategoryCommand} from "../models/requests/addTransactionCategoryCommand";
+import {AddTransactionCategoryCommand} from "../models/requests/categories/addTransactionCategoryCommand";
+import {AddTransactionSubcategoryCommand} from "../models/requests/subcategories/addTransactionSubcategoryCommand";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -110,6 +111,15 @@ const transactionCategories = {
         axios.delete(`/transaction-categories/${transactionCategoryId}`),
 }
 
+const transactionSubcategories = {
+    addTransactionSubcategory: (command: AddTransactionSubcategoryCommand) =>
+        axios.post('/transaction-subcategories', command),
+    updateTransactionSubcategory: (transactionSubcategoryId: string, newValue: string) =>
+        axios.put(`/transaction-subcategories/${transactionSubcategoryId}`, { transactionSubcategoryId: transactionSubcategoryId, newValue: newValue }),
+    removeTransactionSubcategory: (transactionSubcategoryId: string) =>
+        axios.delete(`/transaction-subcategories/${transactionSubcategoryId}`),
+}
+
 const transactions = {
     getTransactions: () => axios.get<Transaction[]>('/transactions').then(responseBody),
     createInternalTransaction: (command: AddInternalTransactionCommand) =>
@@ -126,6 +136,7 @@ const agent = {
     budgetPlans,
     transactionEntities,
     transactionCategories,
+    transactionSubcategories,
     transactions,
 }
 

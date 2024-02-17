@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import {Form, Formik} from "formik";
 import * as Yup from 'yup'
-import {AccountUpdateData} from "../../../../models/requests/accountUpdateData";
+import {AccountUpdateData} from "../../../../models/requests/accounts/accountUpdateData";
 import {number, string} from "yup";
 import MyTextInput from "../../../../components/MyTextInput";
 import theme from "../../../theme";

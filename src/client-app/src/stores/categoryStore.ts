@@ -1,7 +1,7 @@
 import {makeAutoObservable, runInAction} from "mobx"
 import {TransactionCategory} from "../models/transactionCategories/transactionCategory";
 import agent from "../api/agent";
-import {AddTransactionCategoryCommand} from "../models/requests/addTransactionCategoryCommand";
+import {AddTransactionCategoryCommand} from "../models/requests/categories/addTransactionCategoryCommand";
 
 export default class CategoryStore {
     private categoriesRegistry: Map<string, TransactionCategory> = new Map<string, TransactionCategory>()

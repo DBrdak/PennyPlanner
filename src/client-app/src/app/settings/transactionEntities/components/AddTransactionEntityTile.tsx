@@ -3,7 +3,7 @@ import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import theme from "../../../theme";
 import {AddTwoTone, DeleteTwoTone, EditTwoTone} from "@mui/icons-material";
 import {useState} from "react";
-import {AddTransactionEntityCommand} from "../../../../models/requests/addTransactionEntityCommand";
+import {AddTransactionEntityCommand} from "../../../../models/requests/transactionEntities/addTransactionEntityCommand";
 import {AddTransactionEntityForm} from "./AddTransactionEntityForm";
 
 interface AddTransactionEntityTileProps {

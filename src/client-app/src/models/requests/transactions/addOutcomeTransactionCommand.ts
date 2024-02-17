@@ -4,6 +4,7 @@ export interface AddOutcomeTransactionCommand {
     recipientName: string
     transactionAmount: number
     categoryValue: string
+    subcategoryValue: string
     transactionDateTime: Date
 }
 
@@ -13,6 +14,7 @@ export class AddOutcomeTransactionCommand implements AddOutcomeTransactionComman
         this.recipientName = values?.recipientName || ''
         this.transactionAmount = values?.transactionAmount || 0
         this.categoryValue = values?.categoryValue || ''
+        this.subcategoryValue = values?.subcategoryValue || ''
         this.transactionDateTime = values?.transactionDateTime || new Date()
     }
 }

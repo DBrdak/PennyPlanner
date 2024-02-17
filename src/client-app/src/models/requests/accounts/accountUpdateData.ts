@@ -1,4 +1,4 @@
-import {Account} from "../accounts/account";
+import {Account} from "../../accounts/account";
 
 export interface AccountUpdateData {
     accountId: string

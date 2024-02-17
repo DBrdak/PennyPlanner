@@ -1,4 +1,4 @@
-import {AddInternalTransactionCommand} from "../../../../models/requests/addInternalTransactionCommand";
+import {AddInternalTransactionCommand} from "../../../../models/requests/transactions/addInternalTransactionCommand";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../../stores/store";
 import {Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@mui/material";

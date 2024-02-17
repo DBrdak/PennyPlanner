@@ -17,7 +17,7 @@ import {Form, Formik} from "formik";
 import MyTextInput from "../../../components/MyTextInput";
 import {UndoTwoTone} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
-import {NewAccountData} from "../../../models/requests/newAccountData";
+import {NewAccountData} from "../../../models/requests/accounts/newAccountData";
 import * as yup from 'yup'
 import {number, string} from "yup";
 import React from "react";

@@ -1,7 +1,7 @@
 import {Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@mui/material";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../../stores/store";
-import {AddIncomeTransactionCommand} from "../../../../models/requests/addIncomeTransactionCommand";
+import {AddIncomeTransactionCommand} from "../../../../models/requests/transactions/addIncomeTransactionCommand";
 import formatNumber from "../../../../utils/formatters/numberFormatter";
 import formatDate from "../../../../utils/formatters/dateFormatter";
 

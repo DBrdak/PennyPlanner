@@ -7,7 +7,7 @@ import ConfirmModal from "../../../components/ConfirmModal";
 import {TransactionCategoryTile} from "./components/TransactionCategoryTile";
 import {AddTransactionCategoryTile} from "./components/AddTransactionCategoryTile";
 import useCategories from "../../../utils/hooks/useCategories";
-import {AddTransactionCategoryCommand} from "../../../models/requests/addTransactionCategoryCommand";
+import {AddTransactionCategoryCommand} from "../../../models/requests/categories/addTransactionCategoryCommand";
 import {observer} from "mobx-react-lite";
 
 export default observer(function TransactionCategoriesPage() {

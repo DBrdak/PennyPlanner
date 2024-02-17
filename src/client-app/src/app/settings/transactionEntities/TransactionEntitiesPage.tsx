@@ -8,7 +8,7 @@ import useTransactionEntities from "../../../utils/hooks/useTransactionEntities"
 import {useStore} from "../../../stores/store";
 import {TransactionEntityTile} from "./components/TransactionEntityTile";
 import {AddTransactionEntityTile} from "./components/AddTransactionEntityTile";
-import {AddTransactionEntityCommand} from "../../../models/requests/addTransactionEntityCommand";
+import {AddTransactionEntityCommand} from "../../../models/requests/transactionEntities/addTransactionEntityCommand";
 import ConfirmModal from "../../../components/ConfirmModal";
 import {useEffect, useState} from "react";
 import tilePaper from "../../../components/tilesLayout/TilePaper";

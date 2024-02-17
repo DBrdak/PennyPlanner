@@ -1,5 +1,5 @@
 import {Form, Formik} from "formik";
-import {AddIncomeTransactionCommand} from "../../../../models/requests/addIncomeTransactionCommand";
+import {AddIncomeTransactionCommand} from "../../../../models/requests/transactions/addIncomeTransactionCommand";
 import {
     Button,
     FormControl, IconButton,

@@ -1,4 +1,4 @@
-import {AddOutcomeTransactionCommand} from "../../../../models/requests/addOutcomeTransactionCommand";
+import {AddOutcomeTransactionCommand} from "../../../../models/requests/transactions/addOutcomeTransactionCommand";
 import {Account} from "../../../../models/accounts/account";
 import React, {useState} from "react";
 import {

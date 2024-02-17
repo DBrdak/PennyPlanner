@@ -1,6 +1,6 @@
 import {TransactionEntity} from "../../../../models/transactionEntities/transactionEntity";
 import {Form, Formik, FormikValues} from "formik";
-import {NewAccountData} from "../../../../models/requests/newAccountData";
+import {NewAccountData} from "../../../../models/requests/accounts/newAccountData";
 import React from "react";
 import * as yup from 'yup'
 import ValidationConstants from "../../../../utils/constants/validationConstants";

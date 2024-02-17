@@ -4,7 +4,7 @@ import {CircularProgress, Grid, IconButton, Typography} from "@mui/material"
 import {AddIncomeForm} from "./components/AddIncomeForm";
 import {useStore} from "../../../stores/store";
 import React, {useEffect, useState} from "react";
-import {AddIncomeTransactionCommand} from "../../../models/requests/addIncomeTransactionCommand";
+import {AddIncomeTransactionCommand} from "../../../models/requests/transactions/addIncomeTransactionCommand";
 import useTitle from "../../../utils/hooks/useTitle";
 import {observer} from "mobx-react-lite";
 import NewIncomesTable from "./components/NewIncomesTable";

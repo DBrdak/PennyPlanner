@@ -5,7 +5,7 @@ import {useStore} from "../../../stores/store";
 import React, {useEffect, useState} from "react";
 import {CircularProgress, Grid, IconButton, Typography} from "@mui/material";
 import theme from "../../theme";
-import {AddInternalTransactionCommand} from "../../../models/requests/addInternalTransactionCommand";
+import {AddInternalTransactionCommand} from "../../../models/requests/transactions/addInternalTransactionCommand";
 import {AddInternalTransactionForm} from "./components/AddInternalTransactionForm";
 import NewInternalTransactionsTable from "./components/NewInternalTransactionsTable";
 import {NoAccountMessage} from "../components/NoAccountMessage";

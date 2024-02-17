@@ -1,4 +1,4 @@
-import {AddOutcomeTransactionCommand} from "../../../../models/requests/addOutcomeTransactionCommand";
+import {AddOutcomeTransactionCommand} from "../../../../models/requests/transactions/addOutcomeTransactionCommand";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../../stores/store";
 import {Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@mui/material";

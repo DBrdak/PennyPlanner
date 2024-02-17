@@ -5,7 +5,7 @@ import {Clear, DeleteTwoTone, DoneTwoTone} from "@mui/icons-material";
 import theme from "../../../theme";
 import React from "react";
 import * as yup from 'yup'
-import {AddTransactionEntityCommand} from "../../../../models/requests/addTransactionEntityCommand";
+import {AddTransactionEntityCommand} from "../../../../models/requests/transactionEntities/addTransactionEntityCommand";
 import ValidationConstants from "../../../../utils/constants/validationConstants";
 
 interface TransactionEntityForm {
