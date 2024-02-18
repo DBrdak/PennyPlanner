@@ -4,6 +4,9 @@ import {AddTwoTone} from "@mui/icons-material";
 import {useState} from "react";
 import {AddTransactionCategoryCommand} from "../../../../models/requests/categories/addTransactionCategoryCommand";
 import {AddTransactionCategoryForm} from "./AddTransactionCategoryForm";
+import {
+    AddTransactionSubcategoryCommand
+} from "../../../../models/requests/subcategories/addTransactionSubcategoryCommand";
 
 interface AddTransactionCategoryTileProps {
     onCreate: (command: AddTransactionCategoryCommand) => void

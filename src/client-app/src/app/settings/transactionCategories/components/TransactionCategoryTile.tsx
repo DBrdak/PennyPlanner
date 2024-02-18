@@ -1,9 +1,7 @@
-import {Box, CircularProgress, Grid, IconButton, Typography} from "@mui/material";
+import { ButtonGroup, CircularProgress, Grid, IconButton, Typography} from "@mui/material";
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
-import {useState} from "react";
-import {Delete, DeleteTwoTone, EditTwoTone} from "@mui/icons-material";
-import theme from "../../../theme";
-import {Formik} from "formik";
+import React, {useState} from "react";
+import {DeleteTwoTone, EditTwoTone, KeyboardArrowDown, KeyboardArrowUp} from "@mui/icons-material";
 import {UpdateTransactionCategoryForm} from "./UpdateTransactionCategoryForm";
 import {TransactionCategory} from "../../../../models/transactionCategories/transactionCategory";
 
@@ -17,17 +15,20 @@ interface TransactionCategoryTileProps {
 export function TransactionCategoryTile({transactionCategory, onDelete, onEdit, loading}: TransactionCategoryTileProps) {
     const [editMode, setEditMode] = useState(false)
 
+
     return (
-        <Grid item xs={12} md={6} lg={3} sx={{
+        <Grid item xs={12} md={4} lg={3} alignItems="center" justifyContent="center"  sx={{
             minHeight: '200px',
             height: '33%',
-            marginBottom: 3}
-        }>
+            marginBottom: 3,
+            display: 'flex'
+        }}>
             <TilePaper disabled sx={{
-                alignItems: 'center',
+                padding: 1.5,
+                maxWidth: '1200px',
+                width: '100%',
                 justifyContent: 'center',
-                flexDirection: 'column',
-                position: 'relative'
+                alignItems: 'center'
             }}>
                 {
                     loading ?
@@ -41,34 +42,54 @@ export function TransactionCategoryTile({transactionCategory, onDelete, onEdit, 
                                 onSubmit={onEdit}
                             />
                             :
-                            <>
-                                <Typography variant={'h3'}>
-                                    {transactionCategory.value}
-                                </Typography>
-                                <Typography variant={'subtitle1'} color={
-                                    transactionCategory.type.toLowerCase() === 'income' ? 'primary' : 'secondary'
-                                }>
-                                    {transactionCategory.type}
-                                </Typography>
-                                <Box sx={{
-                                    position: 'absolute',
-                                    padding: theme.spacing(2),
-                                    bottom: 0, left: 0, right: 0,
-                                    height: '20%',
+                            <Grid container height={'100%'}>
+                                <Grid item xs={12} sx={{
+                                    height: '70%',
                                     display: 'flex',
                                     justifyContent: 'center',
                                     alignItems: 'center',
+                                    flexDirection: 'column'
                                 }}>
-                                    <IconButton color={'error'} sx={{width: '50%', borderRadius: 0}} onClick={() => {
-                                        onDelete(transactionCategory.transactionCategoryId)
+                                    <Typography variant={'h3'} width={'90%'} textAlign={'center'} sx={{ overflowWrap: 'break-word', overflowY: 'hidden' }}>
+                                        {transactionCategory.value}
+                                    </Typography>
+                                    <Typography variant={'subtitle1'} color={
+                                        transactionCategory.type.toLowerCase() === 'income' ? 'primary' : 'secondary'
+                                    }>
+                                        {transactionCategory.type}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12} sx={{
+                                    height: '30%',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    flexDirection: 'column'
+                                }}>
+                                    <ButtonGroup fullWidth>
+                                        <IconButton color={'error'} sx={{width: '50%', borderRadius: 0}} onClick={() => {
+                                            onDelete(transactionCategory.transactionCategoryId)
+                                        }}>
+                                            <DeleteTwoTone fontSize={'large'} />
+                                        </IconButton>
+                                        <IconButton color={'inherit'} sx={{width: '50%', borderRadius: 0}} onClick={() => setEditMode(true)}>
+                                            <EditTwoTone fontSize={'large'} />
+                                        </IconButton>
+                                    </ButtonGroup>
+                                    <IconButton
+                                        onClick={() => console.log()}
+                                        sx={{
+                                            width: '100%',
+                                            borderRadius: 0,
+                                            flexDirection: 'column'
                                     }}>
-                                        <DeleteTwoTone fontSize={'large'} />
+                                        <Typography variant={'caption'}>
+                                            Subcategories
+                                        </Typography>
+                                        {false ? <KeyboardArrowUp/> : <KeyboardArrowDown/>}
                                     </IconButton>
-                                    <IconButton color={'inherit'} sx={{width: '50%', borderRadius: 0}} onClick={() => setEditMode(true)}>
-                                        <EditTwoTone fontSize={'large'} />
-                                    </IconButton>
-                                </Box>
-                            </>
+                                </Grid>
+                            </Grid>
                 }
             </TilePaper>
         </Grid>

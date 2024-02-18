@@ -106,7 +106,7 @@ const transactionCategories = {
     createTransactionCategory: (command: AddTransactionCategoryCommand) =>
         axios.post('/transaction-categories', command),
     updateTransactionCategory: (categoryId: string, newValue: string) =>
-        axios.post(`/transaction-categories/${categoryId}`, {transactionCategoryId: categoryId, newValue: newValue}),
+        axios.put(`/transaction-categories/${categoryId}`, {transactionCategoryId: categoryId, newValue: newValue}),
     deleteTransactionCategory: (transactionCategoryId: string) =>
         axios.delete(`/transaction-categories/${transactionCategoryId}`),
 }

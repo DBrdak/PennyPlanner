@@ -50,9 +50,9 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
                 te => te.Transactions,
                 cancellationToken);
 
-            var category = await GetOrCreateCategory(request, cancellationToken);
+            var category = await GetOrCreateCategory(new (request.CategoryValue), cancellationToken);
 
-            var subcategory = await GetOrCreateSubcategory(request, cancellationToken, category);
+            var subcategory = await GetOrCreateSubcategory(new (request.SubcategoryValue), category, cancellationToken);
 
             category.AddSubcategory(subcategory);
 
@@ -95,21 +95,21 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
             return Result.Failure<Transaction>(Error.TaskFailed("Problem while adding outcome transaction"));
         }
 
-        private async Task<TransactionSubcategory> GetOrCreateSubcategory(AddOutcomeTransactionCommand request, CancellationToken cancellationToken, OutcomeTransactionCategory category)
+        private async Task<TransactionSubcategory> GetOrCreateSubcategory(TransactionSubcategoryValue subcategoryValue, OutcomeTransactionCategory category, CancellationToken cancellationToken)
         {
             return await _subcategoryRepository.GetByValueAsync(
-                       new(request.SubcategoryValue),
+                       subcategoryValue,
                        category,
                        cancellationToken) ??
-                   new (new(request.SubcategoryValue), category);
+                   new (subcategoryValue, category);
         }
 
-        private async Task<OutcomeTransactionCategory> GetOrCreateCategory(AddOutcomeTransactionCommand request, CancellationToken cancellationToken)
+        private async Task<OutcomeTransactionCategory> GetOrCreateCategory(TransactionCategoryValue categoryValue, CancellationToken cancellationToken)
         {
             return await _categoryRepository.GetByValueAsync<OutcomeTransactionCategory>(
-                       new(request.CategoryValue),
+                       categoryValue,
                        cancellationToken) ??
-                   new(new(request.CategoryValue));
+                   new(categoryValue);
         }
 
         private static bool IsNewRecipient(TransactionRecipient? recipient)
