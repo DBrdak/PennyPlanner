@@ -13,11 +13,12 @@ import {
 
 interface TransactionCategoryForm {
     type: "income" | "outcome"
-    onSubmit: (command: AddTransactionCategoryCommand) => void
+    onSubmit: (command: AddTransactionCategoryCommand | AddTransactionSubcategoryCommand) => void
     onExit: () => void
+    categoryId?: string
 }
 
-export function AddTransactionCategoryForm({type, onSubmit, onExit}: TransactionCategoryForm) {
+export function AddTransactionCategoryForm({type, onSubmit, onExit, categoryId}: TransactionCategoryForm) {
 
     const validationSchema = yup.object({
         value: yup.string()
@@ -31,7 +32,9 @@ export function AddTransactionCategoryForm({type, onSubmit, onExit}: Transaction
 
     return (
         <Formik
-            initialValues={new AddTransactionCategoryCommand(type)}
+            initialValues={categoryId ?
+                new AddTransactionSubcategoryCommand(categoryId)
+                : new AddTransactionCategoryCommand(type)}
             onSubmit={onSubmit}
             validationSchema={validationSchema}>
             {({handleSubmit, setValues, resetForm, values, isValid}) => (
@@ -53,7 +56,7 @@ export function AddTransactionCategoryForm({type, onSubmit, onExit}: Transaction
                             <Typography variant={'subtitle1'} textAlign={'center'} color={
                                 type === 'income' ? 'primary' : 'secondary'
                             }>
-                                {capitalizedType}
+                                {!categoryId && capitalizedType}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sx={{

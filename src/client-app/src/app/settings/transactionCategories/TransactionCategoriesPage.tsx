@@ -16,8 +16,7 @@ import {
 } from "../../../models/requests/subcategories/addTransactionSubcategoryCommand";
 
 export default observer(function TransactionCategoriesPage() {
-    const {categoryStore, subcategoryStore, modalStore} = useStore()
-    const [loadingCategoriesId, setLoadingCategoriesId] = useState<string[]>([])
+    const {categoryStore} = useStore()
     const transactionCategories = useCategories()
     const [initialLoading, setInitialLoading] = useState(true)
 
@@ -27,45 +26,6 @@ export default observer(function TransactionCategoriesPage() {
 
     const getIncomeCategories = () => transactionCategories.filter(tc => tc.type.toLowerCase() === 'income')
     const getOutcomeCategories = () => transactionCategories.filter(tc => tc.type.toLowerCase() === 'outcome')
-
-    const handleDelete = (transactionCategoryId: string) => {
-        const transactionCategoryValue = transactionCategories
-            .find(tc => tc.transactionCategoryId === transactionCategoryId)?.value
-
-        modalStore.openModal(<ConfirmModal
-            important
-            text={`You are about to delete ${transactionCategoryValue}. All related transactions and budget plans will lose data about transaction category. Are you sure you want to proceed?`}
-            onConfirm={() => {
-                setLoadingCategoriesId(prev => [...prev, transactionCategoryId])
-                categoryStore.deleteTransactionCategory(transactionCategoryId).then(() => {
-                    setLoadingCategoriesId(prev => prev.filter(id => id !== transactionCategoryId))
-                })
-            }}
-        />)
-    }
-
-    const handleEdit = (transactionCategoryId: string, newValue: string) => {
-        setLoadingCategoriesId(prev => [...prev, transactionCategoryId])
-        categoryStore.updateTransactionCategory(transactionCategoryId, newValue).then(() => {
-            setLoadingCategoriesId(prev => prev.filter(id => id !== transactionCategoryId))
-        })
-    }
-
-    function handleCreate(command: AddTransactionCategoryCommand | AddTransactionSubcategoryCommand) {
-
-        if((command as AddTransactionCategoryCommand).type){
-            setLoadingCategoriesId(prev => [...prev, (command as AddTransactionCategoryCommand).type])
-            categoryStore.addTransactionCategory(command as AddTransactionCategoryCommand).then(() => {
-                setLoadingCategoriesId(prev => prev.filter(id => id !== (command as AddTransactionCategoryCommand).type))
-            })
-        } else {
-            setLoadingCategoriesId(prev => [...prev, command.value]) // TODO Fix loading
-            subcategoryStore.addTransactionSubcategory(command as AddTransactionSubcategoryCommand).then(() => {
-                setLoadingCategoriesId(prev => prev.filter(id => id !== command.value))
-            })
-        }
-
-    }
 
     return (
         <AppOverlay>
@@ -95,21 +55,15 @@ export default observer(function TransactionCategoriesPage() {
                     initialLoading ?
                         <LoadingTile />
                         :
-                        categoryStore.selectedCategory ?
+                        categoryStore.selectedCategory &&
+                        getIncomeCategories().some(c => c.transactionCategoryId === categoryStore.selectedCategory?.transactionCategoryId) ?
                             <TransactionSubcategoriesView
-                                handleDelete={handleDelete}
-                                handleEdit={handleEdit}
-                                handleCreate={handleCreate}
                                 transactionSubcategories={categoryStore.selectedCategory.subcategories}
-                                loadingSubcategoriesId={loadingCategoriesId}
+                                type={'income'}
                             />
                             :
                             <TransactionCategoriesView
-                                handleDelete={handleDelete}
-                                handleEdit={handleEdit}
-                                handleCreate={handleCreate}
                                 transactionCategories={getIncomeCategories()}
-                                loadingCategoriesId={loadingCategoriesId}
                                 type={'income'}
                             />
                 }
@@ -129,21 +83,15 @@ export default observer(function TransactionCategoriesPage() {
                     initialLoading ?
                         <LoadingTile />
                         :
-                        categoryStore.selectedCategory ?
+                        categoryStore.selectedCategory &&
+                        getOutcomeCategories().some(c => c.transactionCategoryId === categoryStore.selectedCategory?.transactionCategoryId) ?
                             <TransactionSubcategoriesView
-                                handleDelete={handleDelete}
-                                handleEdit={handleEdit}
-                                handleCreate={handleCreate}
                                 transactionSubcategories={categoryStore.selectedCategory.subcategories}
-                                loadingSubcategoriesId={loadingCategoriesId}
+                                type={'outcome'}
                             />
                             :
                             <TransactionCategoriesView
-                                handleDelete={handleDelete}
-                                handleEdit={handleEdit}
-                                handleCreate={handleCreate}
                                 transactionCategories={getOutcomeCategories()}
-                                loadingCategoriesId={loadingCategoriesId}
                                 type={'outcome'}
                             />
                 }

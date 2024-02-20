@@ -9,12 +9,13 @@ import {
 } from "../../../../models/requests/subcategories/addTransactionSubcategoryCommand";
 
 interface AddTransactionCategoryTileProps {
-    onCreate: (command: AddTransactionCategoryCommand) => void
+    onCreate: (command: AddTransactionCategoryCommand | AddTransactionSubcategoryCommand) => void
     type: 'income' | 'outcome'
     loading: boolean
+    categoryId?: string
 }
 
-export function AddTransactionCategoryTile({onCreate, type, loading}: AddTransactionCategoryTileProps) {
+export function AddTransactionCategoryTile({onCreate, type, loading, categoryId}: AddTransactionCategoryTileProps) {
     const [createMode, setCreateMode] = useState(false)
 
     return (
@@ -35,6 +36,7 @@ export function AddTransactionCategoryTile({onCreate, type, loading}: AddTransac
                         :
                         createMode ?
                             <AddTransactionCategoryForm
+                                categoryId={categoryId}
                                 type={type}
                                 onSubmit={(command) => {
                                     setCreateMode(false)

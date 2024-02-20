@@ -7,17 +7,17 @@ import {TransactionCategory} from "../../../../models/transactionCategories/tran
 import {observer} from "mobx-react-lite";
 import useSelectedCategory from "../../../../utils/hooks/useSelectedCategory";
 import {useStore} from "../../../../stores/store";
+import {TransactionSubcategory} from "../../../../models/transactionSubcategories/transactionSubcategory";
 
 interface TransactionCategoryTileProps {
-    transactionCategory: TransactionCategory
-    onDelete: (transactionCategoryId: string) => void
-    onEdit: (transactionCategoryId: string, newValue: string) => void
+    transactionCategory: TransactionCategory | TransactionSubcategory
+    onDelete?: (transactionCategoryId: string) => void
+    onEdit?: (transactionCategoryId: string, newValue: string) => void
     loading: boolean
 }
 
 export default observer (function TransactionCategoryTile({transactionCategory, onDelete, onEdit, loading}: TransactionCategoryTileProps) {
     const [editMode, setEditMode] = useState(false)
-    const [subcategoriesVisible, setSubcategoriesVisible] = useState(false)
     const {categoryStore} = useStore()
     const selectedCategory = useSelectedCategory()
 
@@ -45,7 +45,7 @@ export default observer (function TransactionCategoryTile({transactionCategory, 
                     loading ?
                         <CircularProgress />
                         :
-                        editMode ?
+                        editMode && onDelete && onEdit ?
                             <UpdateTransactionCategoryForm
                                 transactionCategory={transactionCategory}
                                 onDelete={onDelete}
@@ -65,9 +65,10 @@ export default observer (function TransactionCategoryTile({transactionCategory, 
                                         {transactionCategory.value}
                                     </Typography>
                                     <Typography variant={'subtitle1'} color={
-                                        transactionCategory.type.toLowerCase() === 'income' ? 'primary' : 'secondary'
+                                        (transactionCategory as TransactionCategory).type &&
+                                        (transactionCategory as TransactionCategory).type.toLowerCase() === 'income' ? 'primary' : 'secondary'
                                     }>
-                                        {transactionCategory.type}
+                                        {(transactionCategory as TransactionCategory).type}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12} sx={{
@@ -77,32 +78,39 @@ export default observer (function TransactionCategoryTile({transactionCategory, 
                                     alignItems: 'center',
                                     flexDirection: 'column'
                                 }}>
-                                    <ButtonGroup fullWidth>
-                                        <IconButton color={'error'} sx={{width: '50%', borderRadius: 0}} onClick={() => {
-                                            onDelete(transactionCategory.transactionCategoryId)
-                                        }}>
-                                            <DeleteTwoTone fontSize={'large'} />
-                                        </IconButton>
-                                        <IconButton color={'inherit'} sx={{width: '50%', borderRadius: 0}} onClick={() => setEditMode(true)}>
-                                            <EditTwoTone fontSize={'large'} />
-                                        </IconButton>
-                                    </ButtonGroup>
-                                    <IconButton
-                                        onClick={() => handleSubcategoriesClick(transactionCategory.transactionCategoryId)}
-                                        sx={{
-                                            width: '100%',
-                                            borderRadius: 0,
-                                            flexDirection: 'column'
-                                    }}>
-                                        <Typography variant={'caption'}>
-                                            Subcategories
-                                        </Typography>
-                                        {
-                                            selectedCategory?.transactionCategoryId === transactionCategory.transactionCategoryId ?
-                                                <KeyboardArrowUp/> :
-                                                <KeyboardArrowDown/>
-                                        }
-                                    </IconButton>
+                                    {
+                                        onDelete && onEdit &&
+                                            <ButtonGroup fullWidth>
+                                                <IconButton color={'error'} sx={{width: '50%', borderRadius: 0}} onClick={() => {
+                                                    onDelete((transactionCategory as TransactionCategory).transactionCategoryId
+                                                        || (transactionCategory as TransactionSubcategory).transactionSubcategoryId)
+                                                }}>
+                                                    <DeleteTwoTone fontSize={'large'} />
+                                                </IconButton>
+                                                <IconButton color={'inherit'} sx={{width: '50%', borderRadius: 0}} onClick={() => setEditMode(true)}>
+                                                    <EditTwoTone fontSize={'large'} />
+                                                </IconButton>
+                                            </ButtonGroup>
+                                    }
+                                    {
+                                        (transactionCategory as TransactionCategory).transactionCategoryId &&
+                                            <IconButton
+                                                onClick={() => handleSubcategoriesClick((transactionCategory as TransactionCategory).transactionCategoryId)}
+                                                sx={{
+                                                    width: '100%',
+                                                    borderRadius: 0,
+                                                    flexDirection: 'column'
+                                                }}>
+                                                <Typography variant={'caption'}>
+                                                    Subcategories
+                                                </Typography>
+                                                {
+                                                    selectedCategory?.transactionCategoryId === (transactionCategory as TransactionCategory).transactionCategoryId ?
+                                                        <KeyboardArrowUp/> :
+                                                        <KeyboardArrowDown/>
+                                                }
+                                            </IconButton>
+                                    }
                                 </Grid>
                             </Grid>
                 }

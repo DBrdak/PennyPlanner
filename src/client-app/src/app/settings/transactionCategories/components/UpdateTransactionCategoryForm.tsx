@@ -13,7 +13,7 @@ interface UpdateTransactionCategoryFormProps {
     onDelete: (transactionCategoryId: string) => void
     onExit: () => void
     onSubmit: (transactionCategoryId: string, newValue: string) => void
-    transactionCategory: TransactionCategory
+    transactionCategory: TransactionCategory | TransactionSubcategory
 }
 
 export function UpdateTransactionCategoryForm({transactionCategory, onExit, onDelete, onSubmit}: UpdateTransactionCategoryFormProps) {
@@ -29,7 +29,10 @@ export function UpdateTransactionCategoryForm({transactionCategory, onExit, onDe
     return (
         <Formik
             initialValues={{newValue: transactionCategory.value}}
-            onSubmit={(values) => onSubmit(transactionCategory.transactionCategoryId, values.newValue)}
+            onSubmit={(values) =>
+                onSubmit((transactionCategory as TransactionCategory).transactionCategoryId
+                    || (transactionCategory as TransactionSubcategory).transactionSubcategoryId,
+                    values.newValue)}
             validationSchema={validationSchema}
             validateOnMount
         >
@@ -80,7 +83,8 @@ export function UpdateTransactionCategoryForm({transactionCategory, onExit, onDe
                         }}>
                             <ButtonGroup fullWidth>
                                 <IconButton color={'error'} sx={{width: '50%', borderRadius: 0}} onClick={() => onDelete(
-                                    transactionCategory.transactionCategoryId
+                                    (transactionCategory as TransactionCategory).transactionCategoryId ||
+                                    (transactionCategory as TransactionSubcategory).transactionSubcategoryId
                                 )}>
                                     <DeleteTwoTone fontSize={'large'} />
                                 </IconButton>
