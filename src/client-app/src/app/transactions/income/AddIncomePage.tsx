@@ -16,6 +16,7 @@ export default observer(function AddIncomePage() {
     const {accountStore, transactionEntityStore, transactionStore, categoryStore} = useStore()
     const [senderNames, setSenderNames] = useState<string[]>([])
     const [categoryValues, setCategoryValues] = useState<string[]>([])
+    const [subcategoryValues, setSubcategoryValues] = useState<string[]>([])
     const [newIncomes, setNewIncomes] = useState<AddIncomeTransactionCommand[]>([])
     const navigate = useNavigate()
     useTitle('Income')
@@ -32,15 +33,20 @@ export default observer(function AddIncomePage() {
                 .filter(te => te.transactionEntityType.toLowerCase() === "sender").map(te => te.name))
             setCategoryValues(categoryStore.categories
                 .filter(c => c.type.toLowerCase() === 'income').map(c => c.value))
+            setSubcategoryValues(categoryStore.categories
+                .filter(c => c.type.toLowerCase() === 'income').flatMap(c => c.subcategories)
+                .map(s => s.value))
         })
     }, [accountStore, categoryStore, transactionEntityStore, transactionStore])
 
     async function handleFormSubmit(values: AddIncomeTransactionCommand) {
         await transactionStore.addTransaction(new AddIncomeTransactionCommand(values)).then(() => {
             !senderNames.some(name => name === values.senderName) &&
-            setSenderNames([...senderNames, values.senderName])
+                setSenderNames([...senderNames, values.senderName])
             !categoryValues.some(value => value === values.categoryValue) &&
-            setCategoryValues([...categoryValues, values.categoryValue])
+                setCategoryValues([...categoryValues, values.categoryValue])
+            !subcategoryValues.some(value => value === values.subcategoryValue) &&
+                setSubcategoryValues([...subcategoryValues, values.subcategoryValue])
             setNewIncomes([...newIncomes, values])
         })
     }
@@ -79,6 +85,7 @@ export default observer(function AddIncomePage() {
                                         accounts={accountStore.accounts}
                                         senders={senderNames}
                                         categories={categoryValues}
+                                        subcategories={subcategoryValues}
                                         handleFormSubmit={handleFormSubmit}
                                     />
                                 </Grid>

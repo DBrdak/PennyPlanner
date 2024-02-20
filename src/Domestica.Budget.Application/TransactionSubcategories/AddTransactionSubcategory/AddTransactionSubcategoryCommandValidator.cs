@@ -19,6 +19,10 @@ namespace Domestica.Budget.Application.TransactionSubcategories.AddTransactionSu
                 .WithMessage("Transaction subcategory name must be between 1 and 30 characters")
                 .Matches(TransactionSubcategoryValidationSettings.TransactionSubcategoryNamePattern)
                 .WithMessage("Special characters are not allowed in transaction subcategory name");
+
+            RuleFor(x => x.CategoryId)
+                .NotEmpty()
+                .WithMessage("Category is required for subcategory");
         }
     }
 }

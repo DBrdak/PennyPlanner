@@ -13,6 +13,7 @@ namespace Domestica.Budget.Application.DataTransferObjects
         public string? RecipientId { get; init; } 
         public MoneyDto TransactionAmount { get; init; }
         public TransactionCategoryDto? Category { get; init; }
+        public TransactionSubcategoryDto? Subcategory { get; init; }
         public DateTime TransactionDateUtc { get; init; }
 
         private TransactionDto(
@@ -24,7 +25,8 @@ namespace Domestica.Budget.Application.DataTransferObjects
             MoneyDto transactionAmount,
             TransactionCategoryDto? category,
             DateTime transactionDateUtc,
-            string transactionId)
+            string transactionId,
+            TransactionSubcategoryDto? subcategory)
         {
             AccountId = accountId;
             FromAccountId = fromAccountId;
@@ -35,11 +37,13 @@ namespace Domestica.Budget.Application.DataTransferObjects
             Category = category;
             TransactionDateUtc = transactionDateUtc;
             TransactionId = transactionId;
+            Subcategory = subcategory;
         }
 
         [JsonConstructor]
-        private TransactionDto()
+        private TransactionDto(TransactionSubcategoryDto? subcategory)
         {
+            Subcategory = subcategory;
         }
 
         internal static TransactionDto FromDomainObject(Transaction domainObject)
@@ -55,7 +59,8 @@ namespace Domestica.Budget.Application.DataTransferObjects
                 transactionAmount,
                 TransactionCategoryDto.FromDomainObject(domainObject.Category),
                 domainObject.TransactionDateUtc,
-                domainObject.Id.Value.ToString());
+                domainObject.Id.Value.ToString(),
+                TransactionSubcategoryDto.FromDomainObject(domainObject.Subcategory));
         }
     }
 }

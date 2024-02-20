@@ -18,7 +18,7 @@ export default observer (function NewInternalTransactionsTable({newTransactions}
                     <TableRow>
                         <TableCell colSpan={5}>
                             <Typography variant={'h6'} sx={{width: '100%', textAlign: 'center'}}>
-                                New internal transactions
+                                Recent internal transactions
                             </Typography>
                         </TableCell>
                     </TableRow>

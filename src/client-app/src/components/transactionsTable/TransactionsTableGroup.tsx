@@ -107,6 +107,9 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                                     <strong>Category</strong>
                                 </TableCell>
                         }
+                        <TableCell align={'center'}>
+                            <strong>Subcategory</strong>
+                        </TableCell>
                         {
                             groupCriterion !== 'entity' &&
                                 <TableCell align={'center'}>
@@ -183,6 +186,9 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                                             </Button>
                                         </TableCell>
                                 }
+                                <TableCell align={'center'}>
+                                    {transaction.subcategory ? transaction.subcategory.value : '-'}
+                                </TableCell>
                                 {
                                     groupCriterion !== 'entity' &&
                                         <TableCell align={'center'}>

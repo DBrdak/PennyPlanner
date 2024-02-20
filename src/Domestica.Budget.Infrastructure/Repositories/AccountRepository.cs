@@ -1,4 +1,6 @@
 ﻿using Domestica.Budget.Domain.Accounts;
+using Domestica.Budget.Domain.Transactions;
+using Domestica.Budget.Domain.TransactionSubcategories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domestica.Budget.Infrastructure.Repositories
@@ -13,7 +15,8 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
             return await DbContext.Set<Account>()
                 .Include(a => a.Transactions)
-                .ThenInclude(t => t.Category)
+                .ThenInclude(t => t.Subcategory)
+                .ThenInclude(s => s.Category)
                 .Where(/*a => a.UserId == userId*/ x=> true)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);

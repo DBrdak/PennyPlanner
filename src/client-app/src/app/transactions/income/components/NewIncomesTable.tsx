@@ -17,9 +17,9 @@ export default observer (function NewIncomesTable({newIncomes}: NewIncomesTableP
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell colSpan={5}>
+                        <TableCell colSpan={6}>
                             <Typography variant={'h6'} sx={{width: '100%', textAlign: 'center'}}>
-                                New income
+                                Recent income
                             </Typography>
                         </TableCell>
                     </TableRow>
@@ -32,6 +32,9 @@ export default observer (function NewIncomesTable({newIncomes}: NewIncomesTableP
                         </TableCell>
                         <TableCell align={'center'}>
                             <strong>Category</strong>
+                        </TableCell>
+                        <TableCell align={'center'}>
+                            <strong>Subcategory</strong>
                         </TableCell>
                         <TableCell align={'center'}>
                             <strong>Amount</strong>
@@ -52,6 +55,9 @@ export default observer (function NewIncomesTable({newIncomes}: NewIncomesTableP
                             </TableCell>
                             <TableCell align={'center'}>
                                 {transaction.categoryValue}
+                            </TableCell>
+                            <TableCell align={'center'}>
+                                {transaction.subcategoryValue}
                             </TableCell>
                             <TableCell align={'center'}>
                                 {formatNumber(transaction.transactionAmount)} {'USD' /*TODO Retrieve user currency*/}

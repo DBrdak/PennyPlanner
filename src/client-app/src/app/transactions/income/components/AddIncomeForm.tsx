@@ -26,11 +26,13 @@ interface AddIncomeFormProps {
     accounts: Account[]
     categories: string[]
     senders: string[]
+    subcategories: string[]
     handleFormSubmit: (values: AddIncomeTransactionCommand) => void
 }
 
-export function AddIncomeForm({ accounts, categories, senders, handleFormSubmit }: AddIncomeFormProps) {
+export function AddIncomeForm({ accounts, categories, senders, subcategories, handleFormSubmit }: AddIncomeFormProps) {
     const [newCategoryMode, setNewCategoryMode] = useState(false)
+    const [newSubcategoryMode, setNewSubcategoryMode] = useState(false)
     const [newSenderMode, setNewSenderMode] = useState(false)
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
@@ -44,6 +46,11 @@ export function AddIncomeForm({ accounts, categories, senders, handleFormSubmit 
             .required('Category is required')
             .max(30, 'Transaction category name must be between 1 and 30 characters')
             .matches(ValidationConstants.noSpecialCharactersPattern, 'Special characters are not allowed in Transaction category name'),
+        subcategoryValue: Yup
+            .string()
+            .required('Subcategory is required')
+            .max(30, 'Transaction subcategory name must be between 1 and 30 characters')
+            .matches(ValidationConstants.noSpecialCharactersPattern, 'Special characters are not allowed in Transaction subcategory name'),
         transactionAmount: Yup
             .number()
             .required("Amount of transaction is required")
@@ -139,6 +146,29 @@ export function AddIncomeForm({ accounts, categories, senders, handleFormSubmit 
                                     <MenuItem key={index} value={categoryValue}>{categoryValue}</MenuItem>
                                 ))}
                                 <MenuItem key='newCategory' value='' onClick={() => setNewCategoryMode(true)}>New Category</MenuItem>
+                            </Select>
+                        </FormControl>
+                    )}
+                    {!values.categoryValue ? <></> :  newSubcategoryMode ? (
+                        <MyTextInput
+                            placeholder='Subcategory'
+                            name='subcategoryValue'
+                            style={{ minWidth: '60%', maxWidth: '400px' }}
+                            inputProps={{ endAdornment: <IconButton onClick={() => setNewSubcategoryMode(false)}><Cancel /></IconButton> }}
+                        />
+                    ) : (
+                        <FormControl sx={{ minWidth: '60%', maxWidth: '400px' }}>
+                            <InputLabel>Subcategory</InputLabel>
+                            <Select
+                                name='subcategoryValue'
+                                value={values.subcategoryValue}
+                                onChange={handleChange}
+                                label='Subcategory'
+                            >
+                                {subcategories.map((subcategoryValue, index) => (
+                                    <MenuItem key={index} value={subcategoryValue}>{subcategoryValue}</MenuItem>
+                                ))}
+                                <MenuItem key='newSubcategory' value='' onClick={() => setNewSubcategoryMode(true)}>New Subcategory</MenuItem>
                             </Select>
                         </FormControl>
                     )}

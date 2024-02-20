@@ -47,7 +47,7 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
             var sender = await _transactionEntityRepository.GetByNameIncludeAsync<TransactionSender, IEnumerable<Transaction>>(
                 new(request.SenderName),
                 s => s.Transactions,
-                cancellationToken) as TransactionSender;
+                cancellationToken);
 
             var category = await GetOrCreateCategory(new(request.CategoryValue), cancellationToken);
 

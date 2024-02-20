@@ -28,11 +28,13 @@ interface AddOutcomeFormProps {
     handleFormSubmit: (values: AddOutcomeTransactionCommand) => Promise<void>;
     accounts: Account[];
     categories: string[]
+    subcategories: string[]
 }
 
-export function AddOutcomeForm({recipients, handleFormSubmit, accounts, categories}: AddOutcomeFormProps) {
+export function AddOutcomeForm({recipients, handleFormSubmit, accounts, categories, subcategories}: AddOutcomeFormProps) {
     const [newCategoryMode, setNewCategoryMode] = useState(false)
     const [newRecipientMode, setNewRecipientMode] = useState(false)
+    const [newSubcategoryMode, setNewSubcategoryMode] = useState(false)
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
     const validationSchema = Yup.object({
@@ -140,6 +142,29 @@ export function AddOutcomeForm({recipients, handleFormSubmit, accounts, categori
                                     <MenuItem key={index} value={categoryValue}>{categoryValue}</MenuItem>
                                 ))}
                                 <MenuItem key='newCategory' value='' onClick={() => setNewCategoryMode(true)}>New Category</MenuItem>
+                            </Select>
+                        </FormControl>
+                    )}
+                    {!values.categoryValue ? <></> :  newSubcategoryMode ? (
+                        <MyTextInput
+                            placeholder='Subcategory'
+                            name='subcategoryValue'
+                            style={{ minWidth: '60%', maxWidth: '400px' }}
+                            inputProps={{ endAdornment: <IconButton onClick={() => setNewSubcategoryMode(false)}><Cancel /></IconButton> }}
+                        />
+                    ) : (
+                        <FormControl sx={{ minWidth: '60%', maxWidth: '400px' }}>
+                            <InputLabel>Subcategory</InputLabel>
+                            <Select
+                                name='subcategoryValue'
+                                value={values.subcategoryValue}
+                                onChange={handleChange}
+                                label='Subcategory'
+                            >
+                                {subcategories.map((subcategoryValue, index) => (
+                                    <MenuItem key={index} value={subcategoryValue}>{subcategoryValue}</MenuItem>
+                                ))}
+                                <MenuItem key='newSubcategory' value='' onClick={() => setNewSubcategoryMode(true)}>New Subcategory</MenuItem>
                             </Select>
                         </FormControl>
                     )}

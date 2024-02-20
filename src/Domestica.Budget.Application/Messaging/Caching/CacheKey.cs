@@ -1,5 +1,6 @@
 ﻿using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.BudgetPlans;
+using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.Transactions;
 
@@ -16,6 +17,7 @@ namespace Domestica.Budget.Application.Caching
         internal static CacheKey BudgetPlans(string? userId) => new (nameof(BudgetPlan), userId);
         internal static CacheKey TransactionEntities(string? userId) => new (nameof(TransactionEntity), userId);
         internal static CacheKey Transactions(string? userId) => new (nameof(Transaction), userId);
+        internal static CacheKey TransactionCategories(string? userId) => new (nameof(TransactionCategory), userId);
 
         internal static IReadOnlyCollection<CacheKey> All(string? userId) =>
             new[]

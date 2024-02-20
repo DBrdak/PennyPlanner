@@ -26,8 +26,13 @@ namespace Domestica.Budget.Application.DataTransferObjects
         {
         }
 
-        internal static TransactionSubcategoryDto FromDomainObject(TransactionSubcategory domainObject)
+        internal static TransactionSubcategoryDto? FromDomainObject(TransactionSubcategory? domainObject)
         {
+            if (domainObject is null)
+            {
+                return null;
+            }
+
             return new(domainObject.Id.Value.ToString(), domainObject.Value.Value, domainObject.CategoryId.Value.ToString());
         }
     }

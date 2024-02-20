@@ -15,7 +15,8 @@ namespace Domestica.Budget.API.Extensions
         {
             services.AddHealthChecks()
                 .AddApplicationStatus()
-                .AddNpgSql(configuration.GetConnectionString("Database") ?? string.Empty);
+                .AddNpgSql(configuration.GetConnectionString("Database") ?? string.Empty)
+                .AddRedis(configuration.GetConnectionString("Cache") ?? string.Empty);
 
             services.AddInfrastructure(configuration);
             services.AddApplication();

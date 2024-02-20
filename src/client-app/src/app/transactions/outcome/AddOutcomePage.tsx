@@ -16,6 +16,7 @@ export default observer (function AddOutcomePage() {
     const {accountStore, transactionEntityStore, transactionStore, categoryStore} = useStore()
     const [recipientNames, setRecipientNames] = useState<string[]>([])
     const [categoryValues, setCategoryValues] = useState<string[]>([])
+    const [subcategoryValues, setSubcategoryValues] = useState<string[]>([])
     const [newOutcomes, setNewOutcomes] = useState<AddOutcomeTransactionCommand[]>([])
     const navigate = useNavigate()
     useTitle('Outcome')
@@ -38,9 +39,11 @@ export default observer (function AddOutcomePage() {
     async function handleFormSubmit(values: AddOutcomeTransactionCommand) {
         await transactionStore.addTransaction(new AddOutcomeTransactionCommand(values)).then(() => {
             !recipientNames.some(name => name === values.recipientName) &&
-            setRecipientNames([...recipientNames, values.recipientName])
+                setRecipientNames([...recipientNames, values.recipientName])
             !categoryValues.some(value => value === values.categoryValue) &&
-            setCategoryValues([...categoryValues, values.categoryValue])
+                setCategoryValues([...categoryValues, values.categoryValue])
+            !subcategoryValues.some(value => value === values.subcategoryValue) &&
+                setSubcategoryValues([...subcategoryValues, values.subcategoryValue])
             setNewOutcomes([...newOutcomes, values])
         })
     }
@@ -79,6 +82,7 @@ export default observer (function AddOutcomePage() {
                                         accounts={accountStore.accounts}
                                         recipients={recipientNames}
                                         categories={categoryValues}
+                                        subcategories={subcategoryValues}
                                         handleFormSubmit={handleFormSubmit}
                                     />
                                 </Grid>
