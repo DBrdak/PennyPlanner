@@ -4,6 +4,9 @@ import React, {useState} from "react";
 import {DeleteTwoTone, EditTwoTone, KeyboardArrowDown, KeyboardArrowUp} from "@mui/icons-material";
 import {UpdateTransactionCategoryForm} from "./UpdateTransactionCategoryForm";
 import {TransactionCategory} from "../../../../models/transactionCategories/transactionCategory";
+import {observer} from "mobx-react-lite";
+import useSelectedCategory from "../../../../utils/hooks/useSelectedCategory";
+import {useStore} from "../../../../stores/store";
 
 interface TransactionCategoryTileProps {
     transactionCategory: TransactionCategory
@@ -12,9 +15,17 @@ interface TransactionCategoryTileProps {
     loading: boolean
 }
 
-export function TransactionCategoryTile({transactionCategory, onDelete, onEdit, loading}: TransactionCategoryTileProps) {
+export default observer (function TransactionCategoryTile({transactionCategory, onDelete, onEdit, loading}: TransactionCategoryTileProps) {
     const [editMode, setEditMode] = useState(false)
+    const [subcategoriesVisible, setSubcategoriesVisible] = useState(false)
+    const {categoryStore} = useStore()
+    const selectedCategory = useSelectedCategory()
 
+    function handleSubcategoriesClick(transactionCategoryId: string) {
+        categoryStore.selectedCategory?.transactionCategoryId === transactionCategoryId
+            ? categoryStore.setSelectedCategory(undefined)
+            : categoryStore.setSelectedCategory(transactionCategoryId)
+    }
 
     return (
         <Grid item xs={12} md={4} lg={3} alignItems="center" justifyContent="center"  sx={{
@@ -77,7 +88,7 @@ export function TransactionCategoryTile({transactionCategory, onDelete, onEdit, 
                                         </IconButton>
                                     </ButtonGroup>
                                     <IconButton
-                                        onClick={() => console.log()}
+                                        onClick={() => handleSubcategoriesClick(transactionCategory.transactionCategoryId)}
                                         sx={{
                                             width: '100%',
                                             borderRadius: 0,
@@ -86,7 +97,11 @@ export function TransactionCategoryTile({transactionCategory, onDelete, onEdit, 
                                         <Typography variant={'caption'}>
                                             Subcategories
                                         </Typography>
-                                        {false ? <KeyboardArrowUp/> : <KeyboardArrowDown/>}
+                                        {
+                                            selectedCategory?.transactionCategoryId === transactionCategory.transactionCategoryId ?
+                                                <KeyboardArrowUp/> :
+                                                <KeyboardArrowDown/>
+                                        }
                                     </IconButton>
                                 </Grid>
                             </Grid>
@@ -94,4 +109,4 @@ export function TransactionCategoryTile({transactionCategory, onDelete, onEdit, 
             </TilePaper>
         </Grid>
     );
-}
+})

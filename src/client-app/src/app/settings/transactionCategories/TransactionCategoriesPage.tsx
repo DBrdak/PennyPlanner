@@ -1,18 +1,23 @@
 import AppOverlay from "../../../components/appOverlay/AppOverlay";
-import {CircularProgress, Grid, Paper, Typography} from "@mui/material";
+import {Grid, Paper, Typography} from "@mui/material";
 import theme from "../../theme";
 import {useStore} from "../../../stores/store";
 import {useEffect, useState} from "react";
 import ConfirmModal from "../../../components/ConfirmModal";
-import {TransactionCategoryTile} from "./components/TransactionCategoryTile";
-import {AddTransactionCategoryTile} from "./components/AddTransactionCategoryTile";
+import TransactionCategoryTile from "./components/TransactionCategoryTile";
 import useCategories from "../../../utils/hooks/useCategories";
 import {AddTransactionCategoryCommand} from "../../../models/requests/categories/addTransactionCategoryCommand";
 import {observer} from "mobx-react-lite";
+import TransactionCategoriesView from "./components/TransactionCategoriesView";
+import {LoadingTile} from "./components/LoadingTile";
+import {TransactionSubcategoriesView} from "./components/TransactionSubcategoriesView";
+import {
+    AddTransactionSubcategoryCommand
+} from "../../../models/requests/subcategories/addTransactionSubcategoryCommand";
 
 export default observer(function TransactionCategoriesPage() {
-    const {categoryStore, modalStore} = useStore()
-    const [tileLoadingIds, setTileLoadingIds] = useState<string[]>([])
+    const {categoryStore, subcategoryStore, modalStore} = useStore()
+    const [loadingCategoriesId, setLoadingCategoriesId] = useState<string[]>([])
     const transactionCategories = useCategories()
     const [initialLoading, setInitialLoading] = useState(true)
 
@@ -31,26 +36,35 @@ export default observer(function TransactionCategoriesPage() {
             important
             text={`You are about to delete ${transactionCategoryValue}. All related transactions and budget plans will lose data about transaction category. Are you sure you want to proceed?`}
             onConfirm={() => {
-                setTileLoadingIds(prev => [...prev, transactionCategoryId])
+                setLoadingCategoriesId(prev => [...prev, transactionCategoryId])
                 categoryStore.deleteTransactionCategory(transactionCategoryId).then(() => {
-                    setTileLoadingIds(prev => prev.filter(id => id !== transactionCategoryId))
+                    setLoadingCategoriesId(prev => prev.filter(id => id !== transactionCategoryId))
                 })
             }}
         />)
     }
 
     const handleEdit = (transactionCategoryId: string, newValue: string) => {
-        setTileLoadingIds(prev => [...prev, transactionCategoryId])
+        setLoadingCategoriesId(prev => [...prev, transactionCategoryId])
         categoryStore.updateTransactionCategory(transactionCategoryId, newValue).then(() => {
-            setTileLoadingIds(prev => prev.filter(id => id !== transactionCategoryId))
+            setLoadingCategoriesId(prev => prev.filter(id => id !== transactionCategoryId))
         })
     }
 
-    function handleCreate(command: AddTransactionCategoryCommand) {
-        setTileLoadingIds(prev => [...prev, command.type])
-        categoryStore.addTransactionCategory(command).then(() => {
-            setTileLoadingIds(prev => prev.filter(id => id !== command.type))
-        })
+    function handleCreate(command: AddTransactionCategoryCommand | AddTransactionSubcategoryCommand) {
+
+        if((command as AddTransactionCategoryCommand).type){
+            setLoadingCategoriesId(prev => [...prev, (command as AddTransactionCategoryCommand).type])
+            categoryStore.addTransactionCategory(command as AddTransactionCategoryCommand).then(() => {
+                setLoadingCategoriesId(prev => prev.filter(id => id !== (command as AddTransactionCategoryCommand).type))
+            })
+        } else {
+            setLoadingCategoriesId(prev => [...prev, command.value]) // TODO Fix loading
+            subcategoryStore.addTransactionSubcategory(command as AddTransactionSubcategoryCommand).then(() => {
+                setLoadingCategoriesId(prev => prev.filter(id => id !== command.value))
+            })
+        }
+
     }
 
     return (
@@ -79,35 +93,25 @@ export default observer(function TransactionCategoriesPage() {
                 </Paper>
                 {
                     initialLoading ?
-                        <Grid item xs={12} sx={{
-                            minHeight: '200px',
-                            height: '33%',
-                            marginBottom: 3,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <CircularProgress />
-                        </Grid>
+                        <LoadingTile />
                         :
-                        <>
-                            {
-                                getIncomeCategories().map(transactionCategory => (
-                                    <TransactionCategoryTile
-                                        key={transactionCategory.transactionCategoryId}
-                                        transactionCategory={transactionCategory}
-                                        onDelete={handleDelete}
-                                        onEdit={handleEdit}
-                                        loading={tileLoadingIds.some(id => id === transactionCategory.transactionCategoryId)}
-                                    />
-                                ))
-                            }
-                            <AddTransactionCategoryTile
-                                onCreate={handleCreate}
-                                type={'income'}
-                                loading={tileLoadingIds.some(id => id === 'income')}
+                        categoryStore.selectedCategory ?
+                            <TransactionSubcategoriesView
+                                handleDelete={handleDelete}
+                                handleEdit={handleEdit}
+                                handleCreate={handleCreate}
+                                transactionSubcategories={categoryStore.selectedCategory.subcategories}
+                                loadingSubcategoriesId={loadingCategoriesId}
                             />
-                        </>
+                            :
+                            <TransactionCategoriesView
+                                handleDelete={handleDelete}
+                                handleEdit={handleEdit}
+                                handleCreate={handleCreate}
+                                transactionCategories={getIncomeCategories()}
+                                loadingCategoriesId={loadingCategoriesId}
+                                type={'income'}
+                            />
                 }
                 <Paper sx={{
                     width: '100%',
@@ -123,35 +127,25 @@ export default observer(function TransactionCategoriesPage() {
                 </Paper>
                 {
                     initialLoading ?
-                        <Grid item xs={12} sx={{
-                            minHeight: '200px',
-                            height: '33%',
-                            marginBottom: 3,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <CircularProgress />
-                        </Grid>
+                        <LoadingTile />
                         :
-                        <>
-                            {
-                                getOutcomeCategories().map(transactionCategory => (
-                                    <TransactionCategoryTile
-                                        key={transactionCategory.transactionCategoryId}
-                                        transactionCategory={transactionCategory}
-                                        onDelete={handleDelete}
-                                        onEdit={handleEdit}
-                                        loading={tileLoadingIds.some(id => id === transactionCategory.transactionCategoryId)}
-                                    />
-                                ))
-                            }
-                            <AddTransactionCategoryTile
-                                onCreate={handleCreate}
-                                type={'outcome'}
-                                loading={tileLoadingIds.some(id => id === 'outcome')}
+                        categoryStore.selectedCategory ?
+                            <TransactionSubcategoriesView
+                                handleDelete={handleDelete}
+                                handleEdit={handleEdit}
+                                handleCreate={handleCreate}
+                                transactionSubcategories={categoryStore.selectedCategory.subcategories}
+                                loadingSubcategoriesId={loadingCategoriesId}
                             />
-                        </>
+                            :
+                            <TransactionCategoriesView
+                                handleDelete={handleDelete}
+                                handleEdit={handleEdit}
+                                handleCreate={handleCreate}
+                                transactionCategories={getOutcomeCategories()}
+                                loadingCategoriesId={loadingCategoriesId}
+                                type={'outcome'}
+                            />
                 }
             </Grid>
         </AppOverlay>

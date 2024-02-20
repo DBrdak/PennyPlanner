@@ -13,7 +13,7 @@ const useCategories = (account?: Account) => {
                 ...account.transactions.map(t => t.category)
             ]))
 
-            if(categoryStore.categories.length < requiredCategories.length) {
+            if(categoryStore.categories.length !== requiredCategories.length) {
                 loadCategories()
             }
         } else {

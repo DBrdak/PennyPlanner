@@ -5,6 +5,7 @@ import {AddTransactionCategoryCommand} from "../models/requests/categories/addTr
 
 export default class CategoryStore {
     private categoriesRegistry: Map<string, TransactionCategory> = new Map<string, TransactionCategory>()
+    private selectedCategoryId?: string
     loading: boolean = false
 
     constructor() {
@@ -15,12 +16,22 @@ export default class CategoryStore {
         return Array.from(this.categoriesRegistry.values())
     }
 
+    get selectedCategory() {
+        return this.selectedCategoryId ?
+            this.categoriesRegistry.get(this.selectedCategoryId)
+            : undefined
+    }
+
     private setLoading(state: boolean) {
         this.loading = state
     }
 
     private setCategory(category: TransactionCategory) {
         this.categoriesRegistry.set(category.transactionCategoryId, category)
+    }
+
+    setSelectedCategory(categoryId: string | undefined) {
+        this.selectedCategoryId = categoryId
     }
 
     async loadCategories() {

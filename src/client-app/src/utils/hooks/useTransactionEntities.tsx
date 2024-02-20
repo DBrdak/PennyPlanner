@@ -14,7 +14,7 @@ const useTransactionEntities = (account?: Account) => {
                 ...account.transactions.flatMap(t => t.recipientId)
             ]))
 
-            if(transactionEntityStore.transactionEntities.length < requiredTransactionEntities.length) {
+            if(transactionEntityStore.transactionEntities.length !== requiredTransactionEntities.length) {
                 loadTransactionEntities()
             }
         } else {
