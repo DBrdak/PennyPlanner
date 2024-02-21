@@ -12,7 +12,10 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
                 .WithMessage("Budgeted amount must be greater than 0")
                 .Must(values => TransactionCategoryType.All.Any(tcType => tcType.Value == values.CategoryType))
                 .WithMessage("Invalid Transaction category type");
-            ;
+
+            RuleFor(x => x.BudgetPlanForDate)
+                .GreaterThanOrEqualTo(DateTime.UtcNow)
+                .WithMessage("Cannot create budget plan for past month");
         }
     }
 }

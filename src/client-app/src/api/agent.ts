@@ -15,6 +15,9 @@ import {Transaction} from "../models/transactions/transaction";
 import {TransactionCategory} from "../models/transactionCategories/transactionCategory";
 import {AddTransactionCategoryCommand} from "../models/requests/categories/addTransactionCategoryCommand";
 import {AddTransactionSubcategoryCommand} from "../models/requests/subcategories/addTransactionSubcategoryCommand";
+import {DateTimeRange} from "../models/shared/dateTimeRange";
+import {BudgetPlan} from "../models/budgetPlans/budgetPlan";
+import {SetBudgetPlanCommand} from "../models/requests/budgetPlans/setBudgetPlanCommand";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -81,10 +84,9 @@ const accounts = {
 }
 
 const budgetPlans = {
-    getBudgetPlan: (params: URLSearchParams) => axios.get('/budget-plans', {params}).then(responseBody),
-    createBudgetPlan: (period: DateTimeRange) => axios.post('/budget-plans', period),
-    updateBudgetPlan: (budgetPlanId: string, categories: BudgetedTransactionCategoryValues[]) =>
-        axios.put(`/budget-plans/${budgetPlanId}`, categories),
+    getBudgetPlan: (params: URLSearchParams) => axios.get<BudgetPlan | null>('/budget-plans', {params}).then(responseBody),
+    setBudgetPlan: (command: SetBudgetPlanCommand) =>
+        axios.post(`/budget-plans`, command),
     updateBudgetPlanCategory: (budgetPlanId: string, budgetPlanCategory: string, values: UpdateBudgetPlanCategoryValues) =>
         axios.put(`/budget-plans/${budgetPlanId}/${budgetPlanCategory}`, values),
 }

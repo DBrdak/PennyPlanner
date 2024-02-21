@@ -29,11 +29,12 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
         {
             //TODO Retrive user id
 
-            var budgetPlan = await _budgetPlanRepository.GetByIdAsync(request.BudgetPlanId, cancellationToken);
+            var budgetPlan = await _budgetPlanRepository.GetBudgetPlanByDateAsync(request.BudgetPlanForDate, cancellationToken);
 
             if (budgetPlan is null)
             {
-                return Result.Failure<BudgetPlan>(Error.NotFound("Budget plan not found"));
+                budgetPlan = BudgetPlan.CreateForMonth(request.BudgetPlanForDate);
+                await _budgetPlanRepository.AddAsync(budgetPlan, cancellationToken);
             }
             
             //TODO Fetch currency from user
@@ -41,25 +42,10 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
 
             foreach (var budgetedTransactionCategoryValues in request.BudgetedTransactionCategoryValues)
             {
-                var category = await _categoryRepository.GetByValueAsync<TransactionCategory>(
-                    new(budgetedTransactionCategoryValues.CategoryValue),
+                var category = await GetOrCreateCategory(
+                    new (budgetedTransactionCategoryValues.CategoryValue), 
+                    TransactionCategoryType.FromString(budgetedTransactionCategoryValues.CategoryType), 
                     cancellationToken);
-
-                if (category is null)
-                {
-                    var categoryCreateResult = await CreateCategory(
-                        budgetedTransactionCategoryValues.CategoryValue,
-                        TransactionCategoryType.FromString(budgetedTransactionCategoryValues.CategoryValue) == TransactionCategoryType.Income ?
-                            TransactionCategoryType.Income :
-                            TransactionCategoryType.Outcome);
-
-                    if (categoryCreateResult.IsFailure)
-                    {
-                        return Result.Failure<BudgetPlan>(categoryCreateResult.Error);
-                    }
-
-                    category = categoryCreateResult.Value;
-                }
 
                 budgetPlan.SetBudgetForCategory(
                     category!,
@@ -68,21 +54,32 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
-            if (isSuccessful)
+            return isSuccessful 
+                ? Result.Success(budgetPlan) 
+                : Result.Failure<BudgetPlan>(Error.TaskFailed("Problem while setting budgeted categories"));
+        }
+
+        private async Task<TransactionCategory?> GetOrCreateCategory(TransactionCategoryValue categoryValue, TransactionCategoryType categoryType, CancellationToken cancellationToken)
+        {
+            return await _categoryRepository.GetByValueAsync<TransactionCategory>(
+                categoryValue,
+                cancellationToken) ??
+                           CreateCategory(categoryValue, categoryType);
+        }
+
+        private TransactionCategory CreateCategory(TransactionCategoryValue value, TransactionCategoryType type)
+        {
+            if (type == TransactionCategoryType.Income)
             {
-                return Result.Success(budgetPlan);
+                return new IncomeTransactionCategory(value);
             }
 
-            return Result.Failure<BudgetPlan>(Error.TaskFailed("Problem while setting budgeted categories"));
-        }
-        private async Task<Result<TransactionCategory>> CreateCategory(string categoryValue, TransactionCategoryType categoryType)
-        {
-            using var scope = _serviceScopeFactory.CreateScope();
-            var mediator = scope.ServiceProvider.GetRequiredService<ISender>();
-            var command = new AddTransactionCategoryCommand(categoryValue, categoryType.Value);
-            var categoryCreateResult = await mediator.Send(command);
+            if (type == TransactionCategoryType.Outcome)
+            {
+                return new OutcomeTransactionCategory(value);
+            }
 
-            return categoryCreateResult;
+            return null;
         }
     }
 }

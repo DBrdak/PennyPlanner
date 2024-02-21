@@ -8,19 +8,19 @@ namespace Domestica.Budget.Application.DataTransferObjects
         public MoneyDto BudgetedAmount { get; init; }
         public MoneyDto ActualAmount { get; init; }
 
-        private BudgetedTransactionCategoryDto(TransactionCategoryDto Category,
-            MoneyDto BudgetedAmount,
-            MoneyDto ActualAmount)
+        private BudgetedTransactionCategoryDto(
+            TransactionCategoryDto category,
+            MoneyDto budgetedAmount,
+            MoneyDto actualAmount)
         {
-            this.Category = Category;
-            this.BudgetedAmount = BudgetedAmount;
-            this.ActualAmount = ActualAmount;
+            Category = category;
+            BudgetedAmount = budgetedAmount;
+            ActualAmount = actualAmount;
         }
 
         [JsonConstructor]
-        private BudgetedTransactionCategoryDto()
-        {
-        }
+        private BudgetedTransactionCategoryDto(string budgetedTransactionCategoryId)
+        { }
 
         internal static BudgetedTransactionCategoryDto FromDomainObject(
             Domestica.Budget.Domain.BudgetPlans.BudgetedTransactionCategory domainObject)

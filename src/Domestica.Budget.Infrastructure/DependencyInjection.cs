@@ -1,5 +1,5 @@
 ﻿using CommonAbstractions.DB;
-using Domestica.Budget.Application.Caching;
+using Domestica.Budget.Application.Messaging.Caching;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.BudgetPlans;
 using Domestica.Budget.Domain.TransactionCategories;

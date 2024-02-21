@@ -1,0 +1,5 @@
+export function BudgetedCategoryCreateCard() {
+    return (
+        <></>
+    );
+}

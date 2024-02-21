@@ -1,5 +1,6 @@
 
 export interface BudgetedTransactionCategoryValues {
-    category: string | null
+    categoryValue: string
+    categoryType: string
     budgetedAmount: number
 }

@@ -2,11 +2,15 @@ import {Button, ButtonGroup, Typography, useMediaQuery, useTheme} from "@mui/mat
 import {useNavigate} from "react-router-dom";
 import '../../styles/index.css'
 import GradientContainer from "./GradientContainer";
+import useTitle from "../../utils/hooks/useTitle";
+import {observer} from "mobx-react-lite";
 
 const WelcomePage: React.FC = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const navigate = useNavigate()
+
+    useTitle()
 
     const headerStyles: React.CSSProperties = {
         color: theme.palette.common.white,
@@ -67,4 +71,4 @@ const WelcomePage: React.FC = () => {
     );
 };
 
-export default WelcomePage;
+export default observer(WelcomePage)

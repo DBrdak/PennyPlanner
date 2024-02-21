@@ -1,7 +1,7 @@
 import AppOverlay from "../../components/appOverlay/AppOverlay";
-import {TilesLayout} from "../../components/tilesLayout/TilesLayout";
 import {observer} from "mobx-react-lite";
 import useTitle from "../../utils/hooks/useTitle";
+import BudgetPlanContainer from "./components/BudgetPlanContainer";
 
 export default observer (function BudgetPlansPage() {
 
@@ -9,7 +9,7 @@ export default observer (function BudgetPlansPage() {
 
     return (
         <AppOverlay>
-
+            <BudgetPlanContainer />
         </AppOverlay>
     );
 })

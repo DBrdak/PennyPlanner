@@ -9,11 +9,16 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
         }
 
-        public async Task<BudgetPlan?> GetBudgetPlanByDateAsync(DateTime dateTime, CancellationToken cancellationToken)
+        public async Task<BudgetPlan?> GetBudgetPlanByDateAsync(DateTime dateTime, CancellationToken cancellationToken, bool asNoTracking = false)
         {
-            return await DbContext.Set<BudgetPlan>()
-                .Include(bp => bp.Transactions)
-                .FirstOrDefaultAsync(
+            IQueryable<BudgetPlan> query = DbContext.Set<BudgetPlan>().Include(bp => bp.Transactions);
+
+            if (asNoTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            return await query.FirstOrDefaultAsync(
                     budgetPlan => budgetPlan.BudgetPeriod.Start <= dateTime && budgetPlan.BudgetPeriod.End >= dateTime /*&& budgetPlan.UserId == userId*/,
                     cancellationToken);
         }

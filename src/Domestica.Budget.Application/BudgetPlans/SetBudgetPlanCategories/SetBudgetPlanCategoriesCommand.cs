@@ -4,7 +4,7 @@ using Domestica.Budget.Domain.BudgetPlans;
 namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
 {
     public sealed record SetBudgetPlanCategoriesCommand(
-        BudgetPlanId BudgetPlanId,
+        DateTime BudgetPlanForDate,
         IEnumerable<BudgetedTransactionCategoryValues> BudgetedTransactionCategoryValues) : ICommand<BudgetPlan>
     {
     }

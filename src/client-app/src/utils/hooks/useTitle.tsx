@@ -6,8 +6,10 @@ const useTitle = (staticTitle?: string, dynamicTitle?: string) => {
             document.title = dynamicTitle && `Budgetify | ${dynamicTitle}`
         } else if(staticTitle) {
             document.title = `Budgetify | ${staticTitle}`
+        } else {
+            document.title = 'Budgetify'
         }
-    }, [dynamicTitle])
+    }, [dynamicTitle, staticTitle])
 }
 
 export default useTitle

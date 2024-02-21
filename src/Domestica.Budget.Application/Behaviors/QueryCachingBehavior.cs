@@ -1,5 +1,5 @@
-﻿using Domestica.Budget.Application.Caching;
-using Domestica.Budget.Application.Messaging;
+﻿using Domestica.Budget.Application.Messaging;
+using Domestica.Budget.Application.Messaging.Caching;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Responses.DB;

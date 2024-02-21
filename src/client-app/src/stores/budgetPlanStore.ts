@@ -32,11 +32,11 @@ export default class BudgetPlanStore {
 
         this.setOnDate(onDate)
         const params = new URLSearchParams()
-        params.append('onDate', this.onDate.toString())
+        params.append('onDate', this.onDate.toISOString())
 
         try {
             const budgetPlan = await agent.budgetPlans.getBudgetPlan(params)
-            this.setBudgetPlan(budgetPlan)
+            budgetPlan && this.setBudgetPlan(budgetPlan)
         } catch (e) {
             console.log(e)
         } finally {

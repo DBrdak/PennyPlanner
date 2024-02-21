@@ -11,7 +11,7 @@ namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
                 .WithMessage("Specify whether you want to reset category or update budgeted amount");
 
             RuleFor(x => x.Values.NewBudgetAmount)
-                .Must(amount => !amount.HasValue || amount.Value > 0)
+                .Must(amount => amount is null or > 0)
                 .WithMessage("Budgeted amount must be greater than 0");
         }
     }
