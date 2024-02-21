@@ -21,7 +21,7 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
 
         public async Task<Result<Account>> Handle(AddAccountCommand request, CancellationToken cancellationToken)
         {
-            var isUniqueName = (await _accountRepository.BrowseUserAccounts()).All(a => a.Name.Value.ToLower() != request.NewAccountData.Name.ToLower());
+            var isUniqueName = (await _accountRepository.BrowseAccounts()).All(a => a.Name.Value.ToLower() != request.NewAccountData.Name.ToLower());
 
             if (!isUniqueName)
             {

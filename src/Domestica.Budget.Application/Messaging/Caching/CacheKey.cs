@@ -4,7 +4,7 @@ using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.Transactions;
 
-namespace Domestica.Budget.Application.Caching
+namespace Domestica.Budget.Application.Messaging.Caching
 {
     public sealed record CacheKey
     {
@@ -25,7 +25,8 @@ namespace Domestica.Budget.Application.Caching
                 Accounts(userId),
                 BudgetPlans(userId),
                 TransactionEntities(userId),
-                Transactions(userId)
+                Transactions(userId),
+                TransactionCategories(userId)
             };
 
         public override string ToString() => $"{UserId}:{Collection}";

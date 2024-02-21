@@ -1,5 +1,5 @@
 ﻿using CommonAbstractions.DB.Messaging;
-using Domestica.Budget.Application.Caching;
+using Domestica.Budget.Application.Messaging.Caching;
 
 namespace Domestica.Budget.Application.Messaging
 {

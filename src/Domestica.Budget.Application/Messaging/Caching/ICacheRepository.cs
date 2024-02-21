@@ -1,6 +1,6 @@
 ﻿using Responses.DB;
 
-namespace Domestica.Budget.Application.Caching
+namespace Domestica.Budget.Application.Messaging.Caching
 {
     public interface ICacheRepository
     {

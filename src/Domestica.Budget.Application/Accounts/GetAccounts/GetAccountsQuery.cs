@@ -1,6 +1,6 @@
-﻿using Domestica.Budget.Application.Caching;
-using Domestica.Budget.Application.DataTransferObjects;
+﻿using Domestica.Budget.Application.DataTransferObjects;
 using Domestica.Budget.Application.Messaging;
+using Domestica.Budget.Application.Messaging.Caching;
 
 namespace Domestica.Budget.Application.Accounts.GetAccounts
 {

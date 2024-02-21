@@ -9,8 +9,7 @@ export default observer (function BudgetPlansPage() {
 
     return (
         <AppOverlay>
-            <TilesLayout tiles={[
-            ]} />
+
         </AppOverlay>
     );
 })

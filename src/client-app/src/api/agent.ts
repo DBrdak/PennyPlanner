@@ -81,7 +81,7 @@ const accounts = {
 }
 
 const budgetPlans = {
-    getBudgetPlans: () => axios.get('/budget-plans').then(responseBody),
+    getBudgetPlan: (params: URLSearchParams) => axios.get('/budget-plans', {params}).then(responseBody),
     createBudgetPlan: (period: DateTimeRange) => axios.post('/budget-plans', period),
     updateBudgetPlan: (budgetPlanId: string, categories: BudgetedTransactionCategoryValues[]) =>
         axios.put(`/budget-plans/${budgetPlanId}`, categories),

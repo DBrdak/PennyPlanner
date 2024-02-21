@@ -20,14 +20,14 @@ namespace Domestica.Budget.Application.Accounts.UpdateAccount
         {
             //TODO Retrive user id
 
-            var account = await _accountRepository.GetUserAccountByIdAsync(new (Guid.Parse(request.AccountUpdateData.AccountId)), cancellationToken);
+            var account = await _accountRepository.GetAccountByIdAsync(new (Guid.Parse(request.AccountUpdateData.AccountId)), cancellationToken);
 
             if (account is null)
             {
                 return Result.Failure<Account>(Error.NotFound($"Account with ID: {request.AccountUpdateData.AccountId} not found"));
             }
 
-            var isUniqueName = (await _accountRepository.BrowseUserAccounts())
+            var isUniqueName = (await _accountRepository.BrowseAccounts())
                 .All(a => a.Name.Value.ToLower() != request.AccountUpdateData.Name.ToLower() ||
                           a.Id.Value.ToString() == request.AccountUpdateData.AccountId);
 

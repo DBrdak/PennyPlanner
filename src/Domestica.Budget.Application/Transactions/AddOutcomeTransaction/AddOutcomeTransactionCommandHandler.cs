@@ -38,7 +38,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
 
         public async Task<Result<Transaction>> Handle(AddOutcomeTransactionCommand request, CancellationToken cancellationToken)
         {
-            var sourceAccount = await _accountRepository.GetUserAccountByIdAsync(new(Guid.Parse(request.SourceAccountId)), cancellationToken);
+            var sourceAccount = await _accountRepository.GetAccountByIdAsync(new(Guid.Parse(request.SourceAccountId)), cancellationToken);
 
             if (sourceAccount is null)
             {

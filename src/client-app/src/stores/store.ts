@@ -6,6 +6,7 @@ import TransactionEntityStore from "./transactionEntityStore";
 import TransactionStore from "./transactionStore";
 import CategoryStore from "./categoryStore";
 import TransactionSubcategoryStore from "./transactionSubcategoryStore";
+import BudgetPlanStore from "./budgetPlanStore";
 
 interface Store {
   modalStore: ModalStore
@@ -15,6 +16,7 @@ interface Store {
   transactionStore: TransactionStore
   categoryStore: CategoryStore
   subcategoryStore: TransactionSubcategoryStore
+  budgetPlanStore: BudgetPlanStore
 }
 
 export const store: Store = {
@@ -25,6 +27,7 @@ export const store: Store = {
   transactionStore: new TransactionStore(),
   categoryStore: new CategoryStore(),
   subcategoryStore: new TransactionSubcategoryStore(),
+  budgetPlanStore: new BudgetPlanStore(),
 }
 
 export const StoreContext = createContext(store);

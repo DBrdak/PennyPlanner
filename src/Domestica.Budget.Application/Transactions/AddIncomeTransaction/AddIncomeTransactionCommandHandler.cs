@@ -37,7 +37,7 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
 
         public async Task<Result<Transaction>> Handle(AddIncomeTransactionCommand request, CancellationToken cancellationToken)
         {
-            var destinationAccount = await _accountRepository.GetUserAccountByIdAsync(new(Guid.Parse(request.DestinationAccountId)), cancellationToken);
+            var destinationAccount = await _accountRepository.GetAccountByIdAsync(new(Guid.Parse(request.DestinationAccountId)), cancellationToken);
 
             if (destinationAccount is null)
             {
@@ -80,9 +80,9 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
-            if (IsNewSender(sender))
+            if (IsNewSender(sender!))
             {
-                _transactionEntityRepository.Update(sender);
+                _transactionEntityRepository.Update(sender!);
                 isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
             }
 
@@ -111,9 +111,9 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
                    new(categoryValue);
         }
 
-        private static bool IsNewSender(TransactionSender? sender)
+        private static bool IsNewSender(TransactionSender sender)
         {
-            return sender!.Transactions.Count == 1;
+            return sender.Transactions.Count == 1;
         }
 
         private async Task<Result<TransactionEntity>> CreateSender(string senderName)

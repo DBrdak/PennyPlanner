@@ -11,20 +11,23 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
         }
 
-        public async Task<List<Account>> BrowseUserAccounts(CancellationToken cancellationToken = default)
+        public async Task<List<Account>> BrowseAccounts(CancellationToken cancellationToken = default)
         {
             return await DbContext.Set<Account>()
                 .Include(a => a.Transactions)
                 .ThenInclude(t => t.Subcategory)
-                .ThenInclude(s => s.Category)
+                .Include(a => a.Transactions)
+                .ThenInclude(t => t.Category)
                 .Where(/*a => a.UserId == userId*/ x=> true)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<Account?> GetUserAccountByIdAsync(AccountId accountId, CancellationToken cancellationToken = default)
+        public async Task<Account?> GetAccountByIdAsync(AccountId accountId, CancellationToken cancellationToken = default)
         {
             return await DbContext.Set<Account>()
+                .Include(a => a.Transactions)
+                .ThenInclude(t => t.Subcategory)
                 .Include(a => a.Transactions)
                 .ThenInclude(t => t.Category)
                 .FirstOrDefaultAsync( /*a => a.UserId == userId*/
