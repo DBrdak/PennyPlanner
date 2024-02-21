@@ -13,7 +13,7 @@ export class AddIncomeTransactionCommand implements AddIncomeTransactionCommand 
         this.senderName = values?.senderName || ''
         this.transactionAmount = values?.transactionAmount || 0
         this.categoryValue = values?.categoryValue || ''
-        this.subcategoryValue = values?.categoryValue || ''
+        this.subcategoryValue = values?.subcategoryValue || ''
         this.transactionDateTime = values?.transactionDateTime || new Date()
     }
 }

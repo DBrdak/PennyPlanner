@@ -5,6 +5,7 @@ import TransactionsTableGroup from "./TransactionsTableGroup";
 import TransactionsTableGroupHeader from "./TransactionsTableGroupHeader";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../stores/store";
+import useCategories from "../../utils/hooks/useCategories";
 
 interface TransactionsTableProps {
     groupedTransactions: Record<string, Transaction[]>
@@ -41,8 +42,6 @@ export default observer(function TransactionsTable({ groupedTransactions, groupC
 
                 if (groupCriterion === 'entity') {
                     groupKeyName = transactionEntityStore.getTransactionEntity(groupKey)?.name || groupKey
-                } else if (groupCriterion === 'category') {
-                    groupKeyName = categoryStore.getCategory(groupKey)?.value || groupKey
                 } else if (groupCriterion === 'account') {
                     groupKeyName = accountStore.getAccount(groupKey)?.name || groupKey
                 } else {

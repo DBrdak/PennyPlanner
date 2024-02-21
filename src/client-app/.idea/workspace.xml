@@ -5,18 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Transaction Subcategories Feature Added">
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Domestica.Budget.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Domestica.Budget.API.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Extensions/ApplicationBuilderExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.API/Extensions/ApplicationBuilderExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionSubcategories/AddTransactionSubcategory/AddTransactionSubcategoryCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionSubcategories/AddTransactionSubcategory/AddTransactionSubcategoryCommandValidator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/transactions/income/AddIncomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/income/AddIncomePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/transactions/income/components/AddIncomeForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/income/components/AddIncomeForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/transactions/income/components/NewIncomesTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/income/components/NewIncomesTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/transactions/internal/components/NewInternalTransactionsTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/internal/components/NewInternalTransactionsTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/transactions/outcome/AddOutcomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/outcome/AddOutcomePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/components/tiles/TotalAccountsTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/tiles/TotalAccountsTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/accounts/details/AccountDetailsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/details/AccountDetailsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/settings/transactionCategories/components/AddTransactionCategoryForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/transactionCategories/components/AddTransactionCategoryForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/transactions/outcome/components/AddOutcomeForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/outcome/components/AddOutcomeForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/transactions/outcome/components/NewOutcomesTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/outcome/components/NewOutcomesTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MyTextInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MyTextInput.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tilesLayout/TilePaper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tilesLayout/TilePaper.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/transactionsTable/TransactionsTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transactionsTable/TransactionsTable.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/transactionsTable/TransactionsTableGroup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transactionsTable/TransactionsTableGroup.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/requests/transactions/addIncomeTransactionCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/requests/transactions/addIncomeTransactionCommand.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/categoryStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/categoryStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/transactionsGroupBy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/transactionsGroupBy.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +144,7 @@
       <workItem from="1707926977030" duration="7010000" />
       <workItem from="1707988063423" duration="10140000" />
       <workItem from="1708385913724" duration="4745000" />
-      <workItem from="1708438795582" duration="8344000" />
+      <workItem from="1708438795582" duration="14116000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>

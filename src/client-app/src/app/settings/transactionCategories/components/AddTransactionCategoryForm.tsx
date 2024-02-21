@@ -52,6 +52,7 @@ export function AddTransactionCategoryForm({type, onSubmit, onExit, categoryId}:
                                 placeholder={'Value'}
                                 type={'text'}
                                 showErrors
+                                color={type === 'income' ? 'primary' : 'secondary'}
                             />
                             <Typography variant={'subtitle1'} textAlign={'center'} color={
                                 type === 'income' ? 'primary' : 'secondary'

@@ -107,9 +107,12 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
                                     <strong>Category</strong>
                                 </TableCell>
                         }
-                        <TableCell align={'center'}>
-                            <strong>Subcategory</strong>
-                        </TableCell>
+                        {
+                            groupCriterion !== 'subcategory' &&
+                                <TableCell align={'center'}>
+                                    <strong>Subcategory</strong>
+                                </TableCell>
+                        }
                         {
                             groupCriterion !== 'entity' &&
                                 <TableCell align={'center'}>

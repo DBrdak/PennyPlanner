@@ -1,6 +1,7 @@
 import {Transaction} from "../models/transactions/transaction";
 import formatDate from "./formatters/dateFormatter";
 import {TransactionCategory} from "../models/transactionCategories/transactionCategory";
+import {TransactionSubcategory} from "../models/transactionSubcategories/transactionSubcategory";
 
 const groupBy = (transactions: Transaction[], criterion: string): Record<string, Transaction[]> => {
     const groupedTransactions: Record<string, Transaction[]> = {};
@@ -35,7 +36,14 @@ const groupBy = (transactions: Transaction[], criterion: string): Record<string,
                 }
                 break
             case 'category':
-                key = (transaction['category' as keyof Transaction] as TransactionCategory)?.transactionCategoryId || 'Adjustments'
+                key = (transaction['category' as keyof Transaction] as TransactionCategory)?.value
+                    || ((transaction.senderId || transaction.recipientId) && 'Uncategorized')
+                    || 'Adjustments'
+                break
+            case 'subcategory':
+                key = (transaction['subcategory' as keyof Transaction] as TransactionSubcategory).value
+                    || ((transaction.senderId || transaction.recipientId) && 'Uncategorized')
+                    || 'Adjustments'
                 break
             case 'account':
                 key = (transaction['accountId' as keyof Transaction] as string)

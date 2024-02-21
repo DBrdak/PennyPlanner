@@ -26,8 +26,8 @@ export default observer(function AccountDetailsPage() {
     const [collapsedGroups, setCollapsedGroups] = useState<string[]>([])
     const {accountStore, categoryStore, transactionStore, transactionEntityStore} = useStore()
     const [account, setAccount] = useState<Account>()
-    const transactionEntities = useTransactionEntities(account)
-    const categories = useCategories(account)
+    useTransactionEntities(account);
+    useCategories(account);
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
 
     useTitle(undefined, account?.name)

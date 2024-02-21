@@ -38,6 +38,7 @@ export default class CategoryStore {
         this.setLoading(true)
         try {
             const categories = await agent.transactionCategories.getTransactionCategories()
+            console.log(categories)
             runInAction(() => {
                 this.categoriesRegistry.clear();
                 categories.forEach(c => this.setCategory(c))

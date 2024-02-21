@@ -4,13 +4,15 @@ import theme from "../../app/theme";
 import {useEffect, useState} from "react";
 
 interface TilePaperProps {
-    disableborder?: boolean
+    disableBorder?: boolean
     disabled?: boolean
     invert?: boolean
 }
 
-const TilePaper = styled(MuiPaper)<TilePaperProps>(
-    ({ theme, disableborder, disabled, invert }) => {
+const TilePaper = styled(MuiPaper, {shouldForwardProp: propName =>
+            propName !== 'invert' && propName !== 'disableBorder' && propName !== 'disabled'})
+    <TilePaperProps>(
+    ({ theme, disableBorder, disabled, invert }) => {
         const [isMounted, setIsMounted] = useState(false)
 
         useEffect(() => {
@@ -33,7 +35,7 @@ const TilePaper = styled(MuiPaper)<TilePaperProps>(
             height: "100%",
             transform: isMounted ? "scale(1)" : "scale(0)",
             transition: "transform 0.5s ease",
-            ...(!disableborder && {
+            ...(!disableBorder && {
                 border: 'thin solid transparent',
                 borderImage: `linear-gradient(to bottom left, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
                 borderImageSlice: 1,

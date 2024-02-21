@@ -23,9 +23,10 @@ interface Props {
     disabled?: boolean
     maxLength?: number
     capitalize?: boolean
+    color?: "error" | "primary" | "secondary" | "info" | "success" | "warning" | undefined
 }
 
-const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, showErrors, maxValue, minValue, inputProps, type, style, ...props }) => {
+const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, color, showErrors, maxValue, minValue, inputProps, type, style, ...props }) => {
     const [field, meta, helpers] = useField(props.name);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,6 +83,7 @@ const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, showErr
                     variant="outlined"
                     error={meta.touched && !!meta.error}
                     InputProps={inputProps}
+                    color={color || 'primary'}
                 />
             </Tooltip>
         </FormControl>
@@ -97,7 +99,7 @@ const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, showErr
                 variant="outlined"
                 error={meta.touched && !!meta.error}
                 InputProps={inputProps}
-
+                color={color || 'primary'}
             />
         </FormControl>
     )

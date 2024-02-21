@@ -47,6 +47,11 @@ export function AddOutcomeForm({recipients, handleFormSubmit, accounts, categori
             .required('Category is required')
             .max(30, 'Transaction category name must be between 1 and 30 characters')
             .matches(ValidationConstants.noSpecialCharactersPattern, 'Special characters are not allowed in Transaction category name'),
+        subcategoryValue: Yup
+            .string()
+            .required('Category is required')
+            .max(30, 'Transaction category name must be between 1 and 30 characters')
+            .matches(ValidationConstants.noSpecialCharactersPattern, 'Special characters are not allowed in Transaction category name'),
         transactionAmount: Yup
             .number()
             .required("Amount of transaction is required")
