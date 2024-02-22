@@ -282,12 +282,15 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                         </SwipeableDrawer>
                         <Box
                             component="main"
-                            sx={{ flexGrow: 1,
+                            sx={{
+                                flexGrow: 1,
                                 width: '100%',
-                                padding: '3%',
+                                padding: 2,
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                display: 'flex'
+                                display: 'flex',
+                                overflow: 'hidden',
+                                height: '90vh'
                             }}>
                             {children}
                         </Box>

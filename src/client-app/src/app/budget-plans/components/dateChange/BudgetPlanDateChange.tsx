@@ -43,23 +43,27 @@ export function BudgetPlanDateChange({ date, setDate }: BudgetPlanDateChangeProp
             alignItems: 'center',
             height: '100%',
             borderRadius: '20px',
-            padding: theme.spacing(4),
+            padding: theme.spacing(isMobile ? 1 : 4),
         }}>
-            <DateChangeButton disableRipple left onClick={() => handleDateChange(-12)}>
-                <KeyboardDoubleArrowLeft sx={{fontSize: theme.spacing(15)}} />
-            </DateChangeButton>
+            {!isMobile &&
+                <DateChangeButton disableRipple left onClick={() => handleDateChange(-12)}>
+                    <KeyboardDoubleArrowLeft sx={{fontSize: theme.spacing(15)}} />
+                </DateChangeButton>
+            }
             <DateChangeButton disableRipple left onClick={() => handleDateChange(-1)}>
-                <KeyboardArrowLeft sx={{fontSize: theme.spacing(15)}} />
+                <KeyboardArrowLeft sx={{fontSize: theme.spacing(isMobile ? 8 : 15)}} />
             </DateChangeButton>
             <DateTypography variant={ isMobile ? 'h4' : 'h3'} textAlign={'center'} sx={{opacity, transform: `translateX(${transform}px)`}}>
                 {dayjs(date).format("MMMM YYYY")}
             </DateTypography>
             <DateChangeButton disableRipple right onClick={() => handleDateChange(1)}>
-                <KeyboardArrowRight sx={{fontSize: theme.spacing(15)}} />
+                <KeyboardArrowRight sx={{fontSize: theme.spacing(isMobile ? 8 : 15)}} />
             </DateChangeButton>
-            <DateChangeButton disableRipple right onClick={() => handleDateChange(12)}>
-                <KeyboardDoubleArrowRight sx={{fontSize: theme.spacing(15)}} />
-            </DateChangeButton>
+            {!isMobile &&
+                <DateChangeButton disableRipple right onClick={() => handleDateChange(12)}>
+                    <KeyboardDoubleArrowRight sx={{fontSize: theme.spacing(15)}} />
+                </DateChangeButton>
+            }
         </Paper>
     );
 }

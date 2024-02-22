@@ -19,7 +19,7 @@ namespace Domestica.Budget.Application.DataTransferObjects
         }
 
         [JsonConstructor]
-        private BudgetedTransactionCategoryDto(string budgetedTransactionCategoryId)
+        private BudgetedTransactionCategoryDto()
         { }
 
         internal static BudgetedTransactionCategoryDto FromDomainObject(

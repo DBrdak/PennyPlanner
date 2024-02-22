@@ -1,14 +1,7 @@
-const formatDate = (dateString: Date) => {
-    const date = new Date(dateString)
-    const options: Intl.DateTimeFormatOptions = {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-    };
+import dayjs from "dayjs";
 
-    return date.toLocaleString('pl-PL', options);
+const formatDate = (dateString: Date) => {
+    return dayjs(dateString).format("DD.MM.YYYY HH:mm");
 };
 
 export default formatDate

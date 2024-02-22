@@ -42,10 +42,9 @@ namespace Domestica.Budget.Domain.BudgetPlans
         {
             return new DateTimeRange(
                 new DateTime(date.Year, date.Month, 1),
-                new DateTime(date.Year, date.Month, GetLastDayOfMonth(date)));
+                new DateTime(date.Year, date.Month + 1, 1));
         }
 
-        private static int GetLastDayOfMonth(DateTime date) => DateTime.DaysInMonth(date.Year, date.Month);
 
         private static void Validate(DateTimeRange budgetPeriod)
         {

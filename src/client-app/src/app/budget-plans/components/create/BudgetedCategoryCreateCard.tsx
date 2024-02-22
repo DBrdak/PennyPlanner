@@ -4,19 +4,48 @@ import theme from "../../../theme";
 import {BudgetedCategoryCreateForm} from "./BudgetedCategoryCreateForm";
 import {observer} from "mobx-react-lite";
 import {Add} from "@mui/icons-material";
+import {useEffect, useState} from "react";
+import {
+    AddTransactionCategoryForm
+} from "../../../settings/transactionCategories/components/AddTransactionCategoryForm";
+import {AddTransactionCategoryCommand} from "../../../../models/requests/categories/addTransactionCategoryCommand";
+import {useStore} from "../../../../stores/store";
+import {calcColorForCategory} from "../../../../utils/calculators/layoutCalculator";
+import {
+    BudgetedTransactionCategoryValues
+} from "../../../../models/requests/budgetPlans/budgetedTransactionCategoryValues";
 
 interface BudgetedCategoryCreateCardProps {
     category?: TransactionCategory
+    newCategoryType?: 'income' | 'outcome'
 }
 
-export default observer(function BudgetedCategoryCreateCard({category}: BudgetedCategoryCreateCardProps) {
+export default observer(function BudgetedCategoryCreateCard({category, newCategoryType}: BudgetedCategoryCreateCardProps) {
+    const { budgetPlanStore, categoryStore} = useStore()
+    const [newCategoryValue, setNewCategoryValue] = useState<string>()
+    const [existingCategoryValues, setExistingCategoryValues] = useState<string[]>([])
 
-    const calcColor = (type: string) => type.toLowerCase() === 'income' ? theme.palette.success.light : theme.palette.error.main
+    useEffect(() => {
+        setExistingCategoryValues([
+            ...categoryStore.categories.flatMap(c => c.value),
+            ...budgetPlanStore.newBudgetedCategories.flatMap(bc => bc.categoryValue)
+            ])
+    }, [budgetPlanStore.newBudgetedCategories, categoryStore.categories])
+
+    const handleSubmit = (values: BudgetedTransactionCategoryValues) => {
+        budgetPlanStore.setBudgetedCategory(values)
+        setNewCategoryValue(values.categoryValue)
+    }
+
+    const handleCancel = () => {
+        category && budgetPlanStore.removeBudgetedCategory(category.value)
+        newCategoryValue && budgetPlanStore.removeBudgetedCategory(newCategoryValue)
+    }
 
     return (
         <Grid item xs={12} md={4} lg={3} sx={{
-            height: '30%',
-            minHeight: '400px'
+            height: '40%',
+            minHeight: '500px',
         }}>
             <Paper sx={{
                 height: '100%',
@@ -28,28 +57,21 @@ export default observer(function BudgetedCategoryCreateCard({category}: Budgeted
                 {
                     category ?
                         <>
-                            <Grid item xs={12} sx={{height: '10%'}}>
-                                <Typography variant={'h4'} textAlign={'center'}>
-                                    {category.value}
-                                </Typography>
-                                <Typography variant={'subtitle1'} textAlign={'center'} sx={{color: calcColor(category.type)}}>
-                                    {category.type}
-                                </Typography>
-                            </Grid>
+
                             <BudgetedCategoryCreateForm
                                 category={category}
-                                onSubmit={(values) => console.log(values)}
-                                onCancel={() => console.log(category.transactionCategoryId)}
+                                onSubmit={handleSubmit}
+                                onCancel={() => handleCancel()}
                             />
                         </>
                         :
-                        <IconButton centerRipple={false} sx={{
-                            position: 'absolute',
-                            top: 0, right: 0, left: 0, bottom: 0,
-                            borderRadius: '20px'
-                        }}>
-                            <Add />
-                        </IconButton>
+                        newCategoryType &&
+                            <BudgetedCategoryCreateForm
+                                newCategoryType={newCategoryType}
+                                onSubmit={handleSubmit}
+                                onCancel={() => handleCancel()}
+                                forbiddenCategoryValues={existingCategoryValues}
+                            />
                 }
             </Paper>
         </Grid>

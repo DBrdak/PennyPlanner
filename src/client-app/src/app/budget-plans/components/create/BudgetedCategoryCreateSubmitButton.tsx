@@ -1,6 +1,11 @@
 import {Box, Button} from "@mui/material";
 
-export function BudgetedCategoryCreateSubmitButton() {
+interface BudgetedCategoryCreateSubmitButtonProps{
+    onSubmit: () => void
+    disabled: boolean
+}
+
+export function BudgetedCategoryCreateSubmitButton({onSubmit, disabled}: BudgetedCategoryCreateSubmitButtonProps) {
     return (
         <Box sx={{
             width: '100%',
@@ -11,7 +16,12 @@ export function BudgetedCategoryCreateSubmitButton() {
             justifyContent: 'center',
             alignItems:'center',
         }}>
-            <Button sx={{height: '100%', width: '30%'}} variant={'contained'} color={'success'}>
+            <Button
+                disabled={disabled}
+                onClick={() => onSubmit()}
+                sx={{height: '100%', width: '30%'}}
+                variant={'contained'}
+                color={'success'}>
                 Submit
             </Button>
         </Box>

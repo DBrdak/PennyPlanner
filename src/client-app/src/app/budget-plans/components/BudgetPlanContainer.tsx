@@ -16,16 +16,16 @@ export default observer(function BudgetPlanContainer() {
     return (
         <Grid container sx={{
             height:'100%',
-            padding: theme.spacing(2),
+            padding: theme.spacing(3),
             margin: 0,
+            overflow: 'hidden',
             backgroundColor: theme.palette.background.paper,
             borderRadius: '20px',
-            overflow:'auto',
             userSelect: 'none'
         }}>
             <Grid item xs={12} sx={{
                 height: '10%',
-                minHeight: '100px'
+                minHeight: '75px'
             }}>
                 <BudgetPlanDateChange
                     date={date}
@@ -33,7 +33,10 @@ export default observer(function BudgetPlanContainer() {
                 />
             </Grid>
             <Grid item xs={12} sx={{
-                height: '90%'
+                overflow: 'auto',
+                maxHeight: '80%',
+                textAlign: 'center',
+                marginTop: `${theme.spacing(5)}`
             }}>
                 {
                     budgetPlan?.budgetedTransactionCategories ?
