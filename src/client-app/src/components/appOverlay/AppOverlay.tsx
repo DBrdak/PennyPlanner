@@ -6,12 +6,12 @@ import {
     ListItemText,
     IconButton,
     Avatar,
-    Typography, Box,
+    Typography, Box, useMediaQuery, SwipeableDrawer,
 } from '@mui/material';
 import {
     AccountBalanceWalletTwoTone, AccountBoxTwoTone, AssessmentTwoTone, CalendarMonthTwoTone,
     ChevronLeftTwoTone,
-    ChevronRightTwoTone, EditNoteTwoTone, EmojiEventsTwoTone, HomeTwoTone,
+    ChevronRightTwoTone, EditNoteTwoTone, EmojiEventsTwoTone, HomeTwoTone, KeyboardArrowDown, KeyboardArrowUp,
 } from "@mui/icons-material";
 import Drawer, {drawerWidth} from "./Drawer";
 import AppBar from "./AppBar";
@@ -74,6 +74,7 @@ const AppOverlay = ({children}: AppOverlayProps) => {
     const {layoutStore} = useStore();
     const navigate = useNavigate();
     const currentLocation = useLocation()
+    const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
 
     useEffect(() => {
         layoutStore.setActiveSectionIndexByPath(currentLocation.pathname)
@@ -106,18 +107,33 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                     padding: `0px 10px`,
                     backgroundColor: theme.palette.background.paper
                 }}>
-                    <DrawerNavButton
-                        disableRipple
-                        isOpen={layoutStore.isDrawerOpen}
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerClick}
-                        edge="start"
-                    >
-                        {!layoutStore.isDrawerOpen ?
-                            <ChevronRightTwoTone color={'primary'} /> :
-                            <ChevronLeftTwoTone color={'primary'} />}
-                    </DrawerNavButton>
+                    {
+                        !isMobile ?
+                            <DrawerNavButton
+                                disableRipple
+                                isOpen={layoutStore.isDrawerOpen}
+                                color="inherit"
+                                aria-label="open drawer"
+                                onClick={handleDrawerClick}
+                                edge="start"
+                            >
+                                {!layoutStore.isDrawerOpen ?
+                                    <ChevronRightTwoTone color={'primary'} /> :
+                                    <ChevronLeftTwoTone color={'primary'} />}
+                            </DrawerNavButton>
+                            :
+                            <DrawerNavButton
+                                disableRipple
+                                color="inherit"
+                                aria-label="open drawer"
+                                onClick={handleDrawerClick}
+                                edge="start"
+                            >
+                                {!layoutStore.isDrawerOpen ?
+                                    <KeyboardArrowDown color={'primary'} /> :
+                                    <KeyboardArrowUp color={'primary'} />}
+                            </DrawerNavButton>
+                    }
                     <Typography variant={'h3'} style={{
                         userSelect: 'none',
                         fontFamily: 'Fira Sans',
@@ -151,65 +167,132 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                     </IconButton>
                 </Toolbar>
             </AppBar>
-            <Box style={{
-                display: 'flex',
-                height: `calc(100% - ${theme.spacing(8)} + 1px)`
-            }}>
-                <Drawer
-                    open={layoutStore.isDrawerOpen}
-                    variant={'permanent'}
-                    anchor="left"
-                >
-                    <List style={{
-                        margin: '0',
-                        padding: '0',
+            {
+                !isMobile ?
+                    <Box style={{
                         display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        height: '100%',
-                        width: '100%'
+                        height: `calc(100% - ${theme.spacing(8)} + 1px)`
                     }}>
-                        {sideNavBarSections.map((btn, index) => (
-                            <DrawerListItem key={index}
-                                            onClick={() => handleSectionChange(index)}
-                                            isactive={isActiveSection(index).toString()}
-                                            itemscount={sideNavBarSections.length}>
-                                <DrawerButton
-                                    disabled={isActiveSection(index)}
-                                >
-                                    <ListItemIcon sx={{
-                                        minWidth: '0px',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        textAlign: 'center'
-                                    }}>
-                                        {isActiveSection(index) ? btn.activeIcon : btn.icon}
-                                    </ListItemIcon>
-                                    {layoutStore.isDrawerOpen && (<ListItemText primary={btn.title} primaryTypographyProps={{
-                                        fontSize: '1.3rem',
-                                        fontWeight: '700',
-                                        color: isActiveSection(index) ? theme.palette.secondary.light : theme.palette.primary.light,
-                                        letterSpacing: 0,
-                                    }}/>)}
-                                </DrawerButton>
-                            </DrawerListItem>
-                        ))}
-                    </List>
-                </Drawer>
-                <Box
-                    component="main"
-                    sx={{ flexGrow: 1,
-                        width: {sm: `calc(100% - ${drawerWidth}px)` },
-                        padding: '3%',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        display: 'flex'
+                        <Drawer
+                            open={layoutStore.isDrawerOpen}
+                            variant={'permanent'}
+                            anchor="left"
+                        >
+                            <List style={{
+                                margin: '0',
+                                padding: '0',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                height: '100%',
+                                width: '100%'
+                            }}>
+                                {sideNavBarSections.map((btn, index) => (
+                                    <DrawerListItem key={index}
+                                                    onClick={() => handleSectionChange(index)}
+                                                    isactive={isActiveSection(index).toString()}
+                                                    itemscount={sideNavBarSections.length}>
+                                        <DrawerButton
+                                            disabled={isActiveSection(index)}
+                                        >
+                                            <ListItemIcon sx={{
+                                                minWidth: '0px',
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                textAlign: 'center'
+                                            }}>
+                                                {isActiveSection(index) ? btn.activeIcon : btn.icon}
+                                            </ListItemIcon>
+                                            {layoutStore.isDrawerOpen && (<ListItemText primary={btn.title} primaryTypographyProps={{
+                                                fontSize: '1.3rem',
+                                                fontWeight: '700',
+                                                color: isActiveSection(index) ? theme.palette.secondary.light : theme.palette.primary.light,
+                                                letterSpacing: 0,
+                                            }}/>)}
+                                        </DrawerButton>
+                                    </DrawerListItem>
+                                ))}
+                            </List>
+                        </Drawer>
+                        <Box
+                            component="main"
+                            sx={{ flexGrow: 1,
+                                width: {sm: `calc(100% - ${drawerWidth}px)` },
+                                padding: '3%',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                display: 'flex'
+                            }}>
+                            {children}
+                        </Box>
+                    </Box>
+                    :
+                    <Box style={{
+                        display: 'flex',
                     }}>
-                    {children}
-                </Box>
-            </Box>
+                        <SwipeableDrawer
+                            open={layoutStore.isDrawerOpen}
+                            variant={'temporary'}
+                            anchor="top"
+                            onClose={() => layoutStore.setDrawerState()}
+                            onOpen={() => layoutStore.setDrawerState()}
+                        >
+                            <List style={{
+                                marginTop: `calc(${theme.spacing(8)} + 1px)`,
+                                padding: '0',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                height: '100%',
+                                width: '100%'
+                            }}>
+                                {sideNavBarSections.map((btn, index) => (
+                                    <DrawerListItem key={index}
+                                                    onClick={() => handleSectionChange(index)}
+                                                    isactive={isActiveSection(index).toString()}
+                                                    itemscount={sideNavBarSections.length}>
+                                        <DrawerButton
+                                            disabled={isActiveSection(index)}
+                                            sx={{flexDirection: 'column'}}
+                                        >
+                                            <ListItemIcon sx={{
+                                                minWidth: '0px',
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                textAlign: 'center',
+                                                minHeight: '100px'
+                                            }}>
+                                                {isActiveSection(index) ? btn.activeIcon : btn.icon}
+                                            </ListItemIcon>
+                                            <ListItemText primary={btn.title} primaryTypographyProps={{
+                                                fontSize: '1.3rem',
+                                                fontWeight: '700',
+                                                color: isActiveSection(index) ? theme.palette.secondary.light : theme.palette.primary.light,
+                                                letterSpacing: 0,
+                                            }}
+                                            />
+                                        </DrawerButton>
+                                    </DrawerListItem>
+                                ))}
+                            </List>
+                        </SwipeableDrawer>
+                        <Box
+                            component="main"
+                            sx={{ flexGrow: 1,
+                                width: '100%',
+                                padding: '3%',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                display: 'flex'
+                            }}>
+                            {children}
+                        </Box>
+                    </Box>
+            }
             <AddTransactionButton />
         </Box>
     );

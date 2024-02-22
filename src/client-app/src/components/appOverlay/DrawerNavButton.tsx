@@ -4,7 +4,7 @@ import theme from "../../app/theme";
 import {drawerWidth} from "./Drawer";
 
 interface CustomIconButtonProps extends IconButtonProps {
-    isOpen: boolean;
+    isOpen?: boolean;
 }
 
 const openedMixin = (theme: Theme): CSSObject => ({

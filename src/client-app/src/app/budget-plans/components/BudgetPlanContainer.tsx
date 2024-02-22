@@ -6,7 +6,7 @@ import {BudgetedCategoriesContainer} from "./view/BudgetedCategoriesContainer";
 import {useStore} from "../../../stores/store";
 import {observer} from "mobx-react-lite";
 import useBudgetPlan from "../../../utils/hooks/useBudgetPlan";
-import {BudgetPlanCreateContainer} from "./create/BudgetPlanCreateContainer";
+import BudgetPlanCreateContainer from "./create/BudgetPlanCreateContainer";
 
 export default observer(function BudgetPlanContainer() {
     const [date, setDate] = useState(new Date())
@@ -24,12 +24,17 @@ export default observer(function BudgetPlanContainer() {
             userSelect: 'none'
         }}>
             <Grid item xs={12} sx={{
-
+                height: '10%',
+                minHeight: '100px'
             }}>
                 <BudgetPlanDateChange
                     date={date}
                     setDate={setDate}
                 />
+            </Grid>
+            <Grid item xs={12} sx={{
+                height: '90%'
+            }}>
                 {
                     budgetPlan?.budgetedTransactionCategories ?
                         <BudgetedCategoriesContainer budgetedCategories={budgetPlan?.budgetedTransactionCategories} />

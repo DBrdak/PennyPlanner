@@ -41,8 +41,7 @@ export function BudgetPlanDateChange({ date, setDate }: BudgetPlanDateChangeProp
             display:'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            height: '10%',
-            minHeight: '100px',
+            height: '100%',
             borderRadius: '20px',
             padding: theme.spacing(4),
         }}>
