@@ -42,7 +42,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
             return await DbContext.Set<Transaction>()
                 .Where(
-                    t => t.TransactionDateUtc.Date >= dateTimePeriod.Start &&
+                    t => t.TransactionDateUtc >= dateTimePeriod.Start &&
                          t.TransactionDateUtc <= dateTimePeriod.End &&
                          t.Category == category)
                 .ToListAsync();

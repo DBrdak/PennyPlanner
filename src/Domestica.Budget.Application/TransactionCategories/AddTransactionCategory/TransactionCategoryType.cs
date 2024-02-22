@@ -14,10 +14,10 @@ namespace Domestica.Budget.Application.TransactionCategories.AddTransactionCateg
         }
 
         public static TransactionCategoryType FromString(string value) =>
-            value switch
+            value.ToLower() switch
             {
-                "Outcome" => Outcome,
-                "Income" => Income,
+                "outcome" => Outcome,
+                "income" => Income,
                 _ => throw new DomainException<TransactionCategoryType>($"Unknown account type: {value}")
             };
 

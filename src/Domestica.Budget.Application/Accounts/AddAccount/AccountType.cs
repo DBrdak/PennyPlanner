@@ -14,10 +14,10 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
         }
 
         public static AccountType FromString(string value) =>
-            value switch
+            value.ToLower() switch
             {
-                "Savings" => Savings,
-                "Transactional" => Transactional,
+                "savings" => Savings,
+                "transactional" => Transactional,
                 _ => throw new DomainException<AccountType>($"Unknown account type: {value}")
             };
 
