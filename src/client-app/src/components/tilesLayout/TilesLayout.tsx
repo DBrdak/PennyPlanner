@@ -21,7 +21,7 @@ export function TilesLayout({ tiles }: TilesLayoutProps) {
         }}>
 
             {tiles.map((tile, index) => (
-                <Grid key={index} item xs={12} sm={tile.cols} height={'50%'} padding={isMobile ? 0.5 : 1}>
+                <Grid key={index} item xs={12} sm={tile.cols} height={tile.height} padding={isMobile ? 0.5 : 1}>
                     {tile.content}
                 </Grid>
             ))}

@@ -1,5 +1,6 @@
 ﻿using DateKit.DB;
 using Domestica.Budget.Domain.Accounts;
+using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.Transactions;
 using Microsoft.EntityFrameworkCore;
@@ -41,7 +42,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
             return await DbContext.Set<Transaction>()
                 .Where(
-                    t => t.TransactionDateUtc.Date >= dateTimePeriod.Start &&
+                    t => t.TransactionDateUtc >= dateTimePeriod.Start &&
                          t.TransactionDateUtc <= dateTimePeriod.End &&
                          t.Category == category)
                 .ToListAsync();
@@ -51,6 +52,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
             return await DbContext.Set<Transaction>()
                 .Where(t => true /*t -> t.UserId == userId*/)
+                .Include(t => t.Category)
                 .ToListAsync(cancellationToken);
         }
     }

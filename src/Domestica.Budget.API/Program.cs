@@ -1,10 +1,5 @@
-using System.Text.Json.Serialization;
 using Carter;
 using Domestica.Budget.API.Extensions;
-using Domestica.Budget.Application;
-using Domestica.Budget.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);

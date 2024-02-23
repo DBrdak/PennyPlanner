@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using Domestica.Budget.Domain.Accounts;
-using Domestica.Budget.Domain.Shared;
-using Domestica.Budget.Domain.TransactionEntities;
+﻿using System.Text.Json.Serialization;
 using Domestica.Budget.Domain.Transactions;
 
 namespace Domestica.Budget.Application.DataTransferObjects
 {
     public sealed record TransactionDto
     {
+        public string TransactionId { get; init; }
         public string? AccountId { get; init; }
         public string? FromAccountId { get; init; }
         public string? ToAccountId { get; init; }
         public string? SenderId { get; init; }
         public string? RecipientId { get; init; } 
         public MoneyDto TransactionAmount { get; init; }
-        public string Category { get; init; }
+        public TransactionCategoryDto? Category { get; init; }
+        public TransactionSubcategoryDto? Subcategory { get; init; }
         public DateTime TransactionDateUtc { get; init; }
 
         private TransactionDto(
@@ -29,8 +23,10 @@ namespace Domestica.Budget.Application.DataTransferObjects
             string? senderId,
             string? recipientId,
             MoneyDto transactionAmount,
-            string category,
-            DateTime transactionDateUtc)
+            TransactionCategoryDto? category,
+            DateTime transactionDateUtc,
+            string transactionId,
+            TransactionSubcategoryDto? subcategory)
         {
             AccountId = accountId;
             FromAccountId = fromAccountId;
@@ -40,12 +36,14 @@ namespace Domestica.Budget.Application.DataTransferObjects
             TransactionAmount = transactionAmount;
             Category = category;
             TransactionDateUtc = transactionDateUtc;
+            TransactionId = transactionId;
+            Subcategory = subcategory;
         }
 
         [JsonConstructor]
-        private TransactionDto()
+        private TransactionDto(TransactionSubcategoryDto? subcategory)
         {
-            
+            Subcategory = subcategory;
         }
 
         internal static TransactionDto FromDomainObject(Transaction domainObject)
@@ -59,8 +57,10 @@ namespace Domestica.Budget.Application.DataTransferObjects
                 domainObject.SenderId?.Value.ToString(),
                 domainObject.RecipientId?.Value.ToString(),
                 transactionAmount,
-                domainObject.Category.Value,
-                domainObject.TransactionDateUtc);
+                TransactionCategoryDto.FromDomainObject(domainObject.Category),
+                domainObject.TransactionDateUtc,
+                domainObject.Id.Value.ToString(),
+                TransactionSubcategoryDto.FromDomainObject(domainObject.Subcategory));
         }
     }
 }

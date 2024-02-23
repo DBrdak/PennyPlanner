@@ -4,38 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Account Page 1 complete">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/accounts/components/AccountBalanceDisplay.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/accounts/components/NewAccountTile.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/FadeContainer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/stores/accountStore.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/calculators/balanceCalculator.ts" afterDir="false" />
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Transaction Subcategories Feature Fixed">
+      <change afterPath="$PROJECT_DIR$/src/stores/budgetPlanStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/AddAccount/AddAccountCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/AddAccount/AddAccountCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/GetAccounts/GetAccountsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/GetAccounts/GetAccountsQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/GetAccounts/GetAccountsQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/GetAccounts/GetAccountsQueryHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/RemoveAccount/RemoveAccountCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/RemoveAccount/RemoveAccountCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/UpdateAccount/UpdateAccountCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/UpdateAccount/UpdateAccountCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Behaviors/CacheInvalidationBehavior.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Behaviors/CacheInvalidationBehavior.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/GetBudgetPlans/GetBudgetPlansQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/GetBudgetPlans/GetBudgetPlansQueryHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Messaging/Caching/CacheKey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Messaging/Caching/CacheKey.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Messaging/Caching/ICacheRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Messaging/Caching/ICacheRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Messaging/ICachedQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Messaging/ICachedQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/GetTransactionCategories/GetTransactionCategoriesQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/GetTransactionCategories/GetTransactionCategoriesQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/GetTransactionEntities/GetTransactionEntitiesQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/GetTransactionEntities/GetTransactionEntitiesQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddInternalTransaction/AddInternalTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddInternalTransaction/AddInternalTransactionCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddOutcomeTransaction/AddOutcomeTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddOutcomeTransaction/AddOutcomeTransactionCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/GetTransactions/GetTransactionsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/GetTransactions/GetTransactionsQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/IAccountRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/IAccountRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/AccountRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/AccountRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/CacheRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/CacheRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/agent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/agent.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/AccountsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/AccountsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/browse/BrowseAccounts.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/accounts/new/AddAccount.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/new/AddAccount.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/budget-plans/BudgetPlansPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/budget-plans/BudgetPlansPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/goals/GoalsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/goals/GoalsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/home/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/HomePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/settings/SettingsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/SettingsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/statistics/StatisticsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/statistics/StatisticsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/theme.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/UserPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/UserPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CenteredStack.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CenteredStack.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NotFoundPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NotFoundPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/appOverlay/AppBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/AppBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/appOverlay/Drawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/Drawer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tilesLayout/TileContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/accounts/components/AccountTile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tilesLayout/TilePaper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tilesLayout/TilePaper.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tilesLayout/TilesLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tilesLayout/TilesLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/layout/dashboardSection.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/layout/dashboardSection.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/layout/tile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/layout/tile.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/Routes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/budgetPlans/budgetPlan.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/budgetPlans/budgetPlan.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/stores/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/store.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,22 +53,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ReactCreateComponentLastSelected": "functionDeclarationComponent",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "init-develop",
-    "last_opened_file_path": "D:/Programownie/Projekty/Domestica/Domestica.Budget/src/client-app/src/app/accounts/components",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\Programownie\\Projekty\\Domestica\\Domestica.Budget\\src\\client-app\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ReactCreateComponentLastSelected&quot;: &quot;functionDeclarationComponent&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;init-develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Programownie/Projekty/Domestica/Domestica.Budget/src/client-app/src/components&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Programownie\\Projekty\\Domestica\\Domestica.Budget\\src\\client-app\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -87,18 +79,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components\transactionsTable" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\accounts\components" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\public\assets" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\router" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\stores" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components\tilesLayout" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components\appOverlay" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\public\assets" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\styles" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\transactions\outcome\components" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\transactions\internal\components" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\transactions\income\components" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\models\transactionCategories" />
     </key>
   </component>
   <component name="RunManager" selected="npm.start">
@@ -150,7 +142,21 @@
       <workItem from="1706388144104" duration="9756000" />
       <workItem from="1706481074862" duration="3221000" />
       <workItem from="1706498557149" duration="10259000" />
-      <workItem from="1706516036064" duration="30578000" />
+      <workItem from="1706516036064" duration="35510000" />
+      <workItem from="1706632785704" duration="11495000" />
+      <workItem from="1706724865145" duration="25896000" />
+      <workItem from="1706806686146" duration="14212000" />
+      <workItem from="1706870860197" duration="32368000" />
+      <workItem from="1706950798695" duration="12047000" />
+      <workItem from="1707018975777" duration="2118000" />
+      <workItem from="1707170360469" duration="400000" />
+      <workItem from="1707230277000" duration="975000" />
+      <workItem from="1707312172489" duration="29516000" />
+      <workItem from="1707768904208" duration="34049000" />
+      <workItem from="1707926977030" duration="7010000" />
+      <workItem from="1707988063423" duration="10140000" />
+      <workItem from="1708385913724" duration="4745000" />
+      <workItem from="1708438795582" duration="15903000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
@@ -180,7 +186,196 @@
       <option name="project" value="LOCAL" />
       <updated>1706508905792</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Account Details Page Init">
+      <created>1706582047956</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1706582047956</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Welcome Page Added">
+      <created>1706637907864</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1706637907864</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add Account Feature Added">
+      <created>1706650928135</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1706650928135</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Toast error handling fix">
+      <created>1706734041800</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1706734041800</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add Accounts feature added">
+      <created>1706736950779</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1706736950779</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Account Details Init">
+      <created>1706779389146</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1706779389146</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Account Details Transaction List Completed">
+      <created>1706800445362</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1706800445362</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Account Edit Init">
+      <created>1706821027308</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1706821027308</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Account Edit Bug">
+      <created>1706899882176</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1706899882176</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Account Edit Bug Fix">
+      <created>1706912441123</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1706912441123</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Transaction Remove Feature Added">
+      <created>1706918077248</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1706918077248</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Account Page Completed">
+      <created>1706963319099</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1706963319099</updated>
+    </task>
+    <task id="LOCAL-00017" summary="home page init">
+      <created>1706965705441</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1706965705441</updated>
+    </task>
+    <task id="LOCAL-00018" summary="home page init">
+      <created>1707230351955</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1707230351955</updated>
+    </task>
+    <task id="LOCAL-00019" summary="code cleanup">
+      <created>1707230659814</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1707230659814</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Account Page re-styled">
+      <created>1707321128583</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1707321128583</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Transactions Page Init">
+      <created>1707349377731</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1707349377731</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Home Page Transactions Tile">
+      <created>1707354877372</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1707354877372</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Income Transaction Add feature">
+      <created>1707798576228</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1707798576228</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Transactions Add feature">
+      <created>1707875803271</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1707875803271</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Cache Refactor">
+      <created>1707875833244</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1707875833244</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Before Settings Page">
+      <created>1707879211695</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1707879211695</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Validation Settings Added">
+      <created>1707934988192</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1707934988192</updated>
+    </task>
+    <task id="LOCAL-00028" summary="TransactionEntitiesSetting Init">
+      <created>1708020697378</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1708020697378</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Transaction Subcategories View">
+      <created>1708390472936</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1708390472936</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Transaction Subcategories Feature Added">
+      <created>1708443454528</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1708443454528</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Transaction Subcategories Feature Fixed">
+      <created>1708528298325</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1708528298325</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,10 +393,31 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Dashboard initialized" />
-    <MESSAGE value="Accounts Patge Init" />
-    <MESSAGE value="Tile Layout" />
-    <MESSAGE value="Account Page 1 complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="Account Page 1 complete" />
+    <MESSAGE value="Welcome Page Added" />
+    <MESSAGE value="Add Account Feature Added" />
+    <MESSAGE value="Toast error handling fix" />
+    <MESSAGE value="Add Accounts feature added" />
+    <MESSAGE value="Account Details Init" />
+    <MESSAGE value="Account Details Transaction List Completed" />
+    <MESSAGE value="Account Edit Init" />
+    <MESSAGE value="Account Edit Bug" />
+    <MESSAGE value="Account Edit Bug Fix" />
+    <MESSAGE value="Transaction Remove Feature Added" />
+    <MESSAGE value="Account Page Completed" />
+    <MESSAGE value="home page init" />
+    <MESSAGE value="code cleanup" />
+    <MESSAGE value="Account Page re-styled" />
+    <MESSAGE value="Transactions Page Init" />
+    <MESSAGE value="Home Page Transactions Tile" />
+    <MESSAGE value="Income Transaction Add feature" />
+    <MESSAGE value="Transactions Add feature" />
+    <MESSAGE value="Cache Refactor" />
+    <MESSAGE value="Before Settings Page" />
+    <MESSAGE value="Validation Settings Added" />
+    <MESSAGE value="TransactionEntitiesSetting Init" />
+    <MESSAGE value="Transaction Subcategories View" />
+    <MESSAGE value="Transaction Subcategories Feature Added" />
+    <MESSAGE value="Transaction Subcategories Feature Fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Transaction Subcategories Feature Fixed" />
   </component>
 </project>

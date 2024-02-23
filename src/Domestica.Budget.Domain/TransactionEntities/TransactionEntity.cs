@@ -1,6 +1,5 @@
 ﻿using CommonAbstractions.DB.Entities;
 using Domestica.Budget.Domain.Transactions;
-using Exceptions.DB;
 
 #pragma warning disable CS8618
 

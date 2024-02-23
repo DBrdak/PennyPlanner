@@ -1,5 +1,4 @@
-﻿using System.IO.Compression;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using CommonAbstractions.DB.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +35,16 @@ namespace Domestica.Budget.Infrastructure.Repositories
             return await DbContext.Set<TEntity>()
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
+        }        
+
+        public async Task<IEnumerable<TEntity>> BrowseAllIncludeAsync<TProperty>(
+            Expression<Func<TEntity, TProperty>> includeExpression, 
+            CancellationToken cancellationToken = default)
+        {
+            return await DbContext.Set<TEntity>()
+                .Include(includeExpression)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
         }
 
         public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
@@ -46,6 +55,11 @@ namespace Domestica.Budget.Infrastructure.Repositories
         public void Remove(TEntity entity)
         {
             DbContext.Set<TEntity>().Remove(entity);
+        } 
+        
+        public void Update(TEntity entity)
+        {
+            DbContext.Update(entity);
         }
     }
 }

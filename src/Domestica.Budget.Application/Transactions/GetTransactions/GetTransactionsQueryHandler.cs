@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommonAbstractions.DB.Messaging;
+﻿using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Application.DataTransferObjects;
 using Domestica.Budget.Domain.Transactions;
 using Responses.DB;
@@ -23,7 +18,10 @@ namespace Domestica.Budget.Application.Transactions.GetTransactions
         {
             var transactions = await _transactionRepository.BrowseUserTransactions(cancellationToken);
 
-            return transactions.Select(TransactionDto.FromDomainObject).ToList();
+            return transactions
+                .Select(TransactionDto.FromDomainObject)
+                .OrderByDescending(t => t.TransactionDateUtc)
+                .ToList();
         }
     }
 }

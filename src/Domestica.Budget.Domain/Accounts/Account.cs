@@ -2,7 +2,6 @@
 using System.Text.Json.Serialization;
 using CommonAbstractions.DB.Entities;
 using Domestica.Budget.Domain.Transactions;
-using Exceptions.DB;
 using Currency = Money.DB.Currency;
 using Transaction = Domestica.Budget.Domain.Transactions.Transaction;
 
@@ -12,12 +11,12 @@ namespace Domestica.Budget.Domain.Accounts
 {
     public abstract class Account : Entity<AccountId>
     {
-        public IReadOnlyCollection<Transaction> Transactions => _transactions;
+        public IReadOnlyCollection<Transaction> Transactions => _transactions.OrderByDescending(t => t.TransactionDateUtc).ToList();
         private readonly List<Transaction> _transactions;
         public AccountName Name { get; private set; }
         [NotMapped]
-        public Money.DB.Money Balance => new(_transactions.Sum(transaction => transaction.TransactionAmount.Amount), Currency);
-        public Currency Currency { get; private set; }
+        public global::Money.DB.Money Balance => new(_transactions.Sum(transaction => transaction.TransactionAmount.Amount), Currency);
+        public Currency Currency { get; private set; } //TODO remove when define user currency 
 
         [JsonConstructor]
         protected Account()
@@ -29,12 +28,15 @@ namespace Domestica.Budget.Domain.Accounts
             Currency = currency;
             _transactions = new();
 
-            TransactionService.CreatePrivateTransaction(new (initialBalance, currency), this);
+            if (initialBalance != 0)
+            {
+                TransactionService.CreatePrivateTransaction(new(initialBalance, currency), this);
+            }
         }
 
-        public void UpdateAccount(AccountName name, global::Money.DB.Money balance)
+        public void UpdateAccount(AccountName name, decimal balance)
         {
-            if(balance != Balance)
+            if(balance != Balance.Amount)
             {
                 AdjustAccountBalance(balance);
             }
@@ -56,14 +58,9 @@ namespace Domestica.Budget.Domain.Accounts
             Name = newName;
         }
 
-        private void AdjustAccountBalance(global::Money.DB.Money newBalance)
+        private void AdjustAccountBalance(decimal newBalance)
         {
-            if (newBalance.Currency != Balance.Currency)
-            {
-                Currency = newBalance.Currency;
-            }
-
-            var difference = newBalance - Balance;
+            var difference = new global::Money.DB.Money(newBalance - Balance.Amount, Balance.Currency);
 
             TransactionService.CreatePrivateTransaction(difference, this);
         }

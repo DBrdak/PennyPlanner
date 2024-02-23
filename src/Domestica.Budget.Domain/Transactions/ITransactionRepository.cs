@@ -1,5 +1,6 @@
 ﻿using DateKit.DB;
 using Domestica.Budget.Domain.Accounts;
+using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 
 namespace Domestica.Budget.Domain.Transactions
@@ -16,5 +17,6 @@ namespace Domestica.Budget.Domain.Transactions
             CancellationToken cancellationToken);
         void Remove(Transaction transaction);
         Task<List<Transaction>> BrowseUserTransactions(CancellationToken cancellationToken);
+        Task AddAsync(Transaction transaction, CancellationToken cancellationToken);
     }
 }

@@ -21,23 +21,31 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
 
         public async Task<Result<Account>> Handle(AddAccountCommand request, CancellationToken cancellationToken)
         {
+            var isUniqueName = (await _accountRepository.BrowseAccounts()).All(a => a.Name.Value.ToLower() != request.NewAccountData.Name.ToLower());
+
+            if (!isUniqueName)
+            {
+                return Result.Failure<Account>(Error.InvalidRequest($"Account with name {request.NewAccountData.Name} already exist"));
+            }
+
             Account? newAccount;
 
-            switch (request.NewAccountData.Type)
+            if (request.NewAccountData.Type == AccountType.Savings.Value)
             {
-                case "Savings":
-                    newAccount = CreateAccount<SavingsAccount>(request.NewAccountData);
-                    break;
-                case "Transactional":
-                    newAccount = CreateAccount<TransactionalAccount>(request.NewAccountData);
-                    break;
-                default:
-                    return Result.Failure<Account>(Error.InvalidRequest("Account type not supported"));
+                newAccount = CreateAccount<SavingsAccount>(request.NewAccountData);
+            }
+            else if (request.NewAccountData.Type == AccountType.Transactional.Value)
+            {
+                newAccount = CreateAccount<TransactionalAccount>(request.NewAccountData);
+            }
+            else
+            {
+                return Result.Failure<Account>(Error.InvalidRequest("Account type not supported"));
             }
 
             if (newAccount is null)
             {
-                return Result.Failure<Account>(Error.InvalidRequest("Account type not supported"));
+                return Result.Failure<Account>(Error.InvalidRequest("Problem while creating new account"));
             }
 
             await _accountRepository.AddAsync(newAccount, cancellationToken);
@@ -52,12 +60,12 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
         }
 
         private TAccount? CreateAccount<TAccount>(NewAccountData newAccountData) where TAccount : class
-        {
+        {//TODO fetch currency from user
             return Activator.CreateInstance(
                 typeof(TAccount),
                 new AccountName(newAccountData.Name),
-                Currency.FromCode(newAccountData.InitialBalance.Currency),
-                newAccountData.InitialBalance.Amount) as TAccount;
+                Currency.Usd, //TODO Fetch currency from user
+                newAccountData.InitialBalance) as TAccount;
         }
     }
 }

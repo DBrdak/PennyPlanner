@@ -1,31 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace Domestica.Budget.Application.DataTransferObjects
 {
     public sealed record BudgetedTransactionCategoryDto
     {
-        public string Category { get; init; }
+        public TransactionCategoryDto Category { get; init; }
         public MoneyDto BudgetedAmount { get; init; }
         public MoneyDto ActualAmount { get; init; }
 
-        private BudgetedTransactionCategoryDto(string Category,
-            MoneyDto BudgetedAmount,
-            MoneyDto ActualAmount)
+        private BudgetedTransactionCategoryDto(
+            TransactionCategoryDto category,
+            MoneyDto budgetedAmount,
+            MoneyDto actualAmount)
         {
-            this.Category = Category;
-            this.BudgetedAmount = BudgetedAmount;
-            this.ActualAmount = ActualAmount;
+            Category = category;
+            BudgetedAmount = budgetedAmount;
+            ActualAmount = actualAmount;
         }
 
         [JsonConstructor]
         private BudgetedTransactionCategoryDto()
-        {
-        }
+        { }
 
         internal static BudgetedTransactionCategoryDto FromDomainObject(
             Domestica.Budget.Domain.BudgetPlans.BudgetedTransactionCategory domainObject)
@@ -33,7 +28,7 @@ namespace Domestica.Budget.Application.DataTransferObjects
             var budgetedAmount = MoneyDto.FromDomainObject(domainObject.BudgetedAmount);
             var actualAmount = MoneyDto.FromDomainObject(domainObject.ActualAmount);
 
-            return new (domainObject.Category.Value, budgetedAmount, actualAmount);
+            return new(TransactionCategoryDto.FromDomainObject(domainObject.Category)!, budgetedAmount, actualAmount);
         }
 
     }

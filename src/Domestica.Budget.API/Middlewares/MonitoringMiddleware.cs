@@ -1,5 +1,7 @@
 ﻿using Serilog.Context;
 using System.Diagnostics;
+using Serilog;
+using MediatR;
 
 namespace Domestica.Budget.API.Middlewares
 {
@@ -17,6 +19,7 @@ namespace Domestica.Budget.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
+
             using (LogContext.PushProperty("RequestId", context.TraceIdentifier))
             {
                 var request = context.Request;
@@ -28,10 +31,25 @@ namespace Domestica.Budget.API.Middlewares
 
                 var elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
 
-                if (elapsedMilliseconds > longRunningRequestThreshold)
+                LogRequestExecutionTime(request, elapsedMilliseconds);
+            }
+        }
+
+        private void LogRequestExecutionTime(HttpRequest request, long elapsedMilliseconds)
+        {
+            using (LogContext.PushProperty("RequestExecutionTime", elapsedMilliseconds))
+            {
+                switch (elapsedMilliseconds > longRunningRequestThreshold)
                 {
-                    var message = $"Long running request: {request.Method} {request.Path} ({elapsedMilliseconds} milliseconds)";
-                    _logger.LogWarning(message);
+                    case true:
+                        var warningMessage =
+                            $"Long running request: {request.Method} {request.Path} ({elapsedMilliseconds} milliseconds)";
+                        _logger.LogWarning(warningMessage);
+                        break;
+                    case false:
+                        var infoMessage = $"Request: {request.Method} {request.Path} ({elapsedMilliseconds} milliseconds)";
+                        _logger.LogInformation(infoMessage);
+                        break;
                 }
             }
         }

@@ -1,5 +1,5 @@
 ﻿using CommonAbstractions.DB.Entities;
-using Domestica.Budget.Domain.Transactions;
+using Domestica.Budget.Domain.TransactionCategories;
 
 namespace Domestica.Budget.Domain.BudgetPlans.DomainEvents;
 

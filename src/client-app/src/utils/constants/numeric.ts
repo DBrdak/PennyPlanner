@@ -1,0 +1,1 @@
+export const decimal_MAX = 79228162514264337593543950335

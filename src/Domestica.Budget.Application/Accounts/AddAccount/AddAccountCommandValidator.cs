@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Money.DB;
 
 namespace Domestica.Budget.Application.Accounts.AddAccount
 {
@@ -18,10 +17,6 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
             RuleFor(x => x.NewAccountData.Type)
                 .Must(type => AccountType.All.Any(accountType => accountType.Value == type))
                 .WithMessage("Invalid account type");
-
-            RuleFor(x => x.NewAccountData.InitialBalance)
-                .Must(balance => Currency.All.Any(currency => currency.Code == balance.Currency))
-                .WithMessage("Invalid currency");
         }
     }
 }

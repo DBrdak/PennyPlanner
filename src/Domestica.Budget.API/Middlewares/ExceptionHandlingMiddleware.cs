@@ -2,6 +2,8 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Responses.DB;
+using Serilog.Context;
+using static Domestica.Budget.API.Middlewares.ExceptionMiddleware;
 
 namespace Domestica.Budget.API.Middlewares
 {
@@ -41,7 +43,7 @@ namespace Domestica.Budget.API.Middlewares
                     problemDetails.Extensions["errors"] = exceptionDetails.Errors;
                 }
 
-                _logger.LogError(exception, "{Exception} occurred: {Message}", exceptionDetails.Title, exception.Message);
+                LogException(exceptionDetails, exception);
 
                 context.Response.StatusCode = exceptionDetails.Status;
 
@@ -60,19 +62,19 @@ namespace Domestica.Budget.API.Middlewares
             {
                 ValidationException validationException => new ExceptionDetails(
                     StatusCodes.Status400BadRequest,
-                    "ValidationFailure",
+                    validationException.GetType().Name,
                     "Validation error",
                     "One or more validation errors has occurred",
                     validationException.Errors),
                 DomainException domainException => new ExceptionDetails(
                     StatusCodes.Status400BadRequest,
-                    "DomainException",
+                    domainException.GetType().Name,
                     $"{domainException.Type.Name} Domain error",
                     domainException.Message,
                     null),
                 ApplicationException applicationException => new ExceptionDetails(
                     StatusCodes.Status400BadRequest,
-                    "ApplicationException",
+                    applicationException.GetType().Name,
                     "Application error",
                     applicationException.Message,
                     null),
@@ -83,6 +85,14 @@ namespace Domestica.Budget.API.Middlewares
                     "An unexpected error has occurred",
                     null)
             };
+        }
+
+        private void LogException(ExceptionDetails details, Exception exception)
+        {
+            using (LogContext.PushProperty("Exception", details.Type, true))
+            {
+                _logger.LogError(exception, "{Exception} occurred: {Message}", details.Title, exception.Message);
+            }
         }
 
         internal record ExceptionDetails(

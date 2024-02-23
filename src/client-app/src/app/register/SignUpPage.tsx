@@ -1,7 +1,7 @@
 import {
     Button,
     Divider,
-    FormControl,
+    FormControl, Grid,
     InputLabel, MenuItem,
     Paper,
     Select,
@@ -15,12 +15,15 @@ import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import MyTextInput from "../../components/MyTextInput";
 import {SignupValues} from "../../models/forms/signUpValues";
-import MainContainer from "../../components/MainContainer";
+import useTitle from "../../utils/hooks/useTitle";
+import GradientContainer from "../welcome/GradientContainer";
 
 
 
 const SignUpPage: React.FC = () => {
     const navigate = useNavigate()
+
+    useTitle('Register')
 
     const initialValues: SignupValues = {
         email: '',
@@ -31,7 +34,7 @@ const SignUpPage: React.FC = () => {
     }
 
 
-    const invalidPasswordMessage =
+    const passwordManual =
         `Your password should contain: 
     · 8 characters 
     · 1 special character 
@@ -62,24 +65,30 @@ const SignUpPage: React.FC = () => {
     }
 
     return (
-        <MainContainer>
-            <Stack style={{minWidth: '600px'}}>
-                <Typography variant="h4" align="center" gutterBottom>
-                    Your Logo
-                </Typography>
-                <Paper elevation={3} style={{
-                    padding: '50px', borderRadius: '70px', minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <Stack justifyContent={'center'} width={'100%'} spacing={3}>
-                        <Formik
-                            validationSchema={validationSchema}
-                            initialValues={initialValues}
-                            onSubmit={values => handleFormSubmit(values)}
-                        >
-                            {({ handleSubmit, setValues, values}) => (
-                                <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                                    <CenteredStack style={{gap: 30}}>
-
+        <GradientContainer sx={{userSelect: 'none'}}>
+            <Paper elevation={3} style={{
+                minWidth: '400px',
+                maxWidth: '600px',
+                padding: '3rem',
+                borderRadius: '70px',
+                minHeight: '600px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '3em 0em',
+            }}>
+                <Stack justifyContent={'center'} width={'100%'} spacing={3}>
+                    <Formik
+                        validationSchema={validationSchema}
+                        initialValues={initialValues}
+                        onSubmit={values => handleFormSubmit(values)}
+                    >
+                        {({ handleSubmit, setValues, values}) => (
+                            <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
+                                <Grid container>
+                                    <Grid xs={12} md={6} sx={{
+                                        padding: 2
+                                    }}>
                                         <MyTextInput
                                             name={'name'}
                                             label="Name"
@@ -87,7 +96,10 @@ const SignUpPage: React.FC = () => {
                                             type={'text'}
                                             showErrors
                                         />
-
+                                    </Grid>
+                                    <Grid xs={12} md={6} sx={{
+                                        padding: 2
+                                    }}>
                                         <MyTextInput
                                             name={'email'}
                                             label="Email"
@@ -95,7 +107,10 @@ const SignUpPage: React.FC = () => {
                                             type="email"
                                             showErrors
                                         />
-
+                                    </Grid>
+                                    <Grid xs={12} md={6} sx={{
+                                        padding: 2
+                                    }}>
                                         <MyTextInput
                                             name={'password'}
                                             label="Password"
@@ -103,7 +118,10 @@ const SignUpPage: React.FC = () => {
                                             type="password"
                                             showErrors
                                         />
-
+                                    </Grid>
+                                    <Grid xs={12} md={6} sx={{
+                                        padding: 2
+                                    }}>
                                         <MyTextInput
                                             name={'confirmPassword'}
                                             label="Confirm password"
@@ -111,44 +129,51 @@ const SignUpPage: React.FC = () => {
                                             type="password"
                                             showErrors
                                         />
-
+                                    </Grid>
+                                    <Grid xs={12} md={6} sx={{
+                                        padding: 2
+                                    }}>
                                         <FormControl fullWidth error={values.currency.length < 1}>
                                             <InputLabel>Currency</InputLabel>
-                                                <Select
-                                                    value={values.currency}
-                                                    onChange={(e) => setValues({...values, currency: e.target.value})}
-                                                >
-                                                    <MenuItem value={'PLN'}>PLN</MenuItem>
-                                                    <MenuItem value={'USD'}>USD</MenuItem>
-                                                </Select>
+                                            <Select
+                                                value={values.currency}
+                                                onChange={(e) => setValues({...values, currency: e.target.value})}
+                                            >
+                                                <MenuItem value={'PLN'}>PLN</MenuItem>
+                                                <MenuItem value={'USD'}>USD</MenuItem>
+                                            </Select>
                                         </FormControl>
-
-                                        <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px', width: '75%' }}
-                                                onClick={() => console.log('Registered !')}>
+                                    </Grid>
+                                    <Grid xs={12} md={6} sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        padding: 2
+                                    }}>
+                                        <Button fullWidth type="submit" variant="contained" color="primary" onClick={() => console.log('Registered !')}>
                                             Sign Up
                                         </Button>
-                                    </CenteredStack>
-                                </Form>
-                            )}
-                        </Formik>
-                        <Typography variant={'caption'} textAlign={'center'} style={{whiteSpace: 'pre-wrap'}}>
-                            {invalidPasswordMessage}
+                                    </Grid>
+                                </Grid>
+                            </Form>
+                        )}
+                    </Formik>
+                    <Typography variant={'caption'} textAlign={'center'} style={{whiteSpace: 'pre-wrap'}}>
+                        {passwordManual}
+                    </Typography>
+                    <Divider variant="middle" />
+                    <CenteredStack>
+                        <Typography variant="body2" color="textSecondary" align="center" style={{ margin: '10px 0' }}>
+                            Already have an account?
                         </Typography>
-                        <Divider variant="middle" />
-
-                        <CenteredStack>
-                            <Typography variant="body2" color="textSecondary" align="center" style={{ margin: '10px 0' }}>
-                                Already have an account?
-                            </Typography>
-                            <Button variant={"outlined"} color={'secondary'} style={{width: '75%', borderWidth: '3px', fontWeight: '900'}}
-                                    onClick={() => navigate('/login')}>
-                                Sign In
-                            </Button>
-                        </CenteredStack>
-                    </Stack>
-                </Paper>
-            </Stack>
-        </MainContainer>
+                        <Button variant={"outlined"} color={'secondary'} style={{width: '75%', borderWidth: '3px', fontWeight: '900'}}
+                                onClick={() => navigate('/login')}>
+                            Sign In
+                        </Button>
+                    </CenteredStack>
+                </Stack>
+            </Paper>
+        </GradientContainer>
     )
 }
 

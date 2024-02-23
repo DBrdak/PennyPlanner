@@ -1,15 +1,23 @@
-import axios, { AxiosResponse } from "axios"
-import { toast } from "react-toastify"
+import axios, {AxiosResponse} from "axios"
+import {toast} from "react-toastify"
 import { router } from "../router/Routes"
-import {NewAccountData} from "../models/requests/newAccountData";
-import {AddTransactionEntityCommand} from "../models/requests/addTransactionEntityCommand";
-import {AccountUpdateData} from "../models/requests/accountUpdateData";
-import {BudgetedTransactionCategoryValues} from "../models/requests/budgetedTransactionCategoryValues";
-import {UpdateBudgetPlanCategoryValues} from "../models/requests/updateBudgetPlanCategoryValues";
-import {AddInternalTransactionCommand} from "../models/requests/addInternalTransactionCommand";
-import {AddIncomeTransactionCommand} from "../models/requests/addIncomeTransactionCommand";
-import {AddOutcomeTransactionCommand} from "../models/requests/addOutcomeTransactionCommand";
+import {NewAccountData} from "../models/requests/accounts/newAccountData";
+import {AddTransactionEntityCommand} from "../models/requests/transactionEntities/addTransactionEntityCommand";
+import {AccountUpdateData} from "../models/requests/accounts/accountUpdateData";
+import {BudgetedTransactionCategoryValues} from "../models/requests/budgetPlans/budgetedTransactionCategoryValues";
+import {UpdateBudgetPlanCategoryValues} from "../models/requests/budgetPlans/updateBudgetPlanCategoryValues";
+import {AddInternalTransactionCommand} from "../models/requests/transactions/addInternalTransactionCommand";
+import {AddIncomeTransactionCommand} from "../models/requests/transactions/addIncomeTransactionCommand";
+import {AddOutcomeTransactionCommand} from "../models/requests/transactions/addOutcomeTransactionCommand";
 import {Account} from "../models/accounts/account";
+import {TransactionEntity} from "../models/transactionEntities/transactionEntity";
+import {Transaction} from "../models/transactions/transaction";
+import {TransactionCategory} from "../models/transactionCategories/transactionCategory";
+import {AddTransactionCategoryCommand} from "../models/requests/categories/addTransactionCategoryCommand";
+import {AddTransactionSubcategoryCommand} from "../models/requests/subcategories/addTransactionSubcategoryCommand";
+import {DateTimeRange} from "../models/shared/dateTimeRange";
+import {BudgetPlan} from "../models/budgetPlans/budgetPlan";
+import {SetBudgetPlanCommand} from "../models/requests/budgetPlans/setBudgetPlanCommand";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -28,42 +36,35 @@ axios.interceptors.response.use(async(response) => {
         }
         return response
     }, (error) => {
-        console.log(error.data)
-        if (error.response) {
-            if (error.response.data && error.response.data.name) {
-                const errorMessage = error.response.data.name;
-                toast.error(errorMessage);
-                return Promise.reject();
-            } else {
-                let errorMessage = ''
-                switch(error.response.status) {
-                    case 400:
-                        if(error.response.config.method === 'get' && error.response.data.errors.hasOwnProperty('id')){
-                            router.navigate('/not-found');
-                        }
-                        break;
-                    case 401:
-                        if( error.response.headers['www-authenticate']?.startsWith('Bearer error="invalid_token"')){
-                            toast.error("Session expired - please login again")
-                        }
-                        else toast.error('unauthorized')
-                        break;
-                    case 403:
-                        errorMessage = error.response.data.name;
-                        toast.error(errorMessage);
-                        return Promise.reject();
-                    case 404:
-                        errorMessage = error.response.data.name;
-                        toast.error(errorMessage);
-                        return Promise.reject();
-                    case 500:
-                        router.navigate('/server-error');
-                        break;
-                }
+        if (error) {
+            const errorMessage = error.response.data.error.name || error.response.data.name
+            const errorMessages = errorMessage.split('\n')
+            console.log(error)
+            switch(error.response.status) {
+                case 400:
+                    errorMessages.forEach(toast.error)
+                    return Promise.reject();
+                case 401:
+                    if( error.response.headers['www-authenticate']?.startsWith('Bearer error="invalid_token"')){
+                        toast.error("Session expired - please login again")
+                    }
+                    else toast.error('Unauthorized')
+                    break;
+                case 403:
+                    errorMessages.forEach(toast.error)
+                    return Promise.reject();
+                case 404:
+                    if(error.response.config.method === 'get' && error.response.data.errors.hasOwnProperty('id')){
+                        router.navigate('/not-found');
+                    }
+                    errorMessages.forEach(toast.error)
+                    return Promise.reject();
+                case 500:
+                    router.navigate('/server-error');
+                    break;
             }
         }
 
-        // Pass the error to the next handler
         return Promise.reject(error);
     }
 );
@@ -77,46 +78,68 @@ const requests = {
 
 const accounts = {
     getAccounts: () => axios.get<Account[]>('/accounts').then(responseBody),
-    createAccount: (data: NewAccountData) => axios.post('/accounts', data).then(responseBody),
-    updateAccount: (data: AccountUpdateData) => axios.put('/accounts', data).then(responseBody),
+    createAccount: (data: NewAccountData) => axios.post('/accounts', data),
+    updateAccount: (data: AccountUpdateData) => axios.put(`/accounts/${data.accountId}`, data),
     deleteAccount: (accountId: string) => axios.delete(`/accounts/${accountId}`),
 }
 
 const budgetPlans = {
-    getBudgetPlans: () => axios.get('/budget-plans').then(responseBody),
-    createBudgetPlan: (period: DateTimeRange) => axios.post('/budget-plans', period).then(responseBody),
-    updateBudgetPlan: (budgetPlanId: string, categories: BudgetedTransactionCategoryValues[]) =>
-        axios.put(`/budget-plans/${budgetPlanId}`, categories).then(responseBody),
+    getBudgetPlan: (params: URLSearchParams) => axios.get<BudgetPlan>('/budget-plans', {params}).then(responseBody),
+    setBudgetPlan: (command: SetBudgetPlanCommand) =>
+        axios.post(`/budget-plans`, command),
     updateBudgetPlanCategory: (budgetPlanId: string, budgetPlanCategory: string, values: UpdateBudgetPlanCategoryValues) =>
-        axios.put(`/budget-plans/${budgetPlanId}/${budgetPlanCategory}`, values).then(responseBody),
+        axios.put(`/budget-plans/${budgetPlanId}/${budgetPlanCategory}`, values),
 }
 
 const transactionEntities = {
-    getTransactionEntities: () => axios.get('/transaction-entities').then(responseBody),
+    getTransactionEntities: () => axios.get<TransactionEntity[]>('/transaction-entities').then(responseBody),
     createTransactionEntity: (command: AddTransactionEntityCommand) =>
-        axios.post('/transaction-entities', command).then(responseBody),
-    updateTransactionEntity: (transactionEntityId: string, data: string) =>
-        axios.put(`/transaction-entities/${transactionEntityId}`, data).then(responseBody),
+        axios.post('/transaction-entities', command),
+    updateTransactionEntity: (transactionEntityId: string, newName: string) =>
+        axios.put(`/transaction-entities/${transactionEntityId}`, {id: transactionEntityId, newName: newName})
+            ,
     deleteTransactionEntity: (transactionEntityId: string) =>
-        axios.delete(`/transaction-entities/${transactionEntityId}`).then(responseBody),
+        axios.delete(`/transaction-entities/${transactionEntityId}`),
+}
+
+const transactionCategories = {
+    getTransactionCategories: () =>
+        axios.get<TransactionCategory[]>('/transaction-categories').then(responseBody),
+    createTransactionCategory: (command: AddTransactionCategoryCommand) =>
+        axios.post('/transaction-categories', command),
+    updateTransactionCategory: (categoryId: string, newValue: string) =>
+        axios.put(`/transaction-categories/${categoryId}`, {transactionCategoryId: categoryId, newValue: newValue}),
+    deleteTransactionCategory: (transactionCategoryId: string) =>
+        axios.delete(`/transaction-categories/${transactionCategoryId}`),
+}
+
+const transactionSubcategories = {
+    addTransactionSubcategory: (command: AddTransactionSubcategoryCommand) =>
+        axios.post('/transaction-subcategories', command),
+    updateTransactionSubcategory: (transactionSubcategoryId: string, newValue: string) =>
+        axios.put(`/transaction-subcategories/${transactionSubcategoryId}`, { transactionSubcategoryId: transactionSubcategoryId, newValue: newValue }),
+    removeTransactionSubcategory: (transactionSubcategoryId: string) =>
+        axios.delete(`/transaction-subcategories/${transactionSubcategoryId}`),
 }
 
 const transactions = {
-    getTransactions: () => axios.get('/transactions').then(responseBody),
+    getTransactions: () => axios.get<Transaction[]>('/transactions').then(responseBody),
     createInternalTransaction: (command: AddInternalTransactionCommand) =>
-        axios.post('/transactions/internal', command).then(responseBody),
+        axios.post('/transactions/internal', command),
     createIncomeTransaction: (command: AddIncomeTransactionCommand) =>
-        axios.post('/transactions/income', command).then(responseBody),
+        axios.post('/transactions/income', command),
     createOutcomeTransaction: (command: AddOutcomeTransactionCommand) =>
-        axios.post('/transactions/outcome', command).then(responseBody),
-    deleteTransaction: (transactionId: string) => axios.delete(`/transactions/${transactionId}`).then(responseBody),
+        axios.post('/transactions/outcome', command),
+    deleteTransaction: (transactionId: string) => axios.delete(`/transactions/${transactionId}`),
 }
 
 const agent = {
     accounts,
     budgetPlans,
     transactionEntities,
-    transactions
+    transactionCategories,
+    transactionSubcategories,
+    transactions,
 }
 
 export default agent;

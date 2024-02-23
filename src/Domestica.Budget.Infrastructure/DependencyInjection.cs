@@ -1,8 +1,11 @@
 ﻿using CommonAbstractions.DB;
+using Domestica.Budget.Application.Messaging.Caching;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.BudgetPlans;
+using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.Transactions;
+using Domestica.Budget.Domain.TransactionSubcategories;
 using Domestica.Budget.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -29,8 +32,12 @@ namespace Domestica.Budget.Infrastructure
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
+                options.UseNpgsql(connectionString, o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
+                    .UseSnakeCaseNamingConvention();
             });
+
+            services.AddStackExchangeRedisCache(options =>
+                options.Configuration = configuration.GetConnectionString("Cache"));
 
             services.AddScoped<IAccountRepository, AccountRepository>();
 
@@ -39,6 +46,12 @@ namespace Domestica.Budget.Infrastructure
             services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             services.AddScoped<IBudgetPlanRepository, BudgetPlanRepository>();
+
+            services.AddScoped<ITransactionCategoryRepository, TransactionCategoryRepository>();
+
+            services.AddScoped<ITransactionSubcategoryRepository, TransactionSubcategoryRepository>();
+
+            services.AddScoped<ICacheRepository, CacheRepository>();
 
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
         }

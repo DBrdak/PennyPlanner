@@ -1,6 +1,9 @@
 ﻿using Domestica.Budget.Domain.Accounts;
+using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities.TransactionRecipients;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
+using Domestica.Budget.Domain.TransactionSubcategories;
+using Exceptions.DB;
 
 namespace Domestica.Budget.Domain.Transactions
 {
@@ -10,9 +13,13 @@ namespace Domestica.Budget.Domain.Transactions
             Money.DB.Money transactionAmount,
             Account destinationAccount,
             TransactionSender sender,
-            IncomingTransactionCategory category)
+            IncomeTransactionCategory category,
+            TransactionSubcategory subcategory,
+            DateTime transactionDateTime)
         {
-            var transaction = Transaction.CreateIncome(transactionAmount, destinationAccount, sender, category);
+            ValidateSubcategory(category, subcategory);
+
+            var transaction = Transaction.CreateIncome(transactionAmount, destinationAccount, sender, subcategory, transactionDateTime);
 
             destinationAccount.AddTransaction(transaction);
             sender.AddTransaction(transaction);
@@ -24,9 +31,13 @@ namespace Domestica.Budget.Domain.Transactions
             Money.DB.Money transactionAmount,
             Account sourceAccount,
             TransactionRecipient recipient,
-            OutgoingTransactionCategory category)
+            OutcomeTransactionCategory category,
+            TransactionSubcategory subcategory,
+            DateTime transactionDateTime)
         {
-            var transaction = Transaction.CreateOutcome(transactionAmount, sourceAccount, recipient, category);
+            ValidateSubcategory(category, subcategory);
+
+            var transaction = Transaction.CreateOutcome(transactionAmount, sourceAccount, recipient, subcategory, transactionDateTime);
 
             sourceAccount.AddTransaction(transaction);
             recipient.AddTransaction(transaction);
@@ -37,12 +48,13 @@ namespace Domestica.Budget.Domain.Transactions
         public static Transaction[] CreateInternalTransaction(
             Money.DB.Money transactionAmount,
             Account sourceAccount,
-            Account destinationAccount) 
+            Account destinationAccount,
+            DateTime transactionDateTime) 
         {
             var transactions = new
             {
-                source = Transaction.CreateInternalOutcome(transactionAmount, sourceAccount, destinationAccount),
-                destination = Transaction.CreateInternalIncome(transactionAmount, destinationAccount, sourceAccount)
+                source = Transaction.CreateInternalOutcome(transactionAmount, sourceAccount, destinationAccount, transactionDateTime),
+                destination = Transaction.CreateInternalIncome(transactionAmount, destinationAccount, sourceAccount, transactionDateTime)
             };
 
             sourceAccount.AddTransaction(transactions.source);
@@ -69,6 +81,18 @@ namespace Domestica.Budget.Domain.Transactions
                     var equalizingOutcomeTransaction = Transaction.CreatePrivateOutcome(transactionAmount, account);
                     account.AddTransaction(equalizingOutcomeTransaction);
                     break;
+            }
+        }
+
+        private static void ValidateSubcategory(
+            TransactionCategory category,
+            TransactionSubcategory subcategory)
+        {
+            var subcategoryInCategory = category.Subcategories.Any(sc => sc.Id == subcategory.Id);
+
+            if (subcategoryInCategory is false)
+            {
+                throw new DomainException<Transaction>($"Subcategory {subcategory.Value.Value} doesn't exist in category {category.Value.Value}");
             }
         }
     }

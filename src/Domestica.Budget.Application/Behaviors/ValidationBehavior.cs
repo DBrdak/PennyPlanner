@@ -3,6 +3,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Serilog.Context;
 using ValidationException = FluentValidation.ValidationException;
 
 namespace Domestica.Budget.Application.Behaviors
@@ -27,29 +28,50 @@ namespace Domestica.Budget.Application.Behaviors
         {
             var context = new ValidationContext<TRequest>(request);
 
-            _logger.LogInformation("Validating request {Request}", request);
-
-            var validationFailures = await Task.WhenAll(
-                _validators.Select(validator => validator.ValidateAsync(context)));
-
-            var errors = validationFailures
-                .Where(validationResult => !validationResult.IsValid)
-                .SelectMany(validationResult => validationResult.Errors)
-                .Select(validationFailure => new ValidationFailure(
-                    validationFailure.PropertyName,
-                    validationFailure.ErrorMessage))
-                .ToList();
-
-            if (errors.Any())
+            using (LogContext.PushProperty("Validation", context.RootContextData))
             {
-                LogValidationFailure(request, errors);
-                throw new ValidationException(errors);
+                LogValidationStart();
+
+                var validationFailures = await Task.WhenAll(
+                    _validators.Select(validator => validator.ValidateAsync(context, cancellationToken)));
+
+                var errors = GetValidationFailures(validationFailures);
+
+                if (errors != null && errors.Any())
+                {
+                    LogValidationFailure(request, errors);
+                    throw new ValidationException(errors);
+                }
+
+                LogValidationSuccess();
             }
 
-            _logger.LogInformation("Request {Request} validation success", request);
             var response = await next();
 
             return response;
+        }
+
+        private static List<ValidationFailure> GetValidationFailures(ValidationResult[] validationFailures)
+        {
+            var errors = validationFailures
+                .Where(validationResult => !validationResult.IsValid)
+                .SelectMany(validationResult => validationResult.Errors)
+                .Select(
+                    validationFailure => new ValidationFailure(
+                        validationFailure.PropertyName,
+                        validationFailure.ErrorMessage))
+                .ToList();
+            return errors;
+        }
+
+        private void LogValidationStart()
+        {
+            _logger.LogInformation("Validating request {Request}", typeof(TRequest).FullName);
+        }
+
+        private void LogValidationSuccess()
+        {
+            _logger.LogInformation("Request {Request} validation success", typeof(TRequest).FullName);
         }
 
         private void LogValidationFailure(TRequest request, List<ValidationFailure> errors)

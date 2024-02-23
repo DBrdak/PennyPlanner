@@ -1,8 +1,11 @@
-﻿using CommonAbstractions.DB.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using CommonAbstractions.DB.Entities;
 using DateKit.DB;
 using Domestica.Budget.Domain.BudgetPlans.DomainEvents;
+using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.Transactions;
 using Exceptions.DB;
+using MediatR;
 
 #pragma warning disable CS8618
 
@@ -19,12 +22,42 @@ namespace Domestica.Budget.Domain.BudgetPlans
         private BudgetPlan()
         { }
 
-        public BudgetPlan(DateTimeRange budgetPeriod): base(new BudgetPlanId())
+        private BudgetPlan(DateTimeRange budgetPeriod): base(new BudgetPlanId())
         {
             _budgetedTransactionCategories = new ();
             BudgetPeriod = budgetPeriod.ParseToUTC();
             _transactions = new ();
         }
+
+        public static BudgetPlan Create(DateTimeRange budgetPeriod)
+        {
+            Validate(budgetPeriod);
+
+            return new BudgetPlan(budgetPeriod);
+        }
+
+        public static BudgetPlan CreateForMonth(DateTime date) => Create(GetMonthRangeFromDateTime(date));
+
+        private static DateTimeRange GetMonthRangeFromDateTime(DateTime date)
+        {
+            return new DateTimeRange(
+                new DateTime(date.Year, date.Month, 1),
+                new DateTime(date.Year, date.Month + 1, 1));
+        }
+
+
+        private static void Validate(DateTimeRange budgetPeriod)
+        {
+            if (!IsMonthDateGreaterThanUtcNow(budgetPeriod.Start) ||
+                !IsMonthDateGreaterThanUtcNow(budgetPeriod.End))
+            {
+                throw new DomainException<BudgetPlan>("Budget plan period should be a future period");
+            }
+        }
+
+        private static bool IsMonthDateGreaterThanUtcNow(DateTime date) =>
+            date.Month >= DateTime.UtcNow.Month &&
+            date.Year >= DateTime.UtcNow.Year;
 
         public void SetBudgetForCategory(TransactionCategory category, Money.DB.Money budgetedAmount)
         {

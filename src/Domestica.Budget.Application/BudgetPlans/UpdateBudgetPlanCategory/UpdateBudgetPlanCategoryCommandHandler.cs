@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommonAbstractions.DB;
+﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Domain.BudgetPlans;
-using Domestica.Budget.Domain.Transactions;
+using Money.DB;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
@@ -31,13 +26,26 @@ namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
                 return Result.Failure<BudgetPlan>(Error.NotFound($"Budget plan with ID: {request.BudgetPlanId} not found"));
             }
 
+            var category =
+                budgetPlan.BudgetedTransactionCategories.FirstOrDefault(
+                    c => c.Category.Id.Value.ToString() == request.CategoryId)?.Category;
+
+            if (category is null)
+            {
+                return Result.Failure<BudgetPlan>(Error.NotFound($"Budget plan category with ID: {request.CategoryId} not found"));
+            }
+
             if (request.Values.NewBudgetAmount is not null && !request.Values.IsBudgetToReset)
             {
-                budgetPlan.UpdateBudgetCategory(TransactionCategory.FromValue(request.Category), request.Values.NewBudgetAmount.ToDomainObject());
+                //TODO Fetch currency from user
+                var currency = Currency.Usd;
+                budgetPlan.UpdateBudgetCategory(
+                    category,
+                    new ((decimal)request.Values.NewBudgetAmount, currency));
             }
             else
             {
-                budgetPlan.ResetBudgetCategory(TransactionCategory.FromValue(request.Category));
+                budgetPlan.ResetBudgetCategory(category);
             }
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;

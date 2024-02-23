@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using Domestica.Budget.Application.Accounts.AddAccount;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.Accounts.SavingsAccounts;
@@ -50,7 +45,9 @@ namespace Domestica.Budget.Application.DataTransferObjects
                 throw new ArgumentException("Unknown account type");
             }
 
-            var transactions = account.Transactions.Select(TransactionDto.FromDomainObject);
+            var transactions = account.Transactions
+                .Select(TransactionDto.FromDomainObject)
+                .OrderByDescending(t => t.TransactionDateUtc);
 
             var balance = MoneyDto.FromDomainObject(account.Balance);
 

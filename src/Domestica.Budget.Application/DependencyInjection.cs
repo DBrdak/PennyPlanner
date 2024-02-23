@@ -1,7 +1,7 @@
-﻿using System.Reflection;
-using Domestica.Budget.Application.Behaviors;
+﻿using Domestica.Budget.Application.Behaviors;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Responses.DB;
 
 namespace Domestica.Budget.Application
 {
@@ -18,6 +18,8 @@ namespace Domestica.Budget.Application
                     config.AddOpenBehavior(typeof(DomainEventPublishBehavior<,>));
                     config.AddOpenBehavior(typeof(LoggingBehavior<,>));
                     config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+                    config.AddOpenBehavior(typeof(QueryCachingBehavior<,>));
+                    config.AddOpenBehavior(typeof(CacheInvalidationBehavior<,>));
                 });
             
             return services;

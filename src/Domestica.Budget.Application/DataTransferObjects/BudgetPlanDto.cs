@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using DateKit.DB;
 using Domestica.Budget.Domain.BudgetPlans;
-using Domestica.Budget.Domain.Transactions;
 
 namespace Domestica.Budget.Application.DataTransferObjects
 {
     public sealed record BudgetPlanDto
     {
+        public string BudgetPlanId { get; init; }
         public DateTimeRange BudgetPeriod { get; init; }
         public IEnumerable<BudgetedTransactionCategoryDto> BudgetedTransactionCategories { get; init; }
         public IEnumerable<TransactionDto> Transactions { get; init; }
 
         private BudgetPlanDto(
+            string budgetPlanId,
             DateTimeRange BudgetPeriod,
             IEnumerable<BudgetedTransactionCategoryDto> BudgetedTransactionCategories,
             IEnumerable<TransactionDto> Transactions)
@@ -24,21 +20,26 @@ namespace Domestica.Budget.Application.DataTransferObjects
             this.BudgetPeriod = BudgetPeriod;
             this.BudgetedTransactionCategories = BudgetedTransactionCategories;
             this.Transactions = Transactions;
+            BudgetPlanId = budgetPlanId;
         }
 
         [JsonConstructor]
         private BudgetPlanDto()
         {
-            
         }
 
-        internal static BudgetPlanDto FromDomainObject(BudgetPlan domainObject)
+        internal static BudgetPlanDto? FromDomainObject(BudgetPlan? domainObject)
         {
+            if (domainObject is null)
+            {
+                return null;
+            }
+
             var transactions = domainObject.Transactions.Select(TransactionDto.FromDomainObject);
             var budgetedTransactionCategories =
                 domainObject.BudgetedTransactionCategories.Select(BudgetedTransactionCategoryDto.FromDomainObject);
-
-            return new (domainObject.BudgetPeriod, budgetedTransactionCategories, transactions);
+            
+            return new (domainObject.Id.Value.ToString(), domainObject.BudgetPeriod, budgetedTransactionCategories, transactions);
         }
     }
 }

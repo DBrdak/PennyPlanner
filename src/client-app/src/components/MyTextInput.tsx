@@ -1,5 +1,12 @@
 import React from 'react';
-import { TextField, FormControl, Tooltip, FilledInputProps, InputProps, OutlinedInputProps } from '@mui/material';
+import {
+    TextField,
+    FormControl,
+    Tooltip,
+    FilledInputProps,
+    InputProps,
+    OutlinedInputProps
+} from '@mui/material';
 import { useField } from 'formik';
 import { observer } from 'mobx-react-lite';
 
@@ -16,16 +23,23 @@ interface Props {
     disabled?: boolean
     maxLength?: number
     capitalize?: boolean
+    color?: "error" | "primary" | "secondary" | "info" | "success" | "warning" | undefined
 }
 
-const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, showErrors, maxValue, minValue, inputProps, type, style, ...props }) => {
+const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, color, showErrors, maxValue, minValue, inputProps, type, style, ...props }) => {
     const [field, meta, helpers] = useField(props.name);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value.replace(',', '.');
 
         if (type === 'number') {
-            value = value.replace(/[^0-9.]/g, '');
+            value = value.replace(/[^0-9.-]/g, '')
+
+            const dots = value.split('.').length - 1
+
+            if (dots > 1) {
+                value = value.slice(0, value.lastIndexOf('.'))
+            }
         }
 
         if (value !== '0') {
@@ -57,35 +71,35 @@ const MyTextInput: React.FC<Props> = ({ disabled, capitalize, maxLength, showErr
 
     return (
     showErrors ? (
-        <FormControl error={meta.touched && !!meta.error} fullWidth>
+        <FormControl error={meta.touched && !!meta.error} style={style}>
             <Tooltip title={meta.touched && meta.error ? meta.error : ''} placement="right">
                 <TextField
                     {...field}
                     {...props}
                     disabled={disabled}
                     onChange={handleChange}
-                    label={props.label}
                     type={type}
+                    label={props.label ? props.label : props.placeholder}
                     variant="outlined"
                     error={meta.touched && !!meta.error}
-                    InputProps={inputProps} 
-                    style={style}
+                    InputProps={inputProps}
+                    color={color || 'primary'}
                 />
             </Tooltip>
         </FormControl>
     ) : (
-        <FormControl error={meta.touched && !!meta.error} fullWidth>
+        <FormControl error={meta.touched && !!meta.error} fullWidth style={style}>
             <TextField
                 {...field}
                 {...props}
                 disabled={disabled}
                 onChange={handleChange}
                 type={type}
-                label={props.label}
+                label={props.label ? props.label : props.placeholder}
                 variant="outlined"
                 error={meta.touched && !!meta.error}
-                InputProps={inputProps} 
-                style={style}
+                InputProps={inputProps}
+                color={color || 'primary'}
             />
         </FormControl>
     )

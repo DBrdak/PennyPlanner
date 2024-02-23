@@ -1,13 +1,15 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 using CommonAbstractions.DB.Entities;
 using CommonAbstractions.DB.Messaging;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Responses.DB;
+using Serilog.Context;
 
 namespace Domestica.Budget.Application.Behaviors
 {
+
     public class DomainEventPublishBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IBaseCommand
@@ -26,101 +28,94 @@ namespace Domestica.Budget.Application.Behaviors
         {
             var response = await next();
 
-            var domainEvents = RetriveDomainEvents(response);
+            var domainEvents = GetDomainEvents(response);
 
-            if (domainEvents is null)
+            if (domainEvents is null || domainEvents.Count < 1)
             {
                 return response;
             }
 
-            _logger.LogInformation("The process of publishing domain events has started");
-
-            foreach (var domainEvent in domainEvents)
+            using (LogContext.PushProperty("DomainEvents", domainEvents, true))
             {
-                _logger.LogInformation("Publishing domain event {DomainEvent}", domainEvent.GetType().Name);
+                LogDomainEventPublishingStart(domainEvents);
 
-                await _publisher.Publish(domainEvent, cancellationToken);
+                foreach (var domainEvent in domainEvents)
+                {
+                    LogSingleDomainEventPublishingStart(domainEvent);
 
-                _logger.LogInformation("Domain event {DomainEvent} published", domainEvent.GetType().Name);
+                    await _publisher.Publish(domainEvent, cancellationToken);
+
+                    LogSingleDomainEventPublishingSuccess(domainEvent);
+                }
+
+                LogDomainEventPublishingSuccess(domainEvents);
+
+                return response;
             }
-
-            _logger.LogInformation($"The process of publishing domain events is completed, {domainEvents.Count} domain events were published");
-
-            return response;
         }
 
-        private static List<IDomainEvent>? RetriveDomainEvents(object obj)
+        private void LogDomainEventPublishingSuccess(IReadOnlyList<IDomainEvent> domainEvents)
         {
-            var isSuccessProperty = GetProperty(obj, "IsSuccess");
+            _logger.LogInformation(
+                $"The process of publishing domain events is completed, {domainEvents.Count} domain events were published");
+        }
 
-            if (isSuccessProperty is null)
+        private void LogSingleDomainEventPublishingSuccess(IDomainEvent domainEvent)
+        {
+            _logger.LogInformation("Domain event {DomainEvent} published", domainEvent.GetType().FullName);
+        }
+
+        private void LogSingleDomainEventPublishingStart(IDomainEvent domainEvent)
+        {
+            _logger.LogInformation("Publishing domain event {DomainEvent}", domainEvent.GetType().FullName);
+        }
+
+        private void LogDomainEventPublishingStart(IReadOnlyList<IDomainEvent> domainEvents)
+        {
+            _logger.LogInformation(
+                $"The process of publishing domain events has started, {domainEvents.Count} domain events are up to be published");
+        }
+
+        private static List<IDomainEvent>? GetDomainEvents(Result result)
+        {
+            if (result.IsFailure)
             {
                 return null;
             }
 
-            var isSuccess = (bool)GetValueFromProperty(obj, isSuccessProperty);
-
-            if (!isSuccess)
-            {
-                return null;
-            }
-
-            var valueProperty = GetProperty(obj, "Value");
-
-            if (valueProperty is null)
-            {
-                return null;
-            }
-
-            var value = GetValueFromProperty(obj, valueProperty);
+            var value = GetProperty(result, "Value");
 
             if (value is null)
             {
                 return null;
             }
 
-            if (value.GetType().IsArray)
+            if (!value.GetType().IsArray)
             {
-                List<IDomainEvent> domainEvents = new();
+                return GetDomainEvents(value);
+            }
 
-                foreach (var val in value as Array)
+            List<IDomainEvent> domainEvents = new();
+                
+            foreach (var val in value as Array ?? new object[] { })
+            {
+                var entityDomainEvents = GetDomainEvents(val);
+                    
+                if (entityDomainEvents is null)
                 {
-                    var domainEventsMethod = GetDomainEventsMethod(val);
-
-                    if (domainEventsMethod is null)
-                    {
-                        return null;
-                    }
-
-                    var entityDomainEvents = GetDomainEvents(domainEventsMethod, val);
-
-                    domainEvents.AddRange(entityDomainEvents);
+                    continue;
                 }
 
-                return domainEvents;
+                domainEvents.AddRange(entityDomainEvents);
             }
-            else
-            {
-                var domainEventsMethod = GetDomainEventsMethod(value);
 
-                if (domainEventsMethod is null)
-                {
-                    return null;
-                }
+            return domainEvents;
 
-                var domainEvents = GetDomainEvents(domainEventsMethod, value);
-
-                return domainEvents;
-            }
         }
 
-        private static List<IDomainEvent>? GetDomainEvents(MethodInfo domainEventsMethod, object value) =>
-            domainEventsMethod.Invoke(value, null) as List<IDomainEvent>;
+        private static List<IDomainEvent>? GetDomainEvents(object value) =>
+            value.GetType().GetMethod("GetDomainEvents")?.Invoke(value, null) as List<IDomainEvent>;
 
-        private static MethodInfo? GetDomainEventsMethod(object value) => value.GetType().GetMethod("GetDomainEvents");
-
-        private static object? GetValueFromProperty(object obj, PropertyInfo property) => property.GetValue(obj);
-
-        private static PropertyInfo? GetProperty(object obj, string propName) => obj.GetType().GetProperty(propName);
+        private static object? GetProperty(object obj, string propName) => obj.GetType().GetProperty(propName)?.GetValue(obj);
     }
 }

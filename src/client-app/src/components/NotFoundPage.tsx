@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {Box, LinearProgress, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import useTitle from "../utils/hooks/useTitle";
 
 interface NotFoundPageProps {
     text?: string;
@@ -9,6 +10,8 @@ interface NotFoundPageProps {
 const NotFoundPage: React.FC<NotFoundPageProps> = ({ text }) => {
     const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
+
+    useTitle('Not Found')
 
     useEffect(() => {
         const timer = setInterval(() => {

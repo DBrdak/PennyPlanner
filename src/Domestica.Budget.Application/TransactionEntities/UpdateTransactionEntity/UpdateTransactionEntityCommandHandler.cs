@@ -25,6 +25,14 @@ namespace Domestica.Budget.Application.TransactionEntities.UpdateTransactionEnti
                 return Result.Failure<TransactionEntity>(Error.NotFound("Transaction entity not found"));
             }
 
+            var isNameUnique = (await _transactionEntityRepository.BrowseUserTransactionEntitiesAsync())
+                .All(te => te.Name.Value.ToLower() != request.NewName.ToLower() || te.Id.Value.ToString() == request.Id);
+
+            if (!isNameUnique)
+            {
+                return Result.Failure<TransactionEntity>(Error.InvalidRequest($"Transaction entity with name {request.NewName} already exist"));
+            }
+
             transactionEntity.ChangeName(new(request.NewName));
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
@@ -34,7 +42,7 @@ namespace Domestica.Budget.Application.TransactionEntities.UpdateTransactionEnti
                 return Result.Success(transactionEntity);
             }
 
-            return Result.Failure<TransactionEntity>(Error.TaskFailed($"Problem while updating transaction entity name with ID: {transactionEntity.Id}"));
+            return Result.Failure<TransactionEntity>(Error.TaskFailed($"Problem while updating transaction entity name with ID: {request.Id}"));
         }
     }
 }

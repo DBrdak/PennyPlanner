@@ -1,5 +1,5 @@
 ﻿using Domestica.Budget.Domain.BudgetPlans;
-using Domestica.Budget.Domain.Transactions;
+using Domestica.Budget.Domain.TransactionCategories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Money.DB;
@@ -34,10 +34,9 @@ namespace Domestica.Budget.Infrastructure.Configurations
                         {
                             moneyBuilder.Property(money => money.Currency).HasConversion(currency => currency.Code, code => Currency.FromCode(code));
                         });
-                    budgetedTransactionCategoryBuilder
-                        .Property(budgetedTransactionCategory => budgetedTransactionCategory.Category).HasConversion(
-                            category => category.Value,
-                            value => TransactionCategory.FromValue(value));
+                    budgetedTransactionCategoryBuilder.HasOne(budgetedTransactionCategory => budgetedTransactionCategory.Category)
+                        .WithMany()
+                        .HasForeignKey(budgetedTransactionCategory => budgetedTransactionCategory.CategoryId);
                 });
 
             builder.HasMany(budgetPlan => budgetPlan.Transactions)
