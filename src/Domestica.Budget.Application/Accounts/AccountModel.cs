@@ -1,20 +1,22 @@
 ﻿using System.Text.Json.Serialization;
 using Domestica.Budget.Application.Accounts.AddAccount;
+using Domestica.Budget.Application.Shared.Models;
+using Domestica.Budget.Application.Transactions;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.Accounts.SavingsAccounts;
 using Domestica.Budget.Domain.Accounts.TransactionalAccounts;
 
-namespace Domestica.Budget.Application.DataTransferObjects
+namespace Domestica.Budget.Application.Accounts
 {
-    public sealed record AccountDto
+    public sealed record AccountModel
     {
         public string AccountId { get; init; }
         public string Name { get; init; }
-        public MoneyDto Balance { get; init; }
-        public IEnumerable<TransactionDto> Transactions { get; init; }
+        public MoneyModel Balance { get; init; }
+        public IEnumerable<TransactionModel> Transactions { get; init; }
         public string AccountType { get; init; }
 
-        private AccountDto(string accountId, string name, MoneyDto balance, IEnumerable<TransactionDto> transactions, AccountType accountType)
+        private AccountModel(string accountId, string name, MoneyModel balance, IEnumerable<TransactionModel> transactions, AccountType accountType)
         {
             AccountId = accountId;
             Name = name;
@@ -24,21 +26,21 @@ namespace Domestica.Budget.Application.DataTransferObjects
         }
 
         [JsonConstructor]
-        private AccountDto()
+        private AccountModel()
         {
         }
 
-        internal static AccountDto FromDomainObject(Account account)
+        internal static AccountModel FromDomainObject(Account account)
         {
             AccountType accountType;
 
             if (account is TransactionalAccount)
             {
-                accountType = Accounts.AddAccount.AccountType.Transactional;
+                accountType = AddAccount.AccountType.Transactional;
             }
             else if (account is SavingsAccount)
             {
-                accountType = Accounts.AddAccount.AccountType.Savings;
+                accountType = AddAccount.AccountType.Savings;
             }
             else
             {
@@ -46,12 +48,12 @@ namespace Domestica.Budget.Application.DataTransferObjects
             }
 
             var transactions = account.Transactions
-                .Select(TransactionDto.FromDomainObject)
+                .Select(TransactionModel.FromDomainObject)
                 .OrderByDescending(t => t.TransactionDateUtc);
 
-            var balance = MoneyDto.FromDomainObject(account.Balance);
+            var balance = MoneyModel.FromDomainObject(account.Balance);
 
-            return new AccountDto(account.Id.Value.ToString(), account.Name.Value, balance, transactions, accountType);
+            return new AccountModel(account.Id.Value.ToString(), account.Name.Value, balance, transactions, accountType);
         }
 
     }

@@ -9,17 +9,18 @@ using System.Threading.Tasks;
 using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
 using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionSubcategories;
+using Domestica.Budget.Application.TransactionSubcategories;
 
-namespace Domestica.Budget.Application.DataTransferObjects
+namespace Domestica.Budget.Application.TransactionCategories
 {
-    public sealed record TransactionCategoryDto
+    public sealed record TransactionCategoryModel
     {
         public string TransactionCategoryId { get; init; }
         public string Value { get; init; }
         public string Type { get; init; }
-        public List<TransactionSubcategoryDto> Subcategories { get; init; }
+        public List<TransactionSubcategoryModel> Subcategories { get; init; }
 
-        private TransactionCategoryDto(string transactionCategoryId, string value, string transactionCategoryType, List<TransactionSubcategoryDto> subcategories)
+        private TransactionCategoryModel(string transactionCategoryId, string value, string transactionCategoryType, List<TransactionSubcategoryModel> subcategories)
         {
             TransactionCategoryId = transactionCategoryId;
             Value = value;
@@ -28,12 +29,12 @@ namespace Domestica.Budget.Application.DataTransferObjects
         }
 
         [JsonConstructor]
-        private TransactionCategoryDto()
+        private TransactionCategoryModel()
         {
         }
 
 
-        internal static TransactionCategoryDto? FromDomainObject(TransactionCategory? domainObject)
+        internal static TransactionCategoryModel? FromDomainObject(TransactionCategory? domainObject)
         {
             if (domainObject is OutcomeTransactionCategory)
             {
@@ -41,7 +42,7 @@ namespace Domestica.Budget.Application.DataTransferObjects
                     domainObject.Id.Value.ToString(),
                     domainObject.Value.Value,
                     TransactionCategoryType.Outcome.Value,
-                    domainObject.Subcategories.Select(TransactionSubcategoryDto.FromDomainObject).ToList());
+                    domainObject.Subcategories.Select(TransactionSubcategoryModel.FromDomainObject).ToList());
             }
 
             if (domainObject is IncomeTransactionCategory)
@@ -50,7 +51,7 @@ namespace Domestica.Budget.Application.DataTransferObjects
                     domainObject.Id.Value.ToString(),
                     domainObject.Value.Value,
                     TransactionCategoryType.Income.Value,
-                    domainObject.Subcategories.Select(TransactionSubcategoryDto.FromDomainObject).ToList());
+                    domainObject.Subcategories.Select(TransactionSubcategoryModel.FromDomainObject).ToList());
             }
 
             return null;

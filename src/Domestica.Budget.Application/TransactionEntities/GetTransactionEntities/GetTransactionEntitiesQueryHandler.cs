@@ -1,11 +1,10 @@
 ﻿using CommonAbstractions.DB.Messaging;
-using Domestica.Budget.Application.DataTransferObjects;
 using Domestica.Budget.Domain.TransactionEntities;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.TransactionEntities.GetTransactionEntities
 {
-    internal sealed class GetTransactionEntitiesQueryHandler : IQueryHandler<GetTransactionEntitiesQuery, List<TransactionEntityDto>>
+    internal sealed class GetTransactionEntitiesQueryHandler : IQueryHandler<GetTransactionEntitiesQuery, List<TransactionEntityModel>>
     {
         private readonly ITransactionEntityRepository _transactionEntityRepository;
 
@@ -14,12 +13,12 @@ namespace Domestica.Budget.Application.TransactionEntities.GetTransactionEntitie
             _transactionEntityRepository = transactionEntityRepository;
         }
 
-        public async Task<Result<List<TransactionEntityDto>>> Handle(GetTransactionEntitiesQuery request, CancellationToken cancellationToken)
+        public async Task<Result<List<TransactionEntityModel>>> Handle(GetTransactionEntitiesQuery request, CancellationToken cancellationToken)
         {
             //TODO Retrive user id
             var transactionEntities = await _transactionEntityRepository.BrowseUserTransactionEntitiesAsync();
 
-            return transactionEntities.Select(TransactionEntityDto.FromDomainObject).ToList();
+            return transactionEntities.Select(TransactionEntityModel.FromDomainObject).ToList();
         }
     }
 }
