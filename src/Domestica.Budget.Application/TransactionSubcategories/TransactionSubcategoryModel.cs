@@ -6,15 +6,15 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Domestica.Budget.Domain.TransactionSubcategories;
 
-namespace Domestica.Budget.Application.DataTransferObjects
+namespace Domestica.Budget.Application.TransactionSubcategories
 {
-    public sealed record TransactionSubcategoryDto
+    public sealed record TransactionSubcategoryModel
     {
         public string TransactionSubcategoryId { get; init; }
         public string Value { get; init; }
         public string CategoryId { get; init; }
 
-        private TransactionSubcategoryDto(string transactionSubcategoryId, string value, string categoryId)
+        private TransactionSubcategoryModel(string transactionSubcategoryId, string value, string categoryId)
         {
             Value = value;
             TransactionSubcategoryId = transactionSubcategoryId;
@@ -22,11 +22,11 @@ namespace Domestica.Budget.Application.DataTransferObjects
         }
 
         [JsonConstructor]
-        private TransactionSubcategoryDto()
+        private TransactionSubcategoryModel()
         {
         }
 
-        internal static TransactionSubcategoryDto? FromDomainObject(TransactionSubcategory? domainObject)
+        internal static TransactionSubcategoryModel? FromDomainObject(TransactionSubcategory? domainObject)
         {
             if (domainObject is null)
             {

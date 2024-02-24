@@ -1,22 +1,23 @@
 ﻿using System.Text.Json.Serialization;
 using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
+using Domestica.Budget.Application.Transactions;
 using Domestica.Budget.Domain.TransactionEntities.TransactionRecipients;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
 
-namespace Domestica.Budget.Application.DataTransferObjects
+namespace Domestica.Budget.Application.TransactionEntities
 {
-    public sealed record TransactionEntityDto
+    public sealed record TransactionEntityModel
     {
         public string TransactionEntityId { get; init; }
         public string Name { get; init; }
         public string TransactionEntityType { get; init; }
-        public IEnumerable<TransactionDto> Transactions { get; init; }
+        public IEnumerable<TransactionModel> Transactions { get; init; }
 
-        private TransactionEntityDto(
+        private TransactionEntityModel(
             string transactionEntityId,
             string name,
             string transactionEntityType,
-            IEnumerable<TransactionDto> transactions)
+            IEnumerable<TransactionModel> transactions)
         {
             TransactionEntityId = transactionEntityId;
             Name = name;
@@ -25,32 +26,32 @@ namespace Domestica.Budget.Application.DataTransferObjects
         }
 
         [JsonConstructor]
-        private TransactionEntityDto()
+        private TransactionEntityModel()
         {
-            
+
         }
 
-        internal static TransactionEntityDto FromDomainObject(
-            Domestica.Budget.Domain.TransactionEntities.TransactionEntity domainObject)
+        internal static TransactionEntityModel FromDomainObject(
+            Domain.TransactionEntities.TransactionEntity domainObject)
         {
             TransactionEntityType transactionEntityType;
 
             if (domainObject is TransactionSender)
             {
-                transactionEntityType = TransactionEntities.AddTransactionEntity.TransactionEntityType.Sender;
+                transactionEntityType = AddTransactionEntity.TransactionEntityType.Sender;
             }
             else if (domainObject is TransactionRecipient)
             {
-                transactionEntityType = TransactionEntities.AddTransactionEntity.TransactionEntityType.Recipient;
+                transactionEntityType = AddTransactionEntity.TransactionEntityType.Recipient;
             }
             else
             {
                 throw new ArgumentException("Unknown transaction entity type");
             }
 
-            var transactions = domainObject.Transactions.Select(TransactionDto.FromDomainObject);
+            var transactions = domainObject.Transactions.Select(TransactionModel.FromDomainObject);
 
-            return new TransactionEntityDto(
+            return new TransactionEntityModel(
                 domainObject.Id.Value.ToString(),
                 domainObject.Name.Value,
                 transactionEntityType.Value,

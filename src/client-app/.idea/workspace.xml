@@ -4,32 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Transaction Subcategories Feature Fixed">
-      <change afterPath="$PROJECT_DIR$/src/stores/budgetPlanStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/AddAccount/AddAccountCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/AddAccount/AddAccountCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/GetAccounts/GetAccountsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/GetAccounts/GetAccountsQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/GetAccounts/GetAccountsQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/GetAccounts/GetAccountsQueryHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/RemoveAccount/RemoveAccountCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/RemoveAccount/RemoveAccountCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/UpdateAccount/UpdateAccountCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/UpdateAccount/UpdateAccountCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Behaviors/CacheInvalidationBehavior.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Behaviors/CacheInvalidationBehavior.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/GetBudgetPlans/GetBudgetPlansQuery.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/GetBudgetPlans/GetBudgetPlansQueryHandler.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Messaging/Caching/CacheKey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Messaging/Caching/CacheKey.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Messaging/Caching/ICacheRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Messaging/Caching/ICacheRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Messaging/ICachedQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Messaging/ICachedQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/GetTransactionCategories/GetTransactionCategoriesQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/GetTransactionCategories/GetTransactionCategoriesQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/GetTransactionEntities/GetTransactionEntitiesQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/GetTransactionEntities/GetTransactionEntitiesQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddInternalTransaction/AddInternalTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddInternalTransaction/AddInternalTransactionCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddOutcomeTransaction/AddOutcomeTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddOutcomeTransaction/AddOutcomeTransactionCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/GetTransactions/GetTransactionsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/GetTransactions/GetTransactionsQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/IAccountRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/IAccountRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/AccountRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/AccountRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/CacheRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/CacheRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/budgetPlans/budgetPlan.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/budgetPlans/budgetPlan.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/store.ts" afterDir="false" />
-    </list>
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Create Budget Plan Feature" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -86,11 +61,11 @@
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\router" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\budget-plans\components\view" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\budget-plans\components\create" />
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\budget-plans\components\dateChange" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\transactions\outcome\components" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\transactions\internal\components" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\transactions\income\components" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\models\transactionCategories" />
     </key>
   </component>
   <component name="RunManager" selected="npm.start">
@@ -156,7 +131,7 @@
       <workItem from="1707926977030" duration="7010000" />
       <workItem from="1707988063423" duration="10140000" />
       <workItem from="1708385913724" duration="4745000" />
-      <workItem from="1708438795582" duration="15903000" />
+      <workItem from="1708438795582" duration="53471000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
@@ -375,7 +350,42 @@
       <option name="project" value="LOCAL" />
       <updated>1708528298325</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Before Budget Plans Page">
+      <created>1708531285998</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1708531285998</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Budget Plan Init">
+      <created>1708552873257</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1708552873257</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Budget Plan Before Crud">
+      <created>1708562158743</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1708562158743</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Create Budget Plan Feature">
+      <created>1708629741019</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1708629741019</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Create Budget Plan Feature">
+      <created>1708629757438</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1708629757438</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,10 +403,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Welcome Page Added" />
-    <MESSAGE value="Add Account Feature Added" />
-    <MESSAGE value="Toast error handling fix" />
-    <MESSAGE value="Add Accounts feature added" />
     <MESSAGE value="Account Details Init" />
     <MESSAGE value="Account Details Transaction List Completed" />
     <MESSAGE value="Account Edit Init" />
@@ -418,6 +424,10 @@
     <MESSAGE value="Transaction Subcategories View" />
     <MESSAGE value="Transaction Subcategories Feature Added" />
     <MESSAGE value="Transaction Subcategories Feature Fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Transaction Subcategories Feature Fixed" />
+    <MESSAGE value="Before Budget Plans Page" />
+    <MESSAGE value="Budget Plan Init" />
+    <MESSAGE value="Budget Plan Before Crud" />
+    <MESSAGE value="Create Budget Plan Feature" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create Budget Plan Feature" />
   </component>
 </project>
