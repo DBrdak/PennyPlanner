@@ -21,6 +21,7 @@ namespace Domestica.Budget.Domain.Transactions
         public TransactionEntityId? SenderId { get; init; } // Income Transaction
         public TransactionEntityId? RecipientId { get; init; } // Outcome Transaction
         public Money.DB.Money TransactionAmount { get; init; }
+        public TransactionCategoryId? CategoryId { get; init; }
         public TransactionCategory? Category { get; init; }
         public TransactionSubcategory? Subcategory { get; init; }
         [JsonConverter(typeof(DateTimeConverter))]
@@ -46,6 +47,7 @@ namespace Domestica.Budget.Domain.Transactions
             RecipientId = recipient?.Id;
             TransactionAmount = transactionAmount;
             TransactionDateUtc = transactionDateTime.ToUniversalTime();
+            CategoryId = subcategory?.CategoryId;
             Category = subcategory?.Category;
             Subcategory = subcategory;
 
@@ -117,6 +119,11 @@ namespace Domestica.Budget.Domain.Transactions
             }
 
             return new(account, null, null, null, null, transactionAmount, null, DateTime.UtcNow);
+        }
+
+        public void SafeDelete()
+        {
+            RaiseDomainEvent(new TransactionDeletedDomainEvent(this));
         }
     }
 }

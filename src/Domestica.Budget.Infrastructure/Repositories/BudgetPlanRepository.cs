@@ -11,7 +11,8 @@ namespace Domestica.Budget.Infrastructure.Repositories
 
         public async Task<BudgetPlan?> GetBudgetPlanByDateAsync(DateTime dateTime, CancellationToken cancellationToken, bool asNoTracking = false)
         {
-            IQueryable<BudgetPlan> query = DbContext.Set<BudgetPlan>().Include(bp => bp.Transactions);
+            IQueryable<BudgetPlan> query = DbContext.Set<BudgetPlan>()
+                .Include(bp => bp.Transactions);
 
             if (asNoTracking)
             {

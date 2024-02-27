@@ -27,6 +27,7 @@ namespace Domestica.Budget.Infrastructure.Configurations
             builder.HasOne(transaction => transaction.Category)
                 .WithMany()
                 .HasPrincipalKey(category => category.Id)
+                .HasForeignKey(transaction => transaction.CategoryId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne(transaction => transaction.Subcategory)

@@ -38,10 +38,6 @@ export default class BudgetPlanStore {
     }
 
     async loadBudgetPlan(onDate: Date) {
-        if(this.budgetPlan) {
-            return
-        }
-
         this.setLoading(true)
         this.setOnDate(onDate)
 

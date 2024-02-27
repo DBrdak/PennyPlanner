@@ -30,7 +30,7 @@ namespace Domestica.Budget.Domain.TransactionCategories
         {
             if (_subcategories.Any(sc => string.Equals(sc.Value.Value, subcategory.Value.Value, StringComparison.CurrentCultureIgnoreCase)))
             {
-                throw new DomainException<TransactionCategory>($"Subcategory {subcategory.Value.Value} already exist in category {Value.Value}");
+                return;
             }
 
             _subcategories.Add(subcategory);

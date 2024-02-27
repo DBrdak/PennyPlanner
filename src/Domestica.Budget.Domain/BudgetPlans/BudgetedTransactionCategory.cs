@@ -32,5 +32,10 @@ namespace Domestica.Budget.Domain.BudgetPlans
         {
             BudgetedAmount = budgetedAmount;
         }
+
+        internal void RemoveTransaction(Transaction transaction)
+        {
+            ActualAmount -= new Money.DB.Money(Math.Abs(transaction.TransactionAmount.Amount), transaction.TransactionAmount.Currency);
+        }
     }
 }

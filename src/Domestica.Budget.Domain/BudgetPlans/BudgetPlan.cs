@@ -78,12 +78,12 @@ namespace Domestica.Budget.Domain.BudgetPlans
         public void AddTransaction(Transaction transaction)
         {
             var budgetedTransactionCategory = _budgetedTransactionCategories
-                .SingleOrDefault(budgetedTransactionCategory => budgetedTransactionCategory.Category == transaction.Category);
+                .SingleOrDefault(budgetedTransactionCategory => budgetedTransactionCategory.CategoryId == transaction.CategoryId);
 
             if (budgetedTransactionCategory is null)
             {
                 throw new DomainException<BudgetPlan>(
-                    $"Category: {transaction.Category.Value} is not budgeted for period: [{BudgetPeriod.Start:dd/MM/yyyy} - {BudgetPeriod.End:dd/MM/yyyy}]");
+                    $"Category: {transaction.Category?.Value} is not budgeted for period: [{BudgetPeriod.Start:dd/MM/yyyy} - {BudgetPeriod.End:dd/MM/yyyy}]");
             }
 
             budgetedTransactionCategory.AddTransaction(transaction);
@@ -116,6 +116,20 @@ namespace Domestica.Budget.Domain.BudgetPlans
             _budgetedTransactionCategories.Remove(budgetedTransactionCategory);
 
             _transactions.RemoveAll(transaction => transaction.Category == category);
+        }
+
+        public void RemoveTransaction(Transaction transaction)
+        {
+            var budgetedCategory = _budgetedTransactionCategories
+                .FirstOrDefault(btc => btc.CategoryId == transaction.CategoryId);
+
+            if (budgetedCategory is null)
+            {
+                throw new DomainException<BudgetPlan>(
+                    $"Category with ID: {budgetedCategory?.CategoryId} is not budgeted for period: [{BudgetPeriod.Start:dd/MM/yyyy} - {BudgetPeriod.End:dd/MM/yyyy}]");
+            }
+
+            budgetedCategory.RemoveTransaction(transaction);
         }
     }
 }

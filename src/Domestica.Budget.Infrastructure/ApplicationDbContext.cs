@@ -1,5 +1,7 @@
 ﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Entities;
+using Domestica.Budget.Domain.BudgetPlans;
+using Domestica.Budget.Domain.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -24,8 +26,23 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
         base.OnModelCreating(modelBuilder);
     }
 
-    public async Task<int> SaveChangesAsync(List<IDomainEvent> domainEvents, CancellationToken cancellationToken = new CancellationToken())
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
-        return await base.SaveChangesAsync(cancellationToken);
+        SafeDeleteTransactions();
+
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    private void SafeDeleteTransactions()
+    {
+        var transactions = ChangeTracker.Entries()
+            .Where(
+                e => e.Entity is Transaction &&
+                     e.State == EntityState.Deleted)
+            .Select(e => e.Entity)
+            .Cast<Transaction>()
+            .ToList();
+
+        transactions.ForEach(t => t.SafeDelete());
     }
 }

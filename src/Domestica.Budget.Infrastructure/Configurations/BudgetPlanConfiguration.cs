@@ -41,7 +41,8 @@ namespace Domestica.Budget.Infrastructure.Configurations
 
             builder.HasMany(budgetPlan => budgetPlan.Transactions)
                 .WithOne()
-                .HasPrincipalKey(budgetPlan => budgetPlan.Id);
+                .HasPrincipalKey(budgetPlan => budgetPlan.Id)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

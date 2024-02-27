@@ -39,7 +39,7 @@ export default observer(function BudgetPlanContainer() {
                 marginTop: `${theme.spacing(5)}`
             }}>
                 {
-                    budgetPlan?.budgetedTransactionCategories ?
+                    budgetPlan && budgetPlan?.budgetedTransactionCategories.length > 0 ?
                         <BudgetedCategoriesContainer budgetedCategories={budgetPlan?.budgetedTransactionCategories} />
                         :
                         <BudgetPlanCreateContainer />
