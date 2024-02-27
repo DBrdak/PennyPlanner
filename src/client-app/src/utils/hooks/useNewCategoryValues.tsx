@@ -30,8 +30,6 @@ export function useNewCategoryValues(newCategoryType: 'income' | 'outcome', cate
                             c.value.toLowerCase() !== bc.categoryValue.toLowerCase()))
                 .map(bc => bc.categoryValue)
 
-        console.log(budgetPlanStore.newBudgetedCategories)
-
         if(newCategoryType === 'outcome' && newOutcomeCategories) {
             const outcomeDiff = newOutcomeCategories.length + 1 - newOutcomeCategoryIndices.length
             if (outcomeDiff > 0) {

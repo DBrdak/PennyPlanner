@@ -5,10 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Budgeted Category Add Fix">
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/DeleteTransactionCategory/DeleteTransactionCategoryCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/DeleteTransactionCategory/DeleteTransactionCategoryCommandHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/budget-plans/components/view/BudgetedCategoryCardActions.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/TwoFactorPieChart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/UpdateBudgetPlanCategory/UpdateBudgetPlanCategoryCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/UpdateBudgetPlanCategory/UpdateBudgetPlanCategoryCommandHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/budget-plans/components/BudgetPlanContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/budget-plans/components/BudgetPlanContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/budgetPlans/budgetedTransactionCategory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/budgetPlans/budgetedTransactionCategory.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/budget-plans/components/view/BudgetedCategoriesContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/budget-plans/components/view/BudgetedCategoriesContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/budget-plans/components/view/BudgetedCategoryCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/budget-plans/components/view/BudgetedCategoryCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/budget-plans/components/view/BudgetedCategoryCardChart.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/calculators/dateCalculator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/calculators/dateCalculator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/hooks/useNewCategoryValues.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/hooks/useNewCategoryValues.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,10 +74,10 @@
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\router" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\budget-plans\components\view" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\budget-plans\components\create" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\budget-plans\components\dateChange" />
-      <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\components" />
       <recent name="D:\Programownie\Projekty\Domestica\Domestica.Budget\src\client-app\src\app\transactions\outcome\components" />
     </key>
   </component>
@@ -137,7 +145,8 @@
       <workItem from="1707988063423" duration="10140000" />
       <workItem from="1708385913724" duration="4745000" />
       <workItem from="1708438795582" duration="53471000" />
-      <workItem from="1708975190425" duration="5559000" />
+      <workItem from="1708975190425" duration="5884000" />
+      <workItem from="1709061752055" duration="8992000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>

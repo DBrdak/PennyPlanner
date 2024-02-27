@@ -1,4 +1,4 @@
-import {Grid} from "@mui/material";
+import {CircularProgress, Grid} from "@mui/material";
 import theme from "../../theme";
 import {useState} from "react";
 import {BudgetPlanDateChange} from "./dateChange/BudgetPlanDateChange";
@@ -39,10 +39,13 @@ export default observer(function BudgetPlanContainer() {
                 marginTop: `${theme.spacing(5)}`
             }}>
                 {
-                    budgetPlan && budgetPlan?.budgetedTransactionCategories.length > 0 ?
-                        <BudgetedCategoriesContainer budgetedCategories={budgetPlan?.budgetedTransactionCategories} />
+                    budgetPlan ?
+                        budgetPlan?.budgetedTransactionCategories.length > 0 ?
+                            <BudgetedCategoriesContainer budgetedCategories={budgetPlan?.budgetedTransactionCategories} />
+                            :
+                            <BudgetPlanCreateContainer />
                         :
-                        <BudgetPlanCreateContainer />
+                        <CircularProgress />
                 }
             </Grid>
         </Grid>

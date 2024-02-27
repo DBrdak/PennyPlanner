@@ -50,12 +50,9 @@ namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
-            if (isSuccessful)
-            {
-                return Result.Success(budgetPlan);
-            }
-
-            return Result.Failure<BudgetPlan>(Error.TaskFailed($"Problem while updating budget plan with ID: {budgetPlan.Id}"));
+            return isSuccessful 
+                ? Result.Success(budgetPlan) 
+                : Result.Failure<BudgetPlan>(Error.TaskFailed($"Problem while updating budget plan with ID: {budgetPlan.Id}"));
         }
     }
 }
