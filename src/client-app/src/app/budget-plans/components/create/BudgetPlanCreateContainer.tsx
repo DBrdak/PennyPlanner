@@ -10,8 +10,8 @@ import {useNewCategoryValues} from "../../../../utils/hooks/useNewCategoryValues
 export default observer(function BudgetPlanCreateContainer() {
     const categories = useCategories()
     const {categoryStore, budgetPlanStore} = useStore()
-    const {newIncomeCategoryValues} = useNewCategoryValues('income')
-    const {newOutcomeCategoryValues} = useNewCategoryValues('outcome')
+    const {newIncomeCategoryValues} = useNewCategoryValues('income', categories)
+    const {newOutcomeCategoryValues} = useNewCategoryValues('outcome', categories)
 
     const getIncomeCategories = () =>
         categories.filter(c => c.type.toLowerCase() === 'income')

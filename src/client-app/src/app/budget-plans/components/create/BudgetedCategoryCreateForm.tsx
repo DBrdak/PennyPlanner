@@ -128,7 +128,8 @@ export function BudgetedCategoryCreateForm({category, newCategoryType, forbidden
                                         justifyContent: 'center',
                                         height: '100%'
                                     }}>
-                                        {category ? 'Category not budgeted' : 'New Category'}
+                                        {category && 'Category not budgeted'}
+                                        {newCategoryType && `New ${newCategoryType} category`}
                                     </Typography>
                             }
                         </Grid>
