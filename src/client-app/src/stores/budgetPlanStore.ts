@@ -13,6 +13,7 @@ export default class BudgetPlanStore {
     newBudgetedCategoriesRegistry: Map<string, BudgetedTransactionCategoryValues> = new Map<string, BudgetedTransactionCategoryValues>()
     onDate: Date = new Date()
     loading: boolean = false
+    editMode: boolean = false
 
     constructor() {
         makeAutoObservable(this);
@@ -107,5 +108,9 @@ export default class BudgetPlanStore {
 
     isNewBudgetPlanCreatePossible() {
         return this.newBudgetedCategoriesRegistry.size > 0
+    }
+
+    setEditMode(state: boolean) {
+        this.editMode = state
     }
 }

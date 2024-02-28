@@ -58,8 +58,8 @@ export default observer (function BudgetedCategoryCard({budgetedCategory, catego
     return (
         transactionCategory ?
             <Grid item xs={12} md={4} lg={3} sx={{
-                height: '40%',
-                minHeight: '500px',
+                height: '500px',
+                zIndex: 100
             }}>
                 <Paper sx={{
                     height: '100%',

@@ -2,7 +2,7 @@ import {Box, Button, ButtonGroup, Stack} from "@mui/material";
 import theme from "../../../theme";
 
 interface BudgetPlanEditButtonParams {
-    setEditMode: (value: (((prevState: boolean) => boolean) | boolean)) => void
+    setEditMode: (state: boolean) => void
     editMode: boolean
 }
 
@@ -19,42 +19,19 @@ export function BudgetPlanEditButton({setEditMode, editMode}: BudgetPlanEditButt
         }}>
             {
                 editMode ?
-                    <Stack direction={'row'}
-                           alignItems={'center'}
-                           justifyContent={'center'}
-                           spacing={theme.spacing(3)}
-                           sx={{height: '100%', width: '100%'}}>
-                        <Button
-                            onClick={() => setEditMode(false)}
-                            color={'inherit'}
-                            variant={'contained'}
-                            sx={{height: '100%', minWidth: '20%'}}
-                        >
-                            Exit Edit Mode
-                        </Button>
-                        <Button
-                            variant={'contained'}
-                            color={'error'}
-                            sx={{height: '100%', minWidth: '20%'}}
-                        >
-                            Delete Budget Plan
-                        </Button>
-                        <Button
-                            variant={'contained'}
-                            color={'success'}
-                            sx={{height: '100%', minWidth: '20%'}}
-                        >
-                            Submit
-                        </Button>
-                    </Stack>
+                    null
                     :
                     <Button
+                        variant={'outlined'} color={'secondary'}
                         onClick={() => setEditMode(true)}
-                        sx={{height: '100%', width: '30%'}}
-                        variant={'contained'}
-                        color={'inherit'}
-                    >
-                        Edit Budget Plan
+                        sx={{
+                            position: 'absolute',
+                            bottom: 0,
+                            width: '200px',
+                            height: '50px',
+                            zIndex: 101
+                        }}>
+                        Edit Budget
                     </Button>
             }
         </Box>

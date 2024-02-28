@@ -41,17 +41,17 @@ namespace Domestica.Budget.API.Endpoints
                 });
 
             app.MapPut(
-                "budget-plans/{budgetPlanId}/{budgetPlanCategory}",
+                "budget-plans/{budgetPlanId}/{budgetedCategoryId}",
                 async (
                     [FromRoute] string budgetPlanId,
-                    [FromRoute] string budgetPlanCategory,
+                    [FromRoute] string budgetedCategoryId,
                     [FromBody] UpdateBudgetPlanCategoryValues values,
                     ISender sender,
                     CancellationToken cancellationToken) =>
                 {
                     var command = new UpdateBudgetPlanCategoryCommand(
                         budgetPlanId,
-                        budgetPlanCategory,
+                        budgetedCategoryId,
                         values);
 
                     var result = await sender.Send(command, cancellationToken);

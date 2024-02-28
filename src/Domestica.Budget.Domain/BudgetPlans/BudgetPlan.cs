@@ -59,13 +59,16 @@ namespace Domestica.Budget.Domain.BudgetPlans
             date.Month >= DateTime.UtcNow.Month &&
             date.Year >= DateTime.UtcNow.Year;
 
+        private bool IsCategoryAlreadyBudgeted(TransactionCategory category, Money.DB.Money budgetedAmount) =>
+            _budgetedTransactionCategories.Any(
+                budgetedTransactionCategory => budgetedTransactionCategory.Category == category &&
+                                               budgetedTransactionCategory.BudgetedAmount == budgetedAmount);
+
         public void SetBudgetForCategory(TransactionCategory category, Money.DB.Money budgetedAmount)
         {
-            if (_budgetedTransactionCategories.Any(
-                    budgetedTransactionCategory => budgetedTransactionCategory.Category == category))
+            if (IsCategoryAlreadyBudgeted(category, budgetedAmount))
             {
-                throw new DomainException<BudgetPlan>(
-                    $"Category: {category.Value} is already budgeted for period: [{BudgetPeriod.Start:dd/MM/yyyy} - {BudgetPeriod.End:dd/MM/yyyy}]");
+                return;
             }
 
             var budgetedTransactionCategory = new BudgetedTransactionCategory(category, budgetedAmount);
@@ -115,7 +118,7 @@ namespace Domestica.Budget.Domain.BudgetPlans
 
             _budgetedTransactionCategories.Remove(budgetedTransactionCategory);
 
-            _transactions.RemoveAll(transaction => transaction.Category == category);
+            _transactions.RemoveAll(transaction => transaction.CategoryId == category.Id);
         }
 
         public void RemoveTransaction(Transaction transaction)

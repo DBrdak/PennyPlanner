@@ -36,8 +36,9 @@ export default observer(function BudgetPlanContainer() {
             </Grid>
             <Grid item xs={12} sx={{
                 overflow: 'auto',
-                maxHeight: '80%',
+                height: '80%',
                 textAlign: 'center',
+                position: 'relative',
                 marginTop: `${theme.spacing(5)}`,
             }}>
                 {

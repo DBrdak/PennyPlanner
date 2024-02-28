@@ -12,7 +12,10 @@ namespace Domestica.Budget.Infrastructure.Repositories
         public async Task<BudgetPlan?> GetBudgetPlanByDateAsync(DateTime dateTime, CancellationToken cancellationToken, bool asNoTracking = false)
         {
             IQueryable<BudgetPlan> query = DbContext.Set<BudgetPlan>()
-                .Include(bp => bp.Transactions);
+                .Include(bp => bp.Transactions)
+                .ThenInclude(t => t.Category)
+                .Include(bp => bp.Transactions)
+                .ThenInclude(t => t.Subcategory);
 
             if (asNoTracking)
             {
@@ -31,6 +34,18 @@ namespace Domestica.Budget.Infrastructure.Repositories
                 .Include(bp => bp.Transactions)
                 .Where(bp => /*bp.UserId == userId*/ true)
                 .ToListAsync(cancellationToken);
+        }
+
+        public async Task<BudgetPlan?> GetBudgetPlanByIdAsync(BudgetPlanId budgetPlanId, CancellationToken cancellationToken)
+        {
+            return await DbContext.Set<BudgetPlan>()
+                .Include(bp => bp.BudgetedTransactionCategories)
+                .ThenInclude(btc => btc.Category)
+                .Include(bp => bp.Transactions)
+                .ThenInclude(t => t.Category)
+                .FirstOrDefaultAsync(
+                    budgetPlan => budgetPlan.Id == budgetPlanId,
+                    cancellationToken);
         }
     }
 }

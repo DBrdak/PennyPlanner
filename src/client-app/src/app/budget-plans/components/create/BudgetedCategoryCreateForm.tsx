@@ -5,7 +5,7 @@ import {Clear, DeleteTwoTone, Undo} from "@mui/icons-material";
 import theme from "../../../theme";
 import MyTextInput from "../../../../components/MyTextInput";
 import GroupDropdown from "../../../../components/transactionsTable/GroupDropdown";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import * as yup from 'yup'
 import {
     BudgetedTransactionCategoryValues
@@ -13,6 +13,9 @@ import {
 import {decimal_MAX} from "../../../../utils/constants/numeric";
 import {calcColorForCategory} from "../../../../utils/calculators/layoutCalculator";
 import ValidationConstants from "../../../../utils/constants/validationConstants";
+import {observer} from "mobx-react-lite";
+import {useStore} from "../../../../stores/store";
+import BudgetedCategoryCreateCard from "./BudgetedCategoryCreateCard";
 
 interface BudgetedCategoryCreateFormProps {
     category?: TransactionCategory
@@ -22,12 +25,37 @@ interface BudgetedCategoryCreateFormProps {
     onCancel: () => void
 }
 
-export function BudgetedCategoryCreateForm({category, newCategoryType, forbiddenCategoryValues, onSubmit, onCancel}: BudgetedCategoryCreateFormProps) {
+function BudgetedCategoryCreateForm({category, newCategoryType, forbiddenCategoryValues, onSubmit, onCancel}: BudgetedCategoryCreateFormProps) {
     const [isCategoryBudgeted, setIsCategoryBudgeted] = useState(false)
     const [isFormVisible, setIsFormVisible] = useState(false)
-    const initialValues = category ?
-        new BudgetedTransactionCategoryValues(category) :
-        new BudgetedTransactionCategoryValues(undefined, newCategoryType)
+    const [initialValues, setInitialValues] = useState<BudgetedTransactionCategoryValues>()
+    const {budgetPlanStore} = useStore()
+
+    useEffect(() => {
+        const budgetedCategory = budgetPlanStore.budgetPlan?.budgetedTransactionCategories
+            .find(btc => btc.categoryId === category?.transactionCategoryId)
+
+        if(budgetedCategory && category) {
+            budgetPlanStore.setBudgetedCategory({
+                budgetedAmount: budgetedCategory.budgetedAmount.amount,
+                categoryType: category.type,
+                categoryValue: category.value
+            })
+            setInitialValues({
+                budgetedAmount: budgetedCategory.budgetedAmount.amount,
+                categoryType: category.type,
+                categoryValue: category.value
+            })
+            setIsFormVisible(true)
+            setIsCategoryBudgeted(true)
+        } else {
+            category ?
+                setInitialValues(new BudgetedTransactionCategoryValues(category)) :
+                setInitialValues(new BudgetedTransactionCategoryValues(undefined, newCategoryType))
+        }
+
+    }, [])
+
 
     const validationSchema = yup.object({
         budgetedAmount: yup.number()
@@ -53,110 +81,115 @@ export function BudgetedCategoryCreateForm({category, newCategoryType, forbidden
     }
 
     return (
-        <Grid item xs={12} sx={{height: '80%'}}>
-            <Formik sx={{width: '100%', height: '100%'}} initialValues={initialValues} onSubmit={handleCategoryBudget} validationSchema={validationSchema}>
-                {({setValues, values, isValid, handleSubmit, resetForm}) => (
-                    <Form autoComplete='off'
-                          style={{
-                              width: '100%',
-                              display: 'flex',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              flexDirection: 'column',
-                              height: '100%',
-                          }}>
-                        {
-                            category &&
-                                <Grid item xs={12} sx={{height: '10%'}}>
-                                    <Typography variant={'h4'} textAlign={'center'}>
-                                        {category.value}
-                                    </Typography>
-                                    <Typography variant={'subtitle1'} textAlign={'center'} sx={{color: calcColorForCategory(category.type)}}>
-                                        {category.type}
-                                    </Typography>
-                                </Grid>
-                        }
-                        {
-                            newCategoryType && isFormVisible &&
-                                <Grid item xs={12} >
-                                    <MyTextInput
-                                        type={'text'}
-                                        name={'categoryValue'}
-                                        placeholder={'New Category Value'}
-                                        showErrors
-                                        style={{display: 'flex', alignItems: 'center'}}
-                                        inputProps={{
-                                            endAdornment:
-                                                <IconButton onClick={() => {
-                                                    resetForm()
-                                                    handleCategoryUnBudget()
-                                                }}>
-                                                    <Clear/>
-                                                </IconButton>
-                                        }}
-                                    />
-                                    <Typography variant={'subtitle1'} textAlign={'center'} sx={{
-                                        color: calcColorForCategory(newCategoryType),
-                                    }}>
-                                        {newCategoryType[0].toUpperCase() + newCategoryType.slice(1)}
-                                    </Typography>
-                                </Grid>
-                        }
-                        <Grid item xs={12} sx={{
-                            height: '100%'
-                        }}>
+        initialValues ?
+            <Grid item xs={12} sx={{height: '80%'}}>
+                <Formik sx={{width: '100%', height: '100%'}} initialValues={initialValues} onSubmit={handleCategoryBudget} validationSchema={validationSchema}>
+                    {({setValues, values, isValid, handleSubmit, resetForm}) => (
+                        <Form autoComplete='off'
+                              style={{
+                                  width: '100%',
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  flexDirection: 'column',
+                                  height: '100%',
+                              }}>
                             {
-                                isFormVisible ?
-                                    <MyTextInput
-                                        type={'number'}
-                                        name={'budgetedAmount'}
-                                        placeholder={'Budgeted amount'}
-                                        showErrors
-                                        style={{display: 'flex', alignItems: 'center'}}
-                                        inputProps={{endAdornment:
-                                                <IconButton onClick={() => {
-                                                    resetForm()
-                                                    handleCategoryUnBudget()
-                                                }}>
-                                                    <Clear />
-                                                </IconButton>}}
-                                    />
-                                    :
-                                    <Typography sx={{
-                                        display: newCategoryType && 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        height: '100%'
-                                    }}>
-                                        {category && 'Category not budgeted'}
-                                        {newCategoryType && `New ${newCategoryType} category`}
-                                    </Typography>
+                                category &&
+                                    <Grid item xs={12} sx={{height: '10%'}}>
+                                        <Typography variant={'h4'} textAlign={'center'}>
+                                            {category.value}
+                                        </Typography>
+                                        <Typography variant={'subtitle1'} textAlign={'center'} sx={{color: calcColorForCategory(category.type)}}>
+                                            {category.type}
+                                        </Typography>
+                                    </Grid>
                             }
-                        </Grid>
-                        <Button variant={isCategoryBudgeted && isFormVisible ? 'outlined' : 'contained'}
-                                color={category ? 'primary' : 'secondary'}
-                                disabled={!isValid} onClick={() => {
-                                    setIsFormVisible(true)
-                                    handleSubmit()
-                        }} sx={{
-                            position: 'absolute',
-                            bottom: 0, left: 0, right: 0,
-                            borderRadius: '0px 0px 20px 20px',
-                            height: '10%'
-                        }}>
                             {
-                                isCategoryBudgeted && isFormVisible ?
-                                    'Re-budget'
-                                    :
-                                    category ?
-                                        'Budget the category'
+                                newCategoryType && isFormVisible &&
+                                    <Grid item xs={12} >
+                                        <MyTextInput
+                                            type={'text'}
+                                            name={'categoryValue'}
+                                            placeholder={'New Category Value'}
+                                            showErrors
+                                            style={{display: 'flex', alignItems: 'center'}}
+                                            inputProps={{
+                                                endAdornment:
+                                                    <IconButton onClick={() => {
+                                                        resetForm()
+                                                        handleCategoryUnBudget()
+                                                    }}>
+                                                        <Clear/>
+                                                    </IconButton>
+                                            }}
+                                        />
+                                        <Typography variant={'subtitle1'} textAlign={'center'} sx={{
+                                            color: calcColorForCategory(newCategoryType),
+                                        }}>
+                                            {newCategoryType[0].toUpperCase() + newCategoryType.slice(1)}
+                                        </Typography>
+                                    </Grid>
+                            }
+                            <Grid item xs={12} sx={{
+                                height: '100%'
+                            }}>
+                                {
+                                    isFormVisible ?
+                                        <MyTextInput
+                                            type={'number'}
+                                            name={'budgetedAmount'}
+                                            placeholder={'Budgeted amount'}
+                                            showErrors
+                                            style={{display: 'flex', alignItems: 'center'}}
+                                            inputProps={{endAdornment:
+                                                    <IconButton onClick={() => {
+                                                        resetForm()
+                                                        handleCategoryUnBudget()
+                                                    }}>
+                                                        <Clear />
+                                                    </IconButton>}}
+                                        />
                                         :
-                                        'Add and budget new category'
-                            }
-                        </Button>
-                    </Form>
-                )}
-            </Formik>
-        </Grid>
+                                        <Typography sx={{
+                                            display: newCategoryType && 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            height: '100%'
+                                        }}>
+                                            {category && 'Category not budgeted'}
+                                            {newCategoryType && `New ${newCategoryType} category`}
+                                        </Typography>
+                                }
+                            </Grid>
+                            <Button variant={isCategoryBudgeted && isFormVisible ? 'outlined' : 'contained'}
+                                    color={category ? 'primary' : 'secondary'}
+                                    disabled={!isValid} onClick={() => {
+                                        setIsFormVisible(true)
+                                        handleSubmit()
+                            }} sx={{
+                                position: 'absolute',
+                                bottom: 0, left: 0, right: 0,
+                                borderRadius: '0px 0px 20px 20px',
+                                height: '10%'
+                            }}>
+                                {
+                                    isCategoryBudgeted && isFormVisible ?
+                                        'Re-budget'
+                                        :
+                                        category ?
+                                            'Budget the category'
+                                            :
+                                            'Add and budget new category'
+                                }
+                            </Button>
+                        </Form>
+                    )}
+                </Formik>
+            </Grid>
+            :
+            null
     );
 }
+
+export default observer(BudgetedCategoryCreateForm)

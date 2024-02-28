@@ -44,7 +44,7 @@ export function TwoFactorPieChart({ actual, target, color, currency }: TwoFactor
         const data: MakeOptional<PieValueType, "id">[] = []
         const first = target - (actual % target)
 
-        if(actual > 0) {
+        if(actual % target > 0) {
             data.push({
                 id: 1,
                 value: actual % target,
@@ -57,7 +57,7 @@ export function TwoFactorPieChart({ actual, target, color, currency }: TwoFactor
         data.push({
             id: 2,
             value: first,
-            color: actual > target
+            color: actual >= target
                 ? color === 'positive' ? theme.palette.success.light : theme.palette.error.light
                 : theme.palette.text.primary
         })

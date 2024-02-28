@@ -12,6 +12,7 @@ import {Form, Formik} from "formik";
 import * as yup from 'yup'
 import {decimal_MAX} from "../../../../../utils/constants/numeric";
 import MyTextInput from "../../../../../components/MyTextInput";
+import {useNavigate} from "react-router-dom";
 
 interface BudgetedCategoryDetailsModalProps {
     budgetedCategory: BudgetedTransactionCategory,
@@ -23,6 +24,7 @@ interface BudgetedCategoryDetailsModalProps {
 
 export function BudgetedCategoryDetailsModal({ budgetedCategory, transactions, transactionCategory, onEdit, onDelete }: BudgetedCategoryDetailsModalProps) {
     const [editMode, setEditMode] = useState(false)
+    const navigate = useNavigate()
 
     const validationSchema = yup.object({
         newBudgetAmount: yup.number()
@@ -33,13 +35,10 @@ export function BudgetedCategoryDetailsModal({ budgetedCategory, transactions, t
     })
 
     return (
-        <Formik sx={{width: '100%'}} initialValues={new UpdateBudgetPlanCategoryValues(budgetedCategory.budgetedAmount.amount)}
+        <Formik initialValues={new UpdateBudgetPlanCategoryValues(budgetedCategory.budgetedAmount.amount)}
                 onSubmit={onEdit} validationSchema={validationSchema}>
             {({setValues, values, isValid, handleSubmit}) => (
-                    <Form autoComplete='off'
-                          style={{
-                              width: '100%',
-                          }}>
+                    <Form autoComplete='off'>
                         <Grid container spacing={2} sx={{
                             width: '600px',
                             maxWidth: '95vw'

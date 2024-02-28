@@ -13,5 +13,9 @@ namespace Domestica.Budget.Domain.BudgetPlans
             BudgetPlanId id,
             Expression<Func<BudgetPlan, TProperty>> includeExpression,
             CancellationToken cancellationToken = default);
+
+        Task<BudgetPlan?> GetBudgetPlanByIdAsync(BudgetPlanId budgetPlanId, CancellationToken cancellationToken);
+
+        void Remove(BudgetPlan entity);
     }
 }
