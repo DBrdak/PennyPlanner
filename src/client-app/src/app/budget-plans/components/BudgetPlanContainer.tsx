@@ -2,11 +2,12 @@ import {CircularProgress, Grid} from "@mui/material";
 import theme from "../../theme";
 import {useState} from "react";
 import {BudgetPlanDateChange} from "./dateChange/BudgetPlanDateChange";
-import {BudgetedCategoriesContainer} from "./view/BudgetedCategoriesContainer";
+import BudgetedCategoriesContainer from "./view/BudgetedCategoriesContainer";
 import {useStore} from "../../../stores/store";
 import {observer} from "mobx-react-lite";
 import useBudgetPlan from "../../../utils/hooks/useBudgetPlan";
 import BudgetPlanCreateContainer from "./create/BudgetPlanCreateContainer";
+import {BudgetPlanEditButton} from "./view/BudgetPlanEditButton";
 
 export default observer(function BudgetPlanContainer() {
     const [date, setDate] = useState(new Date())
@@ -36,7 +37,7 @@ export default observer(function BudgetPlanContainer() {
                 overflow: 'auto',
                 maxHeight: '80%',
                 textAlign: 'center',
-                marginTop: `${theme.spacing(5)}`
+                marginTop: `${theme.spacing(5)}`,
             }}>
                 {
                     budgetPlan ?

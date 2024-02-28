@@ -1,12 +1,14 @@
 import {AllSeriesType, PieChart, PiePlot, PieValueType, ResponsiveChartContainer, useDrawingArea} from "@mui/x-charts";
 import {MakeOptional} from "@mui/x-charts/models/helpers";
 import theme from "../app/theme";
-import {Box, Container, styled, Typography} from "@mui/material";
+import {Box, Container, styled} from "@mui/material";
+import formatNumber from "../utils/formatters/numberFormatter";
 
 interface TwoFactorPieChartProps {
     actual: number
     target: number
     color: 'positive' | 'negative'
+    currency?: string
 }
 
 const StyledText = styled('text')(({ theme }) => ({
@@ -25,7 +27,16 @@ function PieCenterLabel({ children }: { children: React.ReactNode }) {
     );
 }
 
-export function TwoFactorPieChart({ actual, target, color }: TwoFactorPieChartProps) {
+function PieBottomLabel({ children }: { children: React.ReactNode }) {
+    const { width, height, left, top, bottom } = useDrawingArea();
+    return (
+        <StyledText x={(left + width / 2)} y={5*top+30}>
+            {children}
+        </StyledText>
+    );
+}
+
+export function TwoFactorPieChart({ actual, target, color, currency }: TwoFactorPieChartProps) {
 
     const getData = () => {
         const data: MakeOptional<PieValueType, "id">[] = []
@@ -55,13 +66,18 @@ export function TwoFactorPieChart({ actual, target, color }: TwoFactorPieChartPr
                 data: getData(),
                 innerRadius: 75,
                 outerRadius: 100,
-                paddingAngle: 2,
+                paddingAngle: 0,
                 startAngle: 0,
                 endAngle: 360,
             }
-        ]} title={'Miur'}>
-            <PiePlot tooltip={{ trigger: 'none' }}>
-            </PiePlot>
+        ]} height={300}>
+            <PiePlot tooltip={{ trigger: 'none' }} />
+            <PieCenterLabel>
+                {(actual / target * 100).toFixed(1)}%
+            </PieCenterLabel>
+            <PieBottomLabel>
+                {formatNumber(actual)} / {formatNumber(target)} {currency && currency}
+            </PieBottomLabel>
         </ResponsiveChartContainer>
 
     );

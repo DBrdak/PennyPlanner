@@ -6,13 +6,14 @@ import {BudgetedCategoryCardActions} from "./BudgetedCategoryCardActions";
 import {useState} from "react";
 import {observer} from "mobx-react-lite";
 import useCategories from "../../../../utils/hooks/useCategories";
+import {TransactionCategory} from "../../../../models/transactionCategories/transactionCategory";
 
 interface BudgetedCategoryCardProps{
+    categories: TransactionCategory[]
     budgetedCategory: BudgetedTransactionCategory
 }
 
-export default observer (function BudgetedCategoryCard({budgetedCategory}: BudgetedCategoryCardProps) {
-    const categories = useCategories()
+export default observer (function BudgetedCategoryCard({budgetedCategory, categories}: BudgetedCategoryCardProps) {
     const [editMode, setEditMode] = useState(false)
 
     const transactionCategory = categories.find(c => c.transactionCategoryId === budgetedCategory.categoryId)
@@ -34,22 +35,34 @@ export default observer (function BudgetedCategoryCard({budgetedCategory}: Budge
                     padding: theme.spacing(3),
                     position: 'relative'
                 }}>
-                    <TwoFactorPieChart
-                        actual={budgetedCategory.actualAmount.amount}
-                        target={budgetedCategory.budgetedAmount.amount}
-                        color={transactionCategory.type.toLowerCase() === 'income' ? 'positive' : 'negative'}
-                    />
+                    <Grid item xs={12} maxHeight={'70%'}>
+                        <TwoFactorPieChart
+                            actual={budgetedCategory.actualAmount.amount}
+                            target={budgetedCategory.budgetedAmount.amount}
+                            color={transactionCategory.type.toLowerCase() === 'income' ? 'positive' : 'negative'}
+                            currency={budgetedCategory.budgetedAmount.currency}
+                        />
+                    </Grid>
 
-                    <Divider variant={"middle"} />
+                    <Grid item xs={12}>
+                        <Divider variant={"middle"} />
+                    </Grid>
 
-                    <Typography>
-                        {transactionCategory?.value}
-                    </Typography>
+                    <Grid item xs={12} marginTop={theme.spacing(1.5)}>
+                        <Typography variant={'h4'}>
+                            {transactionCategory?.value}
+                        </Typography>
+                    </Grid>
 
-                    <BudgetedCategoryCardActions
-                        onEditModeEnter={() => setEditMode(true)}
-                        onTransactionsViewEnter={() => handleTransactionsViewEnter()}
-                    />
+                    <Grid item xs={12} sx={{
+                        position: 'absolute',
+                        bottom: 0, left: 0, right: 0,
+                    }}>
+                        <BudgetedCategoryCardActions
+                            onEditModeEnter={() => setEditMode(true)}
+                            onTransactionsViewEnter={() => handleTransactionsViewEnter()}
+                        />
+                    </Grid>
                 </Paper>
             </Grid>
             :
