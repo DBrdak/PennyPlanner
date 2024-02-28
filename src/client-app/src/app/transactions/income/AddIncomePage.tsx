@@ -63,7 +63,8 @@ export default observer(function AddIncomePage() {
                 overflow: 'auto',
                 justifyContent: 'center',
                 alignItems: 'center',
-                position: 'relative'
+                position: 'relative',
+                maxWidth: '1920px'
             }}>
                 {
                     accountStore.loading  || transactionEntityStore.loading || categoryStore.loading ?

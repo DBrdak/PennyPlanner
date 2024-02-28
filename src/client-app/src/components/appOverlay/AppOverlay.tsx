@@ -220,7 +220,7 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                             component="main"
                             sx={{ flexGrow: 1,
                                 width: {sm: `calc(100% - ${drawerWidth}px)` },
-                                padding: '3%',
+                                padding: '1.5% 3%',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 display: 'flex'

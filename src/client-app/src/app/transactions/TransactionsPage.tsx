@@ -59,7 +59,8 @@ export default observer (function TransactionsPage() {
                 backgroundColor: theme.palette.background.paper,
                 borderRadius: '20px',
                 overflow:'auto',
-                position: 'relative'
+                position: 'relative',
+                maxWidth: '1920px'
             }}>
                 {groupedTransactions &&
                     <>

@@ -28,7 +28,7 @@ function PieCenterLabel({ children }: { children: React.ReactNode }) {
 }
 
 function PieBottomLabel({ children }: { children: React.ReactNode }) {
-    const { width, height, left, top, bottom } = useDrawingArea();
+    const { width, left, top } = useDrawingArea();
     return (
         <StyledText x={(left + width / 2)} y={5*top+30}>
             {children}
@@ -38,23 +38,28 @@ function PieBottomLabel({ children }: { children: React.ReactNode }) {
 
 export function TwoFactorPieChart({ actual, target, color, currency }: TwoFactorPieChartProps) {
 
+
+
     const getData = () => {
         const data: MakeOptional<PieValueType, "id">[] = []
+        const first = target - (actual % target)
 
         if(actual > 0) {
             data.push({
                 id: 1,
-                value: actual,
+                value: actual % target,
                 color: color === 'positive'
-                    ? theme.palette.success.light
-                    : theme.palette.error.light
+                    ? actual > target ? theme.palette.success.dark : theme.palette.success.light
+                    : actual > target ? theme.palette.error.dark : theme.palette.error.light
             })
         }
 
         data.push({
             id: 2,
-            value: target - actual,
-            color: theme.palette.text.primary
+            value: first,
+            color: actual > target
+                ? color === 'positive' ? theme.palette.success.light : theme.palette.error.light
+                : theme.palette.text.primary
         })
 
         return data
@@ -66,14 +71,14 @@ export function TwoFactorPieChart({ actual, target, color, currency }: TwoFactor
                 data: getData(),
                 innerRadius: 75,
                 outerRadius: 100,
-                paddingAngle: 0,
+                paddingAngle: 3,
                 startAngle: 0,
                 endAngle: 360,
             }
         ]} height={300}>
             <PiePlot tooltip={{ trigger: 'none' }} />
             <PieCenterLabel>
-                {(actual / target * 100).toFixed(1)}%
+                {(actual / target * 100).toFixed(0)}%
             </PieCenterLabel>
             <PieBottomLabel>
                 {formatNumber(actual)} / {formatNumber(target)} {currency && currency}

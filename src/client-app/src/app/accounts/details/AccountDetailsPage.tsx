@@ -72,6 +72,7 @@ export default observer(function AccountDetailsPage() {
                     backgroundColor: theme.palette.background.paper,
                     borderRadius: '20px',
                     overflow: isMobile ? 'auto' : 'hidden',
+                    maxWidth: '1920px'
                 }}>
                     {!editMode ?
                             <AccountDetailsComponent

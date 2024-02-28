@@ -19,7 +19,9 @@ namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
 
         public async Task<Result<BudgetPlan>> Handle(UpdateBudgetPlanCategoryCommand request, CancellationToken cancellationToken)
         {
-            var budgetPlan = await _budgetPlanRepository.GetByIdAsync(new(Guid.Parse(request.BudgetPlanId)), cancellationToken);
+            var budgetPlan = await _budgetPlanRepository.GetBudgetPlanByIdAsync(
+                new(Guid.Parse(request.BudgetPlanId)),
+                cancellationToken);
 
             if (budgetPlan is null)
             {
@@ -28,7 +30,7 @@ namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
 
             var category =
                 budgetPlan.BudgetedTransactionCategories.FirstOrDefault(
-                    c => c.Category.Id.Value.ToString() == request.CategoryId)?.Category;
+                    c => c.CategoryId.Value.ToString() == request.CategoryId)?.Category;
 
             if (category is null)
             {
@@ -39,9 +41,7 @@ namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
             {
                 //TODO Fetch currency from user
                 var currency = Currency.Usd;
-                budgetPlan.UpdateBudgetCategory(
-                    category,
-                    new ((decimal)request.Values.NewBudgetAmount, currency));
+                budgetPlan.UpdateBudgetCategory(category, new((decimal)request.Values.NewBudgetAmount, currency));
             }
             else
             {

@@ -1,4 +1,4 @@
-import {Divider, Stack, Typography} from "@mui/material";
+import {Divider, Grid, Stack, Typography} from "@mui/material";
 import theme from "../../../theme";
 import {Account} from "../../../../models/accounts/account";
 import {calculateBalanceForCurrentMonth, calculateBalanceForToday} from "../../../../utils/calculators/balanceCalculator";
@@ -29,7 +29,7 @@ export function AccountBalanceDisplay({isMobile, account, transactions, currency
     const generateBalanceTypography = (balance: number, color: string) => (
         <Typography
             sx={{
-                fontSize: isMobile ? '1rem' : '1.75rem',
+                fontSize: isMobile ? '1rem' : '1.3rem',
                 userSelect: 'none',
                 lineHeight: '1',
                 color,
@@ -67,8 +67,12 @@ export function AccountBalanceDisplay({isMobile, account, transactions, currency
                         .toFixed(2))
 
     return (
-        <Stack direction={'row'} justifyContent={'space-around'} sx={{width: '100%', height: '33%'}}>
-            <Stack direction={'column'} justifyContent={'space-around'}>
+        <>
+            <Grid item xs={4} sx={{
+                flexDirection: 'column',
+                gap: theme.spacing(3),
+                display: 'flex', justifyContent: 'center', alignItems: 'center'
+            }}>
                 <Typography sx={{
                     fontSize: isMobile ? '1rem' : '1.75rem',
                     fontWeight: '700',
@@ -80,7 +84,7 @@ export function AccountBalanceDisplay({isMobile, account, transactions, currency
                     Balance
                 </Typography>
                 <Typography sx={{
-                    fontSize: isMobile ? '1rem' : '1.75rem',
+                    fontSize: isMobile ? '1rem' : '1.3rem',
                     userSelect:'none',
                     lineHeight: '1',
                     color: theme.palette.text.primary,
@@ -88,9 +92,13 @@ export function AccountBalanceDisplay({isMobile, account, transactions, currency
                 }}>
                     {formatNumber(balance)} {account ? account.balance.currency : currency}
                 </Typography>
-            </Stack>
-            <Divider orientation={'vertical'} variant={'middle'} sx={{backgroundColor: theme.palette.background.paper}} />
-            <Stack direction={'column'} justifyContent={'space-around'}>
+            </Grid>
+            <Divider orientation={'vertical'} variant={'middle'} />
+            <Grid item xs={4} md={3} sx={{
+                flexDirection: 'column',
+                gap: theme.spacing(3),
+                display: 'flex', justifyContent: 'center', alignItems: 'center'
+            }}>
                 <Typography sx={{
                     fontSize: isMobile ? '1rem' : '1.75rem',
                     fontWeight: '700',
@@ -103,9 +111,13 @@ export function AccountBalanceDisplay({isMobile, account, transactions, currency
                     {new Date().toLocaleString('en-US', { month: 'long' })}
                 </Typography>
                 {currentMonthBalanceTypography}
-            </Stack>
-            <Divider orientation={'vertical'} variant={'middle'} sx={{backgroundColor: theme.palette.background.paper}} />
-            <Stack direction={'column'} justifyContent={'space-around'}>
+            </Grid>
+            <Divider orientation={'vertical'} variant={'middle'} />
+            <Grid item xs={4} sx={{
+                flexDirection: 'column',
+                gap: theme.spacing(3),
+                display: 'flex', justifyContent: 'center', alignItems: 'center'
+            }}>
                 <Typography sx={{
                     fontSize: isMobile ? '1rem' : '1.75rem',
                     fontWeight: '700',
@@ -118,7 +130,7 @@ export function AccountBalanceDisplay({isMobile, account, transactions, currency
                     Today
                 </Typography>
                 {todayBalanceTypography}
-            </Stack>
-        </Stack>
+            </Grid>
+        </>
     );
 }

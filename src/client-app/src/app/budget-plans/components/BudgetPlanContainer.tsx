@@ -22,7 +22,8 @@ export default observer(function BudgetPlanContainer() {
             overflow: 'hidden',
             backgroundColor: theme.palette.background.paper,
             borderRadius: '20px',
-            userSelect: 'none'
+            userSelect: 'none',
+            maxWidth: '1920px'
         }}>
             <Grid item xs={12} sx={{
                 height: '10%',
@@ -42,7 +43,10 @@ export default observer(function BudgetPlanContainer() {
                 {
                     budgetPlan ?
                         budgetPlan?.budgetedTransactionCategories.length > 0 ?
-                            <BudgetedCategoriesContainer budgetedCategories={budgetPlan?.budgetedTransactionCategories} />
+                            <BudgetedCategoriesContainer
+                                budgetedCategories={budgetPlan?.budgetedTransactionCategories}
+
+                            />
                             :
                             <BudgetPlanCreateContainer />
                         :

@@ -67,6 +67,7 @@ export default observer (function TransactionEntitiesPage() {
                 borderRadius: '20px',
                 overflow:'auto',
                 userSelect: 'none',
+                maxWidth: '1920px',
             }}>
                 <Paper sx={{
                     width: '100%',

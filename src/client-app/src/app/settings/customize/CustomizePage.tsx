@@ -11,7 +11,8 @@ export default function CustomizePage() {
                 margin: 0,
                 backgroundColor: theme.palette.background.paper,
                 borderRadius: '20px',
-                overflow:'auto'
+                overflow:'auto',
+                maxWidth: '1920px'
             }}>
 
             </Grid>

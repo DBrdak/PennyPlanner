@@ -44,7 +44,8 @@ export default observer (function AddInternalTransactionPage() {
                 overflow: 'auto',
                 justifyContent: 'center',
                 alignItems: 'center',
-                position: 'relative'
+                position: 'relative',
+                maxWidth: '1920px'
             }}>
                 {
                     accountStore.loading  ?

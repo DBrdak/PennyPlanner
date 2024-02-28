@@ -55,7 +55,8 @@ export default observer(function AddAccountPage() {
                 overflow:'auto',
                 display:'flex',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                maxWidth: '1920px'
             }}>
                 <Grid item xs={12} sx={{
                     height: '65%',

@@ -53,6 +53,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
             return await DbContext.Set<Transaction>()
                 .Where(t => true /*t -> t.UserId == userId*/)
                 .Include(t => t.Category)
+                .Include(t => t.Subcategory)
                 .ToListAsync(cancellationToken);
         }
     }

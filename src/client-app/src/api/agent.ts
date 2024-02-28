@@ -87,8 +87,8 @@ const budgetPlans = {
     getBudgetPlan: (params: URLSearchParams) => axios.get<BudgetPlan>('/budget-plans', {params}).then(responseBody),
     setBudgetPlan: (command: SetBudgetPlanCommand) =>
         axios.post(`/budget-plans`, command),
-    updateBudgetPlanCategory: (budgetPlanId: string, budgetPlanCategory: string, values: UpdateBudgetPlanCategoryValues) =>
-        axios.put(`/budget-plans/${budgetPlanId}/${budgetPlanCategory}`, values),
+    updateBudgetPlanCategory: (budgetPlanId: string, budgetedCategoryId: string, values: UpdateBudgetPlanCategoryValues) =>
+        axios.put(`/budget-plans/${budgetPlanId}/${budgetedCategoryId}`, values),
 }
 
 const transactionEntities = {

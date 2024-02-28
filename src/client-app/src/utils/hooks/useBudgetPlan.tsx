@@ -19,7 +19,7 @@ const useBudgetPlan = (date: Date) => {
 
     }, [budgetPlanStore, date]);
 
-    return budgetPlan;
+    return budgetPlanStore.budgetPlan;
 };
 
 export default useBudgetPlan
