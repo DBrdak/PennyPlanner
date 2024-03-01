@@ -52,11 +52,9 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
                     new (budgetedTransactionCategoryValues.BudgetedAmount, currency));
             }
 
-            var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return isSuccessful 
-                ? Result.Success(budgetPlan) 
-                : Result.Failure<BudgetPlan>(Error.TaskFailed("Problem while setting budgeted categories"));
+            return Result.Success(budgetPlan);
         }
 
         private async Task<TransactionCategory?> GetOrCreateCategory(TransactionCategoryValue categoryValue, TransactionCategoryType categoryType, CancellationToken cancellationToken)

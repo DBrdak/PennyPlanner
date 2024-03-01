@@ -32,6 +32,7 @@ export default observer(function BudgetPlanContainer() {
                 <BudgetPlanDateChange
                     date={date}
                     setDate={setDate}
+                    prevDateAccessible={false}
                 />
             </Grid>
             <Grid item xs={12} sx={{
