@@ -32,7 +32,7 @@ export default observer(function TransactionsTableGroup({groupedTransactions, gr
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const navigate = useNavigate()
     const location = useLocation()
-    const {accountStore, transactionEntityStore, transactionStore} = useStore()
+    const {accountStore, transactionEntityStore, budgetPlanStore, transactionStore} = useStore()
 
     const handleCheckboxClick = (transactionId: string) => {
         if(transactionStore.transactionsIdToRemove.some(id => id === transactionId)){

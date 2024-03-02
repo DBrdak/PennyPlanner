@@ -40,6 +40,13 @@ namespace Domestica.Budget.Domain.BudgetPlans
 
         private static DateTimeRange GetMonthRangeFromDateTime(DateTime date)
         {
+            if (date.Month == 12)
+            {
+                return new DateTimeRange(
+                    new DateTime(date.Year, date.Month, 1),
+                    new DateTime(date.Year + 1, 1, 1));
+            }
+
             return new DateTimeRange(
                 new DateTime(date.Year, date.Month, 1),
                 new DateTime(date.Year, date.Month + 1, 1));
@@ -56,8 +63,9 @@ namespace Domestica.Budget.Domain.BudgetPlans
         }
 
         private static bool IsMonthDateGreaterThanUtcNow(DateTime date) =>
-            date.Month >= DateTime.UtcNow.Month &&
-            date.Year >= DateTime.UtcNow.Year;
+            (date.Month >= DateTime.UtcNow.Month &&
+             date.Year >= DateTime.UtcNow.Year) || 
+            date.Year > DateTime.UtcNow.Year;
 
         private bool IsCategoryAlreadyBudgeted(TransactionCategory category, Money.DB.Money budgetedAmount) =>
             _budgetedTransactionCategories.Any(
@@ -126,13 +134,7 @@ namespace Domestica.Budget.Domain.BudgetPlans
             var budgetedCategory = _budgetedTransactionCategories
                 .FirstOrDefault(btc => btc.CategoryId == transaction.CategoryId);
 
-            if (budgetedCategory is null)
-            {
-                throw new DomainException<BudgetPlan>(
-                    $"Category with ID: {budgetedCategory?.CategoryId} is not budgeted for period: [{BudgetPeriod.Start:dd/MM/yyyy} - {BudgetPeriod.End:dd/MM/yyyy}]");
-            }
-
-            budgetedCategory.RemoveTransaction(transaction);
+            budgetedCategory?.RemoveTransaction(transaction);
         }
     }
 }

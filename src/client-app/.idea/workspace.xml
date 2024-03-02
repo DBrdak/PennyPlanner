@@ -4,10 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Budget Plan Date Changer Fix">
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Budget Plan Date Changer Final Fix">
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/DomainEventHandlers/TransactionDeletedDomainEventHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/DomainEventHandlers/TransactionDeletedDomainEventHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/BudgetPlans/BudgetPlan.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Domain/BudgetPlans/BudgetPlan.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/budget-plans/components/BudgetPlanContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/budget-plans/components/BudgetPlanContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/budget-plans/components/dateChange/BudgetPlanDateChange.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/budget-plans/components/dateChange/BudgetPlanDateChange.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/budget-plans/components/view/BudgetedCategoriesContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/budget-plans/components/view/BudgetedCategoriesContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/goals/GoalsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/goals/GoalsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/HomePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/tiles/AccountsPreviewTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/tiles/AccountsPreviewTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/tiles/BudgetPreviewTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/tiles/BudgetPreviewTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/tiles/GoalsPreviewTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/tiles/GoalsPreviewTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/tiles/TransactionEntitiesPreviewTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/tiles/StatisticsPreviewTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/tiles/TransactionsPreviewTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/tiles/TransactionsPreviewTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/settings/SettingsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/SettingsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/statistics/StatisticsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/statistics/StatisticsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/transactions/TransactionsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/TransactionsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/transactionsTable/TransactionsTableGroup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transactionsTable/TransactionsTableGroup.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +150,7 @@
       <workItem from="1708438795582" duration="53471000" />
       <workItem from="1708975190425" duration="5884000" />
       <workItem from="1709061752055" duration="42486000" />
-      <workItem from="1709314224267" duration="4604000" />
+      <workItem from="1709314224267" duration="7581000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
@@ -434,7 +446,14 @@
       <option name="project" value="LOCAL" />
       <updated>1709317764086</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Budget Plan Date Changer Final Fix">
+      <created>1709341596165</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1709341596165</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -452,7 +471,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Account Page Completed" />
     <MESSAGE value="home page init" />
     <MESSAGE value="code cleanup" />
     <MESSAGE value="Account Page re-styled" />
@@ -477,6 +495,7 @@
     <MESSAGE value="Budget Plan View Step 2" />
     <MESSAGE value="Budget Plan View Step 3" />
     <MESSAGE value="Budget Plan Date Changer Fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Budget Plan Date Changer Fix" />
+    <MESSAGE value="Budget Plan Date Changer Final Fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Budget Plan Date Changer Final Fix" />
   </component>
 </project>

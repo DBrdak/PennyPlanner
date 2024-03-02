@@ -1,23 +1,22 @@
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {useNavigate} from "react-router-dom";
 import theme from "../../../theme";
-import {EmojiEventsTwoTone, PaymentTwoTone} from "@mui/icons-material";
+import {AssessmentTwoTone, PaymentTwoTone} from "@mui/icons-material";
 import {Typography} from "@mui/material";
 
-export function GoalsPreviewTile() {
+export function StatisticsPreviewTile() {
     const navigate = useNavigate()
 
-    //TODO Display crucial info about goals and on click navigate to goals
     return (
-        <TilePaper disabled onClick={() => navigate('/goals')} sx={{
+        <TilePaper disabled onClick={() => navigate('/statistics')} sx={{
             alignItems: 'center',
             flexDirection: 'column',
             gap: theme.spacing(2),
             userSelect: 'none'
         }}>
-            <EmojiEventsTwoTone color={'primary'} sx={{fontSize: theme.spacing(10)}} />
+            <AssessmentTwoTone color={'primary'} sx={{fontSize: theme.spacing(10)}} />
             <Typography variant={'h4'}>
-                Goals
+                Statistics
             </Typography>
             <Typography variant={'h6'} color={'palegoldenrod'}>
                 Available soon!

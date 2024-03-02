@@ -53,8 +53,8 @@ export default observer (function BudgetedCategoriesContainer({budgetedCategorie
                     }
                 </>
                 {
-                    getBudgetedCategoriesByType('outcome').length > 0 && getBudgetedCategoriesByType('income').length > 0 &&
-                        <BudgetPlanEditButton setEditMode={budgetPlanStore.setEditMode} editMode={budgetPlanStore.editMode} />
+                    (getBudgetedCategoriesByType('outcome').length > 0 || getBudgetedCategoriesByType('income').length > 0) &&
+                        <BudgetPlanEditButton setEditMode={state => budgetPlanStore.setEditMode(state)} editMode={budgetPlanStore.editMode} />
                 }
             </Grid>
     );

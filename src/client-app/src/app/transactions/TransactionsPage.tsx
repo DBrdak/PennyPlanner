@@ -3,7 +3,16 @@ import useTitle from "../../utils/hooks/useTitle";
 import {observer} from "mobx-react-lite";
 import React, {useEffect, useState} from "react";
 import {useStore} from "../../stores/store";
-import {Button, ButtonGroup, CircularProgress, Grid, IconButton, Typography, useMediaQuery} from "@mui/material";
+import {
+    Button,
+    ButtonGroup,
+    CircularProgress,
+    Divider,
+    Grid,
+    IconButton,
+    Typography,
+    useMediaQuery
+} from "@mui/material";
 import theme from "../theme";
 import TransactionsTable from "../../components/transactionsTable/TransactionsTable";
 import {useNavigate, useParams} from "react-router-dom";
@@ -90,23 +99,25 @@ export default observer (function TransactionsPage() {
                             maxHeight: '15%',
                             flexDirection: 'column'
                         }}>
-                            <Typography variant={'h6'}>Add New Transaction</Typography>
                             <ButtonGroup fullWidth sx={{justifyContent: 'space-between'}}>
                                 {buttons.map((button, index) =>(
-                                    <IconButton key={index} onClick={() => navigate(button.path)} sx={{
+                                    <Button key={index} onClick={() => navigate(button.path)} variant={'outlined'} color={'inherit'} sx={{
                                         width: `calc(100% / ${buttons.length})`,
                                         flexDirection: 'column',
-                                        borderRadius: 0
+                                        borderRadius: '20px'
                                     }}>
                                         {button.icon}
                                         <Typography variant={'caption'}>
-                                            {button.name}
+                                            Add {button.name}
                                         </Typography>
-                                    </IconButton>
+                                    </Button>
                                     ))}
                             </ButtonGroup>
                         </Grid>
-                        <Grid item xs={12} sx={{overflow: 'hidden', maxHeight: '70%'}}>
+                        <Grid item xs={12}>
+                            <Divider variant={'middle'} />
+                        </Grid>
+                        <Grid item xs={12} sx={{overflow: 'hidden', height: '70%'}}>
                             {
                                 transactionStore.loading ?
                                     <Grid item xs={12} sx={{

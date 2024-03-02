@@ -35,12 +35,7 @@ namespace Domestica.Budget.Application.Transactions.DomainEventHandlers
 
             budgetPlan.RemoveTransaction(notification.DeletedTransaction);
 
-            var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
-
-            if (!isSuccessful)
-            {
-                throw new DBConcurrencyException($"Problem while removing transaction with ID: {notification.DeletedTransaction.Id.Value} from budget plan with ID: {budgetPlan.Id.Value}");
-            }
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }
