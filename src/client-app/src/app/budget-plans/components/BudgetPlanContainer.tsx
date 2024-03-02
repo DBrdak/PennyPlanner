@@ -14,6 +14,9 @@ export default observer(function BudgetPlanContainer() {
     const {budgetPlanStore} = useStore()
     const budgetPlan = useBudgetPlan(date)
 
+    const prevDateAccessible = () => budgetPlanStore.budgetPlans.filter(bp =>
+        bp.budgetPeriod.start <= budgetPlanStore.onDate).length > 0 || budgetPlanStore.onDate >= new Date()
+
     return (
         <Grid container sx={{
             height:'100%',
@@ -32,7 +35,7 @@ export default observer(function BudgetPlanContainer() {
                 <BudgetPlanDateChange
                     date={date}
                     setDate={setDate}
-                    prevDateAccessible={false}
+                    prevDateAccessible={prevDateAccessible()}
                 />
             </Grid>
             <Grid item xs={12} sx={{

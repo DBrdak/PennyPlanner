@@ -25,8 +25,8 @@ export function BudgetPlanDateChange({ date, setDate, prevDateAccessible }: Budg
     const [opacity, setOpacity] = useState(1)
     const [transform, setTransform] = useState(0)
 
-    const isDateIntervalGreaterThanYear = (start: Date, end: Date) => end.getTime() - start.getTime() > 365 * 24 * 60 * 60 * 1000
-    console.log(date.getTime() - new Date().getTime())
+    const numericYear = 360 * 24 * 60 * 60 * 1000
+    const isDateIntervalGreaterThanYear = (start: Date, end: Date) => end.getTime() - start.getTime() >= numericYear
 
     const handleDateChange = (months: number) => {
         setOpacity(0)
@@ -54,25 +54,15 @@ export function BudgetPlanDateChange({ date, setDate, prevDateAccessible }: Budg
             borderRadius: '20px',
             padding: theme.spacing(isMobile ? 1 : 4),
         }}>
-            {!isMobile &&
-                <DateChangeButton disabled={!prevDateAccessible} disableRipple left onClick={() => handleDateChange(-12)}>
-                    <KeyboardDoubleArrowLeft sx={{fontSize: theme.spacing(15)}} />
-                </DateChangeButton>
-            }
             <DateChangeButton disabled={!prevDateAccessible} disableRipple left onClick={() => handleDateChange(-1)}>
                 <KeyboardArrowLeft sx={{fontSize: theme.spacing(isMobile ? 8 : 15)}} />
             </DateChangeButton>
             <DateTypography variant={ isMobile ? 'h4' : 'h3'} textAlign={'center'} sx={{opacity, transform: `translateX(${transform}px)`}}>
                 {dayjs(date).format("MMMM YYYY")}
             </DateTypography>
-            <DateChangeButton disabled={!isDateIntervalGreaterThanYear(new Date(), date)} disableRipple right onClick={() => handleDateChange(1)}>
+            <DateChangeButton disabled={isDateIntervalGreaterThanYear(new Date(), date)} disableRipple right onClick={() => handleDateChange(1)}>
                 <KeyboardArrowRight sx={{fontSize: theme.spacing(isMobile ? 8 : 15)}} />
             </DateChangeButton>
-            {!isMobile &&
-                <DateChangeButton disabled={!isDateIntervalGreaterThanYear(new Date(), date)} disableRipple right onClick={() => handleDateChange(12)}>
-                    <KeyboardDoubleArrowRight sx={{fontSize: theme.spacing(15)}} />
-                </DateChangeButton>
-            }
         </Paper>
     );
 }

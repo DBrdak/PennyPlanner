@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Budget Plan View Step 3">
-      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/SetBudgetPlanCategories/SetBudgetPlanCategoriesCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/SetBudgetPlanCategories/SetBudgetPlanCategoriesCommandHandler.cs" afterDir="false" />
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Budget Plan Date Changer Fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/budget-plans/components/BudgetPlanContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/budget-plans/components/BudgetPlanContainer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/budget-plans/components/dateChange/BudgetPlanDateChange.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/budget-plans/components/dateChange/BudgetPlanDateChange.tsx" afterDir="false" />
@@ -139,7 +138,7 @@
       <workItem from="1708438795582" duration="53471000" />
       <workItem from="1708975190425" duration="5884000" />
       <workItem from="1709061752055" duration="42486000" />
-      <workItem from="1709314224267" duration="2172000" />
+      <workItem from="1709314224267" duration="4604000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
@@ -428,7 +427,14 @@
       <option name="project" value="LOCAL" />
       <updated>1709155801966</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Budget Plan Date Changer Fix">
+      <created>1709317764085</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1709317764086</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -446,7 +452,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Transaction Remove Feature Added" />
     <MESSAGE value="Account Page Completed" />
     <MESSAGE value="home page init" />
     <MESSAGE value="code cleanup" />
@@ -471,6 +476,7 @@
     <MESSAGE value="Budget Plan View Step 1" />
     <MESSAGE value="Budget Plan View Step 2" />
     <MESSAGE value="Budget Plan View Step 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Budget Plan View Step 3" />
+    <MESSAGE value="Budget Plan Date Changer Fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Budget Plan Date Changer Fix" />
   </component>
 </project>
