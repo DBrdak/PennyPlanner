@@ -1,10 +1,8 @@
 import {TransactionCategory} from "../../../../models/transactionCategories/transactionCategory";
 import {Form, Formik} from "formik";
-import {Box, Button, ButtonGroup, Grid, IconButton, InputAdornment, Stack, Typography} from "@mui/material";
-import {Clear, DeleteTwoTone, Undo} from "@mui/icons-material";
-import theme from "../../../theme";
+import {Button, Grid, IconButton, Typography} from "@mui/material";
+import {Clear} from "@mui/icons-material";
 import MyTextInput from "../../../../components/MyTextInput";
-import GroupDropdown from "../../../../components/transactionsTable/GroupDropdown";
 import React, {useEffect, useState} from "react";
 import * as yup from 'yup'
 import {
@@ -15,7 +13,6 @@ import {calcColorForCategory} from "../../../../utils/calculators/layoutCalculat
 import ValidationConstants from "../../../../utils/constants/validationConstants";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../../stores/store";
-import BudgetedCategoryCreateCard from "./BudgetedCategoryCreateCard";
 
 interface BudgetedCategoryCreateFormProps {
     category?: TransactionCategory

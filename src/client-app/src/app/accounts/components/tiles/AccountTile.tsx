@@ -1,4 +1,4 @@
-import {Divider, Grid, Stack, Typography, useMediaQuery} from "@mui/material";
+import {Divider, Grid, Typography, useMediaQuery} from "@mui/material";
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {useNavigate} from "react-router-dom";
 import theme from "../../../theme";

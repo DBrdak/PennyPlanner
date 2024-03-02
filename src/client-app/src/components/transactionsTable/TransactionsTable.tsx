@@ -1,11 +1,10 @@
-import {Box, CircularProgress, Collapse} from "@mui/material";
+import {Box, Collapse} from "@mui/material";
 import {Transaction} from "../../models/transactions/transaction";
 import {useState} from "react";
 import TransactionsTableGroup from "./TransactionsTableGroup";
 import TransactionsTableGroupHeader from "./TransactionsTableGroupHeader";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../stores/store";
-import useCategories from "../../utils/hooks/useCategories";
 
 interface TransactionsTableProps {
     groupedTransactions: Record<string, Transaction[]>

@@ -3,7 +3,7 @@ import useTitle from "../../../utils/hooks/useTitle";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../stores/store";
 import React, {useEffect, useState} from "react";
-import {CircularProgress, Grid, IconButton, Typography} from "@mui/material";
+import {CircularProgress, Grid, IconButton} from "@mui/material";
 import theme from "../../theme";
 import {AddInternalTransactionCommand} from "../../../models/requests/transactions/addInternalTransactionCommand";
 import {AddInternalTransactionForm} from "./components/AddInternalTransactionForm";

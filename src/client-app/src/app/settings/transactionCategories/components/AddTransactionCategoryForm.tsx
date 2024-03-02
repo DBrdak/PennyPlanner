@@ -1,8 +1,7 @@
 import {Form, Formik} from "formik";
 import MyTextInput from "../../../../components/MyTextInput";
-import {Box, ButtonGroup, Grid, IconButton, Typography} from "@mui/material";
-import {Clear, DeleteTwoTone, DoneTwoTone} from "@mui/icons-material";
-import theme from "../../../theme";
+import {ButtonGroup, Grid, IconButton, Typography} from "@mui/material";
+import {Clear, DoneTwoTone} from "@mui/icons-material";
 import React from "react";
 import * as yup from 'yup'
 import {AddTransactionCategoryCommand} from "../../../../models/requests/categories/addTransactionCategoryCommand";

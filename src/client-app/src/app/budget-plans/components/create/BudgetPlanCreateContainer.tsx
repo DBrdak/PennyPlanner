@@ -1,13 +1,10 @@
-import {Box, Button, CircularProgress, Divider, Grid} from "@mui/material";
+import {CircularProgress, Divider, Grid} from "@mui/material";
 import {observer} from "mobx-react-lite";
 import useCategories from "../../../../utils/hooks/useCategories";
 import BudgetedCategoryCreateCard from "./BudgetedCategoryCreateCard";
-import theme from "../../../theme";
 import {BudgetedCategoryCreateSubmitButton} from "./BudgetedCategoryCreateSubmitButton";
 import {useStore} from "../../../../stores/store";
 import {useNewCategoryValues} from "../../../../utils/hooks/useNewCategoryValues";
-import {BudgetedTransactionCategory} from "../../../../models/budgetPlans/budgetedTransactionCategory";
-import {useEffect} from "react";
 
 export default observer(function BudgetPlanCreateContainer() {
     const categories = useCategories()

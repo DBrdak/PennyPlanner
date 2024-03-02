@@ -1,5 +1,3 @@
-import {TransactionCategory} from "../../../../models/transactionCategories/transactionCategory";
-import {AddTransactionCategoryCommand} from "../../../../models/requests/categories/addTransactionCategoryCommand";
 import {
     AddTransactionSubcategoryCommand
 } from "../../../../models/requests/subcategories/addTransactionSubcategoryCommand";

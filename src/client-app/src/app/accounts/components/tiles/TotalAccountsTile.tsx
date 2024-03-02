@@ -1,7 +1,7 @@
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../../stores/store";
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
-import {Divider, Grid, Stack, Typography, useMediaQuery} from "@mui/material";
+import {Divider, Grid, Typography, useMediaQuery} from "@mui/material";
 import theme from "../../../theme";
 import {useNavigate} from "react-router-dom";
 import {AccountBalanceDisplay} from "./AccountBalanceDisplay";

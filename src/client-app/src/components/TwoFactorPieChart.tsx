@@ -1,7 +1,7 @@
-import {AllSeriesType, PieChart, PiePlot, PieValueType, ResponsiveChartContainer, useDrawingArea} from "@mui/x-charts";
+import {PiePlot, PieValueType, ResponsiveChartContainer, useDrawingArea} from "@mui/x-charts";
 import {MakeOptional} from "@mui/x-charts/models/helpers";
 import theme from "../app/theme";
-import {Box, Container, styled} from "@mui/material";
+import {styled} from "@mui/material";
 import formatNumber from "../utils/formatters/numberFormatter";
 
 interface TwoFactorPieChartProps {

@@ -3,9 +3,8 @@ import {Form, Formik} from "formik";
 import React from "react";
 import * as yup from 'yup'
 import ValidationConstants from "../../../../utils/constants/validationConstants";
-import {Box, ButtonGroup, Grid, IconButton, Typography} from "@mui/material";
-import theme from "../../../theme";
-import {Clear, DeleteTwoTone, DoneTwoTone, EditTwoTone, KeyboardArrowDown} from "@mui/icons-material";
+import {ButtonGroup, Grid, IconButton, Typography} from "@mui/material";
+import {Clear, DeleteTwoTone, DoneTwoTone, KeyboardArrowDown} from "@mui/icons-material";
 import MyTextInput from "../../../../components/MyTextInput";
 import {TransactionSubcategory} from "../../../../models/transactionSubcategories/transactionSubcategory";
 

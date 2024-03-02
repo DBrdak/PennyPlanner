@@ -6,14 +6,13 @@ import {
     TextField,
     Divider,
     Stack,
-    ButtonGroup, useMediaQuery
+    ButtonGroup
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import CenteredStack from "../../components/CenteredStack";
 import {router} from "../../router/Routes";
 import {useNavigate} from "react-router-dom";
-import theme from "../theme";
 import useTitle from "../../utils/hooks/useTitle";
 import GradientContainer from "../welcome/GradientContainer";
 

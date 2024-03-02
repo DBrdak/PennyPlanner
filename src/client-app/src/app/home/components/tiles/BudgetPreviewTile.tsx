@@ -1,7 +1,7 @@
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {useNavigate} from "react-router-dom";
 import theme from "../../../theme";
-import {CalendarMonthTwoTone, PaymentTwoTone} from "@mui/icons-material";
+import {CalendarMonthTwoTone} from "@mui/icons-material";
 import {Typography} from "@mui/material";
 
 export function BudgetPreviewTile() {

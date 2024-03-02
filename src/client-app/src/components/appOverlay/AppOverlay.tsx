@@ -25,9 +25,8 @@ import {observer} from "mobx-react-lite";
 import {useStore} from "../../stores/store";
 import DashboardSection from "../../models/layout/dashboardSection";
  import AddTransactionButton from "./AddTransactionButton";
- import {router} from "../../router/Routes";
 
-interface AppOverlayProps {
+ interface AppOverlayProps {
     children: React.ReactNode,
 }
 

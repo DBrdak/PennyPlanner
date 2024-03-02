@@ -1,6 +1,5 @@
 import {Transaction} from "../../../../../models/transactions/transaction";
-import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useMediaQuery} from "@mui/material";
-import theme from "../../../../theme";
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import formatDate from "../../../../../utils/formatters/dateFormatter";
 import formatMoney from "../../../../../utils/formatters/moneyFormatter";
 

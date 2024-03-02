@@ -1,5 +1,4 @@
 import AppOverlay from "../../components/appOverlay/AppOverlay";
-import {TilesLayout} from "../../components/tilesLayout/TilesLayout";
 import {observer} from "mobx-react-lite";
 import useTitle from "../../utils/hooks/useTitle";
 import theme from "../theme";

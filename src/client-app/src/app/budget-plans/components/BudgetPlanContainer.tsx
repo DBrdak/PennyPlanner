@@ -7,7 +7,6 @@ import {useStore} from "../../../stores/store";
 import {observer} from "mobx-react-lite";
 import useBudgetPlan from "../../../utils/hooks/useBudgetPlan";
 import BudgetPlanCreateContainer from "./create/BudgetPlanCreateContainer";
-import {BudgetPlanEditButton} from "./view/BudgetPlanEditButton";
 
 export default observer(function BudgetPlanContainer() {
     const [date, setDate] = useState(new Date())

@@ -1,5 +1,4 @@
 import {TransactionCategory} from "../../transactionCategories/transactionCategory";
-import {BudgetedTransactionCategory} from "../../budgetPlans/budgetedTransactionCategory";
 
 export interface BudgetedTransactionCategoryValues {
     categoryValue: string

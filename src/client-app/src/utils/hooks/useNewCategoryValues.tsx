@@ -1,4 +1,3 @@
-import useCategories from "./useCategories";
 import {useStore} from "../../stores/store";
 import {useEffect, useState} from "react";
 import {TransactionCategory} from "../../models/transactionCategories/transactionCategory";

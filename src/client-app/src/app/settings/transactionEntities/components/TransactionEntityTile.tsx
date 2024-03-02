@@ -2,11 +2,9 @@ import {TransactionEntity} from "../../../../models/transactionEntities/transact
 import {Box, CircularProgress, Grid, IconButton, Typography} from "@mui/material";
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {useState} from "react";
-import {Delete, DeleteTwoTone, EditTwoTone} from "@mui/icons-material";
+import {DeleteTwoTone, EditTwoTone} from "@mui/icons-material";
 import theme from "../../../theme";
-import {Formik} from "formik";
 import {UpdateTransactionEntityForm} from "./UpdateTransactionEntityForm";
-import {runInAction} from "mobx";
 
 interface TransactionEntityTileProps {
     transactionEntity: TransactionEntity

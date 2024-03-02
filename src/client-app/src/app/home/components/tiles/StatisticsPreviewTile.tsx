@@ -1,7 +1,7 @@
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {useNavigate} from "react-router-dom";
 import theme from "../../../theme";
-import {AssessmentTwoTone, PaymentTwoTone} from "@mui/icons-material";
+import {AssessmentTwoTone} from "@mui/icons-material";
 import {Typography} from "@mui/material";
 
 export function StatisticsPreviewTile() {

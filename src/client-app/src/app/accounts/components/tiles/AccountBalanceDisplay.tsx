@@ -1,4 +1,4 @@
-import {Divider, Grid, Stack, Typography} from "@mui/material";
+import {Divider, Grid, Typography} from "@mui/material";
 import theme from "../../../theme";
 import {Account} from "../../../../models/accounts/account";
 import {calculateBalanceForCurrentMonth, calculateBalanceForToday} from "../../../../utils/calculators/balanceCalculator";

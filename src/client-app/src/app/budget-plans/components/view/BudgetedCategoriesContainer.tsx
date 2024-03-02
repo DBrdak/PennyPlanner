@@ -1,8 +1,7 @@
 import {BudgetedTransactionCategory} from "../../../../models/budgetPlans/budgetedTransactionCategory";
-import {Button, Divider, Grid} from "@mui/material";
+import {Divider, Grid} from "@mui/material";
 import BudgetedCategoryCard from "./BudgetedCategoryCard";
 import {BudgetPlanEditButton} from "./BudgetPlanEditButton";
-import {useState} from "react";
 import {observer} from "mobx-react-lite";
 import theme from "../../../theme";
 import useCategories from "../../../../utils/hooks/useCategories";

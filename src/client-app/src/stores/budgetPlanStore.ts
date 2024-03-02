@@ -1,11 +1,8 @@
 import {makeAutoObservable} from "mobx";
 import {BudgetPlan} from "../models/budgetPlans/budgetPlan";
 import agent from "../api/agent";
-import {DateTimeRange} from "../models/shared/dateTimeRange";
 import {isDateTimeRangeContainsDate} from "../utils/calculators/dateCalculator";
-import {BudgetedTransactionCategory} from "../models/budgetPlans/budgetedTransactionCategory";
 import {BudgetedTransactionCategoryValues} from "../models/requests/budgetPlans/budgetedTransactionCategoryValues";
-import {tableFooterClasses} from "@mui/material";
 import {UpdateBudgetPlanCategoryValues} from "../models/requests/budgetPlans/updateBudgetPlanCategoryValues";
 
 export default class BudgetPlanStore {

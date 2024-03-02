@@ -1,6 +1,5 @@
 import {styled} from "@mui/material";
 import MuiIconButton from "@mui/material/IconButton";
-import theme from "../../../theme";
 
 interface DateChangeButtonProps {
     left?: boolean

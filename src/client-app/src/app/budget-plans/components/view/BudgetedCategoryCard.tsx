@@ -3,13 +3,11 @@ import {CircularProgress, Divider, Grid, Paper, Typography} from "@mui/material"
 import theme from "../../../theme";
 import {TwoFactorPieChart} from "../../../../components/TwoFactorPieChart";
 import {BudgetedCategoryCardActions} from "./BudgetedCategoryCardActions";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {observer} from "mobx-react-lite";
-import useCategories from "../../../../utils/hooks/useCategories";
 import {TransactionCategory} from "../../../../models/transactionCategories/transactionCategory";
 import {useStore} from "../../../../stores/store";
 import {BudgetedCategoryDetailsModal} from "./details/BudgetedCategoryDetailsModal";
-import {BudgetPlan} from "../../../../models/budgetPlans/budgetPlan";
 import {UpdateBudgetPlanCategoryValues} from "../../../../models/requests/budgetPlans/updateBudgetPlanCategoryValues";
 
 interface BudgetedCategoryCardProps{

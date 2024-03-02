@@ -1,8 +1,6 @@
 import AppOverlay from "../../../components/appOverlay/AppOverlay";
-import {CircularProgress, Grid, LinearProgress, Paper, Typography} from "@mui/material";
+import {CircularProgress, Grid, Paper, Typography} from "@mui/material";
 import theme from "../../theme";
-import TilePaper from "../../../components/tilesLayout/TilePaper";
-import {TilesLayout} from "../../../components/tilesLayout/TilesLayout";
 import {observer} from "mobx-react-lite";
 import useTransactionEntities from "../../../utils/hooks/useTransactionEntities";
 import {useStore} from "../../../stores/store";
@@ -11,7 +9,6 @@ import {AddTransactionEntityTile} from "./components/AddTransactionEntityTile";
 import {AddTransactionEntityCommand} from "../../../models/requests/transactionEntities/addTransactionEntityCommand";
 import ConfirmModal from "../../../components/ConfirmModal";
 import {useEffect, useState} from "react";
-import tilePaper from "../../../components/tilesLayout/TilePaper";
 
 export default observer (function TransactionEntitiesPage() {
     const {transactionEntityStore, modalStore} = useStore()

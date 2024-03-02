@@ -1,16 +1,10 @@
 import {TransactionCategory} from "../../../../models/transactionCategories/transactionCategory";
-import {Grid, IconButton, Paper, Typography} from "@mui/material";
+import {Grid, Paper} from "@mui/material";
 import theme from "../../../theme";
 import BudgetedCategoryCreateForm from "./BudgetedCategoryCreateForm";
 import {observer} from "mobx-react-lite";
-import {Add} from "@mui/icons-material";
 import {useEffect, useState} from "react";
-import {
-    AddTransactionCategoryForm
-} from "../../../settings/transactionCategories/components/AddTransactionCategoryForm";
-import {AddTransactionCategoryCommand} from "../../../../models/requests/categories/addTransactionCategoryCommand";
 import {useStore} from "../../../../stores/store";
-import {calcColorForCategory} from "../../../../utils/calculators/layoutCalculator";
 import {
     BudgetedTransactionCategoryValues
 } from "../../../../models/requests/budgetPlans/budgetedTransactionCategoryValues";

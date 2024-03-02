@@ -15,9 +15,6 @@ import * as Yup from "yup";
 import {decimal_MAX} from "../../../../utils/constants/numeric";
 import {Form, Formik} from "formik";
 import MyTextInput from "../../../../components/MyTextInput";
-import {DateTimePicker, LocalizationProvider, MobileDateTimePicker} from "@mui/x-date-pickers";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
 import MyDateTimePicker from "../../../../components/MyDateTimePicker";
 
 interface AddInternalTransactionFormProps {

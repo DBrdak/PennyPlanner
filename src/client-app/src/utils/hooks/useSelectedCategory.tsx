@@ -1,4 +1,3 @@
-import {Account} from "../../models/accounts/account";
 import {useStore} from "../../stores/store";
 import {useEffect} from "react";
 

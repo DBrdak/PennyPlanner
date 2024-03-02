@@ -1,21 +1,13 @@
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {Transaction} from "../../../../models/transactions/transaction";
 import {
-    Grid,
-    Table,
-    TableBody,
-    TableCell,
-    TableRow,
-    Typography,
-    useMediaQuery
+    Typography
 } from "@mui/material";
 import theme from "../../../theme";
-import formatNumber from "../../../../utils/formatters/numberFormatter";
-import formatDate from "../../../../utils/formatters/dateFormatter";
 import {TransactionEntity} from "../../../../models/transactionEntities/transactionEntity";
 import {Account} from "../../../../models/accounts/account";
 import {useNavigate} from "react-router-dom";
-import {EventRepeatTwoTone, PaymentsTwoTone, PaymentTwoTone} from "@mui/icons-material";
+import {PaymentTwoTone} from "@mui/icons-material";
 
 interface TransactionsPreviewTileProps {
     transactions: Transaction[]

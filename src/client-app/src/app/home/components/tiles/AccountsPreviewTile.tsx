@@ -1,6 +1,6 @@
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import theme from "../../../theme";
-import {AccountBalanceWalletTwoTone, AccountBoxTwoTone, PaymentTwoTone} from "@mui/icons-material";
+import {AccountBalanceWalletTwoTone} from "@mui/icons-material";
 import {Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 

@@ -3,9 +3,7 @@ import theme from "../../../theme";
 import DateChangeButton from "./DateChangeButton";
 import {
     KeyboardArrowLeft,
-    KeyboardArrowRight,
-    KeyboardDoubleArrowLeft,
-    KeyboardDoubleArrowRight
+    KeyboardArrowRight
 } from "@mui/icons-material";
 import dayjs from "dayjs";
 import {useState} from "react";

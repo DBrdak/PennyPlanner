@@ -15,14 +15,12 @@ import {
 } from "@mui/material";
 import theme from "../theme";
 import TransactionsTable from "../../components/transactionsTable/TransactionsTable";
-import {useNavigate, useParams} from "react-router-dom";
-import {Account} from "../../models/accounts/account";
+import {useNavigate} from "react-router-dom";
 import useTransactionEntities from "../../utils/hooks/useTransactionEntities";
 import useCategories from "../../utils/hooks/useCategories";
 import groupBy from "../../utils/transactionsGroupBy";
 import GroupDropdown from "../../components/transactionsTable/GroupDropdown";
-import {North, South, SyncAlt as SyncAltIcon, SyncAlt, Undo} from "@mui/icons-material";
-import useAccount from "../../utils/hooks/useAccount";
+import {North, South, SyncAlt as SyncAltIcon, Undo} from "@mui/icons-material";
 
 export default observer (function TransactionsPage() {
     useTitle('Transactions')
