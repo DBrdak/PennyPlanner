@@ -2,7 +2,7 @@
 using Responses.DB;
 using System.Buffers;
 using System.Text.Json;
-using Domestica.Budget.Application.Messaging.Caching;
+using Domestica.Budget.Application.Abstractions.Messaging.Caching;
 
 namespace Domestica.Budget.Infrastructure.Repositories
 {

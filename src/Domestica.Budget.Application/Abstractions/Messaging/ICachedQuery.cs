@@ -1,7 +1,7 @@
 ﻿using CommonAbstractions.DB.Messaging;
-using Domestica.Budget.Application.Messaging.Caching;
+using Domestica.Budget.Application.Abstractions.Messaging.Caching;
 
-namespace Domestica.Budget.Application.Messaging
+namespace Domestica.Budget.Application.Abstractions.Messaging
 {
     public interface ICachedQuery<TResponse> : IQuery<TResponse>, ICachedQuery;
 

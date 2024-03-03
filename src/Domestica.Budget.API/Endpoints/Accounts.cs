@@ -3,6 +3,7 @@ using Domestica.Budget.Application.Accounts.AddAccount;
 using Domestica.Budget.Application.Accounts.GetAccounts;
 using Domestica.Budget.Application.Accounts.RemoveAccount;
 using Domestica.Budget.Application.Accounts.UpdateAccount;
+using Domestica.Budget.Application.Accounts.GetAccounts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;

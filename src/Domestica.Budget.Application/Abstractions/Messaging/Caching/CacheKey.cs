@@ -4,7 +4,7 @@ using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.Transactions;
 
-namespace Domestica.Budget.Application.Messaging.Caching
+namespace Domestica.Budget.Application.Abstractions.Messaging.Caching
 {
     public sealed record CacheKey
     {

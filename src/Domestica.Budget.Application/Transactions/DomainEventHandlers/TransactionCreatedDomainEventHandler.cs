@@ -30,13 +30,8 @@ namespace Domestica.Budget.Application.Transactions.DomainEventHandlers
             }
 
             budgetPlan.AddTransaction(notification.CreatedTransaction);
-            var isSuccessfull = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
-            if (!isSuccessfull)
-            {
-                throw new DBConcurrencyException(
-                    $"Problem while adding transaction with ID: {notification.CreatedTransaction.Id.Value} to budget plan with ID: {budgetPlan.Id.Value}");
-            }
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }
