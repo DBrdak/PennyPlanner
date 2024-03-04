@@ -7,7 +7,7 @@ using CommonAbstractions.DB.Entities;
 
 namespace Domestica.Budget.Domain.Users.Events
 {
-    public sealed class UserCreatedDomainEvent(UserId UserId) : IDomainEvent
+    public sealed record UserCreatedDomainEvent(UserId UserId) : IDomainEvent
     {
     }
 }

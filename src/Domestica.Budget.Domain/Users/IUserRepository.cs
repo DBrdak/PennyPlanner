@@ -8,7 +8,7 @@ namespace Domestica.Budget.Domain.Users
 {
     public interface IUserRepository
     {
-        Task<User?> GetByIdAsync(UserId id, CancellationToken cancellationToken = default);
+        Task<User?> GetByIdAsync(UserId id, CancellationToken cancellationToken = default, bool asNoTracking = false);
 
         Task AddAsync(User user, CancellationToken cancellationToken);
     }

@@ -3,6 +3,7 @@ using Domestica.Budget.Domain.BudgetPlans;
 using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.Transactions;
+using Domestica.Budget.Domain.Users;
 
 namespace Domestica.Budget.Application.Abstractions.Messaging.Caching
 {
@@ -18,6 +19,7 @@ namespace Domestica.Budget.Application.Abstractions.Messaging.Caching
         internal static CacheKey TransactionEntities(string? userId) => new (nameof(TransactionEntity), userId);
         internal static CacheKey Transactions(string? userId) => new (nameof(Transaction), userId);
         internal static CacheKey TransactionCategories(string? userId) => new (nameof(TransactionCategory), userId);
+        internal static CacheKey Users(string? userId) => new (nameof(User), userId);
 
         internal static IReadOnlyCollection<CacheKey> All(string? userId) =>
             new[]
@@ -26,7 +28,8 @@ namespace Domestica.Budget.Application.Abstractions.Messaging.Caching
                 BudgetPlans(userId),
                 TransactionEntities(userId),
                 Transactions(userId),
-                TransactionCategories(userId)
+                TransactionCategories(userId),
+                Users(userId)
             };
 
         public override string ToString() => $"{UserId}:{Collection}";

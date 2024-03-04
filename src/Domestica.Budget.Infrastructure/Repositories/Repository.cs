@@ -15,9 +15,13 @@ namespace Domestica.Budget.Infrastructure.Repositories
             DbContext = dbContext;
         }
 
-        public async Task<TEntity?> GetByIdAsync(TEntityId id, CancellationToken cancellationToken = default)
+        public async Task<TEntity?> GetByIdAsync(TEntityId id, CancellationToken cancellationToken = default, bool asNoTracking = false)
         {
-            return await DbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            var query = DbContext.Set<TEntity>();
+
+            if (asNoTracking) query.AsNoTracking();
+
+            return await query.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public async Task<TEntity?> GetByIdIncludeAsync<TProperty>(
