@@ -3,25 +3,30 @@ version: '3.4'
 services:
   domestica-budget-db:
     image: postgres:latest
-    container_name: domestica-budget-db
+    container_name: domestica-budget.db
 
   domestica-budget-cache:
     image: redis
-    container_name: domestica-budget-cache
+    container_name: domestica-budget.cache
 
-  domestica-budget-api:
+  domestica-budget.api:
     image: ${DOCKER_REGISTRY-}domesticabudgetapi
-    container_name: domestica-budget-api
+    container_name: domestica-budget.api
     build:
       context: .
       dockerfile: src/Domestica.Budget.API/Dockerfile
     depends_on:
       - domestica-budget-db
       - domestica-budget-cache
+      - domestica-idp 
 
-  seq:
+  domestica-idp:
+    image: jboss/keycloak:latest
+    container_name: domestica.identity
+
+  domestica-budget-seq:
     image: datalust/seq:latest
-    container_name: seq
+    container_name: domestica-budget.seq
 
 volumes:
   postgres_data:

@@ -12,13 +12,11 @@ namespace Domestica.Budget.Application.Users
     {
         public string UserId { get; init; }
         public string Email { get; init; }
-        public string Username { get; init; }
 
-        private UserModel(string userId, string email, string username)
+        private UserModel(string userId, string email)
         {
             UserId = userId;
             Email = email;
-            Username = username;
         }
 
         [JsonConstructor]
@@ -28,8 +26,7 @@ namespace Domestica.Budget.Application.Users
         internal static UserModel FromDomainObject(User user) =>
             new(
                 user.Id.Value.ToString(),
-                user.Email.Value,
-                user.Username.Value
+                user.Email.Value
             );
     }
 }

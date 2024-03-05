@@ -85,10 +85,10 @@ const SignInPage: React.FC = () => {
                         <CenteredStack direction={'row'} style={{width: '100%', gap: 10}}>
                             <Stack>
                                 <Typography variant="body2" color="textSecondary" align="center" style={{ margin: '10px 0' }}>
-                                    You can also
+                                    Available soon
                                 </Typography>
                                 <ButtonGroup>
-                                    <Button
+                                    <Button disabled
                                         variant="outlined"
                                         fullWidth
                                         color={'inherit'}
@@ -97,7 +97,7 @@ const SignInPage: React.FC = () => {
                                     >
                                         Sign in with Facebook
                                     </Button>
-                                    <Button
+                                    <Button disabled
                                         variant="outlined"
                                         fullWidth
                                         color={'inherit'}

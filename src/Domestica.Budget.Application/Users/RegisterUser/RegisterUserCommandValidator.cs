@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domestica.Budget.Application.Settings.ValidationSettings;
+using Domestica.Budget.Domain.Users;
 
 namespace Domestica.Budget.Application.Users.RegisterUser
 {
@@ -12,14 +13,8 @@ namespace Domestica.Budget.Application.Users.RegisterUser
     {
         public RegisterUserCommandValidator()
         {
-            RuleFor(c => c.Username)
-                .MaximumLength(UserValidationSettings.UsernameMaxLength)
-                .WithMessage("Username is too long")
-                .Matches(UserValidationSettings.UsernamePattern)
-                .WithMessage("Invalid username");
-
             RuleFor(c => c.Email)
-                .EmailAddress()
+                .Matches(UserValidationSettings.EmailPattern)
                 .WithMessage("Invalid email");
 
             RuleFor(c => c.Password)

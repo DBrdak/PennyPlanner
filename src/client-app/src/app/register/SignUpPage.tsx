@@ -54,10 +54,7 @@ const SignUpPage: React.FC = () => {
             .oneOf([Yup.ref('password')], 'Passwords differ')
             .required('Confirm your password'),
         currency: Yup.string()
-            .required('Provide currency which you will use'),
-        name: Yup.string()
-            .required('How can we call you?')
-            .max(30, 'Use shorter name')
+            .required('Provide currency which you will use')
     });
 
     function handleFormSubmit(values: any) {
@@ -90,23 +87,31 @@ const SignUpPage: React.FC = () => {
                                         padding: 2
                                     }}>
                                         <MyTextInput
-                                            name={'name'}
-                                            label="Name"
-                                            placeholder="Name"
-                                            type={'text'}
-                                            showErrors
-                                        />
-                                    </Grid>
-                                    <Grid xs={12} md={6} sx={{
-                                        padding: 2
-                                    }}>
-                                        <MyTextInput
                                             name={'email'}
                                             label="Email"
                                             placeholder="Email"
                                             type="email"
                                             showErrors
                                         />
+                                    </Grid>
+                                    <Grid xs={12} md={6} sx={{
+                                        padding: 2
+                                    }}>
+                                        <FormControl fullWidth error={values.currency.length < 1}>
+                                            <InputLabel>Currency</InputLabel>
+                                            <Select
+                                                value={values.currency}
+                                                onChange={(e) => setValues({...values, currency: e.target.value})}
+                                            >
+                                                <MenuItem value={'PLN'}>PLN</MenuItem>
+                                                <MenuItem value={'USD'}>USD</MenuItem>
+                                                <MenuItem value={'GBP'}>GBP</MenuItem>
+                                                <MenuItem value={'CAD'}>CAD</MenuItem>
+                                                <MenuItem value={'EUR'}>EUR</MenuItem>
+                                                <MenuItem value={'CHF'}>CHF</MenuItem>
+                                                <MenuItem value={'CHF'}>JPY</MenuItem>
+                                            </Select>
+                                        </FormControl>
                                     </Grid>
                                     <Grid xs={12} md={6} sx={{
                                         padding: 2
@@ -130,27 +135,14 @@ const SignUpPage: React.FC = () => {
                                             showErrors
                                         />
                                     </Grid>
-                                    <Grid xs={12} md={6} sx={{
-                                        padding: 2
-                                    }}>
-                                        <FormControl fullWidth error={values.currency.length < 1}>
-                                            <InputLabel>Currency</InputLabel>
-                                            <Select
-                                                value={values.currency}
-                                                onChange={(e) => setValues({...values, currency: e.target.value})}
-                                            >
-                                                <MenuItem value={'PLN'}>PLN</MenuItem>
-                                                <MenuItem value={'USD'}>USD</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid xs={12} md={6} sx={{
+                                    <Grid xs={12} md={12} sx={{
                                         display: 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center',
                                         padding: 2
                                     }}>
-                                        <Button fullWidth type="submit" variant="contained" color="primary" onClick={() => console.log('Registered !')}>
+                                        <Button fullWidth type="submit" variant="contained" color="primary" onClick={() => console.log('Registered !')}
+                                            sx={{maxWidth: '250px'}}>
                                             Sign Up
                                         </Button>
                                     </Grid>

@@ -29,11 +29,11 @@ app.UseRouting();
 
 app.AddHealthChecks();
 
-app.AddMiddlewares();
-
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.AddMiddlewares();
 
 app.MapCarter();
 

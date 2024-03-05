@@ -8,6 +8,7 @@ using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.Transactions;
 using Domestica.Budget.Domain.TransactionSubcategories;
+using Domestica.Budget.Domain.Users;
 using Domestica.Budget.Infrastructure.Authentication;
 using Domestica.Budget.Infrastructure.Email;
 using Domestica.Budget.Infrastructure.Repositories;
@@ -65,6 +66,8 @@ namespace Domestica.Budget.Infrastructure
 
             services.AddScoped<ICacheRepository, CacheRepository>();
 
+            services.AddScoped<IUserRepository, UserRepository>();
+
             services.AddTransient<IEmailService, EmailService>();
 
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
@@ -75,6 +78,8 @@ namespace Domestica.Budget.Infrastructure
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer();
+
+            services.AddAuthorization();
 
            services.Configure<AuthenticationOptions>(configuration.GetSection("Authentication"));
 

@@ -4,7 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Imports Cleanup" />
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Imports Cleanup">
+      <change afterPath="$PROJECT_DIR$/src/models/requests/users/logInUserCommand.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/requests/users/registerUserCommand.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/users/accessToken.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/users/user.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/stores/userStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Settings/ValidationSettings/UserValidationSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Settings/ValidationSettings/UserValidationSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/RegisterUser/RegisterUserCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/RegisterUser/RegisterUserCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/RegisterUser/RegisterUserCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/RegisterUser/RegisterUserCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/RegisterUser/RegisterUserCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/RegisterUser/RegisterUserCommandValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/UserModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/UserModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Users/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Domain/Users/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Authentication/Models/UserRepresentationModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Authentication/Models/UserRepresentationModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/login/SignInPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/login/SignInPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -135,6 +152,7 @@
       <workItem from="1708975190425" duration="5884000" />
       <workItem from="1709061752055" duration="42486000" />
       <workItem from="1709314224267" duration="8349000" />
+      <workItem from="1709577675887" duration="4247000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>

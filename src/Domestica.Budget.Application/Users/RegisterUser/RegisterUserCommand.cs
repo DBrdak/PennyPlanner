@@ -10,8 +10,8 @@ namespace Domestica.Budget.Application.Users.RegisterUser
 {
     public sealed record RegisterUserCommand(
         string Email,
-        string Username,
-        string Password) : ICommand<User>
+        string Password,
+        string Currency) : ICommand<User>
     {
     }
 }

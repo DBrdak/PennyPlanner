@@ -4,6 +4,7 @@ using Domestica.Budget.Application.Users.LogInUser;
 using Domestica.Budget.Application.Users.RegisterUser;
 using MediatR;
 using System.Threading;
+using Microsoft.AspNetCore.Authentication.BearerToken;
 
 namespace Domestica.Budget.API.Endpoints
 {
@@ -22,7 +23,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess 
                         ? Results.Ok(result.Value)
                         : Results.NotFound(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapPost(
                 "users/login",

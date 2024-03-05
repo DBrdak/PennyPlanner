@@ -7,6 +7,7 @@ using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Domain.Users;
+using Money.DB;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.Users.RegisterUser
@@ -29,9 +30,7 @@ namespace Domestica.Budget.Application.Users.RegisterUser
 
         public async Task<Result<User>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var user = User.Create(
-                new Username(request.Username),
-                new Email(request.Email));
+            var user = User.Create(new Email(request.Email), Currency.FromCode(request.Currency));
 
             var identityId = await _authenticationService.RegisterAsync(
                 user,
