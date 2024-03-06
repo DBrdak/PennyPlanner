@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx"
 import {RegisterUserCommand} from "../models/requests/users/registerUserCommand";
 import {LogInUserCommand} from "../models/requests/users/logInUserCommand";
 import agent from "../api/agent";
+import {useNavigate} from "react-router-dom";
 
 export default class UserStore {
     currentUser?: User = undefined
@@ -22,7 +23,7 @@ export default class UserStore {
         this.loading = state
     }
 
-    private setCurrentUser(user: User) {
+    private setCurrentUser(user: User | undefined) {
         this.currentUser = user
     }
 
@@ -79,5 +80,11 @@ export default class UserStore {
         } finally {
             this.setLoading(false)
         }
+    }
+
+    logOut() {
+        localStorage.removeItem('jwt')
+        this.setToken(null)
+        this.setCurrentUser(undefined)
     }
 }

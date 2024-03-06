@@ -30,9 +30,9 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL
 
 axios.interceptors.request.use(config => {
     const token = store.userStore.token;
-    if (token && config.headers){
-        config.headers.Authorization = `Bearer ${token}`;
-    }
+
+    config.headers.Authorization = `Bearer ${token}`;
+
     return config;
 })
 
@@ -46,10 +46,8 @@ axios.interceptors.response.use(async(response) => {
         return response
     }, (error) => {
         if (error) {
-            console.log(error)
             const errorMessage = error.response.data.name
             const errorMessages = errorMessage.split('\n')
-            console.log(error)
             switch(error.response.status) {
                 case 400:
                     errorMessages.forEach(toast.error)

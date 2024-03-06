@@ -1,6 +1,6 @@
 import { RouteObject } from "react-router"
 import {createBrowserRouter} from 'react-router-dom'
-import NotFoundPage from "../components/NotFoundPage";
+import RedirectPage from "../components/RedirectPage";
 import App from "../app/App";
 import SignInPage from "../app/login/SignInPage";
 import SignUpPage from "../app/register/SignUpPage";
@@ -61,7 +61,8 @@ export const routes: RouteObject[] = [
           {path: '/user', element: <UserPage />},
       ]},
 
-      {path: '*', element: <NotFoundPage text={'We are sorry, the content you are looking for does not exist 😔'} />}
+      {path: '/logout', element: <RedirectPage text={'Logging out...'} />},
+      {path: '*', element: <RedirectPage text={'We are sorry, the content you are looking for does not exist 😔'} />}
     ]
   }
 ]
