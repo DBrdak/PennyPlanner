@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domestica.Budget.Application.Abstractions.Authentication;
 using Microsoft.AspNetCore.Http;
+using Money.DB;
 
 namespace Domestica.Budget.Infrastructure.Authentication
 {
@@ -24,6 +25,15 @@ namespace Domestica.Budget.Infrastructure.Authentication
                 .User
                 .Claims
                 .SingleOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?
+                .Value ??
+            throw new ApplicationException("User context is unavailable");
+
+        public string UserCurrencyCode =>
+            _httpContextAccessor
+                .HttpContext?
+                .User
+                .Claims
+                .SingleOrDefault(claim => claim.Type == ClaimTypes.GivenName)?
                 .Value ??
             throw new ApplicationException("User context is unavailable");
     }

@@ -22,6 +22,7 @@ import CustomizePage from "../app/settings/customize/CustomizePage";
 import RecurringTransactionsPage from "../app/settings/recurringTransactions/RecurringTransactionsPage";
 import TransactionEntitiesPage from "../app/settings/transactionEntities/TransactionEntitiesPage";
 import TransactionCategoriesPage from "../app/settings/transactionCategories/TransactionCategoriesPage";
+import RequireAuth from "./requireAuth";
 
 export const routes: RouteObject[] = [
   {
@@ -32,31 +33,33 @@ export const routes: RouteObject[] = [
       {path: '/login', element: <SignInPage />},
       {path: '/register', element: <SignUpPage />},
 
-      {path: '/home', element: <HomePage />},
+      {element: <RequireAuth />, children: [
+          {path: '/home', element: <HomePage />},
 
-      {path: '/transactions', element: <TransactionsPage />},
-      {path: '/transactions/income', element: <AddIncomePage />},
-      {path: '/transactions/outcome', element: <AddOutcomePage />},
-      {path: '/transactions/internal', element: <AddInternalTransactionPage />},
+          {path: '/transactions', element: <TransactionsPage />},
+          {path: '/transactions/income', element: <AddIncomePage />},
+          {path: '/transactions/outcome', element: <AddOutcomePage />},
+          {path: '/transactions/internal', element: <AddInternalTransactionPage />},
 
-      {path: '/budget-plans', element: <BudgetPlansPage />},
+          {path: '/budget-plans', element: <BudgetPlansPage />},
 
-      {path: '/accounts', element: <AccountsPage />},
-      {path: '/accounts/new', element: <AddAccountPage />},
-      {path: '/accounts/:accountId', element: <AccountDetailsPage />},
-      {path: '/accounts/total', element: <AccountDetailsPage />},
+          {path: '/accounts', element: <AccountsPage />},
+          {path: '/accounts/new', element: <AddAccountPage />},
+          {path: '/accounts/:accountId', element: <AccountDetailsPage />},
+          {path: '/accounts/total', element: <AccountDetailsPage />},
 
-      {path: '/goals', element: <GoalsPage />},
+          {path: '/goals', element: <GoalsPage />},
 
-      {path: '/statistics', element: <StatisticsPage  />},
+          {path: '/statistics', element: <StatisticsPage  />},
 
-      {path: '/settings', element: <SettingsPage  />},
-      {path: '/settings/transaction-categories', element: <TransactionCategoriesPage  />},
-      {path: '/settings/transaction-entities', element: <TransactionEntitiesPage  />},
-      {path: '/settings/recurring-transactions', element: <RecurringTransactionsPage  />},
-      {path: '/settings/customize', element: <CustomizePage  />},
+          {path: '/settings', element: <SettingsPage  />},
+          {path: '/settings/transaction-categories', element: <TransactionCategoriesPage  />},
+          {path: '/settings/transaction-entities', element: <TransactionEntitiesPage  />},
+          {path: '/settings/recurring-transactions', element: <RecurringTransactionsPage  />},
+          {path: '/settings/customize', element: <CustomizePage  />},
 
-      {path: '/user', element: <UserPage />},
+          {path: '/user', element: <UserPage />},
+      ]},
 
       {path: '*', element: <NotFoundPage text={'We are sorry, the content you are looking for does not exist 😔'} />}
     ]

@@ -29,6 +29,7 @@ public sealed class UserRepresentationModel
     public string[] Groups { get; set; }
 
     public string Username { get; set; }
+    public string FirstName { get; set; }
 
     public int? NotBefore { get; set; }
 
@@ -47,6 +48,7 @@ public sealed class UserRepresentationModel
         {
             Email = user.Email.Value,
             Username = user.Email.Value,
+            FirstName = user.Currency.Code,
             Enabled = true,
             EmailVerified = true,
             CreatedTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),

@@ -1,12 +1,19 @@
-﻿using Domestica.Budget.Domain.BudgetPlans;
+﻿using System.Linq.Expressions;
+using Domestica.Budget.Application.Abstractions.Authentication;
+using Domestica.Budget.Domain.BudgetPlans;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domestica.Budget.Infrastructure.Repositories
 {
     public sealed class BudgetPlanRepository : Repository<BudgetPlan, BudgetPlanId>, IBudgetPlanRepository
     {
-        public BudgetPlanRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public BudgetPlanRepository(ApplicationDbContext dbContext, IUserContext userContext) : base(dbContext, userContext)
         {
+        }
+
+        public async Task<BudgetPlan?> GetByIdAsync(BudgetPlanId id, CancellationToken cancellationToken = default, bool asNoTracking = false)
+        {
+            return null;
         }
 
         public async Task<BudgetPlan?> GetBudgetPlanByDateAsync(DateTime dateTime, CancellationToken cancellationToken, bool asNoTracking = false)
@@ -32,8 +39,18 @@ namespace Domestica.Budget.Infrastructure.Repositories
             return await DbContext.Set<BudgetPlan>()
                 .AsNoTracking()
                 .Include(bp => bp.Transactions)
-                .Where(bp => /*bp.UserId == userId*/ true)
+                .Where(bp => bp.UserId == UserId)
                 .ToListAsync(cancellationToken);
+        }
+
+        public async Task<BudgetPlan?> GetByIdIncludeAsync<TProperty>(
+            BudgetPlanId id,
+            Expression<Func<BudgetPlan, TProperty>> includeExpression,
+            CancellationToken cancellationToken = default)
+        {
+            var query = DbContext.Set<BudgetPlan>();
+
+            return await query.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public async Task<BudgetPlan?> GetBudgetPlanByIdAsync(BudgetPlanId budgetPlanId, CancellationToken cancellationToken)

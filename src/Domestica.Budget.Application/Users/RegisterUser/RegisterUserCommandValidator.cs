@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domestica.Budget.Application.Settings.ValidationSettings;
 using Domestica.Budget.Domain.Users;
+using Money.DB;
 
 namespace Domestica.Budget.Application.Users.RegisterUser
 {
@@ -20,6 +21,15 @@ namespace Domestica.Budget.Application.Users.RegisterUser
             RuleFor(x => x.Password)
                 .Matches(UserValidationSettings.PasswordPattern)
                 .WithMessage("Password does not fulfill the requirements");
+
+            RuleFor(x => x.Currency)
+                .Must(
+                    c => Currency.All.Any(
+                        currency => string.Equals(
+                            currency.Code,
+                            c,
+                            StringComparison.CurrentCultureIgnoreCase)))
+                .WithMessage("Currency not supported");
         }
     }
 }

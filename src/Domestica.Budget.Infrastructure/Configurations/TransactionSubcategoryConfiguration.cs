@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionSubcategories;
+using Domestica.Budget.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

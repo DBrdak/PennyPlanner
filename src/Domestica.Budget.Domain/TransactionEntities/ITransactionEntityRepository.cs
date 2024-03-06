@@ -4,7 +4,7 @@ namespace Domestica.Budget.Domain.TransactionEntities
 {
     public interface ITransactionEntityRepository
     {
-        Task<TransactionEntity> GetByIdAsync(TransactionEntityId id, CancellationToken cancellationToken = default, bool asNoTracking = false);
+        Task<TransactionEntity?> GetByIdAsync(TransactionEntityId id, CancellationToken cancellationToken = default, bool asNoTracking = false);
 
         Task<TransactionEntity?> GetByIdIncludeAsync<TProperty>(
             TransactionEntityId id,

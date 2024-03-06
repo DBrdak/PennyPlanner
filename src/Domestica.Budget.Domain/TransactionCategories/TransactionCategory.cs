@@ -1,19 +1,22 @@
 ﻿using System.Text.Json.Serialization;
 using CommonAbstractions.DB.Entities;
+using Domestica.Budget.Domain.Shared;
 using Domestica.Budget.Domain.TransactionSubcategories;
+using Domestica.Budget.Domain.Users;
 using Exceptions.DB;
 
 namespace Domestica.Budget.Domain.TransactionCategories
 {
-    public abstract class TransactionCategory : Entity<TransactionCategoryId>
+    public abstract class TransactionCategory : IdentifiedEntity<TransactionCategoryId>
     {
         public TransactionCategoryValue Value { get; private set; }
         private readonly List<TransactionSubcategory> _subcategories;
         public IReadOnlyCollection<TransactionSubcategory> Subcategories => _subcategories;
 
-        protected TransactionCategory(TransactionCategoryValue value) : base(new TransactionCategoryId())
+        protected TransactionCategory(TransactionCategoryValue value, UserIdentityId userId) : base(userId)
         {
             Value = value;
+            UserId = userId;
             _subcategories = new();
         }
 

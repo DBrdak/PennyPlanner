@@ -1,11 +1,13 @@
 ﻿using CommonAbstractions.DB.Entities;
+using Domestica.Budget.Domain.Shared;
 using Domestica.Budget.Domain.Transactions;
+using Domestica.Budget.Domain.Users;
 
 #pragma warning disable CS8618
 
 namespace Domestica.Budget.Domain.TransactionEntities
 {
-    public abstract class TransactionEntity : Entity<TransactionEntityId>
+    public abstract class TransactionEntity : IdentifiedEntity<TransactionEntityId>
     {
         public TransactionEntityName Name { get; private set; }
         public IReadOnlyCollection<Transaction> Transactions => _transactions;
@@ -14,9 +16,10 @@ namespace Domestica.Budget.Domain.TransactionEntities
         protected TransactionEntity()
         { }
 
-        protected TransactionEntity(TransactionEntityName name) : base(new TransactionEntityId())
+        protected TransactionEntity(TransactionEntityName name, UserIdentityId userId) : base(userId)
         {
             Name = name;
+            UserId = userId;
             _transactions = new();
         }
 

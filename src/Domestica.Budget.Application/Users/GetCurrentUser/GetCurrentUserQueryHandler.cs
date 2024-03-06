@@ -24,7 +24,7 @@ namespace Domestica.Budget.Application.Users.GetCurrentUser
         public async Task<Result<UserModel>> Handle(GetCurrentUserQuery request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByIdentityIdAsync(
-                new(_userContext.IdentityId),
+                new UserIdentityId(_userContext.IdentityId),
                 cancellationToken,
                 true);
 

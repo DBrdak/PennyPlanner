@@ -26,7 +26,7 @@ public sealed class AdminAuthorizationDelegatingHandler : DelegatingHandler
             authorizationToken.AccessToken);
 
         var httpResponseMessage = await base.SendAsync(request, cancellationToken);
-
+        
         httpResponseMessage.EnsureSuccessStatusCode();
 
         return httpResponseMessage;

@@ -8,7 +8,7 @@ namespace Domestica.Budget.Domain.Users
 {
     public sealed class User : Entity<UserId>
     {
-        public string IdentityId { get; private set; }
+        public UserIdentityId IdentityId { get; private set; }
         public Email Email { get; private set; }
         public Currency Currency { get; private set; }
         public DateTime CreatedAt { get; init; }
@@ -17,7 +17,7 @@ namespace Domestica.Budget.Domain.Users
             : base(new UserId())
         {
             Email = email;
-            IdentityId = string.Empty;
+            IdentityId = new UserIdentityId(string.Empty);
             Currency = currency;
             CreatedAt = DateTime.UtcNow;
         }
@@ -30,14 +30,14 @@ namespace Domestica.Budget.Domain.Users
         {
             var user = new User(email, currency);
 
-            user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
-
             return user;
         }
 
         public void SetIdentityId(string id)
         {
-            IdentityId = id;
+            IdentityId.UdpateId(id);
+
+            RaiseDomainEvent(new UserCreatedDomainEvent(IdentityId));
         }
     }
 }

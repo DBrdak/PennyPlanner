@@ -43,7 +43,7 @@ const SignInPage: React.FC = () => {
     const initialValues = new LogInUserCommand()
 
     const handleLogIn = (command: LogInUserCommand) => {
-        userStore.logIn(command).then(() => userStore.currentUser && navigate('/home'))
+        userStore.logIn(command).then(isSuccess => isSuccess && navigate('/home'))
     }
 
     return (

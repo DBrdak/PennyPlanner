@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using CommonAbstractions.DB.Entities;
+using Domestica.Budget.Domain.Shared;
 using Domestica.Budget.Domain.Transactions;
+using Domestica.Budget.Domain.Users;
 using Currency = Money.DB.Currency;
 using Transaction = Domestica.Budget.Domain.Transactions.Transaction;
 
@@ -9,24 +11,22 @@ using Transaction = Domestica.Budget.Domain.Transactions.Transaction;
 
 namespace Domestica.Budget.Domain.Accounts
 {
-    public abstract class Account : Entity<AccountId>
+    public abstract class Account : IdentifiedEntity<AccountId>
     {
         public IReadOnlyCollection<Transaction> Transactions => _transactions.OrderByDescending(t => t.TransactionDateUtc).ToList();
         private readonly List<Transaction> _transactions;
         public AccountName Name { get; private set; }
-        [NotMapped]
-        public global::Money.DB.Money Balance => new(_transactions.Sum(transaction => transaction.TransactionAmount.Amount), Currency);
-        public Currency Currency { get; private set; } //TODO remove when define user currency 
+        public global::Money.DB.Money Balance { get; private set; }
 
         [JsonConstructor]
         protected Account()
         { }
 
-        protected Account(AccountName name, Currency currency, decimal initialBalance) : base(new AccountId())
+        protected Account(AccountName name, Currency currency, decimal initialBalance, UserIdentityId userId) : base(userId)
         {
             Name = name;
-            Currency = currency;
             _transactions = new();
+            Balance = new(initialBalance, currency);
 
             if (initialBalance != 0)
             {
@@ -50,7 +50,13 @@ namespace Domestica.Budget.Domain.Accounts
         internal void AddTransaction(Transaction transaction)
         {
             _transactions.Add(transaction);
-            //Balance += transaction.TransactionAmount;
+            Balance += transaction.TransactionAmount;
+        }
+
+        public void RemoveTransaction(Transaction transaction)
+        {
+            _transactions.Remove(transaction);
+            Balance -= transaction.TransactionAmount;
         }
 
         private void ChangeAccountName(AccountName newName)

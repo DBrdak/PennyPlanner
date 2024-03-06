@@ -6,17 +6,19 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using CommonAbstractions.DB.Entities;
+using Domestica.Budget.Domain.Shared;
 using Domestica.Budget.Domain.TransactionCategories;
+using Domestica.Budget.Domain.Users;
 
 namespace Domestica.Budget.Domain.TransactionSubcategories
 {
-    public sealed class TransactionSubcategory : Entity<TransactionSubcategoryId>
+    public sealed class TransactionSubcategory : IdentifiedEntity<TransactionSubcategoryId>
     {
         public TransactionSubcategoryValue Value { get; private set; }
         public TransactionCategoryId CategoryId { get; private set; }
         public TransactionCategory Category { get; private set; }
 
-        public TransactionSubcategory(TransactionSubcategoryValue value, TransactionCategory category) : base(new TransactionSubcategoryId())
+        public TransactionSubcategory(TransactionSubcategoryValue value, TransactionCategory category, UserIdentityId userId) : base(userId)
         {
             Value = value;
             Category = category;

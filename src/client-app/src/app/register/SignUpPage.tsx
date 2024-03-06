@@ -21,6 +21,7 @@ import ValidationConstants from "../../utils/constants/validationConstants";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../stores/store";
 import {isValidDateValue} from "@testing-library/user-event/dist/utils";
+import {toast} from "react-toastify";
 
 
 
@@ -57,8 +58,9 @@ const SignUpPage: React.FC = () => {
     });
 
     function handleFormSubmit(values: RegisterUserCommand) {
-        userStore.register(values).then(() => {
-            if(userStore.currentUser) navigate('/home')
+        userStore.register(values).then(isSuccess => {
+            if(userStore.currentUser && isSuccess) navigate('/home')
+            else if(!isSuccess) toast.error('Error')
             else setTakenEmails(prev => [...prev, values.email])
         })
     }

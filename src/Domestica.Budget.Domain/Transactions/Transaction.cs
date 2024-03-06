@@ -8,14 +8,15 @@ using Domestica.Budget.Domain.TransactionEntities.TransactionRecipients;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
 using Domestica.Budget.Domain.Transactions.DomainEvents;
 using Domestica.Budget.Domain.TransactionSubcategories;
+using Domestica.Budget.Domain.Users;
 
 #pragma warning disable CS8618
 
 namespace Domestica.Budget.Domain.Transactions
 {
-    public sealed class Transaction : Entity<TransactionId>
+    public sealed class Transaction : IdentifiedEntity<TransactionId>
     {
-        public AccountId? AccountId { get; init; } // Affected Account (the one which will have added TransactionAmount to balance)
+        public AccountId AccountId { get; init; } // Affected Account (the one which will have added TransactionAmount to balance)
         public AccountId? FromAccountId { get; init; } // Internal Transaction
         public AccountId? ToAccountId { get; init; } // Internal Transaction
         public TransactionEntityId? SenderId { get; init; } // Income Transaction
@@ -38,7 +39,8 @@ namespace Domestica.Budget.Domain.Transactions
             TransactionRecipient? recipient,
             Money.DB.Money transactionAmount,
             TransactionSubcategory? subcategory,
-            DateTime transactionDateTime) : base(new TransactionId())
+            DateTime transactionDateTime,
+            UserIdentityId userId) : base(userId)
         {
             AccountId = account.Id;
             FromAccountId = fromAccount?.Id;
@@ -61,7 +63,7 @@ namespace Domestica.Budget.Domain.Transactions
             TransactionSubcategory subcategory,
             DateTime transactionDateTime)
         {
-            return new(toAccount, null, null, sender, null, transactionAmount, subcategory, transactionDateTime);
+            return new(toAccount, null, null, sender, null, transactionAmount, subcategory, transactionDateTime, toAccount.UserId);
         }
 
         internal static Transaction CreateOutcome(
@@ -73,10 +75,10 @@ namespace Domestica.Budget.Domain.Transactions
         {
             if (transactionAmount.Amount > 0)
             {
-                return new(fromAccount, null, null, null, recipient, -transactionAmount, subcategory, transactionDateTime);
+                return new(fromAccount, null, null, null, recipient, -transactionAmount, subcategory, transactionDateTime, fromAccount.UserId);
             }
 
-            return new(fromAccount, null, null, null, recipient, transactionAmount, subcategory, transactionDateTime);
+            return new(fromAccount, null, null, null, recipient, transactionAmount, subcategory, transactionDateTime, fromAccount.UserId);
         }
 
         internal static Transaction CreateInternalIncome(
@@ -85,7 +87,7 @@ namespace Domestica.Budget.Domain.Transactions
             Account fromAccount,
             DateTime transactionDateTime)
         {
-            return new(toAccount, fromAccount, null, null, null, transactionAmount, null, transactionDateTime);
+            return new(toAccount, fromAccount, null, null, null, transactionAmount, null, transactionDateTime, toAccount.UserId);
         }
 
         internal static Transaction CreateInternalOutcome(
@@ -96,17 +98,17 @@ namespace Domestica.Budget.Domain.Transactions
         {
             if (transactionAmount.Amount > 0)
             {
-                return new(fromAccount, null, toAccount, null, null, -transactionAmount, null, transactionDateTime);
+                return new(fromAccount, null, toAccount, null, null, -transactionAmount, null, transactionDateTime, fromAccount.UserId);
             }
 
-            return new(fromAccount, null, toAccount, null, null, transactionAmount, null, transactionDateTime);
+            return new(fromAccount, null, toAccount, null, null, transactionAmount, null, transactionDateTime, fromAccount.UserId);
         }
 
         internal static Transaction CreatePrivateIncome(
             Money.DB.Money transactionAmount,
             Account account)
         {
-            return new(account, null, null, null, null, transactionAmount, null, DateTime.UtcNow);
+            return new(account, null, null, null, null, transactionAmount, null, DateTime.UtcNow, account.UserId);
         }
 
         internal static Transaction CreatePrivateOutcome(
@@ -115,10 +117,10 @@ namespace Domestica.Budget.Domain.Transactions
         {
             if (transactionAmount.Amount > 0)
             {
-                return new(account, null, null, null, null, -transactionAmount, null, DateTime.UtcNow);
+                return new(account, null, null, null, null, -transactionAmount, null, DateTime.UtcNow, account.UserId);
             }
 
-            return new(account, null, null, null, null, transactionAmount, null, DateTime.UtcNow);
+            return new(account, null, null, null, null, transactionAmount, null, DateTime.UtcNow, account.UserId);
         }
 
         public void SafeDelete()

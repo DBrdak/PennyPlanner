@@ -5,11 +5,17 @@ import agent from "../api/agent";
 
 export default class UserStore {
     currentUser?: User = undefined
-    token: string | null = localStorage.getItem('jwt');
+    token: string | null = localStorage.getItem('jwt')
     loading: boolean = false
 
     constructor() {
         makeAutoObservable(this);
+
+        if(localStorage.getItem('jwt')) {
+            this.token = localStorage.getItem('jwt')
+        } else {
+            this.loadCurrentUser()
+        }
     }
 
     private setLoading(state: boolean) {
@@ -31,8 +37,10 @@ export default class UserStore {
             const user = await agent.users.registerUser(command)
             this.setCurrentUser(user)
             await this.logIn({email: command.email, password: command.password})
+            return true
         } catch (e) {
             console.log(e)
+            return false
         } finally {
             this.setLoading(false)
         }
@@ -50,8 +58,11 @@ export default class UserStore {
                 await this.loadCurrentUser()
             }
 
+            return true
+
         } catch (e) {
             console.log(e)
+            return false
         } finally {
             this.setLoading(false)
         }

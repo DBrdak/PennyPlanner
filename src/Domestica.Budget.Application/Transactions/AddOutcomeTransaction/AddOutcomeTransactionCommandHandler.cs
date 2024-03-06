@@ -14,6 +14,8 @@ using Money.DB;
 using Responses.DB;
 using System.Reflection;
 using Domestica.Budget.Domain.TransactionSubcategories;
+using Domestica.Budget.Application.Abstractions.Authentication;
+using Domestica.Budget.Domain.Users;
 
 namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
 {
@@ -25,8 +27,9 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
         private readonly ITransactionCategoryRepository _categoryRepository;
         private readonly ITransactionSubcategoryRepository _subcategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserContext _userContext;
 
-        public AddOutcomeTransactionCommandHandler(IAccountRepository accountRepository, ITransactionEntityRepository transactionEntityRepository, IUnitOfWork unitOfWork, IServiceScopeFactory serviceScopeFactory, ITransactionCategoryRepository categoryRepository, ITransactionRepository transactionRepository, ITransactionSubcategoryRepository subcategoryRepository)
+        public AddOutcomeTransactionCommandHandler(IAccountRepository accountRepository, ITransactionEntityRepository transactionEntityRepository, IUnitOfWork unitOfWork, IServiceScopeFactory serviceScopeFactory, ITransactionCategoryRepository categoryRepository, ITransactionRepository transactionRepository, ITransactionSubcategoryRepository subcategoryRepository, IUserContext userContext)
         {
             _accountRepository = accountRepository;
             _transactionEntityRepository = transactionEntityRepository;
@@ -34,6 +37,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
             _serviceScopeFactory = serviceScopeFactory;
             _categoryRepository = categoryRepository;
             _subcategoryRepository = subcategoryRepository;
+            _userContext = userContext;
         }
 
         public async Task<Result<Transaction>> Handle(AddOutcomeTransactionCommand request, CancellationToken cancellationToken)
@@ -68,8 +72,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
                 recipient = recipientCreateResult.Value as TransactionRecipient;
             }
 
-            // TODO fetch currency from user
-            var currency = Currency.Usd;
+            var currency = Currency.FromCode(_userContext.UserCurrencyCode);
 
             var createdTransaction = TransactionService.CreateOutgoingTransaction(
                 new(request.TransactionAmount, currency),
@@ -101,7 +104,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
                        subcategoryValue,
                        category,
                        cancellationToken) ??
-                   new (subcategoryValue, category);
+                   new (subcategoryValue, category, new UserIdentityId(_userContext.IdentityId));
         }
 
         private async Task<OutcomeTransactionCategory> GetOrCreateCategory(TransactionCategoryValue categoryValue, CancellationToken cancellationToken)
@@ -109,7 +112,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
             return await _categoryRepository.GetByValueAsync<OutcomeTransactionCategory>(
                        categoryValue,
                        cancellationToken) ??
-                   new(categoryValue);
+                   new(categoryValue, new UserIdentityId(_userContext.IdentityId));
         }
 
         private static bool IsNewRecipient(TransactionRecipient? recipient)

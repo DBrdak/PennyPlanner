@@ -66,13 +66,11 @@ export default observer(function AddAccountPage() {
                 }}>
                     <Formik initialValues={new NewAccountData()} onSubmit={handleFormSubmit} validationSchema={validationSchema}>
                         {({handleSubmit, setValues, values, handleChange}) => (
-                            <Form style={{width: isUwhd ? '15%' : '40%'}} className='ui form' onSubmit={handleSubmit} autoComplete='off'>
+                            <Form style={{width: '100%', maxWidth: '400px'}} className='ui form' onSubmit={handleSubmit} autoComplete='off'>
                                 <Stack spacing={3}>
-                                    {!isMobile &&
-                                        <Typography variant={'h3'} sx={{userSelect: 'none', paddingBottom: '3%', textAlign: 'center'}}>
-                                            Add new account
-                                        </Typography>
-                                    }
+                                    <Typography variant={'h3'} sx={{userSelect: 'none', paddingBottom: '3%', textAlign: 'center'}}>
+                                        Add new account
+                                    </Typography>
                                     <FormControl>
                                         <InputLabel>Account Type</InputLabel>
                                         <Select

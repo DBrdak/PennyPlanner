@@ -27,7 +27,7 @@ namespace Domestica.Budget.Application.Users
 
         internal static UserModel FromDomainObject(User user) =>
             new(
-                user.Id.Value.ToString(),
+                user.IdentityId.Value,
                 user.Email.Value,
                 user.Currency.Code
             );

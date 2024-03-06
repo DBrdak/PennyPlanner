@@ -1,5 +1,6 @@
 ﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
+using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Domain.BudgetPlans;
 using Money.DB;
 using Responses.DB;
@@ -10,11 +11,13 @@ namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
     {
         private readonly IBudgetPlanRepository _budgetPlanRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserContext _userContext;
 
-        public UpdateBudgetPlanCategoryCommandHandler(IBudgetPlanRepository budgetPlanRepository, IUnitOfWork unitOfWork)
+        public UpdateBudgetPlanCategoryCommandHandler(IBudgetPlanRepository budgetPlanRepository, IUnitOfWork unitOfWork, IUserContext userContext)
         {
             _budgetPlanRepository = budgetPlanRepository;
             _unitOfWork = unitOfWork;
+            _userContext = userContext;
         }
 
         public async Task<Result<BudgetPlan>> Handle(UpdateBudgetPlanCategoryCommand request, CancellationToken cancellationToken)
@@ -39,8 +42,7 @@ namespace Domestica.Budget.Application.BudgetPlans.UpdateBudgetPlanCategory
 
             if (request.Values.NewBudgetAmount is not null && !request.Values.IsBudgetToReset)
             {
-                //TODO Fetch currency from user
-                var currency = Currency.Usd;
+                var currency = Currency.FromCode(_userContext.UserCurrencyCode);
                 budgetPlan.UpdateBudgetCategory(category, new((decimal)request.Values.NewBudgetAmount, currency));
             }
             else

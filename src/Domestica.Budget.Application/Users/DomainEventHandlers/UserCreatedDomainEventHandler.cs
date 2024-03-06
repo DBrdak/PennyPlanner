@@ -23,7 +23,7 @@ namespace Domestica.Budget.Application.Users.DomainEventHandlers
 
         public async Task Handle(UserCreatedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByIdAsync(notification.UserId, cancellationToken) ??
+            var user = await _userRepository.GetByIdentityIdAsync(notification.UserId, cancellationToken) ??
                        throw new ApplicationException(
                            $"User with ID: {notification.UserId.Value} not exist, verification email cannot be send");
 

@@ -2,8 +2,10 @@
 using CommonAbstractions.DB.Entities;
 using DateKit.DB;
 using Domestica.Budget.Domain.BudgetPlans.DomainEvents;
+using Domestica.Budget.Domain.Shared;
 using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.Transactions;
+using Domestica.Budget.Domain.Users;
 using Exceptions.DB;
 using MediatR;
 
@@ -11,7 +13,7 @@ using MediatR;
 
 namespace Domestica.Budget.Domain.BudgetPlans
 {
-    public sealed class BudgetPlan : Entity<BudgetPlanId>
+    public sealed class BudgetPlan : IdentifiedEntity<BudgetPlanId>
     {
         public DateTimeRange BudgetPeriod { get; init; }
         public IReadOnlyCollection<BudgetedTransactionCategory> BudgetedTransactionCategories => _budgetedTransactionCategories;
@@ -22,21 +24,22 @@ namespace Domestica.Budget.Domain.BudgetPlans
         private BudgetPlan()
         { }
 
-        private BudgetPlan(DateTimeRange budgetPeriod): base(new BudgetPlanId())
+        private BudgetPlan(DateTimeRange budgetPeriod, UserIdentityId userId): base(userId)
         {
             _budgetedTransactionCategories = new ();
             BudgetPeriod = budgetPeriod.ParseToUTC();
             _transactions = new ();
+            UserId = userId;
         }
 
-        public static BudgetPlan Create(DateTimeRange budgetPeriod)
+        public static BudgetPlan Create(DateTimeRange budgetPeriod, UserIdentityId userId)
         {
             Validate(budgetPeriod);
 
-            return new BudgetPlan(budgetPeriod);
+            return new BudgetPlan(budgetPeriod, userId);
         }
 
-        public static BudgetPlan CreateForMonth(DateTime date) => Create(GetMonthRangeFromDateTime(date));
+        public static BudgetPlan CreateForMonth(DateTime date, UserIdentityId userId) => Create(GetMonthRangeFromDateTime(date), userId);
 
         private static DateTimeRange GetMonthRangeFromDateTime(DateTime date)
         {
