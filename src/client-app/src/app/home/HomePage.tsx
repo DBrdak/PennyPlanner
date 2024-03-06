@@ -7,7 +7,7 @@ import {TransactionsPreviewTile} from "./components/tiles/TransactionsPreviewTil
 import {BudgetPreviewTile} from "./components/tiles/BudgetPreviewTile";
 import {GoalsPreviewTile} from "./components/tiles/GoalsPreviewTile";
 import {AccountsPreviewTile} from "./components/tiles/AccountsPreviewTile";
-import {TransactionEntitiesPreviewTile} from "./components/tiles/TransactionEntitiesPreviewTile";
+import {StatisticsPreviewTile} from "./components/tiles/StatisticsPreviewTile";
 import {useStore} from "../../stores/store";
 import {CircularProgress} from "@mui/material";
 import {useEffect} from "react";
@@ -44,7 +44,7 @@ export default observer(function HomePage() {
             cols: 4, height: '40%', content: <AccountsPreviewTile />
         },
         {
-            cols: 4, height: '40%', content: <TransactionEntitiesPreviewTile />
+            cols: 4, height: '40%', content: <StatisticsPreviewTile />
         }
     ])
 

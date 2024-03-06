@@ -33,12 +33,12 @@ namespace Domestica.Budget.Application.TransactionCategories.DeleteTransactionCa
                 return Result.Failure<TransactionCategory>(
                     Error.NotFound($"Transaction category with ID: {request.TransactionCategoryId} not found"));
             }
-
+            //TODO Think about deleting transaction categories which are not used in current budget plan or set them as inactive
             if (await IsCategoryUsed(transactionCategory.Id, cancellationToken))
             {
                 return Result.Failure<TransactionCategory>(
                     Error.InvalidRequest(
-                        "Transaction category cannot be deleted, because it is related to other entities"));
+                        "Transaction category cannot be deleted, because it is used in budget plan"));
             }
 
             _transactionCategoryRepository.Remove(transactionCategory);

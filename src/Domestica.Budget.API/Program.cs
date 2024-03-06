@@ -22,9 +22,19 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("DefaultPolicy");
+
+//app.UseHttpsRedirection();
+
 app.UseRouting();
+
 app.AddHealthChecks();
-app.MapCarter();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
 app.AddMiddlewares();
+
+app.MapCarter();
 
 await app.RunAsync();

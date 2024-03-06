@@ -18,8 +18,6 @@ namespace Domestica.Budget.Application.Accounts.UpdateAccount
 
         public async Task<Result<Account>> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)
         {
-            //TODO Retrive user id
-
             var account = await _accountRepository.GetAccountByIdAsync(new (Guid.Parse(request.AccountUpdateData.AccountId)), cancellationToken);
 
             if (account is null)

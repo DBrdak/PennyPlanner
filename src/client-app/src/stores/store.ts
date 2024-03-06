@@ -7,6 +7,7 @@ import TransactionStore from "./transactionStore";
 import CategoryStore from "./categoryStore";
 import TransactionSubcategoryStore from "./transactionSubcategoryStore";
 import BudgetPlanStore from "./budgetPlanStore";
+import UserStore from "./userStore";
 
 interface Store {
   modalStore: ModalStore
@@ -17,6 +18,7 @@ interface Store {
   categoryStore: CategoryStore
   subcategoryStore: TransactionSubcategoryStore
   budgetPlanStore: BudgetPlanStore
+  userStore: UserStore
 }
 
 export const store: Store = {
@@ -28,6 +30,7 @@ export const store: Store = {
   categoryStore: new CategoryStore(),
   subcategoryStore: new TransactionSubcategoryStore(),
   budgetPlanStore: new BudgetPlanStore(),
+  userStore: new UserStore(),
 }
 
 export const StoreContext = createContext(store);

@@ -1,5 +1,6 @@
 ﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
+using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
 using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
 using Domestica.Budget.Application.Transactions.AddOutcomeTransaction;
@@ -9,6 +10,7 @@ using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
 using Domestica.Budget.Domain.Transactions;
 using Domestica.Budget.Domain.TransactionSubcategories;
+using Domestica.Budget.Domain.Users;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Money.DB;
@@ -24,8 +26,9 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
         private readonly ITransactionCategoryRepository _categoryRepository;
         private readonly ITransactionSubcategoryRepository _subcategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserContext _userContext;
 
-        public AddIncomeTransactionCommandHandler(IAccountRepository accountRepository, IUnitOfWork unitOfWork, ITransactionEntityRepository transactionEntityRepository, IServiceScopeFactory serviceScopeFactory, ITransactionCategoryRepository categoryRepository, ITransactionSubcategoryRepository subcategoryRepository)
+        public AddIncomeTransactionCommandHandler(IAccountRepository accountRepository, IUnitOfWork unitOfWork, ITransactionEntityRepository transactionEntityRepository, IServiceScopeFactory serviceScopeFactory, ITransactionCategoryRepository categoryRepository, ITransactionSubcategoryRepository subcategoryRepository, IUserContext userContext)
         {
             _accountRepository = accountRepository;
             _unitOfWork = unitOfWork;
@@ -33,6 +36,7 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
             _serviceScopeFactory = serviceScopeFactory;
             _categoryRepository = categoryRepository;
             _subcategoryRepository = subcategoryRepository;
+            _userContext = userContext;
         }
 
         public async Task<Result<Transaction>> Handle(AddIncomeTransactionCommand request, CancellationToken cancellationToken)
@@ -67,8 +71,7 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
                 sender = senderCreateResult.Value as TransactionSender;
             }
 
-            // TODO fetch currency from user
-            var currency = Currency.Usd;
+            var currency = Currency.FromCode(_userContext.UserCurrencyCode);
 
             var createdTransaction = TransactionService.CreateIncomingTransaction(
                 new (request.TransactionAmount, currency),
@@ -100,7 +103,7 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
                        subcategoryValue,
                        category,
                        cancellationToken) ??
-                   new(subcategoryValue, category);
+                   new(subcategoryValue, category, new UserIdentityId(_userContext.IdentityId));
         }
 
         private async Task<IncomeTransactionCategory> GetOrCreateCategory(TransactionCategoryValue categoryValue, CancellationToken cancellationToken)
@@ -108,7 +111,7 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
             return await _categoryRepository.GetByValueAsync<IncomeTransactionCategory>(
                        categoryValue,
                        cancellationToken) ??
-                   new(categoryValue);
+                   new(categoryValue, new UserIdentityId(_userContext.IdentityId));
         }
 
         private static bool IsNewSender(TransactionSender sender)

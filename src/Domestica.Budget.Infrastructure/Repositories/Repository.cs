@@ -1,5 +1,8 @@
 ﻿using System.Linq.Expressions;
 using CommonAbstractions.DB.Entities;
+using Domestica.Budget.Application.Abstractions.Authentication;
+using Domestica.Budget.Domain.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domestica.Budget.Infrastructure.Repositories
@@ -8,16 +11,24 @@ namespace Domestica.Budget.Infrastructure.Repositories
         where TEntityId : EntityId
         where TEntity : Entity<TEntityId>
     {
+        private readonly IUserContext _userContext;
         protected readonly ApplicationDbContext DbContext;
+        protected readonly UserIdentityId UserId;
 
-        protected Repository(ApplicationDbContext dbContext)
+        protected Repository(ApplicationDbContext dbContext, IUserContext userContext)
         {
             DbContext = dbContext;
+            _userContext = userContext;
+            UserId = new UserIdentityId(_userContext.IdentityId);
         }
-
-        public async Task<TEntity?> GetByIdAsync(TEntityId id, CancellationToken cancellationToken = default)
+        /*
+        public async Task<TEntity?> GetByIdAsync(TEntityId id, CancellationToken cancellationToken = default, bool asNoTracking = false)
         {
-            return await DbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            var query = DbContext.Set<TEntity>();
+
+            if (asNoTracking) query.AsNoTracking();
+
+            return await query.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public async Task<TEntity?> GetByIdIncludeAsync<TProperty>(
@@ -46,7 +57,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
         }
-
+        */
         public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             await DbContext.Set<TEntity>().AddAsync(entity, cancellationToken);

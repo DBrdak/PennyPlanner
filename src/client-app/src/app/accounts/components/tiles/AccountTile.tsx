@@ -1,4 +1,4 @@
-import {Divider, Stack, Typography, useMediaQuery} from "@mui/material";
+import {Divider, Grid, Typography, useMediaQuery} from "@mui/material";
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {useNavigate} from "react-router-dom";
 import theme from "../../../theme";
@@ -15,7 +15,42 @@ export function AccountTile({account}: AccountTileProps) {
 
     return (
         <TilePaper onClick={() => navigate(`/accounts/${account.accountId}`)}>
-            <Stack spacing={isMobile ? 2 : 5}
+            <Grid item xs={12} sx={{height: '100%'}}>
+                <Grid item xs={12} sx={{
+                    height: '40%',
+                    display: 'flex', justifyContent: 'center', alignItems: 'center',
+                    flexDirection: 'column', gap: theme.spacing(2)
+                }}>
+                    <Typography sx={{
+                        fontSize:  '2.5rem',
+                        fontWeight: '700',
+                        userSelect:'none',
+                        lineHeight: '1',
+                        color: theme.palette.text.primary,
+                        textAlign: 'center',
+                    }}>
+                        {account.name}
+                    </Typography>
+                    <Typography variant={'h6'} sx={{
+                        userSelect:'none',
+                        lineHeight: '1',
+                        color: theme.palette.text.primary,
+                        textAlign: 'center',
+                    }}>
+                        {account.accountType}
+                    </Typography>
+                </Grid>
+                <Divider variant={'middle'} />
+                <Grid item xs={12} sx={{
+                    height: '55%',
+                    display: 'flex', justifyContent: 'center', alignItems: 'center'
+                }}>
+                    <AccountBalanceDisplay isMobile={isMobile} account={account}/>
+                </Grid>
+            </Grid>
+            {
+                /*
+                            <Stack spacing={isMobile ? 2 : 5}
                 sx={{
                     p: '1vw',
                     color: 'white',
@@ -52,6 +87,8 @@ export function AccountTile({account}: AccountTileProps) {
                 <Divider sx={{backgroundColor: theme.palette.background.paper}} />
                 <AccountBalanceDisplay isMobile={isMobile} account={account}/>
             </Stack>
+                 */
+            }
         </TilePaper>
     );
 }

@@ -4,7 +4,6 @@ import {observer} from "mobx-react-lite";
 import useTitle from "../../utils/hooks/useTitle";
 import Tile from "../../models/layout/tile";
 import {TransactionCategoriesTile} from "./components/tiles/TransactionCategoriesTile";
-import {TransactionEntitiesPreviewTile} from "../home/components/tiles/TransactionEntitiesPreviewTile";
 import {TransactionEntitiesTile} from "./components/tiles/TransactionEntitiesTile";
 import {RecurringTransactionsTile} from "./components/tiles/RecurringTransactionsTile";
 import {CustomizeTile} from "./components/tiles/CustomizeTile";

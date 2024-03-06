@@ -2,8 +2,10 @@
 using CommonAbstractions.DB.Entities;
 using DateKit.DB;
 using Domestica.Budget.Domain.BudgetPlans.DomainEvents;
+using Domestica.Budget.Domain.Shared;
 using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.Transactions;
+using Domestica.Budget.Domain.Users;
 using Exceptions.DB;
 using MediatR;
 
@@ -11,7 +13,7 @@ using MediatR;
 
 namespace Domestica.Budget.Domain.BudgetPlans
 {
-    public sealed class BudgetPlan : Entity<BudgetPlanId>
+    public sealed class BudgetPlan : IdentifiedEntity<BudgetPlanId>
     {
         public DateTimeRange BudgetPeriod { get; init; }
         public IReadOnlyCollection<BudgetedTransactionCategory> BudgetedTransactionCategories => _budgetedTransactionCategories;
@@ -22,24 +24,32 @@ namespace Domestica.Budget.Domain.BudgetPlans
         private BudgetPlan()
         { }
 
-        private BudgetPlan(DateTimeRange budgetPeriod): base(new BudgetPlanId())
+        private BudgetPlan(DateTimeRange budgetPeriod, UserIdentityId userId): base(userId)
         {
             _budgetedTransactionCategories = new ();
             BudgetPeriod = budgetPeriod.ParseToUTC();
             _transactions = new ();
+            UserId = userId;
         }
 
-        public static BudgetPlan Create(DateTimeRange budgetPeriod)
+        public static BudgetPlan Create(DateTimeRange budgetPeriod, UserIdentityId userId)
         {
             Validate(budgetPeriod);
 
-            return new BudgetPlan(budgetPeriod);
+            return new BudgetPlan(budgetPeriod, userId);
         }
 
-        public static BudgetPlan CreateForMonth(DateTime date) => Create(GetMonthRangeFromDateTime(date));
+        public static BudgetPlan CreateForMonth(DateTime date, UserIdentityId userId) => Create(GetMonthRangeFromDateTime(date), userId);
 
         private static DateTimeRange GetMonthRangeFromDateTime(DateTime date)
         {
+            if (date.Month == 12)
+            {
+                return new DateTimeRange(
+                    new DateTime(date.Year, date.Month, 1),
+                    new DateTime(date.Year + 1, 1, 1));
+            }
+
             return new DateTimeRange(
                 new DateTime(date.Year, date.Month, 1),
                 new DateTime(date.Year, date.Month + 1, 1));
@@ -56,16 +66,20 @@ namespace Domestica.Budget.Domain.BudgetPlans
         }
 
         private static bool IsMonthDateGreaterThanUtcNow(DateTime date) =>
-            date.Month >= DateTime.UtcNow.Month &&
-            date.Year >= DateTime.UtcNow.Year;
+            (date.Month >= DateTime.UtcNow.Month &&
+             date.Year >= DateTime.UtcNow.Year) || 
+            date.Year > DateTime.UtcNow.Year;
+
+        private bool IsCategoryAlreadyBudgeted(TransactionCategory category, Money.DB.Money budgetedAmount) =>
+            _budgetedTransactionCategories.Any(
+                budgetedTransactionCategory => budgetedTransactionCategory.Category == category &&
+                                               budgetedTransactionCategory.BudgetedAmount == budgetedAmount);
 
         public void SetBudgetForCategory(TransactionCategory category, Money.DB.Money budgetedAmount)
         {
-            if (_budgetedTransactionCategories.Any(
-                    budgetedTransactionCategory => budgetedTransactionCategory.Category == category))
+            if (IsCategoryAlreadyBudgeted(category, budgetedAmount))
             {
-                throw new DomainException<BudgetPlan>(
-                    $"Category: {category.Value} is already budgeted for period: [{BudgetPeriod.Start:dd/MM/yyyy} - {BudgetPeriod.End:dd/MM/yyyy}]");
+                return;
             }
 
             var budgetedTransactionCategory = new BudgetedTransactionCategory(category, budgetedAmount);
@@ -78,12 +92,12 @@ namespace Domestica.Budget.Domain.BudgetPlans
         public void AddTransaction(Transaction transaction)
         {
             var budgetedTransactionCategory = _budgetedTransactionCategories
-                .SingleOrDefault(budgetedTransactionCategory => budgetedTransactionCategory.Category == transaction.Category);
+                .SingleOrDefault(budgetedTransactionCategory => budgetedTransactionCategory.CategoryId == transaction.CategoryId);
 
             if (budgetedTransactionCategory is null)
             {
                 throw new DomainException<BudgetPlan>(
-                    $"Category: {transaction.Category.Value} is not budgeted for period: [{BudgetPeriod.Start:dd/MM/yyyy} - {BudgetPeriod.End:dd/MM/yyyy}]");
+                    $"Category: {transaction.Category?.Value} is not budgeted for period: [{BudgetPeriod.Start:dd/MM/yyyy} - {BudgetPeriod.End:dd/MM/yyyy}]");
             }
 
             budgetedTransactionCategory.AddTransaction(transaction);
@@ -115,7 +129,15 @@ namespace Domestica.Budget.Domain.BudgetPlans
 
             _budgetedTransactionCategories.Remove(budgetedTransactionCategory);
 
-            _transactions.RemoveAll(transaction => transaction.Category == category);
+            _transactions.RemoveAll(transaction => transaction.CategoryId == category.Id);
+        }
+
+        public void RemoveTransaction(Transaction transaction)
+        {
+            var budgetedCategory = _budgetedTransactionCategories
+                .FirstOrDefault(btc => btc.CategoryId == transaction.CategoryId);
+
+            budgetedCategory?.RemoveTransaction(transaction);
         }
     }
 }

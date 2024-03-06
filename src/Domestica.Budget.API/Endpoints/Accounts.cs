@@ -3,6 +3,7 @@ using Domestica.Budget.Application.Accounts.AddAccount;
 using Domestica.Budget.Application.Accounts.GetAccounts;
 using Domestica.Budget.Application.Accounts.RemoveAccount;
 using Domestica.Budget.Application.Accounts.UpdateAccount;
+using Domestica.Budget.Application.Accounts.GetAccounts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
@@ -19,13 +20,12 @@ namespace Domestica.Budget.API.Endpoints
                 {
                     var query = new GetAccountsQuery();
 
-                    // TODO key for specific user accounts: "accounts_{userId}"
                     var result = await sender.Send(query, cancellationToken);
 
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapPost(
                 "accounts",
@@ -38,7 +38,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapPut(
                 "accounts/{accountId}",
@@ -54,7 +54,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapDelete(
                 "accounts/{accountId}",
@@ -70,7 +70,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
         }
     }
 }

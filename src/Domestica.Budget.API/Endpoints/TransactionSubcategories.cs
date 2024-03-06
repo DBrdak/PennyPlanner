@@ -20,7 +20,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapPut(
                 "transaction-subcategories/{transactionSubcategoryId}",
@@ -34,7 +34,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapDelete("transaction-subcategories/{transactionSubcategoryId}",
                 async (ISender sender, string transactionSubcategoryId, CancellationToken cancellationToken) =>
@@ -46,7 +46,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
         }
     }
 }

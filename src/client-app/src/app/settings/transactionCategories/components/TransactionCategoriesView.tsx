@@ -3,9 +3,6 @@ import {AddTransactionCategoryTile} from "./AddTransactionCategoryTile";
 import {AddTransactionCategoryCommand} from "../../../../models/requests/categories/addTransactionCategoryCommand";
 import {TransactionCategory} from "../../../../models/transactionCategories/transactionCategory";
 import ConfirmModal from "../../../../components/ConfirmModal";
-import {
-    AddTransactionSubcategoryCommand
-} from "../../../../models/requests/subcategories/addTransactionSubcategoryCommand";
 import {useStore} from "../../../../stores/store";
 import {useState} from "react";
 import {observer} from "mobx-react-lite";

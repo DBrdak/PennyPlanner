@@ -6,16 +6,16 @@ namespace Domestica.Budget.Application.BudgetPlans
 {
     public sealed record BudgetedTransactionCategoryModel
     {
-        public TransactionCategoryModel Category { get; init; }
+        public string CategoryId { get; init; }
         public MoneyModel BudgetedAmount { get; init; }
         public MoneyModel ActualAmount { get; init; }
 
         private BudgetedTransactionCategoryModel(
-            TransactionCategoryModel category,
+            string categoryId,
             MoneyModel budgetedAmount,
             MoneyModel actualAmount)
         {
-            Category = category;
+            CategoryId = categoryId;
             BudgetedAmount = budgetedAmount;
             ActualAmount = actualAmount;
         }
@@ -30,7 +30,7 @@ namespace Domestica.Budget.Application.BudgetPlans
             var budgetedAmount = MoneyModel.FromDomainObject(domainObject.BudgetedAmount);
             var actualAmount = MoneyModel.FromDomainObject(domainObject.ActualAmount);
 
-            return new(TransactionCategoryModel.FromDomainObject(domainObject.Category)!, budgetedAmount, actualAmount);
+            return new(domainObject.CategoryId.Value.ToString(), budgetedAmount, actualAmount);
         }
 
     }

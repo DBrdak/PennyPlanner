@@ -1,6 +1,8 @@
 ﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
+using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Domain.TransactionCategories;
+using Domestica.Budget.Domain.Users;
 using Responses.DB;
 
 namespace Domestica.Budget.Application.TransactionCategories.AddTransactionCategory
@@ -9,11 +11,13 @@ namespace Domestica.Budget.Application.TransactionCategories.AddTransactionCateg
     {
         private readonly ITransactionCategoryRepository _transactionCategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserContext _userContext;
 
-        public AddTransactionCategoryCommandHandler(ITransactionCategoryRepository transactionCategoryRepository, IUnitOfWork unitOfWork)
+        public AddTransactionCategoryCommandHandler(ITransactionCategoryRepository transactionCategoryRepository, IUnitOfWork unitOfWork, IUserContext userContext)
         {
             _transactionCategoryRepository = transactionCategoryRepository;
             _unitOfWork = unitOfWork;
+            _userContext = userContext;
         }
 
         public async Task<Result<TransactionCategory>> Handle(AddTransactionCategoryCommand request, CancellationToken cancellationToken)
@@ -22,11 +26,11 @@ namespace Domestica.Budget.Application.TransactionCategories.AddTransactionCateg
 
             if (string.Equals(request.Type, TransactionCategoryType.Income.Value, StringComparison.CurrentCultureIgnoreCase))
             {
-                transactionCategory = new IncomeTransactionCategory(new(request.Value));
+                transactionCategory = new IncomeTransactionCategory(new(request.Value), new UserIdentityId(_userContext.IdentityId));
             }
             else if (string.Equals(request.Type, TransactionCategoryType.Outcome.Value, StringComparison.CurrentCultureIgnoreCase))
             {
-                transactionCategory = new OutcomeTransactionCategory(new(request.Value));
+                transactionCategory = new OutcomeTransactionCategory(new(request.Value), new UserIdentityId(_userContext.IdentityId));
             }
             else
             {

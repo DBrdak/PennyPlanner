@@ -1,5 +1,5 @@
 import {DateTimeRange} from "../../models/shared/dateTimeRange";
 
 export function isDateTimeRangeContainsDate(dateRange: DateTimeRange, date: Date) {
-    return dateRange.start <= date && dateRange.end >= date
+    return new Date(dateRange.start) <= date && new Date(dateRange.end) >= date
 }

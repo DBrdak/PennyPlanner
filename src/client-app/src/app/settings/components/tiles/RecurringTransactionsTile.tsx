@@ -1,7 +1,7 @@
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
 import {EventRepeatTwoTone} from "@mui/icons-material";
 import theme from "../../../theme";
-import {Tooltip, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
 // TODO Implement Feature

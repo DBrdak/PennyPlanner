@@ -1,5 +1,5 @@
-﻿using Domestica.Budget.Application.Messaging;
-using Domestica.Budget.Application.Messaging.Caching;
+﻿using Domestica.Budget.Application.Abstractions.Messaging;
+using Domestica.Budget.Application.Abstractions.Messaging.Caching;
 
 namespace Domestica.Budget.Application.TransactionEntities.GetTransactionEntities
 {

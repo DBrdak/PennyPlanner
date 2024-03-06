@@ -3,17 +3,11 @@ import {Grid, Paper, Typography} from "@mui/material";
 import theme from "../../theme";
 import {useStore} from "../../../stores/store";
 import {useEffect, useState} from "react";
-import ConfirmModal from "../../../components/ConfirmModal";
-import TransactionCategoryTile from "./components/TransactionCategoryTile";
 import useCategories from "../../../utils/hooks/useCategories";
-import {AddTransactionCategoryCommand} from "../../../models/requests/categories/addTransactionCategoryCommand";
 import {observer} from "mobx-react-lite";
 import TransactionCategoriesView from "./components/TransactionCategoriesView";
 import {LoadingTile} from "./components/LoadingTile";
 import {TransactionSubcategoriesView} from "./components/TransactionSubcategoriesView";
-import {
-    AddTransactionSubcategoryCommand
-} from "../../../models/requests/subcategories/addTransactionSubcategoryCommand";
 
 export default observer(function TransactionCategoriesPage() {
     const {categoryStore} = useStore()
@@ -38,6 +32,7 @@ export default observer(function TransactionCategoriesPage() {
                 borderRadius: '20px',
                 overflow:'auto',
                 userSelect: 'none',
+                maxWidth: '1920px',
             }}>
                 <Paper sx={{
                     width: '100%',

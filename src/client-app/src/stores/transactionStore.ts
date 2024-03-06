@@ -1,7 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import agent from "../api/agent";
 import {Transaction} from "../models/transactions/transaction";
-import {store} from "./store";
 import {AddIncomeTransactionCommand} from "../models/requests/transactions/addIncomeTransactionCommand";
 import {AddOutcomeTransactionCommand} from "../models/requests/transactions/addOutcomeTransactionCommand";
 import {AddInternalTransactionCommand} from "../models/requests/transactions/addInternalTransactionCommand";

@@ -1,7 +1,7 @@
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../../stores/store";
 import TilePaper from "../../../../components/tilesLayout/TilePaper";
-import {Divider, Stack, Typography, useMediaQuery} from "@mui/material";
+import {Divider, Grid, Typography, useMediaQuery} from "@mui/material";
 import theme from "../../../theme";
 import {useNavigate} from "react-router-dom";
 import {AccountBalanceDisplay} from "./AccountBalanceDisplay";
@@ -15,21 +15,12 @@ export default observer(function TotalAccountsTile() {
 
     return (
         <TilePaper disabled disableBorder>
-            <Stack spacing={isMobile ? 2 : 5}
-                   sx={{
-                       p: '1vw',
-                       color: 'white',
-                       filter: 'none',
-                       textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)',
-                       borderRadius: '25px',
-                       width: '85%',
-                       height: '90%',
-                       zIndex: 100,
-                       textOverflow: 'wrap', display: 'flex',
-                       justifyContent: 'center',
-                   }}
-            >
-                <Stack direction={'column'} spacing={2}>
+            <Grid item xs={12} sx={{height: '100%'}}>
+                <Grid item xs={12} sx={{
+                    height: '40%',
+                    display: 'flex', justifyContent: 'center', alignItems: 'center',
+                    flexDirection: 'column', gap: theme.spacing(2)
+                }}>
                     <Typography sx={{
                         fontSize: isMobile ? '2rem' : '2.5rem',
                         fontWeight: '700',
@@ -40,10 +31,15 @@ export default observer(function TotalAccountsTile() {
                     }}>
                         Total
                     </Typography>
-                </Stack>
-                <Divider sx={{backgroundColor: theme.palette.background.paper}} />
-                <AccountBalanceDisplay isMobile={isMobile} transactions={transactions} currency={currency} />
-            </Stack>
+                </Grid>
+                <Divider variant={'middle'} />
+                <Grid item xs={12} sx={{
+                    height: '55%',
+                    display: 'flex', justifyContent: 'center', alignItems: 'center',
+                }}>
+                    <AccountBalanceDisplay isMobile={isMobile} transactions={transactions} currency={currency} />
+                </Grid>
+            </Grid>
         </TilePaper>
     );
 })

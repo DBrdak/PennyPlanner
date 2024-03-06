@@ -1,5 +1,5 @@
 import {
-    Button,
+    Button, CircularProgress,
     Divider,
     FormControl, Grid,
     InputLabel, MenuItem,
@@ -9,30 +9,33 @@ import {
     Typography
 } from "@mui/material";
 import CenteredStack from "../../components/CenteredStack";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import MyTextInput from "../../components/MyTextInput";
-import {SignupValues} from "../../models/forms/signUpValues";
 import useTitle from "../../utils/hooks/useTitle";
 import GradientContainer from "../welcome/GradientContainer";
+import {RegisterUserCommand} from "../../models/requests/users/registerUserCommand";
+import ValidationConstants from "../../utils/constants/validationConstants";
+import {observer} from "mobx-react-lite";
+import {useStore} from "../../stores/store";
+import {isValidDateValue} from "@testing-library/user-event/dist/utils";
+import {toast} from "react-toastify";
 
 
 
 const SignUpPage: React.FC = () => {
     const navigate = useNavigate()
+    const {userStore} = useStore()
+    const [takenEmails, setTakenEmails] = useState<string[]>([])
 
     useTitle('Register')
 
-    const initialValues: SignupValues = {
-        email: '',
-        password: '',
-        confirmPassword: '',
-        name: '',
-        currency: 'USD'
-    }
+    useEffect(() => {
+    }, [userStore.loading])
 
+    const initialValues = new RegisterUserCommand()
 
     const passwordManual =
         `Your password should contain: 
@@ -44,24 +47,22 @@ const SignUpPage: React.FC = () => {
 
     const validationSchema = Yup.object({
         email: Yup.string()
-            .matches(RegExp(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$`), {message: 'Sorry, we cannot contact with this email'})
-            .required('How can we contact with you?'),
+            .matches(ValidationConstants.emailPattern, {message: 'Sorry, we cannot contact with this email'})
+            .required('How can we contact with you?')
+            .notOneOf(takenEmails, 'Email is taken'),
         password: Yup.string()
             .required('Protect your account')
-            .matches(RegExp(`^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()-_=+{};:'",<.>/?\\\\[\\]_\`|~])(?!.*\\s).{8,}$`),
-                {message: 'This password is too weak'}),
-        confirmPassword: Yup.string()
-            .oneOf([Yup.ref('password')], 'Passwords differ')
-            .required('Confirm your password'),
+            .matches(ValidationConstants.passwordPattern,{message: 'This password is too weak'}),
         currency: Yup.string()
-            .required('Provide currency which you will use'),
-        name: Yup.string()
-            .required('How can we call you?')
-            .max(30, 'Use shorter name')
+            .required('Provide currency which you will use')
     });
 
-    function handleFormSubmit(values: any) {
-        return undefined;
+    function handleFormSubmit(values: RegisterUserCommand) {
+        userStore.register(values).then(isSuccess => {
+            if(userStore.currentUser && isSuccess) navigate('/home')
+            else if(!isSuccess) toast.error('Error')
+            else setTakenEmails(prev => [...prev, values.email])
+        })
     }
 
     return (
@@ -77,104 +78,104 @@ const SignUpPage: React.FC = () => {
                 justifyContent: 'center',
                 margin: '3em 0em',
             }}>
-                <Stack justifyContent={'center'} width={'100%'} spacing={3}>
-                    <Formik
-                        validationSchema={validationSchema}
-                        initialValues={initialValues}
-                        onSubmit={values => handleFormSubmit(values)}
-                    >
-                        {({ handleSubmit, setValues, values}) => (
-                            <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                                <Grid container>
-                                    <Grid xs={12} md={6} sx={{
-                                        padding: 2
-                                    }}>
-                                        <MyTextInput
-                                            name={'name'}
-                                            label="Name"
-                                            placeholder="Name"
-                                            type={'text'}
-                                            showErrors
-                                        />
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Formik
+                            validationSchema={validationSchema}
+                            initialValues={initialValues}
+                            onSubmit={values => handleFormSubmit(values)}
+                        >
+                            {({ handleSubmit, setValues, values, isValid}) => (
+                                <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
+                                    <Grid container width={'100%'}>
+                                        <Grid item xs={12} sx={{
+                                            marginBottom: '20px',
+                                            padding: '0px 20px'
+                                        }}>
+                                            <MyTextInput
+                                                style={{width: '100%'}}
+                                                name={'email'}
+                                                label="Email"
+                                                placeholder="Email"
+                                                type="email"
+                                                showErrors
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sx={{
+                                            marginBottom: '20px',
+                                            padding: '0px 20px'
+                                        }}>
+                                            <FormControl fullWidth error={values.currency.length < 1}>
+                                                <InputLabel>Currency</InputLabel>
+                                                <Select
+                                                    value={values.currency}
+                                                    onChange={(e) => setValues({...values, currency: e.target.value})}
+                                                >
+                                                    <MenuItem value={'PLN'}>PLN</MenuItem>
+                                                    <MenuItem value={'USD'}>USD</MenuItem>
+                                                    <MenuItem value={'GBP'}>GBP</MenuItem>
+                                                    <MenuItem value={'CAD'}>CAD</MenuItem>
+                                                    <MenuItem value={'EUR'}>EUR</MenuItem>
+                                                    <MenuItem value={'CHF'}>CHF</MenuItem>
+                                                    <MenuItem value={'CHF'}>JPY</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12} sx={{
+                                            marginBottom: '20px',
+                                            padding: '0px 20px'
+                                        }}>
+                                            <MyTextInput
+                                                style={{width: '100%'}}
+                                                name={'password'}
+                                                label="Password"
+                                                placeholder="Password"
+                                                type="password"
+                                                showErrors
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sx={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            marginBottom: '20px'
+                                        }}>
+                                            <Button fullWidth disabled={!isValid || takenEmails.some(email => email === values.email)} type="submit" variant="contained" color="primary" sx={{maxWidth: '250px'}}>
+                                                {
+                                                    userStore.loading
+                                                        ? <CircularProgress color={'inherit'} />
+                                                        : 'Sign Up'
+                                                }
+                                            </Button>
+                                        </Grid>
                                     </Grid>
-                                    <Grid xs={12} md={6} sx={{
-                                        padding: 2
-                                    }}>
-                                        <MyTextInput
-                                            name={'email'}
-                                            label="Email"
-                                            placeholder="Email"
-                                            type="email"
-                                            showErrors
-                                        />
-                                    </Grid>
-                                    <Grid xs={12} md={6} sx={{
-                                        padding: 2
-                                    }}>
-                                        <MyTextInput
-                                            name={'password'}
-                                            label="Password"
-                                            placeholder="Password"
-                                            type="password"
-                                            showErrors
-                                        />
-                                    </Grid>
-                                    <Grid xs={12} md={6} sx={{
-                                        padding: 2
-                                    }}>
-                                        <MyTextInput
-                                            name={'confirmPassword'}
-                                            label="Confirm password"
-                                            placeholder="Confirm password"
-                                            type="password"
-                                            showErrors
-                                        />
-                                    </Grid>
-                                    <Grid xs={12} md={6} sx={{
-                                        padding: 2
-                                    }}>
-                                        <FormControl fullWidth error={values.currency.length < 1}>
-                                            <InputLabel>Currency</InputLabel>
-                                            <Select
-                                                value={values.currency}
-                                                onChange={(e) => setValues({...values, currency: e.target.value})}
-                                            >
-                                                <MenuItem value={'PLN'}>PLN</MenuItem>
-                                                <MenuItem value={'USD'}>USD</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid xs={12} md={6} sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        padding: 2
-                                    }}>
-                                        <Button fullWidth type="submit" variant="contained" color="primary" onClick={() => console.log('Registered !')}>
-                                            Sign Up
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                            </Form>
-                        )}
-                    </Formik>
-                    <Typography variant={'caption'} textAlign={'center'} style={{whiteSpace: 'pre-wrap'}}>
-                        {passwordManual}
-                    </Typography>
-                    <Divider variant="middle" />
-                    <CenteredStack>
-                        <Typography variant="body2" color="textSecondary" align="center" style={{ margin: '10px 0' }}>
-                            Already have an account?
+                                </Form>
+                            )}
+                        </Formik>
+                    </Grid>
+                    <Grid item xs={12} textAlign={'center'} marginBottom={'20px'}>
+                        <Typography variant={'caption'} textAlign={'center'} style={{whiteSpace: 'pre-wrap'}}>
+                            {passwordManual}
                         </Typography>
-                        <Button variant={"outlined"} color={'secondary'} style={{width: '75%', borderWidth: '3px', fontWeight: '900'}}
-                                onClick={() => navigate('/login')}>
-                            Sign In
-                        </Button>
-                    </CenteredStack>
-                </Stack>
+                    </Grid>
+                    <Grid item xs={12} marginBottom={'20px'}>
+                        <Divider variant="middle" />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <CenteredStack>
+                            <Typography variant="body2" color="textSecondary" align="center" style={{ margin: '10px 0' }}>
+                                Already have an account?
+                            </Typography>
+                            <Button variant={"outlined"} color={'secondary'} style={{width: '75%', borderWidth: '3px', fontWeight: '900'}}
+                                    onClick={() => navigate('/login')}>
+                                Sign In
+                            </Button>
+                        </CenteredStack>
+                    </Grid>
+                </Grid>
             </Paper>
         </GradientContainer>
     )
 }
 
-export default SignUpPage
+export default observer(SignUpPage)

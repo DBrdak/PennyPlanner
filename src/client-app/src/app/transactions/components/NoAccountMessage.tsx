@@ -1,4 +1,4 @@
-import {Button, IconButton, Stack, Typography} from "@mui/material";
+import {Button, Stack, Typography} from "@mui/material";
 import {ArrowForward} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 

@@ -1,8 +1,10 @@
 ﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
+using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
 using Domestica.Budget.Domain.BudgetPlans;
 using Domestica.Budget.Domain.TransactionCategories;
+using Domestica.Budget.Domain.Users;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Money.DB;
@@ -14,31 +16,28 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
     {
         private readonly IBudgetPlanRepository _budgetPlanRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IUserContext _userContext;
         private readonly ITransactionCategoryRepository _categoryRepository;
 
-        public SetBudgetPlanCategoriesCommandHandler(IBudgetPlanRepository budgetPlanRepository, IUnitOfWork unitOfWork, IServiceScopeFactory serviceScopeFactory, ITransactionCategoryRepository categoryRepository)
+        public SetBudgetPlanCategoriesCommandHandler(IBudgetPlanRepository budgetPlanRepository, IUnitOfWork unitOfWork, ITransactionCategoryRepository categoryRepository, IUserContext userContext)
         {
             _budgetPlanRepository = budgetPlanRepository;
             _unitOfWork = unitOfWork;
-            _serviceScopeFactory = serviceScopeFactory;
             _categoryRepository = categoryRepository;
+            _userContext = userContext;
         }
 
         public async Task<Result<BudgetPlan>> Handle(SetBudgetPlanCategoriesCommand request, CancellationToken cancellationToken)
         {
-            //TODO Retrive user id
-
             var budgetPlan = await _budgetPlanRepository.GetBudgetPlanByDateAsync(request.BudgetPlanForDate, cancellationToken);
 
             if (budgetPlan is null)
             {
-                budgetPlan = BudgetPlan.CreateForMonth(request.BudgetPlanForDate);
+                budgetPlan = BudgetPlan.CreateForMonth(request.BudgetPlanForDate, new UserIdentityId(_userContext.IdentityId));
                 await _budgetPlanRepository.AddAsync(budgetPlan, cancellationToken);
             }
-            
-            //TODO Fetch currency from user
-            var currency = Currency.Usd;
+
+            var currency = Currency.FromCode(_userContext.UserCurrencyCode);
 
             foreach (var budgetedTransactionCategoryValues in request.BudgetedTransactionCategoryValues)
             {
@@ -52,11 +51,9 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
                     new (budgetedTransactionCategoryValues.BudgetedAmount, currency));
             }
 
-            var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return isSuccessful 
-                ? Result.Success(budgetPlan) 
-                : Result.Failure<BudgetPlan>(Error.TaskFailed("Problem while setting budgeted categories"));
+            return Result.Success(budgetPlan);
         }
 
         private async Task<TransactionCategory?> GetOrCreateCategory(TransactionCategoryValue categoryValue, TransactionCategoryType categoryType, CancellationToken cancellationToken)
@@ -71,12 +68,12 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
         {
             if (type == TransactionCategoryType.Income)
             {
-                return new IncomeTransactionCategory(value);
+                return new IncomeTransactionCategory(value, new UserIdentityId(_userContext.IdentityId));
             }
 
             if (type == TransactionCategoryType.Outcome)
             {
-                return new OutcomeTransactionCategory(value);
+                return new OutcomeTransactionCategory(value, new UserIdentityId(_userContext.IdentityId));
             }
 
             return null;

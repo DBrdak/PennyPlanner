@@ -1,17 +1,16 @@
 import {makeAutoObservable} from "mobx";
 import {BudgetPlan} from "../models/budgetPlans/budgetPlan";
 import agent from "../api/agent";
-import {DateTimeRange} from "../models/shared/dateTimeRange";
 import {isDateTimeRangeContainsDate} from "../utils/calculators/dateCalculator";
-import {BudgetedTransactionCategory} from "../models/budgetPlans/budgetedTransactionCategory";
 import {BudgetedTransactionCategoryValues} from "../models/requests/budgetPlans/budgetedTransactionCategoryValues";
-import {tableFooterClasses} from "@mui/material";
+import {UpdateBudgetPlanCategoryValues} from "../models/requests/budgetPlans/updateBudgetPlanCategoryValues";
 
 export default class BudgetPlanStore {
     private budgetPlansRegistry: Map<string, BudgetPlan> = new Map<string, BudgetPlan>()
     newBudgetedCategoriesRegistry: Map<string, BudgetedTransactionCategoryValues> = new Map<string, BudgetedTransactionCategoryValues>()
     onDate: Date = new Date()
     loading: boolean = false
+    editMode: boolean = false
 
     constructor() {
         makeAutoObservable(this);
@@ -34,14 +33,11 @@ export default class BudgetPlanStore {
     }
 
     private setBudgetPlan(budgetPlan: BudgetPlan) {
+        this.budgetPlansRegistry.delete(budgetPlan.budgetPlanId)
         this.budgetPlansRegistry.set(budgetPlan.budgetPlanId, budgetPlan)
     }
 
     async loadBudgetPlan(onDate: Date) {
-        if(this.budgetPlan) {
-            return
-        }
-
         this.setLoading(true)
         this.setOnDate(onDate)
 
@@ -79,7 +75,23 @@ export default class BudgetPlanStore {
         }
     }
 
-    setOnDate(date: Date) {
+    async updateBudgetPlan(categoryId: string, updateValues: UpdateBudgetPlanCategoryValues) {
+        if(!this.budgetPlan) {
+            return
+        }
+
+        this.setLoading(true)
+        try{
+            await agent.budgetPlans.updateBudgetPlanCategory(this.budgetPlan.budgetPlanId, categoryId, updateValues)
+            await this.loadBudgetPlan(this.onDate)
+        } catch (e) {
+            console.log(e)
+        } finally {
+            this.setLoading(false)
+        }
+    }
+
+    private setOnDate(date: Date) {
         this.onDate = date
     }
 
@@ -93,5 +105,9 @@ export default class BudgetPlanStore {
 
     isNewBudgetPlanCreatePossible() {
         return this.newBudgetedCategoriesRegistry.size > 0
+    }
+
+    setEditMode(state: boolean) {
+        this.editMode = state
     }
 }

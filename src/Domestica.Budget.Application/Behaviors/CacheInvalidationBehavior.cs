@@ -1,5 +1,6 @@
 ﻿using CommonAbstractions.DB.Messaging;
-using Domestica.Budget.Application.Messaging.Caching;
+using Domestica.Budget.Application.Abstractions.Authentication;
+using Domestica.Budget.Application.Abstractions.Messaging.Caching;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Responses.DB;
@@ -14,11 +15,13 @@ namespace Domestica.Budget.Application.Behaviors
     {
         private readonly ICacheRepository _cacheRepository;
         private readonly ILogger<CacheInvalidationBehavior<TRequest,TResponse>> _logger;
+        private readonly IUserContext _userContext;
 
-        public CacheInvalidationBehavior(ICacheRepository cacheRepository, ILogger<CacheInvalidationBehavior<TRequest, TResponse>> logger)
+        public CacheInvalidationBehavior(ICacheRepository cacheRepository, ILogger<CacheInvalidationBehavior<TRequest, TResponse>> logger, IUserContext userContext)
         {
             _cacheRepository = cacheRepository;
             _logger = logger;
+            _userContext = userContext;
         }
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
@@ -27,7 +30,7 @@ namespace Domestica.Budget.Application.Behaviors
             {
                 var response = await next();
 
-                //TODO fetch userId from IUserContext
+                //var userId = _userContext.IdentityId;
 
                 //TODO delete only one collection
 

@@ -1,13 +1,15 @@
-﻿using Domestica.Budget.Domain.Accounts;
+﻿using Domestica.Budget.Application.Abstractions.Authentication;
+using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.Transactions;
 using Domestica.Budget.Domain.TransactionSubcategories;
+using Domestica.Budget.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domestica.Budget.Infrastructure.Repositories
 {
     public sealed class AccountRepository : Repository<Account, AccountId>, IAccountRepository
     {
-        public AccountRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public AccountRepository(ApplicationDbContext dbContext, IUserContext userContext) : base(dbContext, userContext)
         {
         }
 
@@ -18,7 +20,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
                 .ThenInclude(t => t.Subcategory)
                 .Include(a => a.Transactions)
                 .ThenInclude(t => t.Category)
-                .Where(/*a => a.UserId == userId*/ x=> true)
+                .Where(a => a.UserId == UserId)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
         }
@@ -30,9 +32,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
                 .ThenInclude(t => t.Subcategory)
                 .Include(a => a.Transactions)
                 .ThenInclude(t => t.Category)
-                .FirstOrDefaultAsync( /*a => a.UserId == userId*/
-                    a => a.Id == accountId,
-                    cancellationToken);
+                .FirstOrDefaultAsync(a => a.Id == accountId && a.UserId == UserId, cancellationToken);
         }
     }
 }

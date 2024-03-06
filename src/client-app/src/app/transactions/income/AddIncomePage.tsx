@@ -1,16 +1,16 @@
+import Undo from "@mui/icons-material/Undo";
+import { CircularProgress, Grid, IconButton } from "@mui/material";
+import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AppOverlay from "../../../components/appOverlay/AppOverlay";
-import theme from "../../theme";
-import {CircularProgress, Grid, IconButton, Typography} from "@mui/material"
-import {AddIncomeForm} from "./components/AddIncomeForm";
-import {useStore} from "../../../stores/store";
-import React, {useEffect, useState} from "react";
-import {AddIncomeTransactionCommand} from "../../../models/requests/transactions/addIncomeTransactionCommand";
+import { AddIncomeTransactionCommand } from "../../../models/requests/transactions/addIncomeTransactionCommand";
+import { useStore } from "../../../stores/store";
 import useTitle from "../../../utils/hooks/useTitle";
-import {observer} from "mobx-react-lite";
+import theme from "../../theme";
+import { NoAccountMessage } from "../components/NoAccountMessage";
+import { AddIncomeForm } from "./components/AddIncomeForm";
 import NewIncomesTable from "./components/NewIncomesTable";
-import {NoAccountMessage} from "../components/NoAccountMessage";
-import {Undo} from "@mui/icons-material";
-import {useNavigate} from "react-router-dom";
 
 export default observer(function AddIncomePage() {
     const {accountStore, transactionEntityStore, transactionStore, categoryStore} = useStore()
@@ -63,7 +63,8 @@ export default observer(function AddIncomePage() {
                 overflow: 'auto',
                 justifyContent: 'center',
                 alignItems: 'center',
-                position: 'relative'
+                position: 'relative',
+                maxWidth: '1920px'
             }}>
                 {
                     accountStore.loading  || transactionEntityStore.loading || categoryStore.loading ?

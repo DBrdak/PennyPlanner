@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
+using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionSubcategories;
 using Exceptions.DB;
@@ -17,12 +18,14 @@ namespace Domestica.Budget.Application.TransactionSubcategories.AddTransactionSu
         private readonly ITransactionSubcategoryRepository _transactionSubcategoryRepository;
         private readonly ITransactionCategoryRepository _transactionCategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserContext _userContext;
 
-        public AddTransactionSubcategoryCommandHandler(ITransactionSubcategoryRepository transactionSubcategoryRepository, IUnitOfWork unitOfWork, ITransactionCategoryRepository transactionCategoryRepository)
+        public AddTransactionSubcategoryCommandHandler(ITransactionSubcategoryRepository transactionSubcategoryRepository, IUnitOfWork unitOfWork, ITransactionCategoryRepository transactionCategoryRepository, IUserContext userContext)
         {
             _transactionSubcategoryRepository = transactionSubcategoryRepository;
             _unitOfWork = unitOfWork;
             _transactionCategoryRepository = transactionCategoryRepository;
+            _userContext = userContext;
         }
 
         public async Task<Result<TransactionSubcategory>> Handle(AddTransactionSubcategoryCommand request, CancellationToken cancellationToken)
@@ -39,7 +42,8 @@ namespace Domestica.Budget.Application.TransactionSubcategories.AddTransactionSu
 
             var newTransactionSubcategory = new TransactionSubcategory(
                 new TransactionSubcategoryValue(request.Value),
-                category);
+                category,
+                new(_userContext.IdentityId));
 
             if (FailAddSubcategoryToCategory(request, category, newTransactionSubcategory, out var result))
             {

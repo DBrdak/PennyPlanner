@@ -24,7 +24,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.Ok();
-                });
+                }).RequireAuthorization();
 
             app.MapPost(
                 "budget-plans",
@@ -38,20 +38,20 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapPut(
-                "budget-plans/{budgetPlanId}/{budgetPlanCategory}",
+                "budget-plans/{budgetPlanId}/{budgetedCategoryId}",
                 async (
                     [FromRoute] string budgetPlanId,
-                    [FromRoute] string budgetPlanCategory,
+                    [FromRoute] string budgetedCategoryId,
                     [FromBody] UpdateBudgetPlanCategoryValues values,
                     ISender sender,
                     CancellationToken cancellationToken) =>
                 {
                     var command = new UpdateBudgetPlanCategoryCommand(
                         budgetPlanId,
-                        budgetPlanCategory,
+                        budgetedCategoryId,
                         values);
 
                     var result = await sender.Send(command, cancellationToken);
@@ -59,7 +59,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
         }
     }
 }

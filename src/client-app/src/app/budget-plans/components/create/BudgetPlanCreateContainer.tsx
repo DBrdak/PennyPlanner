@@ -1,8 +1,7 @@
-import {Box, Button, CircularProgress, Divider, Grid} from "@mui/material";
+import {CircularProgress, Divider, Grid} from "@mui/material";
 import {observer} from "mobx-react-lite";
 import useCategories from "../../../../utils/hooks/useCategories";
 import BudgetedCategoryCreateCard from "./BudgetedCategoryCreateCard";
-import theme from "../../../theme";
 import {BudgetedCategoryCreateSubmitButton} from "./BudgetedCategoryCreateSubmitButton";
 import {useStore} from "../../../../stores/store";
 import {useNewCategoryValues} from "../../../../utils/hooks/useNewCategoryValues";
@@ -10,13 +9,21 @@ import {useNewCategoryValues} from "../../../../utils/hooks/useNewCategoryValues
 export default observer(function BudgetPlanCreateContainer() {
     const categories = useCategories()
     const {categoryStore, budgetPlanStore} = useStore()
-    const {newIncomeCategoryValues} = useNewCategoryValues('income')
-    const {newOutcomeCategoryValues} = useNewCategoryValues('outcome')
+    const {newIncomeCategoryValues} = useNewCategoryValues('income', categories)
+    const {newOutcomeCategoryValues} = useNewCategoryValues('outcome', categories)
+
+    const getCategory = (id: string) =>
+        categories.find(c => c.transactionCategoryId === id)
 
     const getIncomeCategories = () =>
         categories.filter(c => c.type.toLowerCase() === 'income')
     const getOutcomeCategories = () =>
         categories.filter(c => c.type.toLowerCase() === 'outcome')
+
+    const handleSubmit = () => {
+        budgetPlanStore.setNewBudgetPlan()
+        budgetPlanStore.setEditMode(false)
+    }
 
     return (
         categoryStore.loading || budgetPlanStore.loading ?
@@ -28,7 +35,10 @@ export default observer(function BudgetPlanCreateContainer() {
             }}>
                 {
                     getIncomeCategories().map(category => (
-                        <BudgetedCategoryCreateCard key={category.transactionCategoryId} category={category} />
+                        <BudgetedCategoryCreateCard
+                            key={category.transactionCategoryId}
+                            category={category}
+                        />
                     ))
                 }
                 {
@@ -43,7 +53,10 @@ export default observer(function BudgetPlanCreateContainer() {
 
                 {
                     getOutcomeCategories().map(category => (
-                        <BudgetedCategoryCreateCard key={category.transactionCategoryId} category={category} />
+                        <BudgetedCategoryCreateCard
+                            key={category.transactionCategoryId}
+                            category={category}
+                        />
                     ))
                 }
 
@@ -54,7 +67,7 @@ export default observer(function BudgetPlanCreateContainer() {
                 }
 
                 <BudgetedCategoryCreateSubmitButton
-                    onSubmit={() => budgetPlanStore.setNewBudgetPlan()}
+                    onSubmit={() => handleSubmit()}
                     disabled={!budgetPlanStore.isNewBudgetPlanCreatePossible()}
                 />
             </Grid>

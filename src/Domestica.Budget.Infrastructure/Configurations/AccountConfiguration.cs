@@ -2,6 +2,7 @@
 using Domestica.Budget.Domain.Accounts.SavingsAccounts;
 using Domestica.Budget.Domain.Accounts.TransactionalAccounts;
 using Domestica.Budget.Domain.Transactions;
+using Domestica.Budget.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Money.DB;
@@ -22,8 +23,13 @@ namespace Domestica.Budget.Infrastructure.Configurations
             builder.Property(account => account.Name)
                 .HasConversion(accountName => accountName.Value, value => new AccountName(value));
 
-            builder.Property(account => account.Currency)
-                .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
+            builder.OwnsOne(
+                account => account.Balance,
+                moneyBuilder =>
+                {
+                    moneyBuilder.Property(money => money.Currency)
+                        .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
+                });
 
             builder.HasMany(account => account.Transactions)
                 .WithOne()

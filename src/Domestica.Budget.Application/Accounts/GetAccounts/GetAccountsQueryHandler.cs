@@ -15,7 +15,6 @@ namespace Domestica.Budget.Application.Accounts.GetAccounts
 
         public async Task<Result<List<AccountModel>>> Handle(GetAccountsQuery request, CancellationToken cancellationToken)
         {
-            //TODO Retrive user id
             var accounts = await _accountRepository.BrowseAccounts(cancellationToken);
 
             return accounts.Select(AccountModel.FromDomainObject).ToList();

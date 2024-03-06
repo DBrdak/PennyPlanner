@@ -17,9 +17,6 @@ import {decimal_MAX} from "../../../../utils/constants/numeric";
 import {Form, Formik} from "formik";
 import MyTextInput from "../../../../components/MyTextInput";
 import {Cancel} from "@mui/icons-material";
-import {DateTimePicker, LocalizationProvider, MobileDateTimePicker} from "@mui/x-date-pickers";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
 import MyDateTimePicker from "../../../../components/MyDateTimePicker";
 import ValidationConstants from "../../../../utils/constants/validationConstants";
 

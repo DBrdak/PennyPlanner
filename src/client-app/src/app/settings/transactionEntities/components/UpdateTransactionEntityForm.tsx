@@ -1,14 +1,12 @@
 import {TransactionEntity} from "../../../../models/transactionEntities/transactionEntity";
-import {Form, Formik, FormikValues} from "formik";
-import {NewAccountData} from "../../../../models/requests/accounts/newAccountData";
+import {Form, Formik} from "formik";
 import React from "react";
 import * as yup from 'yup'
 import ValidationConstants from "../../../../utils/constants/validationConstants";
 import {Box, IconButton, Typography} from "@mui/material";
 import theme from "../../../theme";
-import {Clear, DeleteTwoTone, DoneTwoTone, EditTwoTone} from "@mui/icons-material";
+import {Clear, DeleteTwoTone, DoneTwoTone} from "@mui/icons-material";
 import MyTextInput from "../../../../components/MyTextInput";
-import ConfirmModal from "../../../../components/ConfirmModal";
 
 interface UpdateTransactionEntityFormProps {
     onDelete: (transactionEntityId: string) => void

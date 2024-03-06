@@ -1,8 +1,8 @@
-import {Grid} from "@mui/material";
+import {CircularProgress, Grid} from "@mui/material";
 import theme from "../../theme";
 import {useState} from "react";
 import {BudgetPlanDateChange} from "./dateChange/BudgetPlanDateChange";
-import {BudgetedCategoriesContainer} from "./view/BudgetedCategoriesContainer";
+import BudgetedCategoriesContainer from "./view/BudgetedCategoriesContainer";
 import {useStore} from "../../../stores/store";
 import {observer} from "mobx-react-lite";
 import useBudgetPlan from "../../../utils/hooks/useBudgetPlan";
@@ -13,6 +13,9 @@ export default observer(function BudgetPlanContainer() {
     const {budgetPlanStore} = useStore()
     const budgetPlan = useBudgetPlan(date)
 
+    const prevDateAccessible = () => budgetPlanStore.budgetPlans.filter(bp =>
+        bp.budgetPeriod.start <= budgetPlanStore.onDate).length > 0 || budgetPlanStore.onDate >= new Date()
+
     return (
         <Grid container sx={{
             height:'100%',
@@ -21,7 +24,8 @@ export default observer(function BudgetPlanContainer() {
             overflow: 'hidden',
             backgroundColor: theme.palette.background.paper,
             borderRadius: '20px',
-            userSelect: 'none'
+            userSelect: 'none',
+            maxWidth: '1920px'
         }}>
             <Grid item xs={12} sx={{
                 height: '10%',
@@ -30,19 +34,27 @@ export default observer(function BudgetPlanContainer() {
                 <BudgetPlanDateChange
                     date={date}
                     setDate={setDate}
+                    prevDateAccessible={prevDateAccessible()}
                 />
             </Grid>
             <Grid item xs={12} sx={{
                 overflow: 'auto',
-                maxHeight: '80%',
+                height: '80%',
                 textAlign: 'center',
-                marginTop: `${theme.spacing(5)}`
+                position: 'relative',
+                marginTop: `${theme.spacing(5)}`,
             }}>
                 {
-                    budgetPlan?.budgetedTransactionCategories ?
-                        <BudgetedCategoriesContainer budgetedCategories={budgetPlan?.budgetedTransactionCategories} />
+                    budgetPlan ?
+                        budgetPlan?.budgetedTransactionCategories.length > 0 ?
+                            <BudgetedCategoriesContainer
+                                budgetedCategories={budgetPlan?.budgetedTransactionCategories}
+
+                            />
+                            :
+                            <BudgetPlanCreateContainer />
                         :
-                        <BudgetPlanCreateContainer />
+                        <CircularProgress />
                 }
             </Grid>
         </Grid>

@@ -1,9 +1,8 @@
-import useCategories from "./useCategories";
 import {useStore} from "../../stores/store";
 import {useEffect, useState} from "react";
+import {TransactionCategory} from "../../models/transactionCategories/transactionCategory";
 
-export function useNewCategoryValues(newCategoryType: 'income' | 'outcome') {
-    const categories = useCategories()
+export function useNewCategoryValues(newCategoryType: 'income' | 'outcome', categories: TransactionCategory[]) {
     const {budgetPlanStore} = useStore()
     const [newOutcomeCategoryIndices, setNewOutcomeCategoryIndices] = useState<number[]>([0])
     const [newIncomeCategoryIndices, setNewIncomeCategoryIndices] = useState<number[]>([0])
@@ -14,24 +13,24 @@ export function useNewCategoryValues(newCategoryType: 'income' | 'outcome') {
         categories.filter(c => c.type.toLowerCase() === 'outcome')
 
     useEffect(() => {
-        const newCategories = newCategoryType === 'income'
-            ? budgetPlanStore.newBudgetedCategories
+        const newOutcomeCategories = budgetPlanStore.newBudgetedCategories
+            .filter(bc =>
+                bc.categoryType.toLowerCase() === 'outcome' &&
+                getOutcomeCategories()
+                    .every(c =>
+                        c.value.toLowerCase() !== bc.categoryValue.toLowerCase())
+            ).map(bc => bc.categoryValue)
+
+        const newIncomeCategories = budgetPlanStore.newBudgetedCategories
                 .filter(bc =>
+                    bc.categoryType.toLowerCase() === 'income' &&
                     getIncomeCategories()
                         .every(c =>
-                            c.type.toLowerCase() === bc.categoryType.toLowerCase()
-                            && c.value !== bc.categoryValue)
-                ).map(bc => bc.categoryValue)
-            : budgetPlanStore.newBudgetedCategories
-                .filter(bc =>
-                    getOutcomeCategories()
-                        .every(c =>
-                            c.type.toLowerCase() === bc.categoryType.toLowerCase()
-                            && c.value !== bc.categoryValue)
-                ).map(bc => bc.categoryValue)
+                            c.value.toLowerCase() !== bc.categoryValue.toLowerCase()))
+                .map(bc => bc.categoryValue)
 
-        if(newCategoryType === 'outcome') {
-            const outcomeDiff = newCategories.length + 1 - newOutcomeCategoryIndices.length
+        if(newCategoryType === 'outcome' && newOutcomeCategories) {
+            const outcomeDiff = newOutcomeCategories.length + 1 - newOutcomeCategoryIndices.length
             if (outcomeDiff > 0) {
                 setNewOutcomeCategoryIndices(prev => [
                     ...prev,
@@ -40,9 +39,8 @@ export function useNewCategoryValues(newCategoryType: 'income' | 'outcome') {
             } else if (outcomeDiff < 0) {
                 setNewOutcomeCategoryIndices(prev => prev.slice(0, outcomeDiff));
             }
-        } else {
-            const incomeDiff = newCategories.length + 1 - newIncomeCategoryIndices.length
-
+        } else if (newCategoryType === 'income' && newIncomeCategories) {
+            const incomeDiff = newIncomeCategories.length + 1 - newIncomeCategoryIndices.length
 
             if (incomeDiff > 0) {
                 setNewIncomeCategoryIndices(prev => [

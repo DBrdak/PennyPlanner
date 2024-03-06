@@ -4,7 +4,6 @@ import { router } from "../router/Routes"
 import {NewAccountData} from "../models/requests/accounts/newAccountData";
 import {AddTransactionEntityCommand} from "../models/requests/transactionEntities/addTransactionEntityCommand";
 import {AccountUpdateData} from "../models/requests/accounts/accountUpdateData";
-import {BudgetedTransactionCategoryValues} from "../models/requests/budgetPlans/budgetedTransactionCategoryValues";
 import {UpdateBudgetPlanCategoryValues} from "../models/requests/budgetPlans/updateBudgetPlanCategoryValues";
 import {AddInternalTransactionCommand} from "../models/requests/transactions/addInternalTransactionCommand";
 import {AddIncomeTransactionCommand} from "../models/requests/transactions/addIncomeTransactionCommand";
@@ -15,9 +14,11 @@ import {Transaction} from "../models/transactions/transaction";
 import {TransactionCategory} from "../models/transactionCategories/transactionCategory";
 import {AddTransactionCategoryCommand} from "../models/requests/categories/addTransactionCategoryCommand";
 import {AddTransactionSubcategoryCommand} from "../models/requests/subcategories/addTransactionSubcategoryCommand";
-import {DateTimeRange} from "../models/shared/dateTimeRange";
 import {BudgetPlan} from "../models/budgetPlans/budgetPlan";
 import {SetBudgetPlanCommand} from "../models/requests/budgetPlans/setBudgetPlanCommand";
+import {store} from "../stores/store";
+import {LogInUserCommand} from "../models/requests/users/logInUserCommand";
+import {RegisterUserCommand} from "../models/requests/users/registerUserCommand";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -26,6 +27,14 @@ const sleep = (delay: number) => {
 }
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL
+
+axios.interceptors.request.use(config => {
+    const token = store.userStore.token;
+    if (token && config.headers){
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+})
 
 const responseBody = <T> (response: AxiosResponse<T>) => response.data;
 
@@ -37,7 +46,8 @@ axios.interceptors.response.use(async(response) => {
         return response
     }, (error) => {
         if (error) {
-            const errorMessage = error.response.data.error.name || error.response.data.name
+            console.log(error)
+            const errorMessage = error.response.data.name
             const errorMessages = errorMessage.split('\n')
             console.log(error)
             switch(error.response.status) {
@@ -87,8 +97,8 @@ const budgetPlans = {
     getBudgetPlan: (params: URLSearchParams) => axios.get<BudgetPlan>('/budget-plans', {params}).then(responseBody),
     setBudgetPlan: (command: SetBudgetPlanCommand) =>
         axios.post(`/budget-plans`, command),
-    updateBudgetPlanCategory: (budgetPlanId: string, budgetPlanCategory: string, values: UpdateBudgetPlanCategoryValues) =>
-        axios.put(`/budget-plans/${budgetPlanId}/${budgetPlanCategory}`, values),
+    updateBudgetPlanCategory: (budgetPlanId: string, budgetedCategoryId: string, values: UpdateBudgetPlanCategoryValues) =>
+        axios.put(`/budget-plans/${budgetPlanId}/${budgetedCategoryId}`, values),
 }
 
 const transactionEntities = {
@@ -133,6 +143,12 @@ const transactions = {
     deleteTransaction: (transactionId: string) => axios.delete(`/transactions/${transactionId}`),
 }
 
+const users = {
+    getCurrentUser: () => axios.get<User>('/users/current').then(responseBody),
+    logInUser: (command: LogInUserCommand) => axios.post<AccessToken>('/users/login', command).then(responseBody),
+    registerUser: (command: RegisterUserCommand) => axios.post<User>('/users/register', command).then(responseBody),
+}
+
 const agent = {
     accounts,
     budgetPlans,
@@ -140,6 +156,7 @@ const agent = {
     transactionCategories,
     transactionSubcategories,
     transactions,
+    users,
 }
 
 export default agent;

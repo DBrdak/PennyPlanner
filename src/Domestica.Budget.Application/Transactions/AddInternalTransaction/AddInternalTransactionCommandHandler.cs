@@ -1,5 +1,6 @@
 ﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
+using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.Transactions;
 using Money.DB;
@@ -11,11 +12,13 @@ namespace Domestica.Budget.Application.Transactions.AddInternalTransaction
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserContext _userContext;
 
-        public AddInternalTransactionCommandHandler(IAccountRepository accountRepository, IUnitOfWork unitOfWork)
+        public AddInternalTransactionCommandHandler(IAccountRepository accountRepository, IUnitOfWork unitOfWork, IUserContext userContext)
         {
             _accountRepository = accountRepository;
             _unitOfWork = unitOfWork;
+            _userContext = userContext;
         }
 
         public async Task<Result<Transaction[]>> Handle(AddInternalTransactionCommand request, CancellationToken cancellationToken)
@@ -33,8 +36,8 @@ namespace Domestica.Budget.Application.Transactions.AddInternalTransaction
             {
                 return Result.Failure<Transaction[]>(Error.NotFound($"Account with ID: {request.ToAccountId} not found"));
             }
-            // TODO fetch currency from user
-            var currency = Currency.Usd;
+
+            var currency = Currency.FromCode(_userContext.UserCurrencyCode);
 
             var createdTransactions = TransactionService.CreateInternalTransaction(
                 new(request.TransactionAmount, currency),

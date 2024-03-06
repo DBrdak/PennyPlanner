@@ -1,5 +1,6 @@
 ﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
+using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Domain.TransactionEntities;
 using Domestica.Budget.Domain.TransactionEntities.TransactionRecipients;
 using Domestica.Budget.Domain.TransactionEntities.TransactionSenders;
@@ -11,11 +12,13 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
     {
         private readonly ITransactionEntityRepository _transactionEntityRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserContext _userContext;
 
-        public AddTransactionEntityCommandHandler(ITransactionEntityRepository transactionEntityRepository, IUnitOfWork unitOfWork)
+        public AddTransactionEntityCommandHandler(ITransactionEntityRepository transactionEntityRepository, IUnitOfWork unitOfWork, IUserContext userContext)
         {
             _transactionEntityRepository = transactionEntityRepository;
             _unitOfWork = unitOfWork;
+            _userContext = userContext;
         }
 
         public async Task<Result<TransactionEntity>> Handle(AddTransactionEntityCommand request, CancellationToken cancellationToken)
@@ -31,11 +34,11 @@ namespace Domestica.Budget.Application.TransactionEntities.AddTransactionEntity
 
             if (string.Equals(request.Type, TransactionEntityType.Recipient.Value, StringComparison.CurrentCultureIgnoreCase))
             {
-                newTransactionEntity = new TransactionRecipient(new(request.Name));
+                newTransactionEntity = new TransactionRecipient(new(request.Name), new(_userContext.IdentityId));
             }
             else if (string.Equals(request.Type, TransactionEntityType.Sender.Value, StringComparison.CurrentCultureIgnoreCase))
             {
-                newTransactionEntity = new TransactionSender(new(request.Name));
+                newTransactionEntity = new TransactionSender(new(request.Name), new(_userContext.IdentityId));
             }
             else
             {

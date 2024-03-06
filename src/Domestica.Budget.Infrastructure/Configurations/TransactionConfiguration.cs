@@ -1,4 +1,5 @@
 ﻿using Domestica.Budget.Domain.Transactions;
+using Domestica.Budget.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Money.DB;
@@ -27,6 +28,7 @@ namespace Domestica.Budget.Infrastructure.Configurations
             builder.HasOne(transaction => transaction.Category)
                 .WithMany()
                 .HasPrincipalKey(category => category.Id)
+                .HasForeignKey(transaction => transaction.CategoryId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne(transaction => transaction.Subcategory)

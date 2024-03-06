@@ -1,4 +1,11 @@
 export interface UpdateBudgetPlanCategoryValues {
-    newBudgetAmount?: number | null
+    newBudgetAmount?: number
     isBudgetToReset: boolean
+}
+
+export class UpdateBudgetPlanCategoryValues implements UpdateBudgetPlanCategoryValues {
+    constructor(newBudgetAmount?: number) {
+        this.isBudgetToReset = !newBudgetAmount
+        this.newBudgetAmount = newBudgetAmount
+    }
 }

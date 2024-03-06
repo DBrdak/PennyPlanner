@@ -9,7 +9,7 @@ namespace Domestica.Budget.Domain.TransactionCategories
             Expression<Func<TransactionCategory, TProperty>> includeExpression,
             CancellationToken cancellationToken = default);
         Task<IEnumerable<TransactionCategory>> BrowseAllAsync(CancellationToken cancellationToken = default);
-        Task<TransactionCategory?> GetByIdAsync(TransactionCategoryId id, CancellationToken cancellationToken = default);
+        Task<TransactionCategory?> GetByIdAsync(TransactionCategoryId id, CancellationToken cancellationToken = default, bool asNoTracking = false);
         Task<TransactionCategory?> GetByIdIncludeAsync<TProperty>(
             TransactionCategoryId id,
             Expression<Func<TransactionCategory, TProperty>> includeExpression,
