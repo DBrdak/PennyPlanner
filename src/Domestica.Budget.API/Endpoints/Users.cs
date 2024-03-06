@@ -3,11 +3,6 @@ using Domestica.Budget.Application.Users.GetCurrentUser;
 using Domestica.Budget.Application.Users.LogInUser;
 using Domestica.Budget.Application.Users.RegisterUser;
 using MediatR;
-using System.Threading;
-using Microsoft.AspNetCore.Authentication.BearerToken;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace Domestica.Budget.API.Endpoints
 {

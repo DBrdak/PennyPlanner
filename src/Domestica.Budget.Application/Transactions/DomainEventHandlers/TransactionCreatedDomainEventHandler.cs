@@ -1,5 +1,4 @@
-﻿using System.Data;
-using CommonAbstractions.DB;
+﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Entities;
 using Domestica.Budget.Domain.BudgetPlans;
 using Domestica.Budget.Domain.Transactions.DomainEvents;

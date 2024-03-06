@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using Domestica.Budget.Application.Shared.Models;
-using Domestica.Budget.Application.TransactionCategories;
 
 namespace Domestica.Budget.Application.BudgetPlans
 {

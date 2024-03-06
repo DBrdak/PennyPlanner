@@ -1,9 +1,7 @@
 ﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Application.Abstractions.Authentication;
-using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
 using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
-using Domestica.Budget.Application.Transactions.AddOutcomeTransaction;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
@@ -80,6 +78,7 @@ namespace Domestica.Budget.Application.Transactions.AddIncomeTransaction
                 category,
                 subcategory,
                 request.TransactionDateTime);
+            
 
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 

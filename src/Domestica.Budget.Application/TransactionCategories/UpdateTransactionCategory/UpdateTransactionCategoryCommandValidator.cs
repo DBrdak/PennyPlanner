@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domestica.Budget.Application.Settings.ValidationSettings;
+﻿using Domestica.Budget.Application.Settings.ValidationSettings;
 using FluentValidation;
 
 namespace Domestica.Budget.Application.TransactionCategories.UpdateTransactionCategory

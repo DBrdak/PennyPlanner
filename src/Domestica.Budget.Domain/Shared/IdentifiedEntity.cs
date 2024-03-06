@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using CommonAbstractions.DB.Entities;
 using Domestica.Budget.Domain.Users;
-using Newtonsoft.Json.Serialization;
 
 namespace Domestica.Budget.Domain.Shared
 {

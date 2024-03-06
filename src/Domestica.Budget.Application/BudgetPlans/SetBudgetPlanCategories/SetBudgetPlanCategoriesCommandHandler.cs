@@ -5,8 +5,6 @@ using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
 using Domestica.Budget.Domain.BudgetPlans;
 using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.Users;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 using Money.DB;
 using Responses.DB;
 

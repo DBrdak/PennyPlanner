@@ -6,7 +6,7 @@ function RequireAuth() {
   const {userStore} = useStore()
   const location = useLocation()
 
-  if (!userStore.currentUser){
+  if (!userStore.currentUser && !userStore.token){
     toast.warn('Please log in')
     return <Navigate to={'/'} state={{from: location}}/>
   }

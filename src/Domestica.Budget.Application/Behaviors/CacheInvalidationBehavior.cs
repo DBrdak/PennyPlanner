@@ -30,11 +30,9 @@ namespace Domestica.Budget.Application.Behaviors
             {
                 var response = await next();
 
-                //var userId = _userContext.IdentityId;
+                var userId = _userContext.TryGetIdentityId();
 
-                //TODO delete only one collection
-
-                var keys = CacheKey.All(null).ToList();
+                var keys = CacheKey.All(userId).ToList();
 
                 LogCacheInvalidationStart(request);
                 

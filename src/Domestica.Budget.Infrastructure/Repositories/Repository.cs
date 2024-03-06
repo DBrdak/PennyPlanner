@@ -1,9 +1,6 @@
-﻿using System.Linq.Expressions;
-using CommonAbstractions.DB.Entities;
+﻿using CommonAbstractions.DB.Entities;
 using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Domain.Users;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Domestica.Budget.Infrastructure.Repositories
 {

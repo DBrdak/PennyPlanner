@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using Domestica.Budget.Application.Abstractions.Authentication;
 using Microsoft.AspNetCore.Http;
-using Money.DB;
 
 namespace Domestica.Budget.Infrastructure.Authentication
 {
@@ -36,5 +30,18 @@ namespace Domestica.Budget.Infrastructure.Authentication
                 .SingleOrDefault(claim => claim.Type == ClaimTypes.GivenName)?
                 .Value ??
             throw new ApplicationException("User context is unavailable");
+
+        public string? TryGetIdentityId()
+        {
+            try
+            {
+                var identityId = IdentityId;
+                return identityId;
+            }
+            catch (ApplicationException)
+            {
+                return null;
+            }
+        }
     }
 }

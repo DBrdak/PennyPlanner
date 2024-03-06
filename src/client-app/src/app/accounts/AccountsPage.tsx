@@ -10,11 +10,11 @@ import {NewAccountTile} from "./components/tiles/NewAccountTile";
 import TotalAccountsTile from "./components/tiles/TotalAccountsTile";
 import useTitle from "../../utils/hooks/useTitle";
 import Tile from "../../models/layout/tile";
+import ValidationConstants from "../../utils/constants/validationConstants";
 
 export default observer (function AccountsPage() {
-    const isUwhd = useMediaQuery(theme.breakpoints.up('xl'))
     const {accountStore} = useStore()
-    const cols = isUwhd ? 4 : 6
+    const cols = 6
 
     useTitle('Accounts')
 
@@ -47,6 +47,10 @@ export default observer (function AccountsPage() {
                 <NewAccountTile/>
         },
     ])
+
+    if(accountStore.accounts.length >= ValidationConstants.accountsLimit) {
+        tiles.pop()
+    }
 
     return (
         <AppOverlay>

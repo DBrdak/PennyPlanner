@@ -1,5 +1,4 @@
-﻿using CommonAbstractions.DB.Entities;
-using Domestica.Budget.Domain.Shared;
+﻿using Domestica.Budget.Domain.Shared;
 using Domestica.Budget.Domain.Transactions;
 using Domestica.Budget.Domain.Users;
 

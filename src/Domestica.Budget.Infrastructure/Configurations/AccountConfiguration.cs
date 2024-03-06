@@ -2,7 +2,6 @@
 using Domestica.Budget.Domain.Accounts.SavingsAccounts;
 using Domestica.Budget.Domain.Accounts.TransactionalAccounts;
 using Domestica.Budget.Domain.Transactions;
-using Domestica.Budget.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Money.DB;

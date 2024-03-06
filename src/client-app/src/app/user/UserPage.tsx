@@ -20,18 +20,20 @@ export default observer(function UserPage() {
 
     return (
         <AppOverlay>
-            <Grid container sx={{
+            <Grid container  sx={{
                 height:'100%',
                 padding: 5,
                 margin: 0,
                 backgroundColor: theme.palette.background.paper,
                 borderRadius: '20px',
-                overflow:'auto',
+                overflowY:'auto',
+                overflowX:'hidden',
                 maxWidth: '1920px',
+                userSelect: 'none',
                 display: 'flex', alignItems: 'center', justifyContent: 'center'
             }}>
                 <Grid item xs={12} textAlign={'center'}>
-                    <Typography variant={'h2'}>
+                    <Typography variant={'h3'}>
                         User personal info
                     </Typography>
                 </Grid>
@@ -66,7 +68,9 @@ export default observer(function UserPage() {
                 }}>
                     <Button variant={'outlined'} onClick={() => handleLogOut()} color={'error'} sx={{
                         padding: theme.spacing(5),
-                        flexDirection: 'column'
+                        flexDirection: 'column',
+                        width: '200px',
+                        height: '200px'
                     }}>
                         <Logout sx={{fontSize: 70}} />
                         <Typography variant={'caption'}>

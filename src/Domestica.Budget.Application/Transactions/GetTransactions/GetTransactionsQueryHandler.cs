@@ -19,7 +19,6 @@ namespace Domestica.Budget.Application.Transactions.GetTransactions
 
             return transactions
                 .Select(TransactionModel.FromDomainObject)
-                .OrderByDescending(t => t.TransactionDateUtc)
                 .ToList();
         }
     }

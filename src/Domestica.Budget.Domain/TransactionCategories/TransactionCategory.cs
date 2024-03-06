@@ -1,9 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using CommonAbstractions.DB.Entities;
 using Domestica.Budget.Domain.Shared;
 using Domestica.Budget.Domain.TransactionSubcategories;
 using Domestica.Budget.Domain.Users;
-using Exceptions.DB;
 
 namespace Domestica.Budget.Domain.TransactionCategories
 {

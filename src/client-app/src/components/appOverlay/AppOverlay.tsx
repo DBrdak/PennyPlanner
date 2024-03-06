@@ -282,7 +282,6 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                         <Box
                             component="main"
                             sx={{
-                                flexGrow: 1,
                                 width: '100%',
                                 padding: 2,
                                 justifyContent: 'center',

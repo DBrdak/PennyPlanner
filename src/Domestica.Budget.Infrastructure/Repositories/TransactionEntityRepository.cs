@@ -1,7 +1,5 @@
 ﻿using System.Linq.Expressions;
 using Domestica.Budget.Application.Abstractions.Authentication;
-using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
-using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.TransactionEntities;
 using Microsoft.EntityFrameworkCore;
 

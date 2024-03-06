@@ -1,11 +1,10 @@
 ﻿using Carter;
+using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
 using Domestica.Budget.Application.TransactionCategories.DeleteTransactionCategory;
 using Domestica.Budget.Application.TransactionCategories.GetTransactionCategories;
 using Domestica.Budget.Application.TransactionCategories.UpdateTransactionCategory;
 using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Domestica.Budget.API.Endpoints
 {
@@ -15,9 +14,9 @@ namespace Domestica.Budget.API.Endpoints
         {
             app.MapGet(
                 "transaction-categories",
-                async (ISender sender, CancellationToken cancellationToken) =>
+                async (ISender sender, IUserContext userContext, CancellationToken cancellationToken) =>
                 {
-                    var result = await sender.Send(new GetTransactionCategoriesQuery(), cancellationToken);
+                    var result = await sender.Send(new GetTransactionCategoriesQuery(new(userContext.IdentityId)), cancellationToken);
 
                     return Results.Ok(result.Value);
                 }).RequireAuthorization();

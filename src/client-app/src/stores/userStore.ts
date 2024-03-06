@@ -14,8 +14,8 @@ export default class UserStore {
 
         if(localStorage.getItem('jwt')) {
             this.token = localStorage.getItem('jwt')
-        } else {
-            this.loadCurrentUser()
+
+            !this.currentUser && this.loadCurrentUser()
         }
     }
 

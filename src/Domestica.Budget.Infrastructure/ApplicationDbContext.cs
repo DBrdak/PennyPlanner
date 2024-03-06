@@ -1,6 +1,4 @@
 ﻿using CommonAbstractions.DB;
-using CommonAbstractions.DB.Entities;
-using Domestica.Budget.Domain.BudgetPlans;
 using Domestica.Budget.Domain.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;

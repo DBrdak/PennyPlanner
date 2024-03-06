@@ -1,8 +1,5 @@
 ﻿using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Domain.Accounts;
-using Domestica.Budget.Domain.Transactions;
-using Domestica.Budget.Domain.TransactionSubcategories;
-using Domestica.Budget.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domestica.Budget.Infrastructure.Repositories

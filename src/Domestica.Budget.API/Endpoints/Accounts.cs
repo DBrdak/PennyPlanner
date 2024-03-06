@@ -1,12 +1,11 @@
 ﻿using Carter;
+using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Application.Accounts.AddAccount;
 using Domestica.Budget.Application.Accounts.GetAccounts;
 using Domestica.Budget.Application.Accounts.RemoveAccount;
 using Domestica.Budget.Application.Accounts.UpdateAccount;
-using Domestica.Budget.Application.Accounts.GetAccounts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
 
 namespace Domestica.Budget.API.Endpoints
 {
@@ -16,9 +15,9 @@ namespace Domestica.Budget.API.Endpoints
         {
             app.MapGet(
                 "accounts",
-                async (ISender sender, IDistributedCache cache, CancellationToken cancellationToken) =>
+                async (ISender sender, IUserContext userContext, CancellationToken cancellationToken) =>
                 {
-                    var query = new GetAccountsQuery();
+                    var query = new GetAccountsQuery(new (userContext.IdentityId));
 
                     var result = await sender.Send(query, cancellationToken);
 

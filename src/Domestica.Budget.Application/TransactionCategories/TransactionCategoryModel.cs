@@ -1,14 +1,6 @@
-﻿using Domestica.Budget.Domain.Accounts;
-using Money.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
 using Domestica.Budget.Domain.TransactionCategories;
-using Domestica.Budget.Domain.TransactionSubcategories;
 using Domestica.Budget.Application.TransactionSubcategories;
 
 namespace Domestica.Budget.Application.TransactionCategories

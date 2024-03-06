@@ -1,6 +1,7 @@
 ﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Application.Abstractions.Authentication;
+using Domestica.Budget.Application.Settings.ValidationSettings;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.Accounts.SavingsAccounts;
 using Domestica.Budget.Domain.Accounts.TransactionalAccounts;
@@ -25,11 +26,11 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
 
         public async Task<Result<Account>> Handle(AddAccountCommand request, CancellationToken cancellationToken)
         {
-            var isUniqueName = (await _accountRepository.BrowseAccounts()).All(a => a.Name.Value.ToLower() != request.NewAccountData.Name.ToLower());
+            var validationResult = await ValidateAsync(request, cancellationToken);
 
-            if (!isUniqueName)
+            if (validationResult is not null)
             {
-                return Result.Failure<Account>(Error.InvalidRequest($"Account with name {request.NewAccountData.Name} already exist"));
+                return validationResult;
             }
 
             Account? newAccount;
@@ -61,6 +62,27 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
             }
 
             return Result.Failure<Account>(Error.TaskFailed("Problem while saving new account to database"));
+        }
+
+        private async Task<Result<Account>?> ValidateAsync(AddAccountCommand request, CancellationToken cancellationToken)
+        {
+            var isUniqueName = (await _accountRepository.BrowseAccounts()).All(a => a.Name.Value.ToLower() != request.NewAccountData.Name.ToLower());
+
+            if (!isUniqueName)
+            {
+                return Result.Failure<Account>(Error.InvalidRequest($"Account with name {request.NewAccountData.Name} already exist"));
+            }
+
+            var isAccountLimitExceeded = (await _accountRepository.BrowseAccounts()).Count >= AccountValidationSettings.AccountsLimit;
+
+            if (isAccountLimitExceeded)
+            {
+                return Result.Failure<Account>(
+                    Error.InvalidRequest(
+                        $"You've reached maximum number of accounts"));
+            }
+
+            return null;
         }
 
         private TAccount? CreateAccount<TAccount>(NewAccountData newAccountData) where TAccount : class
