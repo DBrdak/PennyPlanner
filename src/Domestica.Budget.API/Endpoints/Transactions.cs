@@ -23,7 +23,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapPost(
                 "transactions/internal",
@@ -34,7 +34,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapPost(
                 "transactions/income",
@@ -45,7 +45,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapPost(
                 "transactions/outcome",
@@ -56,7 +56,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapDelete(
                 "transactions/{transactionId}",
@@ -72,7 +72,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
         }
     }
 }

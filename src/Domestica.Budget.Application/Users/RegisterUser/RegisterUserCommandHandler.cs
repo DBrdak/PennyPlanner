@@ -12,7 +12,7 @@ using Responses.DB;
 
 namespace Domestica.Budget.Application.Users.RegisterUser
 {
-    internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, User>
+    internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, UserModel>
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly IUserRepository _userRepository;
@@ -28,8 +28,15 @@ namespace Domestica.Budget.Application.Users.RegisterUser
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<User>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<Result<UserModel>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
+            var validationResult = await ValidateUserAsync(request, cancellationToken);
+
+            if (validationResult.IsFailure)
+            {
+                return (Result<UserModel>)validationResult;
+            }
+
             var user = User.Create(new Email(request.Email), Currency.FromCode(request.Currency));
 
             var identityId = await _authenticationService.RegisterAsync(
@@ -43,7 +50,19 @@ namespace Domestica.Budget.Application.Users.RegisterUser
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return user;
+            return UserModel.FromDomainObject(user);
+        }
+
+        private async Task<Result> ValidateUserAsync(RegisterUserCommand request, CancellationToken cancellationToken)
+        {
+            var isEmailUnique = await _userRepository.GetByEmailAsync(new(request.Email), cancellationToken, true) is null;
+
+            if (!isEmailUnique)
+            {
+                return Result.Failure<UserModel>(Error.InvalidRequest($"Email: {request.Email} is taken"));
+            }
+
+            return Result.Success();
         }
     }
 }

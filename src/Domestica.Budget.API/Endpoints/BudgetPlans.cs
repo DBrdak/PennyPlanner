@@ -24,7 +24,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.Ok();
-                });
+                }).RequireAuthorization();
 
             app.MapPost(
                 "budget-plans",
@@ -38,7 +38,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapPut(
                 "budget-plans/{budgetPlanId}/{budgetedCategoryId}",
@@ -59,7 +59,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
         }
     }
 }

@@ -20,13 +20,12 @@ namespace Domestica.Budget.API.Endpoints
                 {
                     var query = new GetAccountsQuery();
 
-                    // TODO key for specific user accounts: "accounts_{userId}"
                     var result = await sender.Send(query, cancellationToken);
 
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapPost(
                 "accounts",
@@ -39,7 +38,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapPut(
                 "accounts/{accountId}",
@@ -55,7 +54,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
 
             app.MapDelete(
                 "accounts/{accountId}",
@@ -71,7 +70,7 @@ namespace Domestica.Budget.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                });
+                }).RequireAuthorization();
         }
     }
 }

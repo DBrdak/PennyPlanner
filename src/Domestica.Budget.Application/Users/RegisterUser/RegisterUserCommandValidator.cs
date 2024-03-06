@@ -13,11 +13,11 @@ namespace Domestica.Budget.Application.Users.RegisterUser
     {
         public RegisterUserCommandValidator()
         {
-            RuleFor(c => c.Email)
+            RuleFor(x => x.Email)
                 .Matches(UserValidationSettings.EmailPattern)
                 .WithMessage("Invalid email");
 
-            RuleFor(c => c.Password)
+            RuleFor(x => x.Password)
                 .Matches(UserValidationSettings.PasswordPattern)
                 .WithMessage("Password does not fulfill the requirements");
         }

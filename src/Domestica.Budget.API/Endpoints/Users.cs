@@ -5,6 +5,9 @@ using Domestica.Budget.Application.Users.RegisterUser;
 using MediatR;
 using System.Threading;
 using Microsoft.AspNetCore.Authentication.BearerToken;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace Domestica.Budget.API.Endpoints
 {
@@ -33,7 +36,7 @@ namespace Domestica.Budget.API.Endpoints
 
                     return result.IsSuccess
                         ? Results.Ok(result.Value)
-                        : Results.Unauthorized();
+                        : Results.BadRequest(result.Error);
                 });
 
             app.MapPost(

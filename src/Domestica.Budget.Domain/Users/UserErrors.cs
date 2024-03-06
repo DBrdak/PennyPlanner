@@ -9,5 +9,5 @@ public static class UserErrors
 
     public static Error InvalidCredentials = new(
         "User.InvalidCredentials",
-        "The provided credentials were invalid");
+        "Invalid credentials");
 }

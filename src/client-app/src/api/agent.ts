@@ -16,6 +16,9 @@ import {AddTransactionCategoryCommand} from "../models/requests/categories/addTr
 import {AddTransactionSubcategoryCommand} from "../models/requests/subcategories/addTransactionSubcategoryCommand";
 import {BudgetPlan} from "../models/budgetPlans/budgetPlan";
 import {SetBudgetPlanCommand} from "../models/requests/budgetPlans/setBudgetPlanCommand";
+import {store} from "../stores/store";
+import {LogInUserCommand} from "../models/requests/users/logInUserCommand";
+import {RegisterUserCommand} from "../models/requests/users/registerUserCommand";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -24,6 +27,14 @@ const sleep = (delay: number) => {
 }
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL
+
+axios.interceptors.request.use(config => {
+    const token = store.userStore.token;
+    if (token && config.headers){
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+})
 
 const responseBody = <T> (response: AxiosResponse<T>) => response.data;
 
@@ -35,6 +46,7 @@ axios.interceptors.response.use(async(response) => {
         return response
     }, (error) => {
         if (error) {
+            console.log(error)
             const errorMessage = error.response.data.name
             const errorMessages = errorMessage.split('\n')
             console.log(error)
@@ -131,6 +143,12 @@ const transactions = {
     deleteTransaction: (transactionId: string) => axios.delete(`/transactions/${transactionId}`),
 }
 
+const users = {
+    getCurrentUser: () => axios.get<User>('/users/current').then(responseBody),
+    logInUser: (command: LogInUserCommand) => axios.post<AccessToken>('/users/login', command).then(responseBody),
+    registerUser: (command: RegisterUserCommand) => axios.post<User>('/users/register', command).then(responseBody),
+}
+
 const agent = {
     accounts,
     budgetPlans,
@@ -138,6 +156,7 @@ const agent = {
     transactionCategories,
     transactionSubcategories,
     transactions,
+    users,
 }
 
 export default agent;
