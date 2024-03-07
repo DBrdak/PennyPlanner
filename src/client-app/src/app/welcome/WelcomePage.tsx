@@ -33,7 +33,7 @@ const WelcomePage: React.FC = () => {
                     :
                     <>
                         <Typography variant={isMobile ? 'h4' : 'h2'} sx={headerStyles}>
-                            Welcome to Budgetify
+                            Welcome to Penny Planner
                         </Typography>
                         <Typography variant="h6" color="textSecondary" align="center" sx={{
                             marginBottom: theme.spacing(3),

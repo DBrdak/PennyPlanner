@@ -139,7 +139,7 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                         color: theme.palette.primary.light,
                         fontWeight: 'bold'
                     }}>
-                        Budgetify
+                        Penny Planner
                     </Typography>
                     <IconButton sx={{
                         borderRadius: 0,
