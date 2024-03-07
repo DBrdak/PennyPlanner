@@ -1,22 +1,12 @@
-﻿using Domestica.Budget.Application.Abstractions.Authentication;
-using Domestica.Budget.Application.Abstractions.Messaging;
+﻿using Domestica.Budget.Application.Abstractions.Messaging;
 using Domestica.Budget.Application.Abstractions.Messaging.Caching;
+using Domestica.Budget.Domain.Users;
 
 namespace Domestica.Budget.Application.Transactions.GetTransactions
 {
-    //TODO just like this
-    /*
-    public sealed record GetTransactionsQuery(IUserContext _userContext) : ICachedQuery<List<TransactionModel>>
+    public sealed record GetTransactionsQuery(UserIdentityId UserId) : ICachedQuery<List<TransactionModel>>
     {
-        private readonly IUserContext _userContext = _userContext;
-
-        public CacheKey CacheKey => CacheKey.Transactions(_userContext.IdentityId);
-        public TimeSpan? Expiration => null;
-    }
-    */
-    public sealed record GetTransactionsQuery() : ICachedQuery<List<TransactionModel>>
-    {
-        public CacheKey CacheKey => CacheKey.Transactions(null);
+        public CacheKey CacheKey => CacheKey.Transactions(UserId.Value);
         public TimeSpan? Expiration => null;
     }
 }

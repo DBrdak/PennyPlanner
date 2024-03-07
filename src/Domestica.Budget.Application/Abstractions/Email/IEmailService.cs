@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Responses.DB;
 
 namespace Domestica.Budget.Application.Abstractions.Email
 {
     public interface IEmailService
     {
-        Task SendAsync(Domain.Users.Email recipient, string subject, string body);
+        Task<Result> SendAsync(Domain.Users.Email recipient, string subject, string plainBody, string htmlBody);
     }
 }

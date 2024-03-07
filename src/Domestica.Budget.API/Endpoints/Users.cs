@@ -3,11 +3,6 @@ using Domestica.Budget.Application.Users.GetCurrentUser;
 using Domestica.Budget.Application.Users.LogInUser;
 using Domestica.Budget.Application.Users.RegisterUser;
 using MediatR;
-using System.Threading;
-using Microsoft.AspNetCore.Authentication.BearerToken;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace Domestica.Budget.API.Endpoints
 {
@@ -46,7 +41,7 @@ namespace Domestica.Budget.API.Endpoints
                     var result = await sender.Send(command, cancellationToken);
 
                     return result.IsSuccess
-                        ? Results.Ok(result.Value)
+                        ? Results.Ok()
                         : Results.BadRequest(result.Error);
                 });
         }

@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx"
 import {RegisterUserCommand} from "../models/requests/users/registerUserCommand";
 import {LogInUserCommand} from "../models/requests/users/logInUserCommand";
 import agent from "../api/agent";
+import {useNavigate} from "react-router-dom";
 
 export default class UserStore {
     currentUser?: User = undefined
@@ -13,8 +14,8 @@ export default class UserStore {
 
         if(localStorage.getItem('jwt')) {
             this.token = localStorage.getItem('jwt')
-        } else {
-            this.loadCurrentUser()
+
+            !this.currentUser && this.loadCurrentUser()
         }
     }
 
@@ -22,7 +23,7 @@ export default class UserStore {
         this.loading = state
     }
 
-    private setCurrentUser(user: User) {
+    private setCurrentUser(user: User | undefined) {
         this.currentUser = user
     }
 
@@ -34,8 +35,7 @@ export default class UserStore {
         this.setLoading(true)
 
         try {
-            const user = await agent.users.registerUser(command)
-            this.setCurrentUser(user)
+            await agent.users.registerUser(command)
             await this.logIn({email: command.email, password: command.password})
             return true
         } catch (e) {
@@ -79,5 +79,11 @@ export default class UserStore {
         } finally {
             this.setLoading(false)
         }
+    }
+
+    logOut() {
+        localStorage.removeItem('jwt')
+        this.setToken(null)
+        this.setCurrentUser(undefined)
     }
 }

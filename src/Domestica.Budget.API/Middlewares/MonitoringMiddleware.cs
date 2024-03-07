@@ -1,7 +1,5 @@
 ﻿using Serilog.Context;
 using System.Diagnostics;
-using Serilog;
-using MediatR;
 
 namespace Domestica.Budget.API.Middlewares
 {

@@ -139,7 +139,7 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                         color: theme.palette.primary.light,
                         fontWeight: 'bold'
                     }}>
-                        Budgetify
+                        Penny Planner
                     </Typography>
                     <IconButton sx={{
                         borderRadius: 0,
@@ -282,7 +282,6 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                         <Box
                             component="main"
                             sx={{
-                                flexGrow: 1,
                                 width: '100%',
                                 padding: 2,
                                 justifyContent: 'center',

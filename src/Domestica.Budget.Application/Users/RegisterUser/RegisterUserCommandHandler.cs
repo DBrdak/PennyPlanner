@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommonAbstractions.DB;
+﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
 using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Domain.Users;
@@ -12,7 +7,7 @@ using Responses.DB;
 
 namespace Domestica.Budget.Application.Users.RegisterUser
 {
-    internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, UserModel>
+    internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, User>
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly IUserRepository _userRepository;
@@ -28,13 +23,13 @@ namespace Domestica.Budget.Application.Users.RegisterUser
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<UserModel>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<Result<User>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             var validationResult = await ValidateUserAsync(request, cancellationToken);
 
             if (validationResult.IsFailure)
             {
-                return (Result<UserModel>)validationResult;
+                return (Result<User>)validationResult;
             }
 
             var user = User.Create(new Email(request.Email), Currency.FromCode(request.Currency));
@@ -50,7 +45,7 @@ namespace Domestica.Budget.Application.Users.RegisterUser
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return UserModel.FromDomainObject(user);
+            return user;
         }
 
         private async Task<Result> ValidateUserAsync(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -59,7 +54,7 @@ namespace Domestica.Budget.Application.Users.RegisterUser
 
             if (!isEmailUnique)
             {
-                return Result.Failure<UserModel>(Error.InvalidRequest($"Email: {request.Email} is taken"));
+                return Result.Failure<User>(Error.InvalidRequest($"Email: {request.Email} is taken"));
             }
 
             return Result.Success();

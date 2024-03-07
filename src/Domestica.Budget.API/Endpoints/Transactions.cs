@@ -1,4 +1,5 @@
 ﻿using Carter;
+using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Application.Transactions.AddIncomeTransaction;
 using Domestica.Budget.Application.Transactions.AddInternalTransaction;
 using Domestica.Budget.Application.Transactions.AddOutcomeTransaction;
@@ -6,7 +7,6 @@ using Domestica.Budget.Application.Transactions.GetTransactions;
 using Domestica.Budget.Application.Transactions.RemoveTransaction;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
 
 namespace Domestica.Budget.API.Endpoints
 {
@@ -16,9 +16,9 @@ namespace Domestica.Budget.API.Endpoints
         {
             app.MapGet(
                 "transactions",
-                async (ISender sender, IDistributedCache cache, CancellationToken cancellationToken) =>
+                async (ISender sender, IUserContext userContext, CancellationToken cancellationToken) =>
                 {
-                    var result = await sender.Send(new GetTransactionsQuery(), cancellationToken);
+                    var result = await sender.Send(new GetTransactionsQuery(new(userContext.IdentityId)), cancellationToken);
 
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :

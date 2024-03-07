@@ -21,6 +21,11 @@ namespace Domestica.Budget.Application.Abstractions.Messaging.Caching
         internal static CacheKey TransactionCategories(string? userId) => new (nameof(TransactionCategory), userId);
         internal static CacheKey Users(string? userId) => new (nameof(User), userId);
 
+        internal static CacheKey? FromString(string collection, string? userId)
+        {
+            return All(userId).FirstOrDefault(x => x.Collection.ToLower() == collection.ToLower());
+        }
+
         internal static IReadOnlyCollection<CacheKey> All(string? userId) =>
             new[]
             {

@@ -1,6 +1,4 @@
 ﻿using Carter;
-using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
-using Domestica.Budget.Application.TransactionCategories.UpdateTransactionCategory;
 using Domestica.Budget.Application.TransactionSubcategories.AddTransactionSubcategory;
 using Domestica.Budget.Application.TransactionSubcategories.RemoveTransactionSubcategory;
 using Domestica.Budget.Application.TransactionSubcategories.UpdateTransactionSubcategory;

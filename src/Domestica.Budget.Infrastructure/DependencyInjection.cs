@@ -12,7 +12,6 @@ using Domestica.Budget.Domain.Users;
 using Domestica.Budget.Infrastructure.Authentication;
 using Domestica.Budget.Infrastructure.Email;
 using Domestica.Budget.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +32,8 @@ namespace Domestica.Budget.Infrastructure
             services.AddPersistence(configuration);
 
             services.AddAuthentication(configuration);
+
+            services.Configure<EmailProviderOptions>(configuration.GetSection("SendGrid"));
 
             return services;
         }

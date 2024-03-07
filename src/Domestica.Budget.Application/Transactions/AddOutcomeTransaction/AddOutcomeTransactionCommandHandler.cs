@@ -1,7 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using CommonAbstractions.DB;
+﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
-using Domestica.Budget.Application.TransactionCategories.AddTransactionCategory;
 using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.TransactionCategories;
@@ -12,7 +10,6 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Money.DB;
 using Responses.DB;
-using System.Reflection;
 using Domestica.Budget.Domain.TransactionSubcategories;
 using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Domain.Users;

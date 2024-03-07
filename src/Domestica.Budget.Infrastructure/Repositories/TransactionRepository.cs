@@ -64,8 +64,10 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
             return await DbContext.Set<Transaction>()
                 .Where(t =>  t.UserId == UserId)
+                .OrderByDescending(t => t.TransactionDateUtc)
                 .Include(t => t.Category)
                 .Include(t => t.Subcategory)
+                .AsNoTracking()
                 .ToListAsync(cancellationToken);
         }
     }

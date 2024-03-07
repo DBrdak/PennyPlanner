@@ -13,7 +13,8 @@ export function RecurringTransactionsTile() {
             alignItems: 'center',
             flexDirection: 'column',
             gap: theme.spacing(2),
-            userSelect: 'none'
+            userSelect: 'none',
+            textAlign: 'center'
         }}>
             <EventRepeatTwoTone color={'primary'} sx={{fontSize: theme.spacing(10)}} />
             <Typography variant={'h4'}>

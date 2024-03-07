@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-using CommonAbstractions.DB.Entities;
+﻿using System.Text.Json.Serialization;
 using Domestica.Budget.Domain.Shared;
 using Domestica.Budget.Domain.Transactions;
 using Domestica.Budget.Domain.Users;

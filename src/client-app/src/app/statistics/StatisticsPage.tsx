@@ -30,7 +30,7 @@ export default observer(function StatisticsPage() {
                     This brilliant feature will be available soon!
                 </Typography>
                 <Typography variant={'h4'}>
-                    Until then, feel free to check out our other features 🥰
+                    Until then, feel free to check out our other features
                 </Typography>
             </Grid>
         </AppOverlay>

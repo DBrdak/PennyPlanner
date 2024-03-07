@@ -1,11 +1,11 @@
 ﻿using Carter;
+using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Application.TransactionEntities.AddTransactionEntity;
 using Domestica.Budget.Application.TransactionEntities.GetTransactionEntities;
 using Domestica.Budget.Application.TransactionEntities.RemoveTransactionEntity;
 using Domestica.Budget.Application.TransactionEntities.UpdateTransactionEntity;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
 
 namespace Domestica.Budget.API.Endpoints
 {
@@ -15,9 +15,9 @@ namespace Domestica.Budget.API.Endpoints
         {
             app.MapGet(
                 "transaction-entities",
-                async (ISender sender, IDistributedCache cache, CancellationToken cancellationToken) =>
+                async (ISender sender, IUserContext userContext, CancellationToken cancellationToken) =>
                 {
-                    var result = await sender.Send(new GetTransactionEntitiesQuery(), cancellationToken);
+                    var result = await sender.Send(new GetTransactionEntitiesQuery(new(userContext.IdentityId)), cancellationToken);
 
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :

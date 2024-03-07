@@ -1,5 +1,4 @@
 ﻿using Domestica.Budget.Domain.BudgetPlans;
-using Domestica.Budget.Domain.TransactionCategories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Money.DB;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommonAbstractions.DB;
+﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Entities;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.BudgetPlans;
@@ -35,18 +29,10 @@ namespace Domestica.Budget.Application.Transactions.DomainEventHandlers
                 notification.DeletedTransaction.AccountId,
                 cancellationToken);
 
-            if (budgetPlan is null)
-            {
-                return;
-            }
 
-            if (account is null)
-            {
-                return;
-            }
+            budgetPlan?.RemoveTransaction(notification.DeletedTransaction);
 
-            budgetPlan.RemoveTransaction(notification.DeletedTransaction);
-            account.RemoveTransaction(notification.DeletedTransaction);
+            account?.RemoveTransaction(notification.DeletedTransaction);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }

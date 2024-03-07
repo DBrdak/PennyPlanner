@@ -18,11 +18,12 @@ export function TilesLayout({ tiles }: TilesLayoutProps) {
             backgroundColor: theme.palette.background.paper,
             borderRadius: '20px',
             overflow:'auto',
+            width: '100%',
             maxWidth: '1920px',
         }}>
 
             {tiles.map((tile, index) => (
-                <Grid key={index} item xs={12} sm={tile.cols} height={tile.height} padding={isMobile ? 0.5 : 1}>
+                <Grid key={index} item xs={12} md={tile.cols} height={tile.height} padding={isMobile ? 0.5 : 1}>
                     {tile.content}
                 </Grid>
             ))}

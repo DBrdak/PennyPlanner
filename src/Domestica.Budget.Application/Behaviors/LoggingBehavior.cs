@@ -1,8 +1,6 @@
-﻿using System.Reflection;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Responses.DB;
-using Serilog;
 using Serilog.Context;
 
 namespace Domestica.Budget.Application.Behaviors

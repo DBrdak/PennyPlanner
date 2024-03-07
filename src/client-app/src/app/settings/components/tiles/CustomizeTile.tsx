@@ -12,7 +12,8 @@ export function CustomizeTile() {
             alignItems: 'center',
             flexDirection: 'column',
             gap: theme.spacing(2),
-            userSelect: 'none'
+            userSelect: 'none',
+            textAlign: 'center'
         }}>
             <TuneTwoTone color={'primary'} sx={{fontSize: theme.spacing(10)}} />
             <Typography variant={'h4'}>

@@ -5,9 +5,10 @@ import useTitle from "../utils/hooks/useTitle";
 
 interface NotFoundPageProps {
     text?: string;
+    redirectTo?: string
 }
 
-const NotFoundPage: React.FC<NotFoundPageProps> = ({ text }) => {
+const RedirectPage: React.FC<NotFoundPageProps> = ({ text, redirectTo }) => {
     const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
 
@@ -18,7 +19,6 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({ text }) => {
             setProgress((oldProgress) => {
                 if (oldProgress === 100) {
                     clearInterval(timer)
-                    navigate('/')
                     return 100;
                 }
                 return Math.min(oldProgress + 1, 100);
@@ -29,6 +29,12 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({ text }) => {
             clearInterval(timer);
         };
     }, []);
+
+    useEffect(() => {
+        if(progress === 100) {
+            navigate(redirectTo || '/')
+        }
+    }, [navigate, progress])
 
     return (
         <Box
@@ -46,4 +52,4 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({ text }) => {
     );
 };
 
-export default NotFoundPage;
+export default RedirectPage;

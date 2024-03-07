@@ -4,4 +4,5 @@ public interface IUserContext
 {
     string IdentityId { get; }
     string UserCurrencyCode { get; }
+    string? TryGetIdentityId();
 }

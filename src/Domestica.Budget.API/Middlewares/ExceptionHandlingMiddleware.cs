@@ -3,7 +3,6 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Responses.DB;
 using Serilog.Context;
-using static Domestica.Budget.API.Middlewares.ExceptionMiddleware;
 
 namespace Domestica.Budget.API.Middlewares
 {

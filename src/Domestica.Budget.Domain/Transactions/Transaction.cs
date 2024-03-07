@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using CommonAbstractions.DB.Entities;
 using Domestica.Budget.Domain.Accounts;
 using Domestica.Budget.Domain.Shared;
 using Domestica.Budget.Domain.TransactionCategories;

@@ -2,7 +2,6 @@
 using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Domain.TransactionCategories;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
 
 namespace Domestica.Budget.Infrastructure.Repositories
 {

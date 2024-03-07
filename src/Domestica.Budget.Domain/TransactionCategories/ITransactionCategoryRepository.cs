@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Domestica.Budget.Domain.TransactionCategories
 {

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domestica.Budget.Application.Abstractions.Authentication;
+﻿using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Domain.TransactionCategories;
-using Domestica.Budget.Domain.Transactions;
 using Domestica.Budget.Domain.TransactionSubcategories;
 using Microsoft.EntityFrameworkCore;
 

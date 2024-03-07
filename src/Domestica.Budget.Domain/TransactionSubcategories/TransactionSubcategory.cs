@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using CommonAbstractions.DB.Entities;
+﻿using System.Text.Json.Serialization;
 using Domestica.Budget.Domain.Shared;
 using Domestica.Budget.Domain.TransactionCategories;
 using Domestica.Budget.Domain.Users;

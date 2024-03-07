@@ -45,8 +45,6 @@ namespace Domestica.Budget.Application.Transactions.AddInternalTransaction
                 toAccount,
                 request.TransactionDateTime);
 
-            
-
             var isSuccessful = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
             if (isSuccessful)

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommonAbstractions.DB.Entities;
+﻿using CommonAbstractions.DB.Entities;
 using Domestica.Budget.Application.Abstractions.Email;
 using Domestica.Budget.Domain.Users;
 using Domestica.Budget.Domain.Users.Events;
@@ -27,7 +22,12 @@ namespace Domestica.Budget.Application.Users.DomainEventHandlers
                        throw new ApplicationException(
                            $"User with ID: {notification.UserId.Value} not exist, verification email cannot be send");
 
-            await _emailService.SendAsync(user.Email, "Verify the email", "");
+            var result = await _emailService.SendAsync(user.Email, "Verify the email", "", "");
+
+            if (result.IsFailure)
+            {
+                throw new ApplicationException(result.Error.Name);
+            }
         }
     }
 }
