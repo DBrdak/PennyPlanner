@@ -22,7 +22,12 @@ namespace Domestica.Budget.Application.Users.DomainEventHandlers
                        throw new ApplicationException(
                            $"User with ID: {notification.UserId.Value} not exist, verification email cannot be send");
 
-            await _emailService.SendAsync(user.Email, "Verify the email", "");
+            var result = await _emailService.SendAsync(user.Email, "Verify the email", "", "");
+
+            if (result.IsFailure)
+            {
+                throw new ApplicationException(result.Error.Name);
+            }
         }
     }
 }

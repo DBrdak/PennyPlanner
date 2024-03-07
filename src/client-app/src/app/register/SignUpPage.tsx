@@ -60,7 +60,7 @@ const SignUpPage: React.FC = () => {
     function handleFormSubmit(values: RegisterUserCommand) {
         userStore.register(values).then(isSuccess => {
             if(userStore.currentUser && isSuccess) navigate('/home')
-            else if(!isSuccess) toast.error('Error')
+
             else setTakenEmails(prev => [...prev, values.email])
         })
     }

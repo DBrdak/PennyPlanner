@@ -33,6 +33,8 @@ namespace Domestica.Budget.Infrastructure
 
             services.AddAuthentication(configuration);
 
+            services.Configure<EmailProviderOptions>(configuration.GetSection("SendGrid"));
+
             return services;
         }
 

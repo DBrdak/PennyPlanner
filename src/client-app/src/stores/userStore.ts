@@ -35,8 +35,7 @@ export default class UserStore {
         this.setLoading(true)
 
         try {
-            const user = await agent.users.registerUser(command)
-            this.setCurrentUser(user)
+            await agent.users.registerUser(command)
             await this.logIn({email: command.email, password: command.password})
             return true
         } catch (e) {

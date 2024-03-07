@@ -16,7 +16,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
         {
             DbContext = dbContext;
             _userContext = userContext;
-            UserId = new UserIdentityId(_userContext.IdentityId);
+            UserId = new UserIdentityId(_userContext.TryGetIdentityId() ?? string.Empty);
         }
         /*
         public async Task<TEntity?> GetByIdAsync(TEntityId id, CancellationToken cancellationToken = default, bool asNoTracking = false)

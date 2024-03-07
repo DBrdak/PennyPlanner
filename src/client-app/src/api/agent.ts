@@ -144,7 +144,7 @@ const transactions = {
 const users = {
     getCurrentUser: () => axios.get<User>('/users/current').then(responseBody),
     logInUser: (command: LogInUserCommand) => axios.post<AccessToken>('/users/login', command).then(responseBody),
-    registerUser: (command: RegisterUserCommand) => axios.post<User>('/users/register', command).then(responseBody),
+    registerUser: (command: RegisterUserCommand) => axios.post('/users/register', command),
 }
 
 const agent = {
