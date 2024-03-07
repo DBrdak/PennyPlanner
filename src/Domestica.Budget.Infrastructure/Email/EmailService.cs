@@ -20,6 +20,7 @@ namespace Domestica.Budget.Infrastructure.Email
 
         public async Task<Result> SendAsync(Domain.Users.Email recipient, string subject, string plainBody, string htmlBody)
         {
+            return Result.Success();
             var client = new SendGridClient(_emailProviderProviderOptions.Key);
 
             subject = "Sending with SendGrid is Fun";
