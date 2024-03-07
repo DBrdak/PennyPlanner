@@ -14,7 +14,7 @@ namespace Domestica.Budget.API.Endpoints
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             app.MapGet(
-                "accounts",
+                "api/accounts",
                 async (ISender sender, IUserContext userContext, CancellationToken cancellationToken) =>
                 {
                     var query = new GetAccountsQuery(new (userContext.IdentityId));
@@ -27,7 +27,7 @@ namespace Domestica.Budget.API.Endpoints
                 }).RequireAuthorization();
 
             app.MapPost(
-                "accounts",
+                "api/accounts",
                 async (NewAccountData newAccountData, ISender sender, CancellationToken cancellationToken) =>
                 {
                     var command = new AddAccountCommand(newAccountData);
@@ -40,7 +40,7 @@ namespace Domestica.Budget.API.Endpoints
                 }).RequireAuthorization();
 
             app.MapPut(
-                "accounts/{accountId}",
+                "api/accounts/{accountId}",
                 async (
                     AccountUpdateData accountUpdateData,
                     ISender sender,
@@ -56,7 +56,7 @@ namespace Domestica.Budget.API.Endpoints
                 }).RequireAuthorization();
 
             app.MapDelete(
-                "accounts/{accountId}",
+                "api/accounts/{accountId}",
                 async (
                     ISender sender,
                     [FromRoute] string accountId,

@@ -14,7 +14,7 @@ namespace Domestica.Budget.API.Endpoints
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             app.MapGet(
-                "transaction-entities",
+                "api/transaction-entities",
                 async (ISender sender, IUserContext userContext, CancellationToken cancellationToken) =>
                 {
                     var result = await sender.Send(new GetTransactionEntitiesQuery(new(userContext.IdentityId)), cancellationToken);
@@ -25,7 +25,7 @@ namespace Domestica.Budget.API.Endpoints
                 }).RequireAuthorization();
 
             app.MapPost(
-                "transaction-entities",
+                "api/transaction-entities",
                 async (AddTransactionEntityCommand command, ISender sender, CancellationToken cancellationToken) =>
                 {
                     var result = await sender.Send(command, cancellationToken);
@@ -36,7 +36,7 @@ namespace Domestica.Budget.API.Endpoints
                 }).RequireAuthorization();
 
             app.MapPut(
-                "transaction-entities/{transactionEntityId}",
+                "api/transaction-entities/{transactionEntityId}",
                 async (
                     [FromRoute] string transactionEntityId,
                     UpdateTransactionEntityCommand command,
@@ -51,7 +51,7 @@ namespace Domestica.Budget.API.Endpoints
                 }).RequireAuthorization();
 
             app.MapDelete(
-                "transaction-entities/{transactionEntityId}",
+                "api/transaction-entities/{transactionEntityId}",
                 async (
                     ISender sender,
                     [FromRoute] string transactionEntityId,

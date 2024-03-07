@@ -10,7 +10,7 @@ namespace Domestica.Budget.API.Endpoints
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("transaction-subcategories",
+            app.MapPost("api/transaction-subcategories",
                 async (ISender sender, AddTransactionSubcategoryCommand command, CancellationToken cancellationToken) =>
                 {
                     var result = await sender.Send(command, cancellationToken);
@@ -21,7 +21,7 @@ namespace Domestica.Budget.API.Endpoints
                 }).RequireAuthorization();
 
             app.MapPut(
-                "transaction-subcategories/{transactionSubcategoryId}",
+                "api/transaction-subcategories/{transactionSubcategoryId}",
                 async (
                     ISender sender,
                     UpdateTransactionSubcategoryCommand command,
@@ -34,7 +34,7 @@ namespace Domestica.Budget.API.Endpoints
                         Results.BadRequest(result.Error);
                 }).RequireAuthorization();
 
-            app.MapDelete("transaction-subcategories/{transactionSubcategoryId}",
+            app.MapDelete("api/transaction-subcategories/{transactionSubcategoryId}",
                 async (ISender sender, string transactionSubcategoryId, CancellationToken cancellationToken) =>
                 {
                     var command = new RemoveTransactionSubcategoryCommand(transactionSubcategoryId);

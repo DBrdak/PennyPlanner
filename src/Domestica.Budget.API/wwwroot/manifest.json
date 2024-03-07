@@ -1,0 +1,10 @@
+{
+  "short_name": "Budget",
+  "name": "Budgetify",
+  "icons": [
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#0d0418"
+}

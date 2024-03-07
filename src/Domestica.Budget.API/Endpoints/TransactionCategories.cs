@@ -13,7 +13,7 @@ namespace Domestica.Budget.API.Endpoints
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             app.MapGet(
-                "transaction-categories",
+                "api/transaction-categories",
                 async (ISender sender, IUserContext userContext, CancellationToken cancellationToken) =>
                 {
                     var result = await sender.Send(new GetTransactionCategoriesQuery(new(userContext.IdentityId)), cancellationToken);
@@ -21,7 +21,7 @@ namespace Domestica.Budget.API.Endpoints
                     return Results.Ok(result.Value);
                 }).RequireAuthorization();
 
-            app.MapPost("transaction-categories",
+            app.MapPost("api/transaction-categories",
                 async (ISender sender, AddTransactionCategoryCommand command, CancellationToken cancellationToken) =>
                 {
                     var result = await sender.Send(command, cancellationToken);
@@ -32,7 +32,7 @@ namespace Domestica.Budget.API.Endpoints
                 }).RequireAuthorization();
 
             app.MapPut(
-                "transaction-categories/{transactionCategoryId}",
+                "api/transaction-categories/{transactionCategoryId}",
                 async (
                     ISender sender,
                     UpdateTransactionCategoryCommand command,
@@ -45,7 +45,7 @@ namespace Domestica.Budget.API.Endpoints
                         Results.BadRequest(result.Error);
                 }).RequireAuthorization();
 
-            app.MapDelete("transaction-categories/{transactionCategoryId}",
+            app.MapDelete("api/transaction-categories/{transactionCategoryId}",
                 async (ISender sender, string transactionCategoryId, CancellationToken cancellationToken) =>
                 {
                     var command = new DeleteTransactionCategoryCommand(transactionCategoryId);

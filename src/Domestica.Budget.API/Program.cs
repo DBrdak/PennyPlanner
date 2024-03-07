@@ -35,6 +35,9 @@ app.UseAuthorization();
 
 app.AddMiddlewares();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.MapCarter();
 
 await app.RunAsync();

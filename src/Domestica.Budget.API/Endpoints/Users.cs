@@ -11,7 +11,7 @@ namespace Domestica.Budget.API.Endpoints
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             app.MapGet(
-                "users/current",
+                "api/users/current",
                 async (ISender sender, CancellationToken cancellationToken) =>
                 {
                     var query = new GetCurrentUserQuery();
@@ -24,7 +24,7 @@ namespace Domestica.Budget.API.Endpoints
                 }).RequireAuthorization();
 
             app.MapPost(
-                "users/login",
+                "api/users/login",
                 async (ISender sender, LogInUserCommand command, CancellationToken cancellationToken) =>
                 {
                     var result = await sender.Send(command, cancellationToken);
@@ -35,7 +35,7 @@ namespace Domestica.Budget.API.Endpoints
                 });
 
             app.MapPost(
-                "users/register",
+                "api/users/register",
                 async (ISender sender, RegisterUserCommand command, CancellationToken cancellationToken) =>
                 {
                     var result = await sender.Send(command, cancellationToken);
