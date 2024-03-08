@@ -3,11 +3,11 @@ import {useEffect} from "react";
 const useTitle = (staticTitle?: string, dynamicTitle?: string) => {
     useEffect(() => {
         if(dynamicTitle) {
-            document.title = dynamicTitle && `Budgetify | ${dynamicTitle}`
+            document.title = dynamicTitle && `PennyPlanner | ${dynamicTitle}`
         } else if(staticTitle) {
-            document.title = `Budgetify | ${staticTitle}`
+            document.title = `PennyPlanner | ${staticTitle}`
         } else {
-            document.title = 'Budgetify'
+            document.title = 'PennyPlanner'
         }
     }, [dynamicTitle, staticTitle])
 }

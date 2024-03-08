@@ -15,7 +15,7 @@ namespace Domestica.Budget.API.Endpoints
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             app.MapGet(
-                "transactions",
+                "api/transactions",
                 async (ISender sender, IUserContext userContext, CancellationToken cancellationToken) =>
                 {
                     var result = await sender.Send(new GetTransactionsQuery(new(userContext.IdentityId)), cancellationToken);
@@ -26,7 +26,7 @@ namespace Domestica.Budget.API.Endpoints
                 }).RequireAuthorization();
 
             app.MapPost(
-                "transactions/internal",
+                "api/transactions/internal",
                 async (AddInternalTransactionCommand command, ISender sender, CancellationToken cancellationToken) =>
                 {
                     var result = await sender.Send(command, cancellationToken);
@@ -37,7 +37,7 @@ namespace Domestica.Budget.API.Endpoints
                 }).RequireAuthorization();
 
             app.MapPost(
-                "transactions/income",
+                "api/transactions/income",
                 async (AddIncomeTransactionCommand command, ISender sender, CancellationToken cancellationToken) =>
                 {
                     var result = await sender.Send(command, cancellationToken);
@@ -48,7 +48,7 @@ namespace Domestica.Budget.API.Endpoints
                 }).RequireAuthorization();
 
             app.MapPost(
-                "transactions/outcome",
+                "api/transactions/outcome",
                 async (AddOutcomeTransactionCommand command, ISender sender, CancellationToken cancellationToken) =>
                 {
                     var result = await sender.Send(command, cancellationToken);
@@ -59,7 +59,7 @@ namespace Domestica.Budget.API.Endpoints
                 }).RequireAuthorization();
 
             app.MapDelete(
-                "transactions/{transactionId}",
+                "api/transactions/{transactionId}",
                 async (
                     [FromRoute] string transactionId,
                     ISender sender,
