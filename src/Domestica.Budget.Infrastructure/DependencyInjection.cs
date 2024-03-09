@@ -10,13 +10,20 @@ using Domestica.Budget.Domain.Transactions;
 using Domestica.Budget.Domain.TransactionSubcategories;
 using Domestica.Budget.Domain.Users;
 using Domestica.Budget.Infrastructure.Authentication;
+using Domestica.Budget.Infrastructure.Data;
 using Domestica.Budget.Infrastructure.Email;
 using Domestica.Budget.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Protocols.Configuration;
+using Npgsql;
+using StackExchange.Redis;
+using System.Text.RegularExpressions;
 using AuthenticationOptions = Domestica.Budget.Infrastructure.Authentication.AuthenticationOptions;
 using AuthenticationService = Domestica.Budget.Infrastructure.Authentication.AuthenticationService;
 using IAuthenticationService = Domestica.Budget.Application.Abstractions.Authentication.IAuthenticationService;
@@ -27,9 +34,10 @@ namespace Domestica.Budget.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(
             this IServiceCollection services,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IWebHostEnvironment env)
         {
-            services.AddPersistence(configuration);
+            services.AddPersistence(configuration, env);
 
             services.AddAuthentication(configuration);
 
@@ -38,20 +46,10 @@ namespace Domestica.Budget.Infrastructure
             return services;
         }
 
-        private static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
+        private static void AddPersistence(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
         {
-            var connectionString =
-                configuration.GetConnectionString("Database") ??
-                throw new ArgumentNullException(nameof(configuration));
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseNpgsql(connectionString, o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
-                    .UseSnakeCaseNamingConvention();
-            });
-
-            services.AddStackExchangeRedisCache(options =>
-                options.Configuration = configuration.GetConnectionString("Cache"));
+            new PostgresConnectionFactory(configuration, env).Connect(services);
+            new RedisConnectionFactory(configuration, env).Connect(services);
 
             services.AddScoped<IAccountRepository, AccountRepository>();
 
@@ -109,5 +107,6 @@ namespace Domestica.Budget.Infrastructure
             
             services.AddScoped<IUserContext, UserContext>();
         }
+
     }
 }

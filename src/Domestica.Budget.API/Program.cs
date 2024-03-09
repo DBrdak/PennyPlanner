@@ -10,7 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.Host.UseSerilog((context, loggerConfig) =>
     loggerConfig.ReadFrom.Configuration(context.Configuration));
 
-builder.Services.InjectDependencies(builder.Configuration);
+builder.Services.InjectDependencies(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 
