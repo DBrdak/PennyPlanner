@@ -11,14 +11,17 @@ namespace Domestica.Budget.API.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
-        public static IServiceCollection InjectDependencies(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection InjectDependencies(
+            this IServiceCollection services,
+            IConfiguration configuration,
+            IWebHostEnvironment env)
         {
             services.AddHealthChecks()
                 .AddApplicationStatus()
                 .AddNpgSql(configuration.GetConnectionString("Database") ?? string.Empty)
                 .AddRedis(configuration.GetConnectionString("Cache") ?? string.Empty);
 
-            services.AddInfrastructure(configuration);
+            services.AddInfrastructure(configuration, env);
             services.AddApplication();
             services.AddCarter();
 
