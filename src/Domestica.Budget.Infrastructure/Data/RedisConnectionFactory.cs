@@ -21,7 +21,8 @@ namespace Domestica.Budget.Infrastructure.Data
         internal RedisConnectionFactory(IConfiguration configuration, IWebHostEnvironment env)
         {
             var connectionString = env.IsDevelopment() ?
-                configuration.GetConnectionString("Cache") :
+                configuration.GetConnectionString("Cache") ??
+                throw new InvalidConfigurationException("Redis connection string not found") :
                 configuration.GetValue<string>("REDISCLOUD_URL") ??
                 throw new InvalidConfigurationException("Redis connection string not found");
 
