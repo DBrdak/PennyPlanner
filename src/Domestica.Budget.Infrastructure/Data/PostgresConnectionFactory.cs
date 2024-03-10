@@ -24,7 +24,8 @@ namespace Domestica.Budget.Infrastructure.Data
         internal PostgresConnectionFactory(IConfiguration configuration, IWebHostEnvironment env)
         {
             var connectionString = env.IsDevelopment() ?
-                configuration.GetConnectionString("Database") :
+                configuration.GetConnectionString("Database") ??
+                throw new InvalidConfigurationException("Postgres connection string not found") :
                 configuration.GetValue<string>("DATABASE_URL") ?? 
                 throw new InvalidConfigurationException("Postgres connection string not found");
 
@@ -38,23 +39,23 @@ namespace Domestica.Budget.Infrastructure.Data
 
         private string PostgresConnectionStringFromUrl(string url)
         {
-            if (!Regex.IsMatch(url, postgresUrlPattern))
+            var match = Regex.Match(url, postgresUrlPattern);
+
+            if (!match.Success)
             {
                 ThrowInvalidConnectionStringException();
             }
 
-            var builder = new NpgsqlConnectionStringBuilder(url);
-
-            var host = builder.Host ?? throw ThrowInvalidConnectionStringException();
-            var port = builder.Port;
-            var database = builder.Database ?? throw ThrowInvalidConnectionStringException();
-            var username = builder.Username ?? throw ThrowInvalidConnectionStringException();
-            var password = builder.Password ?? throw ThrowInvalidConnectionStringException();
+            var host = match.Groups["host"].Value ?? throw ThrowInvalidConnectionStringException();
+            var port = match.Groups["port"].Value;
+            var database = match.Groups["database"].Value ?? throw ThrowInvalidConnectionStringException();
+            var username = match.Groups["username"].Value ?? throw ThrowInvalidConnectionStringException();
+            var password = match.Groups["password"].Value ?? throw ThrowInvalidConnectionStringException();
 
             return GetPostgresConnectionString(host, port, database, username, password);
         }
 
-        private string GetPostgresConnectionString(string host, int port, string database, string username, string password) =>
+        private string GetPostgresConnectionString(string host, string port, string database, string username, string password) =>
             $"Host={host};Port={port};Database={database};Username={username};Password={password}";
 
         private Exception ThrowInvalidConnectionStringException() =>
