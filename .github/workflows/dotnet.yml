@@ -7,10 +7,10 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  build_test:
     runs-on: ubuntu-latest
-
+    #environment: 
+      #name: Development
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -18,8 +18,13 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore src/
+      run: dotnet restore PennyPlanner.sln
+      
+    #- name: Set Environment Variables
+      #run: |
+        #echo "Setting environment variables..."
+      
     - name: Build
-      run: dotnet build src/ --no-restore
+      run: dotnet build PennyPlanner.sln --no-restore
     - name: Test
-      run: dotnet test src/ --no-build --verbosity normal
+      run: dotnet test PennyPlanner.sln --no-build --verbosity normal
