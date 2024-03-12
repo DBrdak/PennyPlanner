@@ -7,7 +7,7 @@
     <ProjectGuid>7ef88197-d41b-47a3-9e0f-121bd74db974</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
-    <DockerServiceName>domestica.budget.api</DockerServiceName>
+    <DockerServiceName>penny-planner</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

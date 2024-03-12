@@ -4,7 +4,232 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Imports Cleanup" />
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Imports Cleanup">
+      <change beforePath="$PROJECT_DIR$/../../.files/domestica-realm-export.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Domestica.Budget.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../docker-compose.dcproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.dcproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../docker-compose.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.override.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Domestica.Budget.API.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/Accounts.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/BudgetPlans.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/TransactionCategories.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/TransactionEntities.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/TransactionSubcategories.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/Transactions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Endpoints/Users.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Extensions/ApplicationBuilderExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Middlewares/ExceptionHandlingMiddleware.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Middlewares/MonitoringMiddleware.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/Properties/launchSettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/appsettings.Development.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/appsettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/asset-manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/assets/FB_Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/assets/Google_Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/assets/penny.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/static/css/main.67670293.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/static/css/main.67670293.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/static/js/787.13e3e0c6.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/static/js/787.13e3e0c6.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/static/js/main.1bdabba9.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/static/js/main.1bdabba9.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.API/wwwroot/static/js/main.1bdabba9.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Abstractions/Authentication/IJwtService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Abstractions/Authentication/IPasswordService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Abstractions/Authentication/IUserContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Abstractions/Email/IEmailService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Abstractions/Messaging/Caching/CacheKey.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Abstractions/Messaging/Caching/ICacheRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Abstractions/Messaging/ICachedQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/AccountModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/AddAccount/AccountType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/AddAccount/AddAccountCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/AddAccount/AddAccountCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/AddAccount/AddAccountCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/AddAccount/NewAccountData.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/GetAccounts/GetAccountsQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/GetAccounts/GetAccountsQueryHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/RemoveAccount/RemoveAccountCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/RemoveAccount/RemoveAccountCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/UpdateAccount/AccountUpdateData.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/UpdateAccount/UpdateAccountCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/UpdateAccount/UpdateAccountCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Accounts/UpdateAccount/UpdateAccountCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/ApplicationAssemblyReference.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Behaviors/CacheInvalidationBehavior.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Behaviors/DomainEventPublishBehavior.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Behaviors/LoggingBehavior.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Behaviors/QueryCachingBehavior.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Behaviors/ValidationBehavior.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/BudgetPlanModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/BudgetedTransactionCategoryModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/DomainEventHandlers/BudgetPlanCategoryBudgetedDomainEventHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/GetBudgetPlan/GetBudgetPlanQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/GetBudgetPlan/GetBudgetPlanQueryHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/SetBudgetPlanCategories/BudgetedTransactionCategoryValues.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/SetBudgetPlanCategories/SetBudgetPlanCategoriesCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/SetBudgetPlanCategories/SetBudgetPlanCategoriesCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/SetBudgetPlanCategories/SetBudgetPlanCategoriesCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/UpdateBudgetPlanCategory/UpdateBudgetPlanCategoryCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/UpdateBudgetPlanCategory/UpdateBudgetPlanCategoryCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/UpdateBudgetPlanCategory/UpdateBudgetPlanCategoryCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/BudgetPlans/UpdateBudgetPlanCategory/UpdateBudgetPlanCategoryValues.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/DependencyInjection.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Domestica.Budget.Application.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Settings/ValidationSettings/AccountValidationSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Settings/ValidationSettings/TransactionCategoryValidationSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Settings/ValidationSettings/TransactionEntityValidationSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Settings/ValidationSettings/TransactionSubcategoryValidationSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Settings/ValidationSettings/UserValidationSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Shared/Models/MoneyModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/AddTransactionCategory/AddTransactionCategoryCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/AddTransactionCategory/AddTransactionCategoryCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/AddTransactionCategory/AddTransactionCategoryCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/AddTransactionCategory/TransactionCategoryType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/DeleteTransactionCategory/DeleteTransactionCategoryCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/DeleteTransactionCategory/DeleteTransactionCategoryCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/GetTransactionCategories/GetTransactionCategoriesQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/GetTransactionCategories/GetTransactionCategoriesQueryHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/TransactionCategoryModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/UpdateTransactionCategory/UpdateTransactionCategoryCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/UpdateTransactionCategory/UpdateTransactionCategoryCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionCategories/UpdateTransactionCategory/UpdateTransactionCategoryCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/AddTransactionEntity/AddTransactionEntityCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/AddTransactionEntity/AddTransactionEntityCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/AddTransactionEntity/AddTransactionEntityCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/AddTransactionEntity/TransactionEntityType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/GetTransactionEntities/GetTransactionEntitiesQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/GetTransactionEntities/GetTransactionEntitiesQueryHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/RemoveTransactionEntity/RemoveTransactionEntityCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/RemoveTransactionEntity/RemoveTransactionEntityHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/TransactionEntityModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/UpdateTransactionEntity/UpdateTransactionEntityCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/UpdateTransactionEntity/UpdateTransactionEntityCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionEntities/UpdateTransactionEntity/UpdateTransactionEntityCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionSubcategories/AddTransactionSubcategory/AddTransactionSubcategoryCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionSubcategories/AddTransactionSubcategory/AddTransactionSubcategoryCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionSubcategories/AddTransactionSubcategory/AddTransactionSubcategoryCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionSubcategories/RemoveTransactionSubcategory/RemoveTransactionSubcategoryCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionSubcategories/RemoveTransactionSubcategory/RemoveTransactionSubcategoryCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionSubcategories/RemoveTransactionSubcategory/RemoveTransactionSubcategoryCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionSubcategories/TransactionSubcategoryModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionSubcategories/UpdateTransactionSubcategory/UpdateTransactionSubcategoryCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionSubcategories/UpdateTransactionSubcategory/UpdateTransactionSubcategoryCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/TransactionSubcategories/UpdateTransactionSubcategory/UpdateTransactionSubcategoryCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddIncomeTransaction/AddIncomeTransactionCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddInternalTransaction/AddInternalTransactionCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddInternalTransaction/AddInternalTransactionCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddInternalTransaction/AddInternalTransactionCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddOutcomeTransaction/AddOutcomeTransactionCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddOutcomeTransaction/AddOutcomeTransactionCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/AddOutcomeTransaction/AddOutcomeTransactionValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/DomainEventHandlers/TransactionCreatedDomainEventHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/DomainEventHandlers/TransactionDeletedDomainEventHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/GetTransactions/GetTransactionsQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/GetTransactions/GetTransactionsQueryHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/RemoveTransaction/RemoveTransactionCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/RemoveTransaction/RemoveTransactionCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Transactions/TransactionModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/DomainEventHandlers/UserCreatedDomainEventHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/GetCurrentUser/GetCurrentUserQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/GetCurrentUser/GetCurrentUserQueryHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/LogInUser/AccessToken.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/LogInUser/LogInUserCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/LogInUser/LogInUserCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/RegisterUser/RegisterUserCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/RegisterUser/RegisterUserCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/RegisterUser/RegisterUserCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Application/Users/UserModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/Account.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/AccountId.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/AccountName.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/IAccountRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/SavingsAccounts/SavingsAccount.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Accounts/TransactionalAccounts/TransactionalAccount.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/BudgetPlans/BudgetPlan.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/BudgetPlans/BudgetPlanId.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/BudgetPlans/BudgetedTransactionCategory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/BudgetPlans/DomainEvents/BudgetPlanCategoryBudgetedDomainEvent.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/BudgetPlans/IBudgetPlanRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Domestica.Budget.Domain.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Shared/DateTimeConverter.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Shared/IdentifiedEntity.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionCategories/ITransactionCategoryRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionCategories/IncomeTransactionCategory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionCategories/OutcomeTransactionCategory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionCategories/TransactionCategory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionCategories/TransactionCategoryId.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionCategories/TransactionCategoryValue.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionEntities/ITransactionEntityRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionEntities/TransactionEntity.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionEntities/TransactionEntityId.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionEntities/TransactionEntityName.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionEntities/TransactionRecipients/TransactionRecipient.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionEntities/TransactionSenders/TransactionSender.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionSubcategories/ITransactionSubcategoryRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionSubcategories/TransactionSubcategory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionSubcategories/TransactionSubcategoryId.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/TransactionSubcategories/TransactionSubcategoryValue.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Transactions/DomainEvents/TransactionCreatedDomainEvent.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Transactions/DomainEvents/TransactionDeletedDomainEvent.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Transactions/ITransactionRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Transactions/Transaction.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Transactions/TransactionId.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Transactions/TransactionService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Users/Email.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Users/Events/UserCreatedDomainEvent.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Users/IPasswordService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Users/IUserRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Users/Password.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Users/User.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Users/UserErrors.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Users/UserId.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Domain/Users/Username.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/ApplicationDbContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Authentication/AuthenticationOptions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Authentication/AuthenticationOptionsSetup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Authentication/JwtBearerOptionsSetup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Authentication/JwtService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Authentication/Models/AuthorizationToken.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Authentication/Models/UserRepresentationModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Authentication/PasswordService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Authentication/UserContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Configurations/AccountConfiguration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Configurations/BudgetPlanConfiguration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Configurations/TransactionCategoryConfiguration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Configurations/TransactionConfiguration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Configurations/TransactionEntitiesConfiguration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Configurations/TransactionSubcategoryConfiguration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Configurations/UserConfiguration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Data/IConnectionFactory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Data/PostgresConnectionFactory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Data/RedisConnectionFactory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/DependencyInjection.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Domestica.Budget.Infrastructure.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Email/EmailProviderOptions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Email/EmailService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Migrations/20240312021309_init.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Migrations/20240312021309_init.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/AccountRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/BudgetPlanRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/CacheRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/Repository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/TransactionCategoryRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/TransactionEntityRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/TransactionRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/TransactionSubcategoryRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Domestica.Budget.Infrastructure/Repositories/UserRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,13 +259,13 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "init-develop",
-    "last_opened_file_path": "D:/Programownie/Projekty/Domestica/Domestica.Budget/src/client-app",
+    "last_opened_file_path": "D:/Programownie/Projekty/Domestica/PennyPlanner/src/client-app",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\Programownie\\Projekty\\Domestica\\Domestica.Budget\\src\\client-app\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "D:\\Programownie\\Projekty\\Domestica\\PennyPlanner\\src\\client-app\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -139,6 +364,7 @@
       <workItem from="1709688304873" duration="6541000" />
       <workItem from="1710092480758" duration="31000" />
       <workItem from="1710206603690" duration="1824000" />
+      <workItem from="1710258123887" duration="1187000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>

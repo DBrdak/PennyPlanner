@@ -1,27 +1,27 @@
 version: '3.4'
 
 services:
-  domestica-budget-db:
+  penny-planner-db:
     image: postgres:latest
-    container_name: domestica-budget.db
+    container_name: penny-planner.db
 
-  domestica-budget-cache:
+  penny-planner-cache:
     image: redis
-    container_name: domestica-budget.cache
+    container_name: penny-planner.cache
 
-  domestica-budget.api:
-    image: ${DOCKER_REGISTRY-}domesticabudgetapi
-    container_name: domestica-budget.api
+  penny-planner.api:
+    image: ${DOCKER_REGISTRY-}pennyplanner
+    container_name: penny-planner.api
     build:
       context: .
-      dockerfile: src/Domestica.Budget.API/Dockerfile
+      dockerfile: src/PennyPlanner.API/Dockerfile
     depends_on:
-      - domestica-budget-db
-      - domestica-budget-cache
+      - penny-planner-db
+      - penny-planner-cache
 
-  domestica-budget-seq:
+  penny-planner-seq:
     image: datalust/seq:latest
-    container_name: domestica-budget.seq
+    container_name: penny-planner.seq
 
 volumes:
   postgres_data:
