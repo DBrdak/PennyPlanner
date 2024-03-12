@@ -35,8 +35,15 @@ namespace Domestica.Budget.Application.Behaviors
                 var keys = CacheKey.All(userId).ToList();
 
                 LogCacheInvalidationStart(request);
-                
-                keys.ForEach(RemoveKey);
+
+                try
+                {
+                    keys.ForEach(RemoveKey);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError("Problem while invalidatig cache", e);
+                }
 
                 LogCacheInvalidationSuccess(request);
 
