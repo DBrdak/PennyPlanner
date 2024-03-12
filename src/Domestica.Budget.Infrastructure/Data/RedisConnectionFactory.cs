@@ -9,12 +9,13 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.Configuration;
+using StackExchange.Redis;
 
 namespace Domestica.Budget.Infrastructure.Data
 {
     internal sealed class RedisConnectionFactory : IConnectionFactory
     {
-        private readonly string? _formatedConnectionString;
+        private readonly string _connectionString;
         private const string redisUrlPattern = @"redis:\/\/\w+:(\w+)@([^:]+):(\d+)";
         private const string redisConnectionStringPattern = @"(?<hostName>[^:]+):(?<portNumber>\d+)(?:,password=(?<password>\w+))?";
 
@@ -26,37 +27,14 @@ namespace Domestica.Budget.Infrastructure.Data
                 configuration.GetValue<string>("REDISCLOUD_URL") ??
                 throw new InvalidConfigurationException("Redis connection string not found");
 
-            if (Regex.IsMatch(connectionString, redisConnectionStringPattern))
-            {
-                _formatedConnectionString = connectionString;
-                return;
-            }
-
-            _formatedConnectionString = RedisConnectionStringFromUrl(connectionString);
+            _connectionString = connectionString;
         }
-
-        private string RedisConnectionStringFromUrl(string url)
-        {
-            var match = Regex.Match(url, redisUrlPattern);
-
-            if (!match.Success)
-            {
-                throw new ArgumentException("Provided Redis connectionString is invalid");
-            }
-
-            var password = match.Groups[1].Value;
-            var hostName = match.Groups[2].Value;
-            var portNumber = match.Groups[3].Value;
-
-            return GetRedisConnectionString(hostName, portNumber, password);
-        }
-
-        private string GetRedisConnectionString(string hostName, string portNumber, string password) =>
-            $"{hostName}:{portNumber},password={password}";
 
         public void Connect(IServiceCollection services)
         {
-            services.AddStackExchangeRedisCache(options => options.Configuration = _formatedConnectionString);
+            services.AddStackExchangeRedisCache(options => 
+                options.ConnectionMultiplexerFactory = async () => 
+                    await ConnectionMultiplexer.ConnectAsync(_connectionString));
         }
     }
 }
