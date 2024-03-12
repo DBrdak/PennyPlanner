@@ -50,7 +50,7 @@ namespace PennyPlanner.Application.BudgetPlans.SetBudgetPlanCategories
                     new (budgetedTransactionCategoryValues.BudgetedAmount, currency));
             }
 
-            _budgetPlanRepository.Update(budgetPlan, cancellationToken);
+            _budgetPlanRepository.Update(budgetPlan);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success(budgetPlan);

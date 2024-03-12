@@ -18,6 +18,6 @@ namespace PennyPlanner.Domain.BudgetPlans
 
         void Remove(BudgetPlan entity);
 
-        void Update(BudgetPlan budgetPlan, CancellationToken cancellationToken);
+        void Update(BudgetPlan budgetPlan);
     }
 }
