@@ -108,7 +108,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
                     }
                     catch (Exception e)
                     {
-                        LogCachingError(key, e);
+                        return (T)Result.Failure(Error.TaskFailed($"Problem while caching key {key}, exception: {e}"));
                     }
                 }
                 else
@@ -119,7 +119,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
                     }
                     catch (Exception e)
                     {
-                        LogCachingError(key, e);
+                        return (T)Result.Failure(Error.TaskFailed($"Problem while caching key {key}, exception: {e}"));
                     }
                 }
                 return result;
@@ -143,8 +143,5 @@ namespace Domestica.Budget.Infrastructure.Repositories
             JsonSerializer.Serialize(writer, value);
             return buffer.WrittenSpan.ToArray();
         }
-
-        private void LogCachingError(string key, Exception e) => 
-            _logger.LogError("Problem while caching key {key}, exception: {exception}", key, e.Message);
     }
 }
