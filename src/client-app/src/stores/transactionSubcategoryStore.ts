@@ -18,7 +18,7 @@ export default class TransactionSubcategoryStore {
         try {
             await agent.transactionSubcategories.addTransactionSubcategory(command)
         } catch (e) {
-            console.error(e);
+
         } finally {
             this.setLoading(false);
         }
@@ -29,7 +29,7 @@ export default class TransactionSubcategoryStore {
         try {
             await agent.transactionSubcategories.updateTransactionSubcategory(id, newValue)
         } catch (e) {
-            console.error(e);
+
         } finally {
             this.setLoading(false);
         }
@@ -40,7 +40,7 @@ export default class TransactionSubcategoryStore {
         try {
             await agent.transactionSubcategories.removeTransactionSubcategory(subcategoryId)
         } catch (e) {
-            console.error(e);
+
         } finally {
             this.setLoading(false);
         }

@@ -47,8 +47,9 @@ export default class BudgetPlanStore {
         try {
             const budgetPlan = await agent.budgetPlans.getBudgetPlan(params)
             this.setBudgetPlan(budgetPlan)
+            this.newBudgetedCategoriesRegistry.clear()
         } catch (e) {
-            console.log(e)
+
         } finally {
             this.setLoading(false)
         }
@@ -69,7 +70,7 @@ export default class BudgetPlanStore {
             })
             await this.loadBudgetPlan(this.onDate)
         } catch (e) {
-            console.log(e)
+
         } finally {
             this.setLoading(false)
         }
@@ -85,7 +86,7 @@ export default class BudgetPlanStore {
             await agent.budgetPlans.updateBudgetPlanCategory(this.budgetPlan.budgetPlanId, categoryId, updateValues)
             await this.loadBudgetPlan(this.onDate)
         } catch (e) {
-            console.log(e)
+
         } finally {
             this.setLoading(false)
         }

@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Imports Cleanup" />
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Imports Cleanup">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/agent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/agent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/accountStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/accountStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/budgetPlanStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/budgetPlanStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/categoryStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/categoryStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/transactionEntityStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/transactionEntityStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/transactionStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/transactionStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/transactionSubcategoryStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/transactionSubcategoryStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/userStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/userStore.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,7 +33,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2b8y7J1T6ElXBlZTzTqtG39cYiR" />
   <component name="ProjectViewState">
@@ -34,13 +46,13 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "init-develop",
-    "last_opened_file_path": "D:/Programownie/Projekty/Domestica/Domestica.Budget/src/client-app",
+    "last_opened_file_path": "D:/Programownie/Projekty/Domestica/PennyPlanner/src/client-app",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\Programownie\\Projekty\\Domestica\\Domestica.Budget\\src\\client-app\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "D:\\Programownie\\Projekty\\Domestica\\PennyPlanner\\src\\client-app\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -139,6 +151,7 @@
       <workItem from="1709688304873" duration="6541000" />
       <workItem from="1710092480758" duration="31000" />
       <workItem from="1710206603690" duration="1824000" />
+      <workItem from="1710258123887" duration="5953000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>

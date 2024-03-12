@@ -45,7 +45,7 @@ axios.interceptors.response.use(async(response) => {
         }
         return response
     }, (error) => {
-        if (error) {
+        if (error.response.data.name) {
             const errorMessage = error.response.data.name
             const errorMessages = errorMessage.split('\n')
             switch(error.response.status) {

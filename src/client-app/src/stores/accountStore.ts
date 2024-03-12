@@ -37,7 +37,7 @@ export default class AccountStore {
                 accounts.forEach((a) => this.setAccount(a));
             });
         } catch (e) {
-            console.error(e);
+
         } finally {
             this.setLoading(false);
         }
@@ -50,7 +50,7 @@ export default class AccountStore {
             this.accountsRegistry.clear()
             return account
         } catch (e) {
-            console.error(e)
+
         } finally {
             this.setLoading(false)
         }
@@ -63,7 +63,7 @@ export default class AccountStore {
             await this.loadAccounts()
             return this.getAccount(accountData.accountId)
         } catch (e) {
-            console.error(e);
+
         } finally {
             this.setLoading(false);
         }
@@ -75,7 +75,7 @@ export default class AccountStore {
             await agent.accounts.deleteAccount(accountId)
             this.removeAccount(accountId)
         } catch (e) {
-            console.log(e)
+
         } finally {
             this.setLoading(false)
         }

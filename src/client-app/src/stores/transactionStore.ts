@@ -53,7 +53,7 @@ export default class TransactionStore {
             this.transactionsRegistry.clear()
             transactions.forEach(t => this.setTransaction(t))
         } catch (e){
-            console.log(e)
+
         } finally {
             this.setLoading(false)
         }
@@ -63,14 +63,14 @@ export default class TransactionStore {
         this.setLoading(true)
         try {
             for (const id of this.transactionsIdToRemove) {
-                console.log(id)
+
                 await agent.transactions.deleteTransaction(id).then(() => {
                     this.removeTransactionIdToRemove(id)
                     this.loadTransactions()
                 })
             }
         } catch (e) {
-            console.log(e)
+
         } finally {
             this.setLoading(false)
         }
@@ -89,7 +89,7 @@ export default class TransactionStore {
                 toast.error('Invalid transaction type')
             }
         } catch (e) {
-            console.log(e)
+
         } finally {
             this.setLoading(false)
         }
