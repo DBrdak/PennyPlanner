@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 using CommonAbstractions.DB.Entities;
 using Domestica.Budget.Domain.Users.Events;
 using Money.DB;
@@ -7,36 +8,36 @@ namespace Domestica.Budget.Domain.Users
 {
     public sealed class User : Entity<UserId>
     {
-        public UserIdentityId IdentityId { get; private set; }
+        public Username Username { get; init; }
         public Email Email { get; private set; }
         public Currency Currency { get; private set; }
+        public string PasswordHash { get; private set; }
         public DateTime CreatedAt { get; init; }
 
-        private User(Email email, Currency currency) 
+        private User(Username username, Email email, Currency currency, string passwordHash) 
             : base(new UserId())
         {
+            Username = username;
             Email = email;
-            IdentityId = new UserIdentityId(string.Empty);
             Currency = currency;
+            PasswordHash = passwordHash;
             CreatedAt = DateTime.UtcNow;
         }
 
         [JsonConstructor]
-        private User()
-        { }
-
-        public static User Create(Email email, Currency currency)
+        private User(Username username, string passwordHash)
         {
-            var user = new User(email, currency);
-
-            return user;
+            Username = username;
+            PasswordHash = passwordHash;
         }
 
-        public void SetIdentityId(string id)
+        public static User Create(Username username, Email email, Currency currency, string passwordHash)
         {
-            IdentityId.UdpateId(id);
+            var user = new User(username, email, currency, passwordHash);
 
-            RaiseDomainEvent(new UserCreatedDomainEvent(IdentityId));
+            user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
+
+            return user;
         }
     }
 }

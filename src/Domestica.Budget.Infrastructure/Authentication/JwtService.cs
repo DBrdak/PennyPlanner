@@ -1,8 +1,13 @@
-﻿using System.Net.Http.Json;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Json;
+using System.Text;
 using Domestica.Budget.Application.Abstractions.Authentication;
+using Domestica.Budget.Domain.Users;
 using Domestica.Budget.Infrastructure.Authentication.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Responses.DB;
+using IPasswordService = Domestica.Budget.Application.Abstractions.Authentication.IPasswordService;
 
 namespace Domestica.Budget.Infrastructure.Authentication;
 
@@ -12,50 +17,48 @@ internal sealed class JwtService : IJwtService
         "Keycloak.AuthenticationFailed",
         "Failed to acquire access token do to authentication failure");
 
-    private readonly HttpClient _httpClient;
-    private readonly KeycloakOptions _keycloakOptions;
+    private readonly AuthenticationOptions _options;
+    private readonly IPasswordService _passwordService;
 
-    public JwtService(HttpClient httpClient, IOptions<KeycloakOptions> keycloakOptions)
+    public JwtService(IOptions<AuthenticationOptions> options, IPasswordService passwordService)
     {
-        _httpClient = httpClient;
-        _keycloakOptions = keycloakOptions.Value;
+        _passwordService = passwordService;
+        _options = options.Value;
     }
 
     public async Task<Result<string>> GetAccessTokenAsync(
-        string email,
+        User userToAuthenticate,
         string password,
         CancellationToken cancellationToken = default)
     {
-        try
-        {
-            var authRequestParameters = new KeyValuePair<string, string>[]
-            {
-                new("client_id", _keycloakOptions.AuthClientId),
-                new("client_secret", _keycloakOptions.AuthClientSecret),
-                new("scope", "openid email"),
-                new("grant_type", "password"),
-                new("username", email),
-                new("password", password)
-            };
+        var isPasswordCorrect = _passwordService.VerifyPassword(password, userToAuthenticate.PasswordHash);
 
-            var authorizationRequestContent = new FormUrlEncodedContent(authRequestParameters);
+        return isPasswordCorrect ? 
+            Generate(userToAuthenticate) : 
+            Result.Failure<string>(AuthenticationFailed);
+    }
 
-            var response = await _httpClient.PostAsync("", authorizationRequestContent, cancellationToken);
+    private string Generate(User user)
+    {
+        var claims = UserRepresentationModel
+            .FromUser(user)
+            .ToClaims();
 
-            response.EnsureSuccessStatusCode();
+        var signingCredentials = new SigningCredentials(
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)),
+            SecurityAlgorithms.HmacSha256);
 
-            var authorizationToken = await response.Content.ReadFromJsonAsync<AuthorizationToken>();
+        var token = new JwtSecurityToken(
+            _options.Issuer,
+            _options.Audience,
+            claims,
+            null,
+            DateTime.UtcNow.AddMinutes(_options.ExpireInMinutes),
+            signingCredentials);
 
-            if (authorizationToken is null)
-            {
-                return Result.Failure<string>(AuthenticationFailed);
-            }
+        var tokenValue = new JwtSecurityTokenHandler()
+            .WriteToken(token);
 
-            return authorizationToken.AccessToken;
-        }
-        catch (HttpRequestException)
-        {
-            return Result.Failure<string>(AuthenticationFailed);
-        }
+        return tokenValue;
     }
 }

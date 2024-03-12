@@ -4,9 +4,9 @@ using Domestica.Budget.Domain.Users;
 
 namespace Domestica.Budget.Application.Accounts.GetAccounts
 {
-    public sealed record GetAccountsQuery(UserIdentityId UserId) : ICachedQuery<List<AccountModel>>
+    public sealed record GetAccountsQuery(UserId UserId) : ICachedQuery<List<AccountModel>>
     {
-        public CacheKey CacheKey => CacheKey.Accounts(UserId.Value);
+        public CacheKey CacheKey => CacheKey.Accounts(UserId.Value.ToString());
         public TimeSpan? Expiration => null;
     }
 }

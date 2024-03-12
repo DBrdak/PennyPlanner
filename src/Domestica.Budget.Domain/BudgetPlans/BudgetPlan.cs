@@ -21,7 +21,7 @@ namespace Domestica.Budget.Domain.BudgetPlans
         private BudgetPlan()
         { }
 
-        private BudgetPlan(DateTimeRange budgetPeriod, UserIdentityId userId): base(userId)
+        private BudgetPlan(DateTimeRange budgetPeriod, UserId userId): base(userId)
         {
             _budgetedTransactionCategories = new ();
             BudgetPeriod = budgetPeriod.ParseToUTC();
@@ -29,14 +29,14 @@ namespace Domestica.Budget.Domain.BudgetPlans
             UserId = userId;
         }
 
-        public static BudgetPlan Create(DateTimeRange budgetPeriod, UserIdentityId userId)
+        public static BudgetPlan Create(DateTimeRange budgetPeriod, UserId userId)
         {
             Validate(budgetPeriod);
 
             return new BudgetPlan(budgetPeriod, userId);
         }
 
-        public static BudgetPlan CreateForMonth(DateTime date, UserIdentityId userId) => Create(GetMonthRangeFromDateTime(date), userId);
+        public static BudgetPlan CreateForMonth(DateTime date, UserId userId) => Create(GetMonthRangeFromDateTime(date), userId);
 
         private static DateTimeRange GetMonthRangeFromDateTime(DateTime date)
         {

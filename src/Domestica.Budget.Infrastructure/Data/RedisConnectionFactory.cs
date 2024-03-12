@@ -29,6 +29,7 @@ namespace Domestica.Budget.Infrastructure.Data
             if (Regex.IsMatch(connectionString, redisConnectionStringPattern))
             {
                 _formatedConnectionString = connectionString;
+                return;
             }
 
             _formatedConnectionString = RedisConnectionStringFromUrl(connectionString);

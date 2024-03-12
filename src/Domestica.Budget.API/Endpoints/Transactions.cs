@@ -18,7 +18,7 @@ namespace Domestica.Budget.API.Endpoints
                 "api/transactions",
                 async (ISender sender, IUserContext userContext, CancellationToken cancellationToken) =>
                 {
-                    var result = await sender.Send(new GetTransactionsQuery(new(userContext.IdentityId)), cancellationToken);
+                    var result = await sender.Send(new GetTransactionsQuery(new(Guid.Parse(userContext.IdentityId))), cancellationToken);
 
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :

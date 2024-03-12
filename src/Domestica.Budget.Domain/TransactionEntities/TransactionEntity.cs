@@ -15,7 +15,7 @@ namespace Domestica.Budget.Domain.TransactionEntities
         protected TransactionEntity()
         { }
 
-        protected TransactionEntity(TransactionEntityName name, UserIdentityId userId) : base(userId)
+        protected TransactionEntity(TransactionEntityName name, UserId userId) : base(userId)
         {
             Name = name;
             UserId = userId;

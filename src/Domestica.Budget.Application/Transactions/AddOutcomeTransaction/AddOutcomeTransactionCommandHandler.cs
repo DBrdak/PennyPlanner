@@ -101,7 +101,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
                        subcategoryValue,
                        category,
                        cancellationToken) ??
-                   new (subcategoryValue, category, new UserIdentityId(_userContext.IdentityId));
+                   new (subcategoryValue, category, new UserId(_userContext.IdentityId));
         }
 
         private async Task<OutcomeTransactionCategory> GetOrCreateCategory(TransactionCategoryValue categoryValue, CancellationToken cancellationToken)
@@ -109,7 +109,7 @@ namespace Domestica.Budget.Application.Transactions.AddOutcomeTransaction
             return await _categoryRepository.GetByValueAsync<OutcomeTransactionCategory>(
                        categoryValue,
                        cancellationToken) ??
-                   new(categoryValue, new UserIdentityId(_userContext.IdentityId));
+                   new(categoryValue, new UserId(_userContext.IdentityId));
         }
 
         private static bool IsNewRecipient(TransactionRecipient? recipient)

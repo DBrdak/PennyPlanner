@@ -1,58 +1,57 @@
-﻿using Domestica.Budget.Domain.Users;
+﻿using System.Security.Claims;
+using Domestica.Budget.Domain.Users;
 
 namespace Domestica.Budget.Infrastructure.Authentication.Models;
 
-public sealed class UserRepresentationModel
+public sealed record UserRepresentationModel
 {
-    public Dictionary<string, string> Access { get; set; }
+    private readonly string _cratedTimeStampClaimName = nameof(CreatedTimestamp);
+    public long CreatedTimestamp { get; init; }
 
-    public Dictionary<string, List<string>> Attributes { get; set; }
+    private readonly string _emailClaimName = nameof(Email);
+    public string Email { get; init; }
 
-    public Dictionary<string, string> ClientRoles { get; set; }
+    private readonly string _emailVerifiedClaimName = nameof(EmailVerified);
+    public bool EmailVerified { get; init; }
 
-    public long? CreatedTimestamp { get; set; }
+    private readonly string _idClaimName = nameof(Id);
+    public string Id { get; init; }
 
-    public CredentialRepresentationModel[] Credentials { get; set; }
+    private readonly string _usernameClaimName = nameof(Username);
+    public string Username { get; init; }
 
-    public string[] DisableableCredentialTypes { get; set; }
+    private readonly string _currencyClaimName = nameof(Currency);
+    public string Currency { get; init; }
 
-    public string Email { get; set; }
-
-    public bool? EmailVerified { get; set; }
-
-    public bool? Enabled { get; set; }
-
-    public string FederationLink { get; set; }
-
-    public string Id { get; set; }
-
-    public string[] Groups { get; set; }
-
-    public string Username { get; set; }
-    public string FirstName { get; set; }
-
-    public int? NotBefore { get; set; }
-
-    public string Origin { get; set; }
-
-    public string[] RealmRoles { get; set; }
-
-    public string[] RequiredActions { get; set; }
-
-    public string Self { get; set; }
-
-    public string ServiceAccountClientId { get; set; }
+    private UserRepresentationModel(long createdTimestamp, string email, bool emailVerified, string id, string username, string currency)
+    {
+        CreatedTimestamp = createdTimestamp;
+        Email = email;
+        EmailVerified = emailVerified;
+        Id = id;
+        Username = username;
+        Currency = currency;
+    }
 
     internal static UserRepresentationModel FromUser(User user) =>
-        new()
+        new(
+            DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+            user.Email.Value,
+            true,
+            user.Id.Value.ToString(),
+            user.Email.Value,
+            user.Currency.Code);
+
+    internal Claim[] ToClaims()
+    {
+        return new[]
         {
-            Email = user.Email.Value,
-            Username = user.Email.Value,
-            FirstName = user.Currency.Code,
-            Enabled = true,
-            EmailVerified = true,
-            CreatedTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
-            Attributes = new Dictionary<string, List<string>>(),
-            RequiredActions = Array.Empty<string>()
+            new Claim(_cratedTimeStampClaimName, CreatedTimestamp.ToString()),
+            new Claim(_emailClaimName, Email),
+            new Claim(_emailVerifiedClaimName, EmailVerified.ToString()),
+            new Claim(_idClaimName, Id),
+            new Claim(_usernameClaimName, Username),
+            new Claim(_currencyClaimName, Currency),
         };
+    }
 }

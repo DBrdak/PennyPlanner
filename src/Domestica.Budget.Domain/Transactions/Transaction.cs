@@ -39,7 +39,7 @@ namespace Domestica.Budget.Domain.Transactions
             Money.DB.Money transactionAmount,
             TransactionSubcategory? subcategory,
             DateTime transactionDateTime,
-            UserIdentityId userId) : base(userId)
+            UserId userId) : base(userId)
         {
             AccountId = account.Id;
             FromAccountId = fromAccount?.Id;

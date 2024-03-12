@@ -2,7 +2,7 @@
 {
     public interface IUserRepository
     {
-        Task<User?> GetByIdentityIdAsync(UserIdentityId identityId, CancellationToken cancellationToken = default, bool asNoTracking = false);
+        Task<User?> GetByIdAsync(UserId userId, CancellationToken cancellationToken = default, bool asNoTracking = false);
         Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken = default, bool asNoTracking = false);
 
         Task AddAsync(User user, CancellationToken cancellationToken);

@@ -24,7 +24,7 @@ namespace Domestica.Budget.Application.BudgetPlans.GetBudgetPlan
             var budgetPlan = await _budgetPlanRepository.GetBudgetPlanByDateAsync(request.ValidOnDate, cancellationToken, true);
 
             return budgetPlan is null ?
-                BudgetPlanModel.FromDomainObject(BudgetPlan.CreateForMonth(request.ValidOnDate, new UserIdentityId(_userContext.IdentityId))) :
+                BudgetPlanModel.FromDomainObject(BudgetPlan.CreateForMonth(request.ValidOnDate, new UserId(_userContext.IdentityId))) :
                 BudgetPlanModel.FromDomainObject(budgetPlan);
         }
 

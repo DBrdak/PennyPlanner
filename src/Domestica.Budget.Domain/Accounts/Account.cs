@@ -20,7 +20,7 @@ namespace Domestica.Budget.Domain.Accounts
         protected Account()
         { }
 
-        protected Account(AccountName name, Currency currency, decimal initialBalance, UserIdentityId userId) : base(userId)
+        protected Account(AccountName name, Currency currency, decimal initialBalance, UserId userId) : base(userId)
         {
             Name = name;
             _transactions = new();

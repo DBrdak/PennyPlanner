@@ -13,7 +13,7 @@ namespace Domestica.Budget.Domain.Accounts.TransactionalAccounts
         public TransactionalAccount(
             AccountName name,
             Currency currency,
-            UserIdentityId userId,
+            UserId userId,
             decimal initialBalance = 0) : base(
             name,
             currency,

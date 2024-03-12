@@ -17,13 +17,13 @@ namespace Domestica.Budget.Infrastructure.Configurations
         {
             builder.ToTable("users");
 
-            builder.HasKey(user => user.IdentityId);
+            builder.HasKey(user => user.Id);
 
             builder.Property(user => user.Id)
                 .HasConversion(userId => userId.Value, value => new UserId(value));
 
-            builder.Property(user => user.IdentityId)
-                .HasConversion(userId => userId.Value, value => new UserIdentityId(value));
+            builder.Property(user => user.Username)
+                .HasConversion(username => username.Value, value => new Username(value));
 
             builder.Property(user => user.Email)
                 .HasMaxLength(400)
@@ -63,8 +63,6 @@ namespace Domestica.Budget.Infrastructure.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasIndex(user => user.Email).IsUnique();
-
-            builder.HasIndex(user => user.Id).IsUnique();
         }
     }
 }

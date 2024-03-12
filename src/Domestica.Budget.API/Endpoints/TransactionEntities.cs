@@ -17,7 +17,7 @@ namespace Domestica.Budget.API.Endpoints
                 "api/transaction-entities",
                 async (ISender sender, IUserContext userContext, CancellationToken cancellationToken) =>
                 {
-                    var result = await sender.Send(new GetTransactionEntitiesQuery(new(userContext.IdentityId)), cancellationToken);
+                    var result = await sender.Send(new GetTransactionEntitiesQuery(new(Guid.Parse(userContext.IdentityId))), cancellationToken);
 
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :

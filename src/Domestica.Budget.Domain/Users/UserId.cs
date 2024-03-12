@@ -9,6 +9,11 @@ public record UserId : EntityId
 
     }
 
+    public UserId(string value) : base(Guid.Parse(value))
+    {
+
+    }
+
     public UserId() : base(Guid.NewGuid())
     {
 

@@ -8,15 +8,18 @@ namespace Domestica.Budget.Infrastructure.Repositories
         where TEntityId : EntityId
         where TEntity : Entity<TEntityId>
     {
-        private readonly IUserContext _userContext;
         protected readonly ApplicationDbContext DbContext;
-        protected readonly UserIdentityId UserId;
+        protected readonly UserId? UserId;
 
         protected Repository(ApplicationDbContext dbContext, IUserContext userContext)
         {
             DbContext = dbContext;
-            _userContext = userContext;
-            UserId = new UserIdentityId(_userContext.TryGetIdentityId() ?? string.Empty);
+
+            var userId = userContext.TryGetIdentityId();
+
+            UserId = userId is not null ?
+                new UserId(Guid.Parse(userId)) :
+                null;
         }
         /*
         public async Task<TEntity?> GetByIdAsync(TEntityId id, CancellationToken cancellationToken = default, bool asNoTracking = false)

@@ -7,9 +7,9 @@ namespace Domestica.Budget.Domain.Shared
     public class IdentifiedEntity<TId> : Entity<TId>
         where TId : EntityId, new()
     {
-        public UserIdentityId UserId { get; init; }
+        public UserId UserId { get; init; }
 
-        public IdentifiedEntity(UserIdentityId userId) : base(new TId())
+        public IdentifiedEntity(UserId userId) : base(new TId())
         {
             UserId = userId;
         }

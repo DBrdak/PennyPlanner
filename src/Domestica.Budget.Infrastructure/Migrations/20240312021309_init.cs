@@ -16,15 +16,16 @@ namespace Domestica.Budget.Infrastructure.Migrations
                 name: "users",
                 columns: table => new
                 {
-                    identity_id = table.Column<string>(type: "text", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    username = table.Column<string>(type: "text", nullable: false),
                     email = table.Column<string>(type: "character varying(400)", maxLength: 400, nullable: false),
                     currency = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    id = table.Column<Guid>(type: "uuid", nullable: true)
+                    password_hash = table.Column<string>(type: "text", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_users", x => x.identity_id);
+                    table.PrimaryKey("pk_users", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -36,16 +37,16 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     balance_amount = table.Column<decimal>(type: "numeric", nullable: false),
                     balance_currency = table.Column<string>(type: "text", nullable: false),
                     account_type = table.Column<string>(type: "text", nullable: false),
-                    user_id = table.Column<string>(type: "text", nullable: false)
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_accounts", x => x.id);
                     table.ForeignKey(
-                        name: "fk_accounts_users_user_identity_id",
+                        name: "fk_accounts_users_user_id1",
                         column: x => x.user_id,
                         principalTable: "users",
-                        principalColumn: "identity_id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -56,16 +57,16 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     budget_period_start = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     budget_period_end = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    user_id = table.Column<string>(type: "text", nullable: false)
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_budget_plans", x => x.id);
                     table.ForeignKey(
-                        name: "fk_budget_plans_users_user_identity_id",
+                        name: "fk_budget_plans_users_user_id1",
                         column: x => x.user_id,
                         principalTable: "users",
-                        principalColumn: "identity_id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -76,16 +77,16 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     value = table.Column<string>(type: "text", nullable: false),
                     transaction_category_type = table.Column<string>(type: "text", nullable: false),
-                    user_id = table.Column<string>(type: "text", nullable: false)
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_transaction_categories", x => x.id);
                     table.ForeignKey(
-                        name: "fk_transaction_categories_users_user_identity_id",
+                        name: "fk_transaction_categories_users_user_id1",
                         column: x => x.user_id,
                         principalTable: "users",
-                        principalColumn: "identity_id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -96,16 +97,16 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     entity_type = table.Column<string>(type: "text", nullable: false),
-                    user_id = table.Column<string>(type: "text", nullable: false)
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_transaction_entities", x => x.id);
                     table.ForeignKey(
-                        name: "fk_transaction_entities_users_user_identity_id",
+                        name: "fk_transaction_entities_users_user_id1",
                         column: x => x.user_id,
                         principalTable: "users",
-                        principalColumn: "identity_id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -146,7 +147,7 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     value = table.Column<string>(type: "text", nullable: false),
                     category_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    user_id = table.Column<string>(type: "text", nullable: false)
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -158,10 +159,10 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_transaction_subcategories_users_user_identity_id",
+                        name: "fk_transaction_subcategories_users_user_id1",
                         column: x => x.user_id,
                         principalTable: "users",
-                        principalColumn: "identity_id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -182,7 +183,7 @@ namespace Domestica.Budget.Infrastructure.Migrations
                     transaction_date_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     budget_plan_id = table.Column<Guid>(type: "uuid", nullable: true),
                     transaction_entity_id = table.Column<Guid>(type: "uuid", nullable: true),
-                    user_id = table.Column<string>(type: "text", nullable: false)
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -242,10 +243,10 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "fk_transactions_users_user_identity_id",
+                        name: "fk_transactions_users_user_id1",
                         column: x => x.user_id,
                         principalTable: "users",
-                        principalColumn: "identity_id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -338,12 +339,6 @@ namespace Domestica.Budget.Infrastructure.Migrations
                 name: "ix_users_email",
                 table: "users",
                 column: "email",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "ix_users_id",
-                table: "users",
-                column: "id",
                 unique: true);
         }
 
