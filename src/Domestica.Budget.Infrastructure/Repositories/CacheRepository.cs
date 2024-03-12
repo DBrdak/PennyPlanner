@@ -3,18 +3,22 @@ using Responses.DB;
 using System.Buffers;
 using System.Text.Json;
 using Domestica.Budget.Application.Abstractions.Messaging.Caching;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Domestica.Budget.Infrastructure.Repositories
 {
     public class CacheRepository : ICacheRepository
     {
         private readonly IDistributedCache _cache;
+        private readonly ILogger<CacheRepository> _logger;
         private readonly DistributedCacheEntryOptions _defaultExpiration = new DistributedCacheEntryOptions
         { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5) };
 
-        public CacheRepository(IDistributedCache cache)
+        public CacheRepository(IDistributedCache cache, ILogger<CacheRepository> logger)
         {
             _cache = cache;
+            _logger = logger;
         }
 
         public async Task<T> GetCachedResponseAsync<T>(
@@ -36,16 +40,16 @@ namespace Domestica.Budget.Infrastructure.Repositories
 
         public async void RemoveKey(CacheKey key) => await _cache.RemoveAsync(key.ToString());
 
-        private static DistributedCacheEntryOptions? ParseExpriration(TimeSpan? expiration) => new DistributedCacheEntryOptions
+        private DistributedCacheEntryOptions? ParseExpriration(TimeSpan? expiration) => new DistributedCacheEntryOptions
             { AbsoluteExpirationRelativeToNow = expiration };
 
-        private static ValueTask<T> GetAsync<T>(IDistributedCache cache, string key, Func<CancellationToken, Task<T>> getMethod,
+        private ValueTask<T> GetAsync<T>(IDistributedCache cache, string key, Func<CancellationToken, Task<T>> getMethod,
             DistributedCacheEntryOptions? options = null, CancellationToken cancellation = default) where T : Result
         {
             return GetAsyncShared<int, T>(cache, key, state: 0, getMethod, options, cancellation);
         }
 
-        private static ValueTask<T> GetAsyncShared<TState, T>(IDistributedCache cache, string key, TState state, Delegate getMethod,
+        private ValueTask<T> GetAsyncShared<TState, T>(IDistributedCache cache, string key, TState state, Delegate getMethod,
             DistributedCacheEntryOptions? options, CancellationToken cancellation) where T : Result
         {
             var pending = cache.GetAsync(key, cancellation);
@@ -62,7 +66,7 @@ namespace Domestica.Budget.Infrastructure.Repositories
 
             return new(Deserialize<T>(bytes));
 
-            static async ValueTask<T> Awaited(
+            async ValueTask<T> Awaited(
                 IDistributedCache cache,
                 string key,
                 Task<byte[]?>? pending,
@@ -98,22 +102,36 @@ namespace Domestica.Budget.Infrastructure.Repositories
 
                 if (options is null)
                 {
-                    await cache.SetAsync(key, bytes, cancellation);
+                    try
+                    {
+                        await cache.SetAsync(key, bytes, cancellation);
+                    }
+                    catch (Exception e)
+                    {
+                        LogCachingError(key, e);
+                    }
                 }
                 else
                 {
-                    await cache.SetAsync(key, bytes, options, cancellation);
+                    try
+                    {
+                        await cache.SetAsync(key, bytes, options, cancellation);
+                    }
+                    catch (Exception e)
+                    {
+                        LogCachingError(key, e);
+                    }
                 }
                 return result;
             }
         }
 
-        private static T Deserialize<T>(byte[] bytes)
+        private T Deserialize<T>(byte[] bytes)
         {
             return JsonSerializer.Deserialize<T>(bytes, new JsonSerializerOptions { IncludeFields = true })!;
         }
 
-        private static byte[]? Serialize<T>(T value) where T : Result
+        private byte[]? Serialize<T>(T value) where T : Result
         {
             if (value.IsFailure)
             {
@@ -125,5 +143,8 @@ namespace Domestica.Budget.Infrastructure.Repositories
             JsonSerializer.Serialize(writer, value);
             return buffer.WrittenSpan.ToArray();
         }
+
+        private void LogCachingError(string key, Exception e) => 
+            _logger.LogError("Problem while caching key {key}, exception: {exception}", key, e.Message);
     }
 }
