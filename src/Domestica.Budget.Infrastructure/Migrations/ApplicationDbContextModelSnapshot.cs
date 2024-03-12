@@ -33,9 +33,8 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.Property<string>("account_type")
@@ -62,9 +61,8 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
@@ -82,9 +80,8 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.Property<string>("Value")
@@ -121,9 +118,8 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.Property<string>("entity_type")
@@ -154,9 +150,8 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("category_id");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.Property<string>("Value")
@@ -222,9 +217,8 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("transaction_entity_id");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
@@ -265,9 +259,9 @@ namespace Domestica.Budget.Infrastructure.Migrations
 
             modelBuilder.Entity("Domestica.Budget.Domain.Users.User", b =>
                 {
-                    b.Property<string>("IdentityId")
-                        .HasColumnType("text")
-                        .HasColumnName("identity_id");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -284,20 +278,22 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasColumnType("character varying(400)")
                         .HasColumnName("email");
 
-                    b.Property<Guid?>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
 
-                    b.HasKey("IdentityId")
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("username");
+
+                    b.HasKey("Id")
                         .HasName("pk_users");
 
                     b.HasIndex("Email")
                         .IsUnique()
                         .HasDatabaseName("ix_users_email");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasDatabaseName("ix_users_id");
 
                     b.ToTable("users", (string)null);
                 });
@@ -351,7 +347,7 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_accounts_users_user_identity_id");
+                        .HasConstraintName("fk_accounts_users_user_id1");
 
                     b.OwnsOne("Money.DB.Money", "Balance", b1 =>
                         {
@@ -388,7 +384,7 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_budget_plans_users_user_identity_id");
+                        .HasConstraintName("fk_budget_plans_users_user_id1");
 
                     b.OwnsOne("DateKit.DB.DateTimeRange", "BudgetPeriod", b1 =>
                         {
@@ -527,7 +523,7 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_transaction_categories_users_user_identity_id");
+                        .HasConstraintName("fk_transaction_categories_users_user_id1");
                 });
 
             modelBuilder.Entity("Domestica.Budget.Domain.TransactionEntities.TransactionEntity", b =>
@@ -537,7 +533,7 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_transaction_entities_users_user_identity_id");
+                        .HasConstraintName("fk_transaction_entities_users_user_id1");
                 });
 
             modelBuilder.Entity("Domestica.Budget.Domain.TransactionSubcategories.TransactionSubcategory", b =>
@@ -554,7 +550,7 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_transaction_subcategories_users_user_identity_id");
+                        .HasConstraintName("fk_transaction_subcategories_users_user_id1");
 
                     b.Navigation("Category");
                 });
@@ -621,7 +617,7 @@ namespace Domestica.Budget.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_transactions_users_user_identity_id");
+                        .HasConstraintName("fk_transactions_users_user_id1");
 
                     b.OwnsOne("Money.DB.Money", "TransactionAmount", b1 =>
                         {

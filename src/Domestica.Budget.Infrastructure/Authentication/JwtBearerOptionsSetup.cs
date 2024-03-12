@@ -1,27 +1,29 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Domestica.Budget.Infrastructure.Authentication;
-
-internal sealed class JwtBearerOptionsSetup : IConfigureNamedOptions<JwtBearerOptions>
+namespace Domestica.Budget.Infrastructure.Authentication
 {
-    private readonly AuthenticationOptions _authenticationOptions;
-
-    public JwtBearerOptionsSetup(IOptions<AuthenticationOptions> authenticationOptions)
+    internal class JwtBearerOptionsSetup : IPostConfigureOptions<JwtBearerOptions>
     {
-        _authenticationOptions = authenticationOptions.Value;
-    }
+        private readonly AuthenticationOptions _options;
 
-    public void Configure(JwtBearerOptions options)
-    {
-        options.Audience = _authenticationOptions.Audience;
-        options.MetadataAddress = _authenticationOptions.MetadataUrl;
-        options.RequireHttpsMetadata = _authenticationOptions.RequireHttpsMetadata;
-        options.TokenValidationParameters.ValidIssuer = _authenticationOptions.Issuer;
-    }
+        public JwtBearerOptionsSetup(IOptions<AuthenticationOptions> jwtOptions)
+        {
+            _options = jwtOptions.Value;
+        }
 
-    public void Configure(string? name, JwtBearerOptions options)
-    {
-        Configure(options);
+        public void PostConfigure(string? name, JwtBearerOptions options)
+        {
+            options.TokenValidationParameters.ValidIssuer = _options.Issuer;
+            options.TokenValidationParameters.ValidAudience = _options.Audience;
+            options.TokenValidationParameters.IssuerSigningKey =
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey));
+        }
     }
 }

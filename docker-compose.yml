@@ -18,11 +18,6 @@ services:
     depends_on:
       - domestica-budget-db
       - domestica-budget-cache
-      - domestica-idp 
-
-  domestica-idp:
-    image: jboss/keycloak:latest
-    container_name: domestica.identity
 
   domestica-budget-seq:
     image: datalust/seq:latest

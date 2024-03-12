@@ -4,23 +4,24 @@ using Domestica.Budget.Application.Abstractions.Authentication;
 using Domestica.Budget.Domain.Users;
 using Money.DB;
 using Responses.DB;
+using IPasswordService = Domestica.Budget.Application.Abstractions.Authentication.IPasswordService;
 
 namespace Domestica.Budget.Application.Users.RegisterUser
 {
     internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, User>
     {
-        private readonly IAuthenticationService _authenticationService;
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IPasswordService _passwordService;
 
         public RegisterUserCommandHandler(
-            IAuthenticationService authenticationService,
             IUserRepository userRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IPasswordService passwordService)
         {
-            _authenticationService = authenticationService;
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
+            _passwordService = passwordService;
         }
 
         public async Task<Result<User>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -32,14 +33,13 @@ namespace Domestica.Budget.Application.Users.RegisterUser
                 return (Result<User>)validationResult;
             }
 
-            var user = User.Create(new Email(request.Email), Currency.FromCode(request.Currency));
+            var passwordHash = _passwordService.HashPassword(request.Password);
 
-            var identityId = await _authenticationService.RegisterAsync(
-                user,
-                request.Password,
-                cancellationToken);
-
-            user.SetIdentityId(identityId);
+            var user = User.Create(
+                new (request.Username),
+                new (request.Email),
+                Currency.FromCode(request.Currency),
+                passwordHash);
 
             await _userRepository.AddAsync(user, cancellationToken);
 

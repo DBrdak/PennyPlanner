@@ -32,6 +32,7 @@ namespace Domestica.Budget.Infrastructure.Data
             if (Regex.IsMatch(connectionString, postgresConnectionStringPattern))
             {
                 _formatedConnectionString = connectionString;
+                return;
             }
 
             _formatedConnectionString = PostgresConnectionStringFromUrl(connectionString);

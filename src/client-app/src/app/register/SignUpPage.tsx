@@ -6,7 +6,7 @@ import {
     Paper,
     Select,
     Stack,
-    Typography
+    Typography, useMediaQuery
 } from "@mui/material";
 import CenteredStack from "../../components/CenteredStack";
 import React, {useEffect, useState} from "react";
@@ -22,6 +22,7 @@ import {observer} from "mobx-react-lite";
 import {useStore} from "../../stores/store";
 import {isValidDateValue} from "@testing-library/user-event/dist/utils";
 import {toast} from "react-toastify";
+import theme from "../theme";
 
 
 
@@ -50,6 +51,9 @@ const SignUpPage: React.FC = () => {
             .matches(ValidationConstants.emailPattern, {message: 'Sorry, we cannot contact with this email'})
             .required('How can we contact with you?')
             .notOneOf(takenEmails, 'Email is taken'),
+        username: Yup.string()
+            .matches(ValidationConstants.noSpecialCharactersPattern)
+            .required("How can we call you?"),
         password: Yup.string()
             .required('Protect your account')
             .matches(ValidationConstants.passwordPattern,{message: 'This password is too weak'}),
@@ -98,6 +102,19 @@ const SignUpPage: React.FC = () => {
                                                 label="Email"
                                                 placeholder="Email"
                                                 type="email"
+                                                showErrors
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sx={{
+                                            marginBottom: '20px',
+                                            padding: '0px 20px'
+                                        }}>
+                                            <MyTextInput
+                                                style={{width: '100%'}}
+                                                name={'username'}
+                                                label="Username"
+                                                placeholder="Username"
+                                                type="text"
                                                 showErrors
                                             />
                                         </Grid>

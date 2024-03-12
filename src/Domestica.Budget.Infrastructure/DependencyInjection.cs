@@ -25,8 +25,7 @@ using Npgsql;
 using StackExchange.Redis;
 using System.Text.RegularExpressions;
 using AuthenticationOptions = Domestica.Budget.Infrastructure.Authentication.AuthenticationOptions;
-using AuthenticationService = Domestica.Budget.Infrastructure.Authentication.AuthenticationService;
-using IAuthenticationService = Domestica.Budget.Application.Abstractions.Authentication.IAuthenticationService;
+using IPasswordService = Domestica.Budget.Application.Abstractions.Authentication.IPasswordService;
 
 namespace Domestica.Budget.Infrastructure
 {
@@ -74,38 +73,22 @@ namespace Domestica.Budget.Infrastructure
 
         private static void AddAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
+            services.ConfigureOptions<AuthenticationOptionsSetup>();
+            services.ConfigureOptions<JwtBearerOptionsSetup>();
+
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer();
 
             services.AddAuthorization();
 
-           services.Configure<AuthenticationOptions>(configuration.GetSection("Authentication"));
-
-            services.ConfigureOptions<JwtBearerOptionsSetup>();
-
-            services.Configure<KeycloakOptions>(configuration.GetSection("Keycloak"));
-
-            services.AddTransient<AdminAuthorizationDelegatingHandler>();
-            
-            services.AddHttpClient<IAuthenticationService, AuthenticationService>((serviceProvider, httpClient) =>
-                {
-                    var keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
-
-                    httpClient.BaseAddress = new Uri(keycloakOptions.AdminUrl);
-                })
-                .AddHttpMessageHandler<AdminAuthorizationDelegatingHandler>();
-
-            services.AddHttpClient<IJwtService, JwtService>((serviceProvider, httpClient) =>
-            {
-                var keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
-
-                httpClient.BaseAddress = new Uri(keycloakOptions.TokenUrl);
-            });
-
             services.AddHttpContextAccessor();
-            
+
             services.AddScoped<IUserContext, UserContext>();
+
+            services.AddScoped<IPasswordService, PasswordService>();
+
+            services.AddScoped<IJwtService, JwtService>();
         }
 
     }

@@ -31,7 +31,7 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
 
             if (budgetPlan is null)
             {
-                budgetPlan = BudgetPlan.CreateForMonth(request.BudgetPlanForDate, new UserIdentityId(_userContext.IdentityId));
+                budgetPlan = BudgetPlan.CreateForMonth(request.BudgetPlanForDate, new UserId(_userContext.IdentityId));
                 await _budgetPlanRepository.AddAsync(budgetPlan, cancellationToken);
             }
 
@@ -66,12 +66,12 @@ namespace Domestica.Budget.Application.BudgetPlans.SetBudgetPlanCategories
         {
             if (type == TransactionCategoryType.Income)
             {
-                return new IncomeTransactionCategory(value, new UserIdentityId(_userContext.IdentityId));
+                return new IncomeTransactionCategory(value, new UserId(_userContext.IdentityId));
             }
 
             if (type == TransactionCategoryType.Outcome)
             {
-                return new OutcomeTransactionCategory(value, new UserIdentityId(_userContext.IdentityId));
+                return new OutcomeTransactionCategory(value, new UserId(_userContext.IdentityId));
             }
 
             return null;

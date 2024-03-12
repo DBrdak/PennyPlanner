@@ -16,6 +16,10 @@ namespace Domestica.Budget.Application.Users.RegisterUser
                 .Matches(UserValidationSettings.PasswordPattern)
                 .WithMessage("Password does not fulfill the requirements");
 
+            RuleFor(x => x.Username)
+                .Matches(UserValidationSettings.UsernamePattern)
+                .WithMessage("Invalid username");
+
             RuleFor(x => x.Currency)
                 .Must(
                     c => Currency.All.Any(

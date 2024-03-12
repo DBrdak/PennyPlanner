@@ -11,7 +11,7 @@ namespace Domestica.Budget.Domain.TransactionSubcategories
         public TransactionCategoryId CategoryId { get; private set; }
         public TransactionCategory Category { get; private set; }
 
-        public TransactionSubcategory(TransactionSubcategoryValue value, TransactionCategory category, UserIdentityId userId) : base(userId)
+        public TransactionSubcategory(TransactionSubcategoryValue value, TransactionCategory category, UserId userId) : base(userId)
         {
             Value = value;
             Category = category;

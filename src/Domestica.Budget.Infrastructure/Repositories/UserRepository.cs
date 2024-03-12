@@ -11,14 +11,14 @@ namespace Domestica.Budget.Infrastructure.Repositories
         }
 
 
-        public async Task<User?> GetByIdentityIdAsync(UserIdentityId identityId, CancellationToken cancellationToken = default, bool asNoTracking = false)
+        public async Task<User?> GetByIdAsync(UserId userId, CancellationToken cancellationToken = default, bool asNoTracking = false)
         {
             var query = DbContext.Set<User>();
 
             if (asNoTracking)
                 query.AsNoTracking();
 
-            return await query.FirstOrDefaultAsync(u => u.IdentityId == identityId, cancellationToken);
+            return await query.FirstOrDefaultAsync(u => u.Id== userId, cancellationToken);
         }
 
         public async Task<User?> GetByEmailAsync(Domain.Users.Email email, CancellationToken cancellationToken = default, bool asNoTracking = false)

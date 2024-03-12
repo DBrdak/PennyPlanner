@@ -7,7 +7,7 @@ namespace Domestica.Budget.Domain.TransactionEntities.TransactionSenders
         private TransactionSender()
         { }
 
-        public TransactionSender(TransactionEntityName name, UserIdentityId userId) : base(name, userId)
+        public TransactionSender(TransactionEntityName name, UserId userId) : base(name, userId)
         {
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Domestica.Budget.Application.Abstractions.Authentication;
+using Domestica.Budget.Infrastructure.Authentication.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Domestica.Budget.Infrastructure.Authentication
@@ -18,7 +19,7 @@ namespace Domestica.Budget.Infrastructure.Authentication
                 .HttpContext?
                 .User
                 .Claims
-                .SingleOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?
+                .SingleOrDefault(claim => claim.Type == nameof(UserRepresentationModel.Id))?
                 .Value ??
             throw new ApplicationException("User context is unavailable");
 
@@ -27,7 +28,7 @@ namespace Domestica.Budget.Infrastructure.Authentication
                 .HttpContext?
                 .User
                 .Claims
-                .SingleOrDefault(claim => claim.Type == ClaimTypes.GivenName)?
+                .SingleOrDefault(claim => claim.Type == nameof(UserRepresentationModel.Currency))?
                 .Value ??
             throw new ApplicationException("User context is unavailable");
 

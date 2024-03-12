@@ -4,9 +4,9 @@ using Domestica.Budget.Domain.Users;
 
 namespace Domestica.Budget.Application.TransactionEntities.GetTransactionEntities
 {
-    public sealed record GetTransactionEntitiesQuery(UserIdentityId UserId) : ICachedQuery<List<TransactionEntityModel>>
+    public sealed record GetTransactionEntitiesQuery(UserId UserId) : ICachedQuery<List<TransactionEntityModel>>
     {
-        public CacheKey CacheKey => CacheKey.TransactionEntities(UserId.Value);
+        public CacheKey CacheKey => CacheKey.TransactionEntities(UserId.Value.ToString());
         public TimeSpan? Expiration => null;
     }
 }

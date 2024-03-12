@@ -91,7 +91,7 @@ namespace Domestica.Budget.Application.Accounts.AddAccount
                 typeof(TAccount),
                 new AccountName(newAccountData.Name),
                 Currency.FromCode(_userContext.UserCurrencyCode),
-                new UserIdentityId(_userContext.IdentityId),
+                new UserId(Guid.Parse(_userContext.IdentityId)),
                 newAccountData.InitialBalance) as TAccount;
         }
     }

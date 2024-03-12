@@ -11,7 +11,7 @@ namespace Domestica.Budget.Domain.TransactionCategories
         private readonly List<TransactionSubcategory> _subcategories;
         public IReadOnlyCollection<TransactionSubcategory> Subcategories => _subcategories;
 
-        protected TransactionCategory(TransactionCategoryValue value, UserIdentityId userId) : base(userId)
+        protected TransactionCategory(TransactionCategoryValue value, UserId userId) : base(userId)
         {
             Value = value;
             UserId = userId;

@@ -4,6 +4,7 @@ using Domestica.Budget.Domain.Users;
 namespace Domestica.Budget.Application.Users.RegisterUser
 {
     public sealed record RegisterUserCommand(
+        string Username,
         string Email,
         string Password,
         string Currency) : ICommand<User>

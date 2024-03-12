@@ -34,7 +34,7 @@ export default observer(function UserPage() {
             }}>
                 <Grid item xs={12} textAlign={'center'}>
                     <Typography variant={'h3'}>
-                        User personal info
+                        {userStore.currentUser?.username}
                     </Typography>
                 </Grid>
                 <Grid item xs={12} sx={{

@@ -16,7 +16,7 @@ namespace Domestica.Budget.API.Endpoints
                 "api/transaction-categories",
                 async (ISender sender, IUserContext userContext, CancellationToken cancellationToken) =>
                 {
-                    var result = await sender.Send(new GetTransactionCategoriesQuery(new(userContext.IdentityId)), cancellationToken);
+                    var result = await sender.Send(new GetTransactionCategoriesQuery(new(Guid.Parse(userContext.IdentityId))), cancellationToken);
 
                     return Results.Ok(result.Value);
                 }).RequireAuthorization();

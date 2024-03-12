@@ -26,11 +26,11 @@ namespace Domestica.Budget.Application.TransactionCategories.AddTransactionCateg
 
             if (string.Equals(request.Type, TransactionCategoryType.Income.Value, StringComparison.CurrentCultureIgnoreCase))
             {
-                transactionCategory = new IncomeTransactionCategory(new(request.Value), new UserIdentityId(_userContext.IdentityId));
+                transactionCategory = new IncomeTransactionCategory(new(request.Value), new UserId(_userContext.IdentityId));
             }
             else if (string.Equals(request.Type, TransactionCategoryType.Outcome.Value, StringComparison.CurrentCultureIgnoreCase))
             {
-                transactionCategory = new OutcomeTransactionCategory(new(request.Value), new UserIdentityId(_userContext.IdentityId));
+                transactionCategory = new OutcomeTransactionCategory(new(request.Value), new UserId(_userContext.IdentityId));
             }
             else
             {

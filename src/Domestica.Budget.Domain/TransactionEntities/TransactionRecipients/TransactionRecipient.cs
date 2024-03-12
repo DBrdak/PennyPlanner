@@ -7,7 +7,7 @@ namespace Domestica.Budget.Domain.TransactionEntities.TransactionRecipients
         private TransactionRecipient()
         { }
 
-        public TransactionRecipient(TransactionEntityName name, UserIdentityId userId) : base(name, userId)
+        public TransactionRecipient(TransactionEntityName name, UserId userId) : base(name, userId)
         {
         }
         

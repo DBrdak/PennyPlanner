@@ -17,7 +17,7 @@ namespace Domestica.Budget.API.Endpoints
                 "api/accounts",
                 async (ISender sender, IUserContext userContext, CancellationToken cancellationToken) =>
                 {
-                    var query = new GetAccountsQuery(new (userContext.IdentityId));
+                    var query = new GetAccountsQuery(new (Guid.Parse(userContext.IdentityId)));
 
                     var result = await sender.Send(query, cancellationToken);
 
