@@ -18,8 +18,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    await app.ApplyMigrations(app.Environment);
 }
+
+await app.ApplyMigrations();
 
 app.UseCors("DefaultPolicy");
 

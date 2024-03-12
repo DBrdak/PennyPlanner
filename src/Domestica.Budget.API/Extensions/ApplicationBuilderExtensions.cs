@@ -41,7 +41,7 @@ namespace Domestica.Budget.API.Extensions
             return services;
         }
 
-        public static async Task<IHost> ApplyMigrations(this IHost app, IHostEnvironment env, int? retry = 0)
+        public static async Task<IHost> ApplyMigrations(this IHost app, int? retry = 0)
         {
             var retryForAvailability = retry.Value;
 
@@ -62,7 +62,7 @@ namespace Domestica.Budget.API.Extensions
                 {
                     retryForAvailability++;
                     Thread.Sleep(2000);
-                    await ApplyMigrations(app, env, retryForAvailability);
+                    await ApplyMigrations(app, retryForAvailability);
                 }
             }
 
