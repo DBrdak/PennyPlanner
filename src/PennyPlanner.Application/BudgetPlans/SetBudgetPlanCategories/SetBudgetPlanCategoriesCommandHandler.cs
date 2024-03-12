@@ -33,6 +33,7 @@ namespace PennyPlanner.Application.BudgetPlans.SetBudgetPlanCategories
             {
                 budgetPlan = BudgetPlan.CreateForMonth(request.BudgetPlanForDate, new UserId(_userContext.IdentityId));
                 await _budgetPlanRepository.AddAsync(budgetPlan, cancellationToken);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
             }
 
             var currency = Currency.FromCode(_userContext.UserCurrencyCode);
@@ -49,6 +50,7 @@ namespace PennyPlanner.Application.BudgetPlans.SetBudgetPlanCategories
                     new (budgetedTransactionCategoryValues.BudgetedAmount, currency));
             }
 
+            _budgetPlanRepository.Update(budgetPlan, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success(budgetPlan);

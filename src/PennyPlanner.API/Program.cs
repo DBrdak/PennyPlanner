@@ -26,25 +26,23 @@ app.UseCors("DefaultPolicy");
 
 //app.UseHttpsRedirection();
 
-app.Run(async (context) =>
-{
-    context.Response.ContentType = "text/html";
-    await context.Response.SendFileAsync(Path.Combine(app.Environment.WebRootPath, "index.html"));
-});
-
 app.UseRouting();
 
 app.AddHealthChecks();
+
+app.AddMiddlewares();
+
+app.SecureApp();
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.AddMiddlewares();
-
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.MapCarter();
+
+app.MapFallbackToController("Index", "Fallback");
 
 await app.RunAsync();

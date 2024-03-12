@@ -24,10 +24,8 @@ namespace PennyPlanner.Domain.Users
         }
 
         [JsonConstructor]
-        private User(Username username, string passwordHash)
+        private User()
         {
-            Username = username;
-            PasswordHash = passwordHash;
         }
 
         public static User Create(Username username, Email email, Currency currency, string passwordHash)

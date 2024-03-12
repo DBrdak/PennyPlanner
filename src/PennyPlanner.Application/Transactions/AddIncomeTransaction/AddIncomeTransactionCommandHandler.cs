@@ -43,7 +43,7 @@ namespace PennyPlanner.Application.Transactions.AddIncomeTransaction
 
             if (destinationAccount is null)
             {
-                return Result.Failure<Transaction>(Error.NotFound($"Account with ID: {request.DestinationAccountId} not found"));
+                return Result.Failure<Transaction>(Error.NotFound($"Account not found"));
             }
 
             var sender = await _transactionEntityRepository.GetByNameIncludeAsync<TransactionSender, IEnumerable<Transaction>>(

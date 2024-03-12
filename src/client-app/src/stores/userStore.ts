@@ -61,7 +61,7 @@ export default class UserStore {
             return true
 
         } catch (e) {
-            console.log(e)
+
             return false
         } finally {
             this.setLoading(false)
@@ -75,7 +75,7 @@ export default class UserStore {
             const user = await agent.users.getCurrentUser()
             this.setCurrentUser(user)
         } catch (e) {
-            console.log(e)
+
         } finally {
             this.setLoading(false)
         }

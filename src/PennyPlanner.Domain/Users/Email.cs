@@ -15,7 +15,7 @@ public record Email
             throw new DomainException<Email>($"Address email: {Value} is invalid");
         }
 
-        this.Value = Value;
+        this.Value = Value.ToLower();
     }
 
     private static bool IsValid(string value) => Regex.IsMatch(value, emailPattern);

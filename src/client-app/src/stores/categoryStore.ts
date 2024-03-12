@@ -44,7 +44,7 @@ export default class CategoryStore {
                 categories.forEach(c => this.setCategory(c))
             });
         } catch (e) {
-            console.log(e)
+
         } finally {
             this.setLoading(false)
         }
@@ -57,7 +57,7 @@ export default class CategoryStore {
                 await this.loadCategories()
             })
         } catch (e) {
-            console.error(e);
+
         } finally {
             this.setLoading(false);
         }
@@ -70,7 +70,7 @@ export default class CategoryStore {
                 await this.loadCategories()
             })
         } catch (e) {
-            console.error(e);
+
         } finally {
             this.setLoading(false);
         }
@@ -83,7 +83,7 @@ export default class CategoryStore {
                 await this.loadCategories()
             })
         } catch (e) {
-            console.error(e);
+
         } finally {
             this.setLoading(false);
         }

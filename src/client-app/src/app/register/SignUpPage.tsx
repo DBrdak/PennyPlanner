@@ -1,7 +1,7 @@
 import {
     Button, CircularProgress,
     Divider,
-    FormControl, Grid,
+    FormControl, Grid, IconButton, InputAdornment,
     InputLabel, MenuItem,
     Paper,
     Select,
@@ -23,6 +23,7 @@ import {useStore} from "../../stores/store";
 import {isValidDateValue} from "@testing-library/user-event/dist/utils";
 import {toast} from "react-toastify";
 import theme from "../theme";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 
 
@@ -30,6 +31,7 @@ const SignUpPage: React.FC = () => {
     const navigate = useNavigate()
     const {userStore} = useStore()
     const [takenEmails, setTakenEmails] = useState<string[]>([])
+    const [showPassword, setShowPassword] = React.useState(false)
 
     useTitle('Register')
 
@@ -143,12 +145,16 @@ const SignUpPage: React.FC = () => {
                                             padding: '0px 20px'
                                         }}>
                                             <MyTextInput
-                                                style={{width: '100%'}}
+                                                style={{width: '70%', minWidth: '300px'}}
                                                 name={'password'}
-                                                label="Password"
                                                 placeholder="Password"
-                                                type="password"
-                                                showErrors
+                                                type={showPassword ? 'text' : "password"}
+                                                inputProps={{endAdornment:
+                                                        <InputAdornment position="end">
+                                                            <IconButton onClick={() => setShowPassword(prev => !prev)}>
+                                                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                                                            </IconButton>
+                                                        </InputAdornment>}}
                                             />
                                         </Grid>
                                         <Grid item xs={12} sx={{

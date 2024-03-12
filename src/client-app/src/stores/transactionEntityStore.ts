@@ -36,7 +36,7 @@ export default class TransactionEntityStore {
                 transactionEntities.forEach((te) => this.setTransactionEntity(te));
             });
         } catch (e) {
-            console.error(e);
+
         } finally {
             this.setLoading(false);
         }
@@ -49,7 +49,7 @@ export default class TransactionEntityStore {
                 await this.loadTransactionEntities()
             })
         } catch (e) {
-            console.error(e);
+
         } finally {
             this.setLoading(false);
         }
@@ -62,7 +62,7 @@ export default class TransactionEntityStore {
                 await this.loadTransactionEntities()
             })
         } catch (e) {
-            console.error(e);
+
         } finally {
             this.setLoading(false);
         }
@@ -75,7 +75,7 @@ export default class TransactionEntityStore {
                 await this.loadTransactionEntities()
             })
         } catch (e) {
-            console.error(e);
+
         } finally {
             this.setLoading(false);
         }

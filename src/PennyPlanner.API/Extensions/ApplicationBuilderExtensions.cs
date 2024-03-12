@@ -24,6 +24,7 @@ namespace PennyPlanner.API.Extensions
             services.AddInfrastructure(configuration, env);
             services.AddApplication();
             services.AddCarter();
+            services.AddControllers();
 
             services.AddCors(options =>
             {
@@ -93,8 +94,11 @@ namespace PennyPlanner.API.Extensions
             app.UseXfo(opt => opt.Deny());
             app.UseCspReportOnly(opt => opt
                 .BlockAllMixedContent()
-                .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com"))
-                .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
+                .StyleSources(s => s.Self()
+                    .CustomSources("https://fonts.googleapis.com")
+                    .UnsafeInline())
+                .FontSources(s => s.Self()
+                    .CustomSources("https://fonts.gstatic.com", "data:"))
                 .FormActions(s => s.Self())
                 .FrameAncestors(s => s.Self())
                 .ScriptSources(s => s.Self()));

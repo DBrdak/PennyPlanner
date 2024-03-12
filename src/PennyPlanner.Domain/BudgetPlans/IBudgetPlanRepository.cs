@@ -17,5 +17,7 @@ namespace PennyPlanner.Domain.BudgetPlans
         Task<BudgetPlan?> GetBudgetPlanByIdAsync(BudgetPlanId budgetPlanId, CancellationToken cancellationToken);
 
         void Remove(BudgetPlan entity);
+
+        void Update(BudgetPlan budgetPlan, CancellationToken cancellationToken);
     }
 }
