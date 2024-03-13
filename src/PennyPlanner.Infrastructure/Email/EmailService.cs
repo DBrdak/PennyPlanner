@@ -32,7 +32,7 @@ namespace PennyPlanner.Infrastructure.Email
             {
                 From = GetSender(),
                 Subject = EmailSubject.WelcomeSubject.Value,
-                PlainTextContent = null,
+                PlainTextContent = "",
                 HtmlContent = new WelcomeEmailTemplate(username.Value, verificationUrl).GetHtmlTemplate()
             };
 

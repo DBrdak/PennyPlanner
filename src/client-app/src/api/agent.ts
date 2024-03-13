@@ -67,6 +67,9 @@ axios.interceptors.response.use(async(response) => {
                     }
                     errorMessages.forEach(toast.error)
                     return Promise.reject();
+                case 429:
+                    toast.error('Too many requests')
+                    return Promise.reject()
                 case 500:
                     router.navigate('/server-error');
                     break;
