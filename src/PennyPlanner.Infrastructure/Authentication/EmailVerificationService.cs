@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PennyPlanner.Domain.Users;
 
 namespace PennyPlanner.Infrastructure.Authentication
 {
-    public sealed class EmailVerificationService
+    public sealed class EmailVerificationService : IEmailVerificationService
     {
         private readonly IDataProtectionProvider _dataProtectionProvider;
 

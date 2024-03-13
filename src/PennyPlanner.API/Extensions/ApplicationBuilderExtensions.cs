@@ -135,6 +135,7 @@ namespace PennyPlanner.API.Extensions
 
         public static void SecureApp(this WebApplication app)
         {
+            app.UseRateLimiter();
             app.UseXContentTypeOptions();
             app.UseReferrerPolicy(opt => opt.NoReferrer());
             app.UseXXssProtection(opt => opt.EnabledWithBlockMode());

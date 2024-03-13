@@ -80,7 +80,9 @@ namespace PennyPlanner.Infrastructure
 
             services.AddScoped<IUserContext, UserContext>();
 
-            services.AddScoped<IPasswordService, PasswordService>();
+            services.AddTransient<IPasswordService, PasswordService>();
+
+            services.AddTransient<IEmailVerificationService, EmailVerificationService>();
 
             services.AddScoped<IJwtService, JwtService>();
         }
