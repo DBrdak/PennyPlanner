@@ -34,7 +34,7 @@ namespace PennyPlanner.Application.Users.VerifyEmail
 
             var decryptedUserId = _emailVerificationService.DecryptEmailVerificationToken(request.Token);
 
-            if (!IsValid(decryptedUserId, user))
+            if (!IsValid(decryptedUserId, user.Id))
             {
                 return Result.Failure<User>(Error.InvalidRequest("Invalid token"));
             }
@@ -47,6 +47,6 @@ namespace PennyPlanner.Application.Users.VerifyEmail
                     Result.Failure<User>(Error.TaskFailed("User email verification failed"));
         }
 
-        private bool IsValid(string decryptedUserId, User user) => decryptedUserId == user.Id.Value.ToString();
+        private bool IsValid(string decryptedUserId, UserId userId) => decryptedUserId == userId.Value.ToString();
     }
 }

@@ -22,7 +22,7 @@ namespace PennyPlanner.Domain.Users
             Currency = currency;
             PasswordHash = passwordHash;
             CreatedAt = DateTime.UtcNow;
-            IsEmailVerified = false;
+            IsEmailVerified = true; //TODO temporary
         }
 
         [JsonConstructor]
