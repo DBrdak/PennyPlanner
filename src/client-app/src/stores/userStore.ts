@@ -39,7 +39,7 @@ export default class UserStore {
             await this.logIn({email: command.email, password: command.password})
             return true
         } catch (e) {
-            console.log(e)
+
             return false
         } finally {
             this.setLoading(false)
