@@ -18,15 +18,17 @@ export function TransactionEntityTile({transactionEntity, onDelete, onEdit, load
 
     return (
         <Grid item xs={12} md={6} lg={3} sx={{
-            minHeight: '200px',
+            minHeight: '300px',
             height: '33%',
             marginBottom: 3,
+            display: 'flex',
             transition: 'opacity 0.5s ease',
         }}>
             <TilePaper disabled sx={{
-                alignItems: 'center',
+                padding: 1.5,
+                width: '100%',
                 justifyContent: 'center',
-                flexDirection: 'column',
+                alignItems: 'center',
                 position: 'relative'
             }}>
                 {

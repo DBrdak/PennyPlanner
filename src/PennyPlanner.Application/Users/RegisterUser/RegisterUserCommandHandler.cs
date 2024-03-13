@@ -31,7 +31,7 @@ namespace PennyPlanner.Application.Users.RegisterUser
             {
                 return (Result<User>)validationResult;
             }
-
+            
             var passwordHash = _passwordService.HashPassword(request.Password);
 
             var user = User.Create(

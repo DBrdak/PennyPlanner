@@ -70,6 +70,8 @@ axios.interceptors.response.use(async(response) => {
                 case 500:
                     router.navigate('/server-error');
                     break;
+                default:
+                    errorMessages.forEach(toast.error)
             }
         }
 

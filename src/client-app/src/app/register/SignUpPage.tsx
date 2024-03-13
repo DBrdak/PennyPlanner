@@ -32,7 +32,6 @@ const SignUpPage: React.FC = () => {
     const {userStore} = useStore()
     const [takenEmails, setTakenEmails] = useState<string[]>([])
     const [showPassword, setShowPassword] = React.useState(false)
-
     useTitle('Register')
 
     useEffect(() => {
@@ -145,7 +144,7 @@ const SignUpPage: React.FC = () => {
                                             padding: '0px 20px'
                                         }}>
                                             <MyTextInput
-                                                style={{width: '70%', minWidth: '300px'}}
+                                                style={{width: '100%', minWidth: '300px'}}
                                                 name={'password'}
                                                 placeholder="Password"
                                                 type={showPassword ? 'text' : "password"}

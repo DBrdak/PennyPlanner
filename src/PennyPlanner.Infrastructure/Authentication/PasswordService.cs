@@ -8,7 +8,7 @@ namespace PennyPlanner.Infrastructure.Authentication
     {
         private const byte keySize = 32;
         private const byte saltSize = 16;
-        private const int iterations = 3500000;
+        private const int iterations = 3_000_000;
         private static readonly HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
         private const char delimiter = ';';
 

@@ -1,5 +1,5 @@
 import AppOverlay from "../../../components/appOverlay/AppOverlay";
-import {Grid, Paper, Typography} from "@mui/material";
+import {Grid, Paper, Typography, useMediaQuery} from "@mui/material";
 import theme from "../../theme";
 import {useStore} from "../../../stores/store";
 import {useEffect, useState} from "react";
@@ -12,6 +12,7 @@ import {TransactionSubcategoriesView} from "./components/TransactionSubcategorie
 export default observer(function TransactionCategoriesPage() {
     const {categoryStore} = useStore()
     const transactionCategories = useCategories()
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'))
     const [initialLoading, setInitialLoading] = useState(true)
 
     useEffect(() => {
@@ -23,7 +24,7 @@ export default observer(function TransactionCategoriesPage() {
 
     return (
         <AppOverlay>
-            <Grid container spacing={3} sx={{
+            <Grid container spacing={isMobile ? 0 : 3} sx={{
                 height:'100%',
                 padding: 2,
                 paddingBottom: 5,

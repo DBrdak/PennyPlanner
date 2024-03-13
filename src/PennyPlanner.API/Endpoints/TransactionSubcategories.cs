@@ -18,7 +18,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization();
+                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
 
             app.MapPut(
                 "api/transaction-subcategories/{transactionSubcategoryId}",
@@ -32,7 +32,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization();
+                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
 
             app.MapDelete("api/transaction-subcategories/{transactionSubcategoryId}",
                 async (ISender sender, string transactionSubcategoryId, CancellationToken cancellationToken) =>
@@ -44,7 +44,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization();
+                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
         }
     }
 }

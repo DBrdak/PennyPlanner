@@ -23,48 +23,53 @@ import RecurringTransactionsPage from "../app/settings/recurringTransactions/Rec
 import TransactionEntitiesPage from "../app/settings/transactionEntities/TransactionEntitiesPage";
 import TransactionCategoriesPage from "../app/settings/transactionCategories/TransactionCategoriesPage";
 import RequireAuth from "./requireAuth";
+import PendingEmailVerificationPage from "../app/email-verification/EmailVerificationPage";
+import {VerifyEmailPage} from "../app/email-verification/verify/VerifyEmailPage";
 
 export const routes: RouteObject[] = [
-  {
-    path: '/',
-    element: <App />,
-    children: [
-      {path: '', element: <WelcomePage />},
-      {path: '/login', element: <SignInPage />},
-      {path: '/register', element: <SignUpPage />},
+    {
+        path: '/',
+        element: <App />,
+        children: [
+            {path: '', element: <WelcomePage />},
+            {path: '/login', element: <SignInPage />},
+            {path: '/register', element: <SignUpPage />},
+            {path: '/email-verification', element: <PendingEmailVerificationPage />},
+            {path: '/email-verification/verify', element: <VerifyEmailPage />},
 
-      {element: <RequireAuth />, children: [
-          {path: '/home', element: <HomePage />},
+            {element: <RequireAuth />, children: [
+                {path: '/home', element: <HomePage />},
 
-          {path: '/transactions', element: <TransactionsPage />},
-          {path: '/transactions/income', element: <AddIncomePage />},
-          {path: '/transactions/outcome', element: <AddOutcomePage />},
-          {path: '/transactions/internal', element: <AddInternalTransactionPage />},
+                {path: '/transactions', element: <TransactionsPage />},
+                {path: '/transactions/income', element: <AddIncomePage />},
+                {path: '/transactions/outcome', element: <AddOutcomePage />},
+                {path: '/transactions/internal', element: <AddInternalTransactionPage />},
 
-          {path: '/budget-plans', element: <BudgetPlansPage />},
+                {path: '/budget-plans', element: <BudgetPlansPage />},
 
-          {path: '/accounts', element: <AccountsPage />},
-          {path: '/accounts/new', element: <AddAccountPage />},
-          {path: '/accounts/:accountId', element: <AccountDetailsPage />},
-          {path: '/accounts/total', element: <AccountDetailsPage />},
+                {path: '/accounts', element: <AccountsPage />},
+                {path: '/accounts/new', element: <AddAccountPage />},
+                {path: '/accounts/:accountId', element: <AccountDetailsPage />},
+                {path: '/accounts/total', element: <AccountDetailsPage />},
 
-          {path: '/goals', element: <GoalsPage />},
+                {path: '/goals', element: <GoalsPage />},
 
-          {path: '/statistics', element: <StatisticsPage  />},
+                {path: '/statistics', element: <StatisticsPage  />},
 
-          {path: '/settings', element: <SettingsPage  />},
-          {path: '/settings/transaction-categories', element: <TransactionCategoriesPage  />},
-          {path: '/settings/transaction-entities', element: <TransactionEntitiesPage  />},
-          {path: '/settings/recurring-transactions', element: <RecurringTransactionsPage  />},
-          {path: '/settings/customize', element: <CustomizePage  />},
+                {path: '/settings', element: <SettingsPage  />},
+                {path: '/settings/transaction-categories', element: <TransactionCategoriesPage  />},
+                {path: '/settings/transaction-entities', element: <TransactionEntitiesPage  />},
+                {path: '/settings/recurring-transactions', element: <RecurringTransactionsPage  />},
+                {path: '/settings/customize', element: <CustomizePage  />},
 
-          {path: '/user', element: <UserPage />},
-      ]},
+                {path: '/user', element: <UserPage />},
 
-      {path: '/logout', element: <RedirectPage text={'Logging out...'} />},
-      {path: '*', element: <RedirectPage text={'We are sorry, the content you are looking for does not exist 😔'} />}
-    ]
-  }
+            ]},
+
+            {path: '/logout', element: <RedirectPage text={'Logging out...'} />},
+            {path: '*', element: <RedirectPage text={'We are sorry, the content you are looking for does not exist 😔'} />}
+        ]
+    }
 ]
 
 export const router = createBrowserRouter(routes);

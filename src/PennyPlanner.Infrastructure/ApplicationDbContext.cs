@@ -2,11 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PennyPlanner.Domain.Transactions;
+using PennyPlanner.Domain.Users;
 
 namespace PennyPlanner.Infrastructure;
 
 public sealed class ApplicationDbContext : DbContext, IUnitOfWork
 {
+    private const int unverifiedUserLifetimeDays = 7;
     private static readonly JsonSerializerSettings JsonSerializerSettings = new()
     {
         TypeNameHandling = TypeNameHandling.All
@@ -27,8 +29,18 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
         SafeDeleteTransactions();
+        DeleteUnverifiedUsers();
 
         return base.SaveChangesAsync(cancellationToken);
+    }
+
+    private void DeleteUnverifiedUsers()
+    {
+        Set<User>()
+            .Where(
+                u => !u.IsEmailVerified &&
+                     DateTime.UtcNow - u.CreatedAt > TimeSpan.FromDays(unverifiedUserLifetimeDays))
+            .ExecuteDelete();
     }
 
     private void SafeDeleteTransactions()

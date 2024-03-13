@@ -3,6 +3,8 @@ using MediatR;
 using PennyPlanner.Application.Users.GetCurrentUser;
 using PennyPlanner.Application.Users.LogInUser;
 using PennyPlanner.Application.Users.RegisterUser;
+using PennyPlanner.Application.Users.ResendVerificationEmail;
+using PennyPlanner.Application.Users.VerifyEmail;
 
 namespace PennyPlanner.API.Endpoints
 {
@@ -21,7 +23,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess 
                         ? Results.Ok(result.Value)
                         : Results.NotFound(result.Error);
-                }).RequireAuthorization();
+                }).RequireAuthorization().RequireRateLimiting("fixed-loose");
 
             app.MapPost(
                 "api/users/login",
@@ -32,7 +34,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess
                         ? Results.Ok(result.Value)
                         : Results.BadRequest(result.Error);
-                });
+                }).RequireRateLimiting("fixed-standard");
 
             app.MapPost(
                 "api/users/register",
@@ -43,7 +45,29 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess
                         ? Results.Ok()
                         : Results.BadRequest(result.Error);
-                });
+                }).RequireRateLimiting("fixed-standard");
+
+            app.MapPut(
+                "api/users/verify-email",
+                async (ISender sender, VerifyEmailCommand command, CancellationToken cancellationToken) =>
+                {
+                    var result = await sender.Send(command, cancellationToken);
+
+                    return result.IsSuccess
+                        ? Results.Ok()
+                        : Results.BadRequest(result.Error);
+                }).RequireRateLimiting("fixed-strict");
+
+            app.MapPut(
+                "api/users/resend-verification-email",
+                async (ISender sender, ResendVerificationEmailCommand command, CancellationToken cancellationToken) =>
+                {
+                    var result = await sender.Send(command, cancellationToken);
+
+                    return result.IsSuccess
+                        ? Results.Ok()
+                        : Results.BadRequest(result.Error);
+                }).RequireRateLimiting("fixed-strict");
         }
     }
 }

@@ -3,4 +3,5 @@ interface User {
     username: string
     email: string
     currency: string
+    isEmailVerified: boolean
 }
