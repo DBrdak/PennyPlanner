@@ -34,8 +34,12 @@ export default class LayoutStore {
         }
     }
 
-    setDrawerState() {
-        this.isDrawerOpen = !this.isDrawerOpen
+    setDrawerState(state?: boolean) {
+        if(state !== undefined){
+            this.isDrawerOpen = state
+        } else {
+            this.isDrawerOpen = !this.isDrawerOpen
+        }
     }
 
     setActiveSectionIndex(index: number){

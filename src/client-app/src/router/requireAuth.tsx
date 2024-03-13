@@ -11,6 +11,10 @@ function RequireAuth() {
     return <Navigate to={'/'} state={{from: location}}/>
   }
 
+  if(!userStore.currentUser?.isEmailVerified) {
+    return <Navigate to={'/email-verification'} state={{from: location}}/>
+  }
+
   return <Outlet />
 }
 

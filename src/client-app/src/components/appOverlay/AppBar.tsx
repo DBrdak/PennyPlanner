@@ -4,13 +4,16 @@ import { drawerWidth } from "./Drawer";
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
+    isMobile: boolean
 }
 
-const AppBar = styled(MuiAppBar, {shouldForwardProp: (prop) => prop !== 'open',})<AppBarProps>(
-    ({ theme, open }) => {
+const AppBar = styled(MuiAppBar, {shouldForwardProp: (prop) => prop !== 'open' && prop !== 'isMobile'})<AppBarProps>(
+    ({ theme, open , isMobile}) => {
         return {
             zIndex: theme.zIndex.drawer + 1,
-            height: `calc(${theme.spacing(8)} + 1px)`,
+            height: isMobile ?
+                `140px` :
+                `calc(${theme.spacing(8)} + 1px)`,
             boxShadow: 'none',
             position: 'relative',
             overflow: 'hidden',

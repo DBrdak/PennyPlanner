@@ -42,6 +42,8 @@ namespace PennyPlanner.Infrastructure
             new PostgresConnectionFactory(configuration, env).Connect(services);
             new RedisConnectionFactory(configuration, env).Connect(services);
 
+            services.AddDataProtection();
+
             services.AddScoped<IAccountRepository, AccountRepository>();
 
             services.AddScoped<ITransactionEntityRepository, TransactionEntityRepository>();

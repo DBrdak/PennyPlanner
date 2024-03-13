@@ -16,15 +16,16 @@ export function AddTransactionEntityTile({onCreate, type, loading}: AddTransacti
 
     return (
         <Grid item xs={12} md={6} lg={3} sx={{
-            minHeight: '200px',
+            minHeight: '300px',
             height: '33%',
-            marginBottom: 3
+            marginBottom: 3,
+            display: 'flex'
         }}>
             <TilePaper disabled={createMode} onClick={() => !createMode && setCreateMode(true)} sx={{
-                alignItems: 'center',
+                padding: 1.5,
+                width: '100%',
                 justifyContent: 'center',
-                flexDirection: 'column',
-                userSelect: 'none'
+                alignItems: 'center'
             }}>
                 {
                     loading ?

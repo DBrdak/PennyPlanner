@@ -9,6 +9,7 @@ namespace PennyPlanner.Domain.Users
     {
         public Username Username { get; init; }
         public Email Email { get; private set; }
+        public bool IsEmailVerified { get; private set; }
         public Currency Currency { get; private set; }
         public string PasswordHash { get; private set; }
         public DateTime CreatedAt { get; init; }
@@ -21,6 +22,7 @@ namespace PennyPlanner.Domain.Users
             Currency = currency;
             PasswordHash = passwordHash;
             CreatedAt = DateTime.UtcNow;
+            IsEmailVerified = false;
         }
 
         [JsonConstructor]
@@ -36,5 +38,7 @@ namespace PennyPlanner.Domain.Users
 
             return user;
         }
+
+        public void VerifyEmail() => IsEmailVerified = true;
     }
 }

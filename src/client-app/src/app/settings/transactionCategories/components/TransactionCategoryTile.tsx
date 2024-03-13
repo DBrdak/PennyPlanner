@@ -29,14 +29,13 @@ export default observer (function TransactionCategoryTile({transactionCategory, 
 
     return (
         <Grid item xs={12} md={4} lg={3} alignItems="center" justifyContent="center"  sx={{
-            minHeight: '200px',
+            minHeight: '300px',
             height: '33%',
             marginBottom: 3,
             display: 'flex'
         }}>
             <TilePaper disabled sx={{
                 padding: 1.5,
-                maxWidth: '1200px',
                 width: '100%',
                 justifyContent: 'center',
                 alignItems: 'center'

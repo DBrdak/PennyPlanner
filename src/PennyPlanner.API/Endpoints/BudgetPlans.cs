@@ -22,7 +22,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.Ok();
-                }).RequireAuthorization();
+                }).RequireAuthorization().RequireRateLimiting("fixed-loose");
 
             app.MapPost(
                 "api/budget-plans",
@@ -36,7 +36,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization();
+                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
 
             app.MapPut(
                 "api/budget-plans/{budgetPlanId}/{budgetedCategoryId}",
@@ -57,7 +57,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization();
+                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
         }
     }
 }

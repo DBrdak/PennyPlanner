@@ -5,17 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Imports Cleanup">
+      <change afterPath="$PROJECT_DIR$/src/app/email-verification/EmailVerificationPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/email-verification/verify/VerifyEmailPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PennyPlanner.Application/Abstractions/Email/IEmailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../PennyPlanner.Application/Abstractions/Email/IEmailService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PennyPlanner.Application/Users/DomainEventHandlers/UserCreatedDomainEventHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../PennyPlanner.Application/Users/DomainEventHandlers/UserCreatedDomainEventHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PennyPlanner.Application/Users/UserModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../PennyPlanner.Application/Users/UserModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PennyPlanner.Domain/Users/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../PennyPlanner.Domain/Users/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PennyPlanner.Infrastructure/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../PennyPlanner.Infrastructure/ApplicationDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PennyPlanner.Infrastructure/Authentication/JwtService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../PennyPlanner.Infrastructure/Authentication/JwtService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PennyPlanner.Infrastructure/Authentication/PasswordService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../PennyPlanner.Infrastructure/Authentication/PasswordService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PennyPlanner.Infrastructure/Email/EmailProviderOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../PennyPlanner.Infrastructure/Email/EmailProviderOptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PennyPlanner.Infrastructure/Email/EmailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../PennyPlanner.Infrastructure/Email/EmailService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/agent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/agent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/goals/GoalsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/goals/GoalsPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/register/SignUpPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/accountStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/accountStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/budgetPlanStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/budgetPlanStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/categoryStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/categoryStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/transactionEntityStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/transactionEntityStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/transactionStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/transactionStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/transactionSubcategoryStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/transactionSubcategoryStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/userStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/userStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/settings/transactionCategories/TransactionCategoriesPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/transactionCategories/TransactionCategoriesPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/settings/transactionCategories/components/AddTransactionCategoryTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/transactionCategories/components/AddTransactionCategoryTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/settings/transactionCategories/components/TransactionCategoryTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/transactionCategories/components/TransactionCategoryTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/settings/transactionEntities/components/AddTransactionEntityTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/transactionEntities/components/AddTransactionEntityTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/settings/transactionEntities/components/TransactionEntityTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/transactionEntities/components/TransactionEntityTile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/statistics/StatisticsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/statistics/StatisticsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ModalContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ModalContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/appOverlay/AppBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/AppBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/users/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/users/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/Routes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/requireAuth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/requireAuth.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/layoutStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/layoutStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +168,7 @@
       <workItem from="1709688304873" duration="6541000" />
       <workItem from="1710092480758" duration="31000" />
       <workItem from="1710206603690" duration="1824000" />
-      <workItem from="1710258123887" duration="5953000" />
+      <workItem from="1710258123887" duration="16126000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>

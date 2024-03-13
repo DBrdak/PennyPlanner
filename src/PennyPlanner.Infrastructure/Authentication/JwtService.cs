@@ -31,8 +31,9 @@ internal sealed class JwtService : IJwtService
         CancellationToken cancellationToken = default)
     {
         var isPasswordCorrect = _passwordService.VerifyPassword(password, userToAuthenticate.PasswordHash);
+        var isEmailVerified = userToAuthenticate.IsEmailVerified;
 
-        return isPasswordCorrect ? 
+        return isPasswordCorrect && isEmailVerified ? 
             Generate(userToAuthenticate) : 
             Result.Failure<string>(AuthenticationFailed);
     }

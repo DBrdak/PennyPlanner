@@ -9,13 +9,15 @@ namespace PennyPlanner.Application.Users
         public string Username { get; init; }
         public string Email { get; init; }
         public string Currency { get; init; }
+        public bool IsEmailVerified { get; init; }
 
-        private UserModel(string userId, string email, string currency, string username)
+        private UserModel(string userId, string email, string currency, string username, bool isEmailVerified)
         {
             UserId = userId;
             Email = email;
             Currency = currency;
             Username = username;
+            IsEmailVerified = isEmailVerified;
         }
 
         [JsonConstructor]
@@ -28,7 +30,8 @@ namespace PennyPlanner.Application.Users
                 user.Id.Value.ToString(),
                 user.Email.Value,
                 user.Currency.Code,
-                user.Username.Value
+                user.Username.Value,
+                user.IsEmailVerified
             );
     }
 }

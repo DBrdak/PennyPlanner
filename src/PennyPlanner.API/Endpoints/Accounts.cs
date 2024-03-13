@@ -24,7 +24,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization();
+                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
 
             app.MapPost(
                 "api/accounts",
@@ -37,7 +37,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization();
+                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
 
             app.MapPut(
                 "api/accounts/{accountId}",
@@ -53,7 +53,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization();
+                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
 
             app.MapDelete(
                 "api/accounts/{accountId}",
@@ -69,7 +69,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization();
+                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
         }
     }
 }

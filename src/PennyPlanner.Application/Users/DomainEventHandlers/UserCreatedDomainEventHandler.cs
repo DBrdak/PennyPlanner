@@ -1,4 +1,5 @@
-﻿using CommonAbstractions.DB.Entities;
+﻿using System.Security.Cryptography;
+using CommonAbstractions.DB.Entities;
 using PennyPlanner.Application.Abstractions.Email;
 using PennyPlanner.Domain.Users;
 using PennyPlanner.Domain.Users.Events;
@@ -22,8 +23,8 @@ namespace PennyPlanner.Application.Users.DomainEventHandlers
                        throw new ApplicationException(
                            $"User with ID: {notification.UserId.Value} not exist, verification email cannot be send");
 
-            var result = await _emailService.SendAsync(user.Email, "Verify the email", "", "");
-
+            var result = await _emailService.SendWelcomeEmailAsync(user.Email, user.Username, user.Id);
+            
             if (result.IsFailure)
             {
                 throw new ApplicationException(result.Error.Name);

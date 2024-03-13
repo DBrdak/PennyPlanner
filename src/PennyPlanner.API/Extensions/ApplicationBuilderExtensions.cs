@@ -1,7 +1,9 @@
-﻿using Carter;
+﻿using System.Threading.RateLimiting;
+using Carter;
 using HealthChecks.ApplicationStatus.DependencyInjection;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using PennyPlanner.API.Middlewares;
 using PennyPlanner.Application;
@@ -21,9 +23,14 @@ namespace PennyPlanner.API.Extensions
                 .AddNpgSql(configuration.GetConnectionString("Database") ?? string.Empty)
                 .AddRedis(configuration.GetConnectionString("Cache") ?? string.Empty);
 
+            services.AddRateLimiters();
+
             services.AddInfrastructure(configuration, env);
+
             services.AddApplication();
+
             services.AddCarter();
+
             services.AddControllers();
 
             services.AddCors(options =>
@@ -40,6 +47,46 @@ namespace PennyPlanner.API.Extensions
             });
 
             return services;
+        }
+
+        private static void AddRateLimiters(this IServiceCollection services)
+        {
+            services.AddRateLimiter(
+                options =>
+                {
+                    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+                    options.AddPolicy(
+                        "fixed-loose",
+                        context =>
+                            RateLimitPartition.GetFixedWindowLimiter(
+                                partitionKey: context.Connection.RemoteIpAddress?.ToString(),
+                                factory: _ => new FixedWindowRateLimiterOptions
+                                {
+                                    PermitLimit = 15,
+                                    Window = TimeSpan.FromSeconds(10)
+                                }));
+                    options.AddPolicy(
+                        "fixed-strict",
+                        context =>
+                            RateLimitPartition.GetFixedWindowLimiter(
+                                partitionKey: context.Connection.RemoteIpAddress?.ToString(),
+                                factory: _ => new FixedWindowRateLimiterOptions
+                                {
+                                    PermitLimit = 1,
+                                    Window = TimeSpan.FromSeconds(10)
+                                }));
+                    options.AddPolicy(
+                        "fixed-standard",
+                        context =>
+                            RateLimitPartition.GetFixedWindowLimiter(
+                                partitionKey: context.Connection.RemoteIpAddress?.ToString(),
+                                factory: _ => new FixedWindowRateLimiterOptions
+                                {
+                                    PermitLimit = 10,
+                                    Window = TimeSpan.FromSeconds(10)
+                                }));
+                });
         }
 
         public static async Task<IHost> ApplyMigrations(this IHost app, int? retry = 0)

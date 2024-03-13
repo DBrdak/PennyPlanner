@@ -73,7 +73,8 @@ const AppOverlay = ({children}: AppOverlayProps) => {
     const {layoutStore} = useStore();
     const navigate = useNavigate();
     const currentLocation = useLocation()
-    const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
+    const isLaptop = useMediaQuery(theme.breakpoints.down('lg'))
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
     useEffect(() => {
         layoutStore.setActiveSectionIndexByPath(currentLocation.pathname)
@@ -85,6 +86,7 @@ const AppOverlay = ({children}: AppOverlayProps) => {
 
     function handleSectionChange(index: number) {
         layoutStore.setActiveSectionIndex(index)
+        isLaptop && layoutStore.setDrawerState(false)
         const sectionTitle = dashboardSections[index].title;
         const sectionPath = sectionTitle.replace(' ', '-').toLowerCase();
         navigate(`/${sectionPath}`);
@@ -96,9 +98,16 @@ const AppOverlay = ({children}: AppOverlayProps) => {
 
     const userSectionIndex = dashboardSections.findIndex(s => s.title === 'User')
 
+    const sectionName = currentLocation.pathname
+        .slice(currentLocation.pathname.lastIndexOf('/') + 1)
+        .replaceAll('-', ' ')
+        .split(' ')
+        .map(word => word.slice(0,1).toUpperCase().concat(word.slice(1)))
+        .join(' ')
+
     return (
         <Box sx={{height: '100svh', overflow: 'hidden', position: 'relative'}}>
-            <AppBar>
+            <AppBar isMobile={isMobile}>
                 <Toolbar style={{
                     height: '100%',
                     alignItems: 'center',
@@ -107,7 +116,7 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                     backgroundColor: theme.palette.background.paper
                 }}>
                     {
-                        !isMobile ?
+                        !isLaptop ?
                             <DrawerNavButton
                                 disableRipple
                                 isOpen={layoutStore.isDrawerOpen}
@@ -137,14 +146,15 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                         userSelect: 'none',
                         fontFamily: 'Fira Sans',
                         color: theme.palette.primary.light,
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        textAlign: 'center'
                     }}>
-                        Penny Planner
+                        {isMobile ? sectionName : 'Penny Planner'}
                     </Typography>
                     <IconButton sx={{
                         borderRadius: 0,
                         height: '100%',
-                        aspectRatio: 1,
+                        aspectRatio: isMobile ? 0 : 1,
                         padding: 'none',
                         margin: 'none',
                         ":disabled": {backgroundColor: theme.palette.background.default},
@@ -167,7 +177,7 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                 </Toolbar>
             </AppBar>
             {
-                !isMobile ?
+                !isLaptop ?
                     <Box style={{
                         display: 'flex',
                         height: `calc(100% - ${theme.spacing(8)} + 1px)`
