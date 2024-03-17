@@ -3,7 +3,7 @@ import useTitle from "../../../utils/hooks/useTitle";
 import {observer} from "mobx-react-lite";
 import {useStore} from "../../../stores/store";
 import React, {useEffect, useState} from "react";
-import {CircularProgress, Grid, IconButton} from "@mui/material";
+import {CircularProgress, Grid, IconButton, useMediaQuery} from "@mui/material";
 import theme from "../../theme";
 import {AddInternalTransactionCommand} from "../../../models/requests/transactions/addInternalTransactionCommand";
 import {AddInternalTransactionForm} from "./components/AddInternalTransactionForm";
@@ -16,6 +16,7 @@ export default observer (function AddInternalTransactionPage() {
     const {accountStore, transactionStore} = useStore()
     const [newTransactions, setNewTransactions] = useState<AddInternalTransactionCommand[]>([])
     const navigate = useNavigate()
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
     useTitle('Internal')
 
     useEffect(() => {
@@ -68,11 +69,14 @@ export default observer (function AddInternalTransactionPage() {
                                         handleFormSubmit={handleFormSubmit}
                                     />
                                 </Grid>
-                                <Grid item xs={12} md={6} sx={{height: '100%'}}>
-                                    <NewInternalTransactionsTable
-                                        newTransactions={newTransactions}
-                                    />
-                                </Grid>
+                                {
+                                    !isMobile &&
+                                        <Grid item xs={12} md={6} sx={{height: '100%'}}>
+                                            <NewInternalTransactionsTable
+                                                newTransactions={newTransactions}
+                                            />
+                                        </Grid>
+                                }
                             </>
                 }
             </Grid>

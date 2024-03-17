@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Imports Cleanup">
-      <change beforePath="$PROJECT_DIR$/src/stores/userStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/userStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/formatters/sectionNameFormatter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/transactions/income/AddIncomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/income/AddIncomePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/transactions/internal/AddInternalTransactionPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/internal/AddInternalTransactionPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/transactions/outcome/AddOutcomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/transactions/outcome/AddOutcomePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/welcome/WelcomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/welcome/WelcomePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appOverlay/AppOverlay.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,22 +36,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ReactCreateComponentLastSelected": "functionDeclarationComponent",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "init-develop",
-    "last_opened_file_path": "D:/Programownie/Projekty/Domestica/PennyPlanner/src/client-app",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\Programownie\\Projekty\\Domestica\\PennyPlanner\\src\\client-app\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ReactCreateComponentLastSelected&quot;: &quot;functionDeclarationComponent&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;init-develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Programownie/Projekty/Domestica/PennyPlanner/src/client-app&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Programownie\\Projekty\\Domestica\\PennyPlanner\\src\\client-app\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -142,6 +148,7 @@
       <workItem from="1710092480758" duration="31000" />
       <workItem from="1710206603690" duration="1824000" />
       <workItem from="1710258123887" duration="16849000" />
+      <workItem from="1710638009956" duration="5644000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>

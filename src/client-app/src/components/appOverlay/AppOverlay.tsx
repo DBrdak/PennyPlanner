@@ -25,6 +25,7 @@ import {observer} from "mobx-react-lite";
 import {useStore} from "../../stores/store";
 import DashboardSection from "../../models/layout/dashboardSection";
  import AddTransactionButton from "./AddTransactionButton";
+ import sectionName from "../../utils/formatters/sectionNameFormatter";
 
  interface AppOverlayProps {
     children: React.ReactNode,
@@ -98,13 +99,6 @@ const AppOverlay = ({children}: AppOverlayProps) => {
 
     const userSectionIndex = dashboardSections.findIndex(s => s.title === 'User')
 
-    const sectionName = currentLocation.pathname
-        .slice(currentLocation.pathname.lastIndexOf('/') + 1)
-        .replaceAll('-', ' ')
-        .split(' ')
-        .map(word => word.slice(0,1).toUpperCase().concat(word.slice(1)))
-        .join(' ')
-
     return (
         <Box sx={{height: '100svh', overflow: 'hidden', position: 'relative'}}>
             <AppBar isMobile={isMobile}>
@@ -149,7 +143,7 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                         fontWeight: 'bold',
                         textAlign: 'center'
                     }}>
-                        {isMobile ? sectionName : 'Penny Planner'}
+                        {isMobile ? sectionName(currentLocation.pathname) : 'Penny Planner'}
                     </Typography>
                     <IconButton sx={{
                         borderRadius: 0,
@@ -249,14 +243,15 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                             onOpen={() => layoutStore.setDrawerState()}
                         >
                             <List style={{
-                                marginTop: `calc(${theme.spacing(8)} + 1px)`,
+                                marginTop: `140px`,
                                 padding: '0',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 height: '100%',
-                                width: '100%'
+                                width: '100%',
+                                paddingBottom: '20px'
                             }}>
                                 {sideNavBarSections.map((btn, index) => (
                                     <DrawerListItem key={index}
@@ -294,6 +289,7 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                             sx={{
                                 width: '100%',
                                 padding: 2,
+                                paddingBottom: 10,
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 display: 'flex',
