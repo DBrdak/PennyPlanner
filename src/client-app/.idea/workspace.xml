@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Section names fix" />
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Section names fix">
+      <change beforePath="$PROJECT_DIR$/src/app/settings/transactionEntities/components/TransactionEntityTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/transactionEntities/components/TransactionEntityTile.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -141,6 +143,7 @@
       <workItem from="1710206603690" duration="1824000" />
       <workItem from="1710258123887" duration="16849000" />
       <workItem from="1710638009956" duration="5765000" />
+      <workItem from="1710780869932" duration="1373000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
