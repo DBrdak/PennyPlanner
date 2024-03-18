@@ -22,7 +22,8 @@ const WelcomePage: React.FC = () => {
         color: theme.palette.common.white,
         marginBottom: theme.spacing(3),
         userSelect: 'none',
-        textShadow: '2px 2px 6px rgba(0,0,0, 0.7)'
+        textShadow: '2px 2px 6px rgba(0,0,0, 0.7)',
+        textAlign: 'center'
     };
 
     return (

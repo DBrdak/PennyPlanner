@@ -1,7 +1,7 @@
 import Undo from "@mui/icons-material/Undo";
-import { CircularProgress, Grid, IconButton } from "@mui/material";
+import {CircularProgress, Grid, IconButton, useMediaQuery} from "@mui/material";
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppOverlay from "../../../components/appOverlay/AppOverlay";
 import { AddIncomeTransactionCommand } from "../../../models/requests/transactions/addIncomeTransactionCommand";
@@ -11,6 +11,7 @@ import theme from "../../theme";
 import { NoAccountMessage } from "../components/NoAccountMessage";
 import { AddIncomeForm } from "./components/AddIncomeForm";
 import NewIncomesTable from "./components/NewIncomesTable";
+import NewInternalTransactionsTable from "../internal/components/NewInternalTransactionsTable";
 
 export default observer(function AddIncomePage() {
     const {accountStore, transactionEntityStore, transactionStore, categoryStore} = useStore()
@@ -19,6 +20,7 @@ export default observer(function AddIncomePage() {
     const [subcategoryValues, setSubcategoryValues] = useState<string[]>([])
     const [newIncomes, setNewIncomes] = useState<AddIncomeTransactionCommand[]>([])
     const navigate = useNavigate()
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
     useTitle('Income')
 
     useEffect(() => {
@@ -90,11 +92,14 @@ export default observer(function AddIncomePage() {
                                         handleFormSubmit={handleFormSubmit}
                                     />
                                 </Grid>
-                                <Grid item xs={12} md={6} sx={{height: '100%'}}>
-                                    <NewIncomesTable
-                                        newIncomes={newIncomes}
-                                    />
-                                </Grid>
+                                {
+                                    !isMobile &&
+                                    <Grid item xs={12} md={6} sx={{height: '100%'}}>
+                                        <NewIncomesTable
+                                            newIncomes={newIncomes}
+                                        />
+                                    </Grid>
+                                }
                             </>
                 }
             </Grid>

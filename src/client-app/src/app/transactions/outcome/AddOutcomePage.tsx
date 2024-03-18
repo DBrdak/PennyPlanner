@@ -3,7 +3,7 @@ import {observer} from "mobx-react-lite";
 import {useStore} from "../../../stores/store";
 import React, {useEffect, useState} from "react";
 import useTitle from "../../../utils/hooks/useTitle";
-import {CircularProgress, Grid, IconButton} from "@mui/material";
+import {CircularProgress, Grid, IconButton, useMediaQuery} from "@mui/material";
 import theme from "../../theme";
 import {AddOutcomeTransactionCommand} from "../../../models/requests/transactions/addOutcomeTransactionCommand";
 import NewOutcomesTable from "./components/NewOutcomesTable";
@@ -11,6 +11,7 @@ import {AddOutcomeForm} from "./components/AddOutcomeForm";
 import {Undo} from "@mui/icons-material";
 import {NoAccountMessage} from "../components/NoAccountMessage";
 import {useNavigate} from "react-router-dom";
+import NewInternalTransactionsTable from "../internal/components/NewInternalTransactionsTable";
 
 export default observer (function AddOutcomePage() {
     const {accountStore, transactionEntityStore, transactionStore, categoryStore} = useStore()
@@ -19,6 +20,7 @@ export default observer (function AddOutcomePage() {
     const [subcategoryValues, setSubcategoryValues] = useState<string[]>([])
     const [newOutcomes, setNewOutcomes] = useState<AddOutcomeTransactionCommand[]>([])
     const navigate = useNavigate()
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
     useTitle('Outcome')
 
     useEffect(() => {
@@ -87,11 +89,14 @@ export default observer (function AddOutcomePage() {
                                         handleFormSubmit={handleFormSubmit}
                                     />
                                 </Grid>
-                                <Grid item xs={12} md={6} sx={{height: '100%'}}>
-                                    <NewOutcomesTable
-                                        newOutcomes={newOutcomes}
-                                    />
-                                </Grid>
+                                {
+                                    !isMobile &&
+                                    <Grid item xs={12} md={6} sx={{height: '100%'}}>
+                                        <NewOutcomesTable
+                                            newOutcomes={newOutcomes}
+                                        />
+                                    </Grid>
+                                }
                             </>
                 }
             </Grid>

@@ -74,12 +74,12 @@ namespace PennyPlanner.Domain.Transactions
             switch (transactionAmount.Amount > 0)
             {
                 case true:
-                    var equalizingIncomeTransaction = Transaction.CreatePrivateIncome(transactionAmount, account);
-                    account.AddTransaction(equalizingIncomeTransaction);
+                    var privateIncomeTransaction = Transaction.CreatePrivateIncome(transactionAmount, account);
+                    account.AddTransaction(privateIncomeTransaction);
                     break;
                 case false:
-                    var equalizingOutcomeTransaction = Transaction.CreatePrivateOutcome(transactionAmount, account);
-                    account.AddTransaction(equalizingOutcomeTransaction);
+                    var privateOutcomeTransaction = Transaction.CreatePrivateOutcome(transactionAmount, account);
+                    account.AddTransaction(privateOutcomeTransaction);
                     break;
             }
         }

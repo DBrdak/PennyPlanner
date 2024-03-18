@@ -11,6 +11,7 @@ export const FadeContainer = styled(MuiBox)(
         animation: `${fadeIn} 2s`,
         minWidth: '99svw',
         minHeight: '100svh',
-        overflowX: 'hidden'
+        overflowX: 'hidden',
+
     })
 );
