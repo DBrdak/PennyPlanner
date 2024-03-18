@@ -26,11 +26,11 @@ namespace PennyPlanner.Application.Accounts.AddAccount
 
         public async Task<Result<Account>> Handle(AddAccountCommand request, CancellationToken cancellationToken)
         {
-            var validationResult = await ValidateAsync(request, cancellationToken);
+            var validationFailure = await ValidateAsync(request, cancellationToken);
 
-            if (validationResult is not null)
+            if (validationFailure is not null)
             {
-                return validationResult;
+                return validationFailure;
             }
 
             Account? newAccount;

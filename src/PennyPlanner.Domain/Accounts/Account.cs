@@ -24,7 +24,7 @@ namespace PennyPlanner.Domain.Accounts
         {
             Name = name;
             _transactions = new();
-            Balance = new(initialBalance, currency);
+            Balance = new(0, currency);
 
             if (initialBalance != 0)
             {
