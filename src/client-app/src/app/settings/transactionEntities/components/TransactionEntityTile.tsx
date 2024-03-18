@@ -29,7 +29,8 @@ export function TransactionEntityTile({transactionEntity, onDelete, onEdit, load
                 width: '100%',
                 justifyContent: 'center',
                 alignItems: 'center',
-                position: 'relative'
+                position: 'relative',
+                flexDirection: 'column'
             }}>
                 {
                     loading ?
