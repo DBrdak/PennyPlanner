@@ -178,7 +178,14 @@
                          </td>
                        </tr>
                      </tbody>
-                   </table></td>
+                   </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="858842f8-79c6-4e8b-9fa0-94ab04b8a979" data-mc-module-version="2019-10-22">
+                 <tbody>
+                   <tr>
+                     <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content"><div><div style="font-family: inherit; text-align: center"><span style="table-layout: fixed; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 20px; padding-right: 0px; padding-bottom: 20px; padding-left: 0px; text-align: center; font-size: 12px; color: #b3b3b3">You shouldn't receive this message? Don't worry, if you won't click the button, this address email will be </span><span style="table-layout: fixed; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 20px; padding-right: 0px; padding-bottom: 20px; padding-left: 0px; text-align: center; font-size: 12px; color: #b3b3b3"><strong>deleted within 7 days</strong></span><span style="table-layout: fixed; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 20px; padding-right: 0px; padding-bottom: 20px; padding-left: 0px; text-align: center; font-size: 12px; color: #b3b3b3">. However, please note that it may have been sent to you on behalf of someone else.</span><span style="font-size: 12px; color: #b3b3b3">&nbsp;</span></div><div></div></div></td>
+                   </tr>
+                 </tbody>
+               </table></td>
+                   
                                                      </tr>
                                                    </table>
                                                    <!--[if mso]>

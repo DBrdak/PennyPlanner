@@ -7,12 +7,15 @@ import {Button, ButtonGroup, CircularProgress, Typography, useMediaQuery} from "
 import theme from "../theme";
 import {ArrowRight, InboxTwoTone} from "@mui/icons-material";
 import {toast} from "react-toastify";
+import useTitle from "../../utils/hooks/useTitle";
 
 export default observer(function EmailVerificationPage() {
+    const [timer, setTimer] = useState(0);
     const {userStore} = useStore()
     const navigate = useNavigate()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [requestedForReload, setRequestedForReload] = useState(false)
+    useTitle('Verification')
 
     useEffect(() => {
         if(!userStore.currentUser){
@@ -38,6 +41,30 @@ export default observer(function EmailVerificationPage() {
         userStore.loadCurrentUser().then(() => setRequestedForReload(prevState => !prevState))
     }
 
+    function handleResend() {
+        if (timer <= 0) {
+            userStore.resendVerificationEmail(userStore.currentUser!.email).then(isSuccess => {
+                isSuccess && toast.success('Verification email sent - check your inbox')
+            })
+            setTimer(31);
+        }
+    }
+
+    useEffect(() => {
+        if (timer > 0) {
+            const interval = setInterval(() => {
+                setTimer(prevTimer => prevTimer - 1);
+            }, 1000);
+
+            return () => clearInterval(interval)
+        }
+    }, [timer]);
+
+    function handleLogOut() {
+        userStore.logOut()
+        navigate('/logout')
+    }
+
     return (
         <GradientContainer>
             {
@@ -48,16 +75,57 @@ export default observer(function EmailVerificationPage() {
                         <Typography variant={isMobile ? 'h4' : 'h2'} sx={headerStyles}>
                             Please verify your email
                         </Typography>
-                        <Button variant={'contained'} onClick={() => handleHomeNavigation()}>
+                        <Button
+                            color={'success'}
+                            onClick={() => handleHomeNavigation()}
+                            variant="contained"
+                            size="large"
+                            sx={{marginBottom: 2, width: '300px'}}>
                             {
                                 userStore.loading ?
                                     <CircularProgress />
                                     :
-                                    <Typography variant={'h6'}>
-                                        Go To Budget
-                                    </Typography>
+                                    'Go To Budget'
                             }
                         </Button>
+                        {
+                            userStore.currentUser &&
+                                <>
+                                    <Button
+                                        color={'info'}
+                                        disabled={timer > 0}
+                                        onClick={() => handleResend()}
+                                        variant="contained"
+                                        size="large"
+                                        sx={{marginBottom: 2, width: '300px'}}>
+                                        {
+                                            userStore.loading ?
+                                                <CircularProgress />
+                                                :
+                                                'Resend verification email'
+                                        }
+                                    </Button>
+                                    {timer > 0 && <p>Resend available in {timer} seconds</p>}
+                                </>
+                        }
+                        {
+                            userStore.currentUser &&
+                            <>
+                                <Button
+                                    color={'error'}
+                                    onClick={() => handleLogOut()}
+                                    variant="contained"
+                                    size="large"
+                                    sx={{marginBottom: 2, width: '300px'}}>
+                                    {
+                                        userStore.loading ?
+                                            <CircularProgress />
+                                            :
+                                            'Logout'
+                                    }
+                                </Button>
+                            </>
+                        }
                     </>
             }
         </GradientContainer>

@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Section names fix">
-      <change beforePath="$PROJECT_DIR$/src/app/settings/transactionEntities/components/TransactionEntityTile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/transactionEntities/components/TransactionEntityTile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/requests/users/resendVerificationEmailCommand.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/requests/users/verifyEmailCommand.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PennyPlanner.Domain/Users/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../PennyPlanner.Domain/Users/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/agent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/agent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/email-verification/EmailVerificationPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/email-verification/EmailVerificationPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/email-verification/verify/VerifyEmailPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/email-verification/verify/VerifyEmailPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RedirectPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RedirectPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/userStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/userStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/hooks/useTitle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/hooks/useTitle.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,6 +152,7 @@
       <workItem from="1710258123887" duration="16849000" />
       <workItem from="1710638009956" duration="5765000" />
       <workItem from="1710780869932" duration="1373000" />
+      <workItem from="1710890009206" duration="6768000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>

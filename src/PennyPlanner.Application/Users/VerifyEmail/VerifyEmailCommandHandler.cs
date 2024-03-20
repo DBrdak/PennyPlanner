@@ -32,6 +32,11 @@ namespace PennyPlanner.Application.Users.VerifyEmail
                 return Result.Failure<User>(Error.NotFound($"User with email: {request.Email} not found"));
             }
 
+            if (user.IsEmailVerified)
+            {
+                return Result.Failure<User>(Error.InvalidRequest("Email is already verified"));
+            }
+
             var decryptedUserId = _emailVerificationService.DecryptEmailVerificationToken(request.Token);
 
             if (!IsValid(decryptedUserId, user.Id))
