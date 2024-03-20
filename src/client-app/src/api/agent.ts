@@ -19,6 +19,8 @@ import {SetBudgetPlanCommand} from "../models/requests/budgetPlans/setBudgetPlan
 import {store} from "../stores/store";
 import {LogInUserCommand} from "../models/requests/users/logInUserCommand";
 import {RegisterUserCommand} from "../models/requests/users/registerUserCommand";
+import {VerifyEmailCommand} from "../models/requests/users/verifyEmailCommand";
+import {ResendVerificationEmailCommand} from "../models/requests/users/resendVerificationEmailCommand";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -39,10 +41,10 @@ axios.interceptors.request.use(config => {
 const responseBody = <T> (response: AxiosResponse<T>) => response.data;
 
 axios.interceptors.response.use(async(response) => {
-
         if(process.env.NODE_ENV === "development") {
             await sleep(1000)
         }
+
         return response
     }, (error) => {
         if (error.response.data.name) {
@@ -67,15 +69,16 @@ axios.interceptors.response.use(async(response) => {
                     }
                     errorMessages.forEach(toast.error)
                     return Promise.reject();
-                case 429:
-                    toast.error('Too many requests')
-                    return Promise.reject()
                 case 500:
                     router.navigate('/server-error');
                     break;
                 default:
                     errorMessages.forEach(toast.error)
             }
+        }
+
+        if(error.response.status === 429) {
+            if(!toast.isActive(1)) toast.error('Too many requests')
         }
 
         return Promise.reject(error);
@@ -150,6 +153,8 @@ const users = {
     getCurrentUser: () => axios.get<User>('/users/current').then(responseBody),
     logInUser: (command: LogInUserCommand) => axios.post<AccessToken>('/users/login', command).then(responseBody),
     registerUser: (command: RegisterUserCommand) => axios.post('/users/register', command),
+    verifyEmail: (command: VerifyEmailCommand) => axios.put('/users/verify-email', command),
+    resendVerificationEmail: (command: ResendVerificationEmailCommand) => axios.put('/users/resend-verification-email', command)
 }
 
 const agent = {

@@ -39,7 +39,7 @@ namespace PennyPlanner.Infrastructure.Email
             message.AddTo(new EmailAddress(recipient.Value));
 
             var response = await client.SendEmailAsync(message);
-
+            
             var responseMessage = await response.Body.ReadAsStringAsync();
 
             return response.IsSuccessStatusCode ?

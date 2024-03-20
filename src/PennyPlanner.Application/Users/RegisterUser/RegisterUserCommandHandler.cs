@@ -1,6 +1,7 @@
 ﻿using CommonAbstractions.DB;
 using CommonAbstractions.DB.Messaging;
 using Money.DB;
+using PennyPlanner.Application.Abstractions.Email;
 using PennyPlanner.Domain.Users;
 using Responses.DB;
 using IPasswordService = PennyPlanner.Application.Abstractions.Authentication.IPasswordService;
@@ -12,15 +13,18 @@ namespace PennyPlanner.Application.Users.RegisterUser
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordService _passwordService;
+        private readonly IEmailService _emailService;
 
         public RegisterUserCommandHandler(
             IUserRepository userRepository,
             IUnitOfWork unitOfWork,
-            IPasswordService passwordService)
+            IPasswordService passwordService,
+            IEmailService emailService)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _passwordService = passwordService;
+            _emailService = emailService;
         }
 
         public async Task<Result<User>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -31,7 +35,7 @@ namespace PennyPlanner.Application.Users.RegisterUser
             {
                 return (Result<User>)validationResult;
             }
-            
+
             var passwordHash = _passwordService.HashPassword(request.Password);
 
             var user = User.Create(

@@ -2,7 +2,6 @@ import { makeAutoObservable } from "mobx"
 import {RegisterUserCommand} from "../models/requests/users/registerUserCommand";
 import {LogInUserCommand} from "../models/requests/users/logInUserCommand";
 import agent from "../api/agent";
-import {useNavigate} from "react-router-dom";
 
 export default class UserStore {
     currentUser?: User = undefined
@@ -76,6 +75,31 @@ export default class UserStore {
             this.setCurrentUser(user)
         } catch (e) {
 
+        } finally {
+            this.setLoading(false)
+        }
+    }
+
+    async verifyEmail(email: string, token: string) {
+        this.setLoading(true)
+
+        try {
+            await agent.users.verifyEmail({email, token})
+        } catch (e) {
+
+        } finally {
+            this.setLoading(false)
+        }
+    }
+
+    async resendVerificationEmail(email: string) {
+        this.setLoading(true)
+
+        try {
+            await agent.users.resendVerificationEmail({email})
+            return true
+        } catch (e) {
+            return false
         } finally {
             this.setLoading(false)
         }

@@ -12,7 +12,7 @@ const RedirectPage: React.FC<NotFoundPageProps> = ({ text, redirectTo }) => {
     const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
 
-    useTitle('Not Found')
+    useTitle()
 
     useEffect(() => {
         const timer = setInterval(() => {
