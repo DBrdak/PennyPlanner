@@ -18,11 +18,6 @@ namespace PennyPlanner.API.Extensions
             IConfiguration configuration,
             IWebHostEnvironment env)
         {
-            services.AddHealthChecks()
-                .AddApplicationStatus()
-                .AddNpgSql(configuration.GetConnectionString("Database") ?? string.Empty)
-                .AddRedis(configuration.GetConnectionString("Cache") ?? string.Empty);
-
             services.AddRateLimiters();
 
             services.AddInfrastructure(configuration, env);
@@ -63,7 +58,7 @@ namespace PennyPlanner.API.Extensions
                                 partitionKey: context.Connection.RemoteIpAddress?.ToString(),
                                 factory: _ => new FixedWindowRateLimiterOptions
                                 {
-                                    PermitLimit = 15,
+                                    PermitLimit = 25,
                                     Window = TimeSpan.FromSeconds(10)
                                 }));
                     options.AddPolicy(
@@ -73,7 +68,7 @@ namespace PennyPlanner.API.Extensions
                                 partitionKey: context.Connection.RemoteIpAddress?.ToString(),
                                 factory: _ => new FixedWindowRateLimiterOptions
                                 {
-                                    PermitLimit = 1,
+                                    PermitLimit = 2,
                                     Window = TimeSpan.FromSeconds(10)
                                 }));
                     options.AddPolicy(
@@ -83,7 +78,7 @@ namespace PennyPlanner.API.Extensions
                                 partitionKey: context.Connection.RemoteIpAddress?.ToString(),
                                 factory: _ => new FixedWindowRateLimiterOptions
                                 {
-                                    PermitLimit = 10,
+                                    PermitLimit = 15,
                                     Window = TimeSpan.FromSeconds(10)
                                 }));
                 });

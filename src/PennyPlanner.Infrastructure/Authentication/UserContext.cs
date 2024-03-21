@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Security.Authentication;
+using Microsoft.AspNetCore.Http;
 using PennyPlanner.Application.Abstractions.Authentication;
 using PennyPlanner.Infrastructure.Authentication.Models;
 

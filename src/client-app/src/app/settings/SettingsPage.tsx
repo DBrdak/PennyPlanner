@@ -7,8 +7,10 @@ import {TransactionCategoriesTile} from "./components/tiles/TransactionCategorie
 import {TransactionEntitiesTile} from "./components/tiles/TransactionEntitiesTile";
 import {RecurringTransactionsTile} from "./components/tiles/RecurringTransactionsTile";
 import {CustomizeTile} from "./components/tiles/CustomizeTile";
+import useAuthProvider from "../../utils/hooks/useAuthProvider";
 
 export default observer(function SettingsPage() {
+    useAuthProvider()
     useTitle('Settings')
 
     const tiles: Tile[] = [

@@ -9,8 +9,10 @@ import {AddTransactionEntityTile} from "./components/AddTransactionEntityTile";
 import {AddTransactionEntityCommand} from "../../../models/requests/transactionEntities/addTransactionEntityCommand";
 import ConfirmModal from "../../../components/ConfirmModal";
 import {useEffect, useState} from "react";
+import useAuthProvider from "../../../utils/hooks/useAuthProvider";
 
 export default observer (function TransactionEntitiesPage() {
+    useAuthProvider()
     const {transactionEntityStore, modalStore} = useStore()
     const [tileLoadingIds, setTileLoadingIds] = useState<string[]>([])
     const transactionEntities = useTransactionEntities()

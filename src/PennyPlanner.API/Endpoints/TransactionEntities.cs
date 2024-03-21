@@ -6,6 +6,7 @@ using PennyPlanner.Application.TransactionEntities.AddTransactionEntity;
 using PennyPlanner.Application.TransactionEntities.GetTransactionEntities;
 using PennyPlanner.Application.TransactionEntities.RemoveTransactionEntity;
 using PennyPlanner.Application.TransactionEntities.UpdateTransactionEntity;
+using PennyPlanner.Infrastructure.Authorization.EmailVerifiedRequirement;
 
 namespace PennyPlanner.API.Endpoints
 {
@@ -22,7 +23,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-loose");
 
             app.MapPost(
                 "api/transaction-entities",
@@ -33,7 +34,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-standard");
 
             app.MapPut(
                 "api/transaction-entities/{transactionEntityId}",
@@ -48,7 +49,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-standard");
 
             app.MapDelete(
                 "api/transaction-entities/{transactionEntityId}",
@@ -64,7 +65,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-standard");
         }
     }
 }

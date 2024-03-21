@@ -7,8 +7,10 @@ import {Button, Divider, Grid, Typography} from "@mui/material";
 import {useStore} from "../../stores/store";
 import {Logout} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
+import useAuthProvider from "../../utils/hooks/useAuthProvider";
 
 export default observer(function UserPage() {
+    useAuthProvider()
     const {userStore} = useStore()
     const navigate = useNavigate()
     useTitle(undefined, `Username`)
@@ -29,37 +31,40 @@ export default observer(function UserPage() {
                 overflowY:'auto',
                 overflowX:'hidden',
                 maxWidth: '1920px',
+                width: '100%',
                 userSelect: 'none',
                 display: 'flex', alignItems: 'center', justifyContent: 'center'
             }}>
-                <Grid item xs={12} textAlign={'center'}>
-                    <Typography variant={'h3'}>
+                <Grid item xs={12} marginBottom={5} sx={{
+                    display: 'flex', justifyContent: 'center', alignItems: 'center',flexDirection: 'column'
+                }}>
+                    <Typography variant={'h3'} marginBottom={2}>
+                        Username
+                    </Typography>
+                    <Divider variant={'middle'} sx={{marginBottom: 2, width: '300px'}} />
+                    <Typography variant={'h5'} textAlign='center' width={'100%'} sx={{overflowWrap: 'break-word'}}>
                         {userStore.currentUser?.username}
                     </Typography>
                 </Grid>
-                <Grid item xs={12} sx={{
+                <Grid item xs={12} marginBottom={5} sx={{
                     display: 'flex', justifyContent: 'center', alignItems: 'center',flexDirection: 'column'
                 }}>
                     <Typography variant={'h3'} marginBottom={2}>
                         Email
                     </Typography>
-                    <Typography marginBottom={2} width={'300px'}>
-                        <Divider variant={'middle'} />
-                    </Typography>
-                    <Typography variant={'h5'}>
+                    <Divider variant={'middle'} sx={{marginBottom: 2, width: '300px'}} />
+                    <Typography variant={'h5'} textAlign='center' width={'100%'} sx={{overflowWrap: 'break-word'}}>
                         {userStore.currentUser?.email}
                     </Typography>
                 </Grid>
-                <Grid item xs={12} sx={{
+                <Grid item xs={12} marginBottom={5} sx={{
                     display: 'flex', justifyContent: 'center', alignItems: 'center',flexDirection: 'column'
                 }}>
                     <Typography variant={'h3'} marginBottom={2}>
                         Currency
                     </Typography>
-                    <Typography marginBottom={2} width={'300px'}>
-                        <Divider variant={'middle'} />
-                    </Typography>
-                    <Typography variant={'h5'}>
+                    <Divider variant={'middle'} sx={{marginBottom: 2, width: '300px'}} />
+                    <Typography variant={'h5'} textAlign='center' width={'100%'} sx={{overflowWrap: 'break-word'}}>
                         {userStore.currentUser?.currency}
                     </Typography>
                 </Grid>

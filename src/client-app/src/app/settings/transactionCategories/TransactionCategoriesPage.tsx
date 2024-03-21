@@ -8,8 +8,10 @@ import {observer} from "mobx-react-lite";
 import TransactionCategoriesView from "./components/TransactionCategoriesView";
 import {LoadingTile} from "./components/LoadingTile";
 import {TransactionSubcategoriesView} from "./components/TransactionSubcategoriesView";
+import useAuthProvider from "../../../utils/hooks/useAuthProvider";
 
 export default observer(function TransactionCategoriesPage() {
+    useAuthProvider()
     const {categoryStore} = useStore()
     const transactionCategories = useCategories()
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))

@@ -1,5 +1,7 @@
 ﻿using CommonAbstractions.DB;
+using HealthChecks.ApplicationStatus.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,8 @@ using PennyPlanner.Domain.Transactions;
 using PennyPlanner.Domain.TransactionSubcategories;
 using PennyPlanner.Domain.Users;
 using PennyPlanner.Infrastructure.Authentication;
+using PennyPlanner.Infrastructure.Authorization;
+using PennyPlanner.Infrastructure.Authorization.EmailVerifiedRequirement;
 using PennyPlanner.Infrastructure.Data;
 using PennyPlanner.Infrastructure.Email;
 using PennyPlanner.Infrastructure.Repositories;
@@ -32,7 +36,9 @@ namespace PennyPlanner.Infrastructure
 
             services.AddAuthentication(configuration);
 
-            services.Configure<EmailProviderOptions>(configuration.GetSection("SendGrid"));
+            services.AddAuthorization(configuration);
+
+            services.AddHealthChecks(configuration);
 
             return services;
         }
@@ -63,6 +69,8 @@ namespace PennyPlanner.Infrastructure
             services.AddTransient<IEmailService, EmailService>();
 
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
+
+            services.Configure<EmailProviderOptions>(configuration.GetSection("SendGrid"));
         }
 
         private static void AddAuthentication(this IServiceCollection services, IConfiguration configuration)
@@ -73,8 +81,6 @@ namespace PennyPlanner.Infrastructure
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer();
-
-            services.AddAuthorization();
 
             services.AddHttpContextAccessor();
 
@@ -87,5 +93,21 @@ namespace PennyPlanner.Infrastructure
             services.AddScoped<IJwtService, JwtService>();
         }
 
+        private static void AddAuthorization(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAuthorization(AuthorizationPolicyProvider.Configure);
+
+            services.AddTransient<AuthorizationErrorWriter>();
+            services.AddTransient<IAuthorizationRequirement, EmailVerifiedRequirement>();
+            services.AddTransient<IAuthorizationHandler, EmailVerifiedAuthorizationHandler>();
+        }
+
+        private static void AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddHealthChecks()
+                .AddApplicationStatus()
+                .AddNpgSql(configuration.GetConnectionString("Database") ?? string.Empty)
+                .AddRedis(configuration.GetConnectionString("Cache") ?? string.Empty);
+        }
     }
 }

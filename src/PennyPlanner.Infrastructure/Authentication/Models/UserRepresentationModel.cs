@@ -5,22 +5,22 @@ namespace PennyPlanner.Infrastructure.Authentication.Models;
 
 public sealed record UserRepresentationModel
 {
-    private readonly string _cratedTimeStampClaimName = nameof(CreatedTimestamp);
+    public static readonly string CratedTimeStampClaimName = nameof(CreatedTimestamp);
     public long CreatedTimestamp { get; init; }
 
-    private readonly string _emailClaimName = nameof(Email);
+    public static readonly string EmailClaimName = nameof(Email);
     public string Email { get; init; }
 
-    private readonly string _emailVerifiedClaimName = nameof(EmailVerified);
+    public static readonly string EmailVerifiedClaimName = nameof(EmailVerified);
     public bool EmailVerified { get; init; }
 
-    private readonly string _idClaimName = nameof(Id);
+    public static readonly string IdClaimName = nameof(Id);
     public string Id { get; init; }
 
-    private readonly string _usernameClaimName = nameof(Username);
+    public static readonly string UsernameClaimName = nameof(Username);
     public string Username { get; init; }
 
-    private readonly string _currencyClaimName = nameof(Currency);
+    public static readonly string CurrencyClaimName = nameof(Currency);
     public string Currency { get; init; }
 
     private UserRepresentationModel(long createdTimestamp, string email, bool emailVerified, string id, string username, string currency)
@@ -37,7 +37,7 @@ public sealed record UserRepresentationModel
         new(
             DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
             user.Email.Value,
-            true,
+            user.IsEmailVerified,
             user.Id.Value.ToString(),
             user.Email.Value,
             user.Currency.Code);
@@ -46,12 +46,12 @@ public sealed record UserRepresentationModel
     {
         return new[]
         {
-            new Claim(_cratedTimeStampClaimName, CreatedTimestamp.ToString()),
-            new Claim(_emailClaimName, Email),
-            new Claim(_emailVerifiedClaimName, EmailVerified.ToString()),
-            new Claim(_idClaimName, Id),
-            new Claim(_usernameClaimName, Username),
-            new Claim(_currencyClaimName, Currency),
+            new Claim(CratedTimeStampClaimName, CreatedTimestamp.ToString()),
+            new Claim(EmailClaimName, Email),
+            new Claim(EmailVerifiedClaimName, EmailVerified.ToString()),
+            new Claim(IdClaimName, Id),
+            new Claim(UsernameClaimName, Username),
+            new Claim(CurrencyClaimName, Currency),
         };
     }
 }

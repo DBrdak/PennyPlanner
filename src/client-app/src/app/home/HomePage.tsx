@@ -11,8 +11,10 @@ import {StatisticsPreviewTile} from "./components/tiles/StatisticsPreviewTile";
 import {useStore} from "../../stores/store";
 import {CircularProgress} from "@mui/material";
 import {useEffect} from "react";
+import useAuthProvider from "../../utils/hooks/useAuthProvider";
 
 export default observer(function HomePage() {
+    useAuthProvider()
     useTitle('Home')
     const {accountStore, transactionStore, transactionEntityStore} = useStore()
 

@@ -6,6 +6,7 @@ using PennyPlanner.Application.Accounts.AddAccount;
 using PennyPlanner.Application.Accounts.GetAccounts;
 using PennyPlanner.Application.Accounts.RemoveAccount;
 using PennyPlanner.Application.Accounts.UpdateAccount;
+using PennyPlanner.Infrastructure.Authorization.EmailVerifiedRequirement;
 
 namespace PennyPlanner.API.Endpoints
 {
@@ -24,7 +25,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-loose");
 
             app.MapPost(
                 "api/accounts",
@@ -37,7 +38,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-standard");
 
             app.MapPut(
                 "api/accounts/{accountId}",
@@ -53,7 +54,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-standard");
 
             app.MapDelete(
                 "api/accounts/{accountId}",
@@ -69,7 +70,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-standard");
         }
     }
 }

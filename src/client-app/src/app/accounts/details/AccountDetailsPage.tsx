@@ -17,8 +17,10 @@ import {Account} from "../../../models/accounts/account";
 import {useNavigate, useParams} from "react-router-dom";
 import useTitle from "../../../utils/hooks/useTitle";
 import useCategories from "../../../utils/hooks/useCategories";
+import useAuthProvider from "../../../utils/hooks/useAuthProvider";
 
 export default observer(function AccountDetailsPage() {
+    useAuthProvider()
     const navigate = useNavigate()
     const { accountId } = useParams<{ accountId: string }>();
     const [editMode, setEditMode] = useState(false)

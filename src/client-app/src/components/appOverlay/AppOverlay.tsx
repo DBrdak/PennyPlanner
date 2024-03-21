@@ -233,7 +233,7 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                     </Box>
                     :
                     <Box style={{
-                        display: 'flex',
+                        display: 'flex'
                     }}>
                         <SwipeableDrawer
                             open={layoutStore.isDrawerOpen}
@@ -243,7 +243,7 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                             onOpen={() => layoutStore.setDrawerState()}
                         >
                             <List style={{
-                                marginTop: `140px`,
+                                marginTop: isMobile ? `140px` : theme.spacing(8),
                                 padding: '0',
                                 display: 'flex',
                                 flexDirection: 'column',
@@ -251,7 +251,8 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                                 justifyContent: 'center',
                                 height: '100%',
                                 width: '100%',
-                                paddingBottom: '20px'
+                                paddingBottom: '20px',
+                                backgroundColor: theme.palette.background.paper
                             }}>
                                 {sideNavBarSections.map((btn, index) => (
                                     <DrawerListItem key={index}
@@ -289,12 +290,11 @@ const AppOverlay = ({children}: AppOverlayProps) => {
                             sx={{
                                 width: '100%',
                                 padding: 2,
-                                paddingBottom: 10,
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 display: 'flex',
                                 overflow: 'hidden',
-                                height: '90vh'
+                                height: isMobile ? `calc(100vh - 140px)` : `calc(100vh - ${theme.spacing(8)})`,
                             }}>
                             {children}
                         </Box>

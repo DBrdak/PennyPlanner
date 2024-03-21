@@ -11,8 +11,10 @@ import NewInternalTransactionsTable from "./components/NewInternalTransactionsTa
 import {NoAccountMessage} from "../components/NoAccountMessage";
 import {Undo} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
+import useAuthProvider from "../../../utils/hooks/useAuthProvider";
 
 export default observer (function AddInternalTransactionPage() {
+    useAuthProvider()
     const {accountStore, transactionStore} = useStore()
     const [newTransactions, setNewTransactions] = useState<AddInternalTransactionCommand[]>([])
     const navigate = useNavigate()

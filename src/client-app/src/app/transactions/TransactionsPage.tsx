@@ -21,8 +21,10 @@ import useCategories from "../../utils/hooks/useCategories";
 import groupBy from "../../utils/transactionsGroupBy";
 import GroupDropdown from "../../components/transactionsTable/GroupDropdown";
 import {North, South, SyncAlt as SyncAltIcon, Undo} from "@mui/icons-material";
+import useAuthProvider from "../../utils/hooks/useAuthProvider";
 
 export default observer (function TransactionsPage() {
+    useAuthProvider()
     useTitle('Transactions')
     const navigate = useNavigate()
     const [groupCriterion, setGroupCriterion] = useState('day')

@@ -33,6 +33,11 @@ namespace PennyPlanner.Application.Users.ResendVerificationEmail
                 return Result.Failure<User>(Error.NotFound($"User with email: {request.Email} not found"));
             }
 
+            if (user.IsEmailVerified)
+            {
+                return Result.Failure<User>(Error.NotFound($"Email: {request.Email} is already verified"));
+            }
+
             var sendResult = await _emailService.SendWelcomeEmailAsync(user.Email, user.Username, user.Id);
 
             return sendResult.IsSuccess ?
