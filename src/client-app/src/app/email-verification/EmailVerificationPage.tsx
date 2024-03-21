@@ -3,7 +3,7 @@ import {useStore} from "../../stores/store";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import GradientContainer from "../welcome/GradientContainer";
-import {Button, ButtonGroup, CircularProgress, Typography, useMediaQuery} from "@mui/material";
+import {Button, ButtonGroup, CircularProgress, Paper, Typography, useMediaQuery} from "@mui/material";
 import theme from "../theme";
 import {ArrowRight, InboxTwoTone} from "@mui/icons-material";
 import {toast} from "react-toastify";
@@ -31,7 +31,8 @@ export default observer(function EmailVerificationPage() {
 
     const headerStyles: React.CSSProperties = {
         color: theme.palette.common.white,
-        marginBottom: theme.spacing(3),
+        textAlign:'center',
+        margin: `${theme.spacing(0)} ${theme.spacing(3)} ${theme.spacing(3)} ${theme.spacing(3)}`,
         userSelect: 'none',
         textShadow: '2px 2px 6px rgba(0,0,0, 0.7)'
     };
@@ -71,7 +72,16 @@ export default observer(function EmailVerificationPage() {
                 userStore.loading ?
                     <CircularProgress />
                     :
-                    <>
+                    <Paper elevation={3} style={{
+                        borderRadius: '70px',
+                        minHeight: '600px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        maxWidth: '650px',
+                        flexDirection: 'column'
+                    }}
+                    >
                         <Typography variant={isMobile ? 'h4' : 'h2'} sx={headerStyles}>
                             Please verify your email
                         </Typography>
@@ -92,10 +102,10 @@ export default observer(function EmailVerificationPage() {
                             userStore.currentUser &&
                                 <>
                                     <Button
-                                        color={'info'}
+                                        color={'inherit'}
                                         disabled={timer > 0}
                                         onClick={() => handleResend()}
-                                        variant="contained"
+                                        variant="outlined"
                                         size="large"
                                         sx={{marginBottom: 2, width: '300px'}}>
                                         {
@@ -114,9 +124,9 @@ export default observer(function EmailVerificationPage() {
                                 <Button
                                     color={'error'}
                                     onClick={() => handleLogOut()}
-                                    variant="contained"
+                                    variant="text"
                                     size="large"
-                                    sx={{marginBottom: 2, width: '300px'}}>
+                                    sx={{marginBottom: 2}}>
                                     {
                                         userStore.loading ?
                                             <CircularProgress />
@@ -126,7 +136,7 @@ export default observer(function EmailVerificationPage() {
                                 </Button>
                             </>
                         }
-                    </>
+                    </Paper>
             }
         </GradientContainer>
     );

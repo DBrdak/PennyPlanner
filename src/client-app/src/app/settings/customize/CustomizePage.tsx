@@ -1,8 +1,10 @@
 import AppOverlay from "../../../components/appOverlay/AppOverlay";
 import {Grid} from "@mui/material";
 import theme from "../../theme";
+import useAuthProvider from "../../../utils/hooks/useAuthProvider";
 
 export default function CustomizePage() {
+    useAuthProvider()
     return (
         <AppOverlay>
             <Grid container sx={{

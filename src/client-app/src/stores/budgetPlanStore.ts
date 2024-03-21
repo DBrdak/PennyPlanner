@@ -33,8 +33,8 @@ export default class BudgetPlanStore {
     }
 
     private setBudgetPlan(budgetPlan: BudgetPlan) {
-        this.budgetPlansRegistry.delete(budgetPlan.budgetPlanId)
-        this.budgetPlansRegistry.set(budgetPlan.budgetPlanId, budgetPlan)
+        this.budgetPlansRegistry.delete(this.onDate.toISOString())
+        this.budgetPlansRegistry.set(this.onDate.toISOString(), budgetPlan)
     }
 
     async loadBudgetPlan(onDate: Date) {
@@ -46,6 +46,7 @@ export default class BudgetPlanStore {
 
         try {
             const budgetPlan = await agent.budgetPlans.getBudgetPlan(params)
+
             this.setBudgetPlan(budgetPlan)
             this.newBudgetedCategoriesRegistry.clear()
         } catch (e) {

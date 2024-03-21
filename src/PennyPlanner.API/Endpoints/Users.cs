@@ -67,7 +67,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess
                         ? Results.Ok()
                         : Results.BadRequest(result.Error);
-                }).RequireRateLimiting("fixed-strict");
+                }).RequireAuthorization().RequireRateLimiting("fixed-strict");
         }
     }
 }

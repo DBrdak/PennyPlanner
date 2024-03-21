@@ -3,8 +3,10 @@ import {observer} from "mobx-react-lite";
 import useTitle from "../../utils/hooks/useTitle";
 import theme from "../theme";
 import {Grid, Typography, useMediaQuery} from "@mui/material";
+import useAuthProvider from "../../utils/hooks/useAuthProvider";
 
 export default observer(function GoalsPage() {
+    useAuthProvider()
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))
     useTitle('Goals')
 

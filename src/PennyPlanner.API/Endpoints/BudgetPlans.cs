@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PennyPlanner.Application.BudgetPlans.GetBudgetPlan;
 using PennyPlanner.Application.BudgetPlans.SetBudgetPlanCategories;
 using PennyPlanner.Application.BudgetPlans.UpdateBudgetPlanCategory;
+using PennyPlanner.Infrastructure.Authorization.EmailVerifiedRequirement;
 
 namespace PennyPlanner.API.Endpoints
 {
@@ -22,7 +23,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.Ok();
-                }).RequireAuthorization().RequireRateLimiting("fixed-loose");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-loose");
 
             app.MapPost(
                 "api/budget-plans",
@@ -36,7 +37,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-standard");
 
             app.MapPut(
                 "api/budget-plans/{budgetPlanId}/{budgetedCategoryId}",
@@ -57,7 +58,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok(result.Value) :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-standard");
         }
     }
 }

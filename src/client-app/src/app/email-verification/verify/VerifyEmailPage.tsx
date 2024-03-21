@@ -1,6 +1,7 @@
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useEffect} from "react";
 import {useStore} from "../../../stores/store";
+import {toast} from "react-toastify";
 
 export function VerifyEmailPage() {
     const {userStore} = useStore()
@@ -17,12 +18,17 @@ export function VerifyEmailPage() {
         const email = getEmailFromParams()
         const token = getTokenFromParams()
 
-        email && token && userStore.verifyEmail(email, token)
-            .then(async () => {
-                await userStore.loadCurrentUser()
-
-                navigate('/home')
-            })
+        if(email && token) {
+            userStore.verifyEmail(email, token)
+                .then(async () => {
+                    await userStore.loadCurrentUser()
+                    toast.success('Email successfully verified')
+                    navigate('/home')
+                })
+        } else {
+            toast.error('Email verification failed')
+            navigate('/')
+        }
     }, [])
 
     return (

@@ -12,8 +12,10 @@ import { NoAccountMessage } from "../components/NoAccountMessage";
 import { AddIncomeForm } from "./components/AddIncomeForm";
 import NewIncomesTable from "./components/NewIncomesTable";
 import NewInternalTransactionsTable from "../internal/components/NewInternalTransactionsTable";
+import useAuthProvider from "../../../utils/hooks/useAuthProvider";
 
 export default observer(function AddIncomePage() {
+    useAuthProvider()
     const {accountStore, transactionEntityStore, transactionStore, categoryStore} = useStore()
     const [senderNames, setSenderNames] = useState<string[]>([])
     const [categoryValues, setCategoryValues] = useState<string[]>([])

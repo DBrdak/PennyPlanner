@@ -12,8 +12,10 @@ import {Undo} from "@mui/icons-material";
 import {NoAccountMessage} from "../components/NoAccountMessage";
 import {useNavigate} from "react-router-dom";
 import NewInternalTransactionsTable from "../internal/components/NewInternalTransactionsTable";
+import useAuthProvider from "../../../utils/hooks/useAuthProvider";
 
 export default observer (function AddOutcomePage() {
+    useAuthProvider()
     const {accountStore, transactionEntityStore, transactionStore, categoryStore} = useStore()
     const [recipientNames, setRecipientNames] = useState<string[]>([])
     const [categoryValues, setCategoryValues] = useState<string[]>([])

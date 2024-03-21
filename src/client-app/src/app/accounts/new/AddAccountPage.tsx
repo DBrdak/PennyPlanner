@@ -22,9 +22,11 @@ import * as yup from 'yup'
 import {number, string} from "yup";
 import React from "react";
 import ValidationConstants from "../../../utils/constants/validationConstants";
+import useAuthProvider from "../../../utils/hooks/useAuthProvider";
 
 
 export default observer(function AddAccountPage() {
+    useAuthProvider()
     const navigate = useNavigate()
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
     const isUwhd = useMediaQuery(theme.breakpoints.up('xl'))

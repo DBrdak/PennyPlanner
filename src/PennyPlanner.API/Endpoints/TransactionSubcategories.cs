@@ -3,6 +3,7 @@ using MediatR;
 using PennyPlanner.Application.TransactionSubcategories.AddTransactionSubcategory;
 using PennyPlanner.Application.TransactionSubcategories.RemoveTransactionSubcategory;
 using PennyPlanner.Application.TransactionSubcategories.UpdateTransactionSubcategory;
+using PennyPlanner.Infrastructure.Authorization.EmailVerifiedRequirement;
 
 namespace PennyPlanner.API.Endpoints
 {
@@ -18,7 +19,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-standard");
 
             app.MapPut(
                 "api/transaction-subcategories/{transactionSubcategoryId}",
@@ -32,7 +33,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-standard");
 
             app.MapDelete("api/transaction-subcategories/{transactionSubcategoryId}",
                 async (ISender sender, string transactionSubcategoryId, CancellationToken cancellationToken) =>
@@ -44,7 +45,7 @@ namespace PennyPlanner.API.Endpoints
                     return result.IsSuccess ?
                         Results.Ok() :
                         Results.BadRequest(result.Error);
-                }).RequireAuthorization().RequireRateLimiting("fixed-standard");
+                }).RequireAuthorization(EmailVerifiedRequirement.PolicyName).RequireRateLimiting("fixed-standard");
         }
     }
 }

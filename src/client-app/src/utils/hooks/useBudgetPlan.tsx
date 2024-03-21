@@ -7,11 +7,7 @@ const useBudgetPlan = (date: Date) => {
     const [budgetPlan, setBudgetPlan] = useState<BudgetPlan>()
 
     useEffect(() => {
-        const loadBudgetPlan = async () => {
-            await budgetPlanStore.loadBudgetPlan(date);
-        };
-
-        loadBudgetPlan().then(() => {
+        budgetPlanStore.loadBudgetPlan(date).then(() =>{
             setBudgetPlan(budgetPlanStore.budgetPlan)
         })
 

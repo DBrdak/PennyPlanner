@@ -59,7 +59,7 @@ namespace PennyPlanner.Application.Behaviors
             {
                 _cacheRepository.RemoveKey(key);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 LogCacheKeyInvalidationFailure(key);
                 throw;

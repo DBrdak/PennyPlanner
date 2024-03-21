@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from "axios"
 import {toast} from "react-toastify"
-import { router } from "../router/Routes"
+import {router, routes} from "../router/Routes"
 import {NewAccountData} from "../models/requests/accounts/newAccountData";
 import {AddTransactionEntityCommand} from "../models/requests/transactionEntities/addTransactionEntityCommand";
 import {AccountUpdateData} from "../models/requests/accounts/accountUpdateData";
@@ -54,12 +54,6 @@ axios.interceptors.response.use(async(response) => {
                 case 400:
                     errorMessages.forEach(toast.error)
                     return Promise.reject();
-                case 401:
-                    if( error.response.headers['www-authenticate']?.startsWith('Bearer error="invalid_token"')){
-                        toast.error("Session expired - please login again")
-                    }
-                    else toast.error('Unauthorized')
-                    break;
                 case 403:
                     errorMessages.forEach(toast.error)
                     return Promise.reject();
@@ -69,18 +63,26 @@ axios.interceptors.response.use(async(response) => {
                     }
                     errorMessages.forEach(toast.error)
                     return Promise.reject();
-                case 500:
-                    router.navigate('/server-error');
-                    break;
                 default:
                     errorMessages.forEach(toast.error)
             }
         }
-
-        if(error.response.status === 429) {
-            if(!toast.isActive(1)) toast.error('Too many requests')
+        switch(error.response.status) {
+            case 401:
+                toast.error('Unauthorized')
+                toast.clearWaitingQueue()
+                break
+            case 403:
+                toast.error(error.response.data.error.name)
+                toast.clearWaitingQueue()
+                break
+            case 429:
+                //if(!toast.isActive(1)) toast.error('Too many requests')
+                break
+            case 500:
+                router.navigate('/server-error');
+                break;
         }
-
         return Promise.reject(error);
     }
 );

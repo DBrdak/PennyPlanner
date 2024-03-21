@@ -11,8 +11,10 @@ import TotalAccountsTile from "./components/tiles/TotalAccountsTile";
 import useTitle from "../../utils/hooks/useTitle";
 import Tile from "../../models/layout/tile";
 import ValidationConstants from "../../utils/constants/validationConstants";
+import useAuthProvider from "../../utils/hooks/useAuthProvider";
 
 export default observer (function AccountsPage() {
+    useAuthProvider()
     const {accountStore} = useStore()
     const cols = 6
 
