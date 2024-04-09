@@ -1,2 +1,2 @@
 # Penny Planner
-## Web application for tracking, planning, and analyzing home budget
+## Application for tracking, planning, and analyzing home budget
