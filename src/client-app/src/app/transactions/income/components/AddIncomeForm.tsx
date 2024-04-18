@@ -18,6 +18,8 @@ import {Cancel} from "@mui/icons-material";
 import {decimal_MAX} from "../../../../utils/constants/numeric";
 import MyDateTimePicker from "../../../../components/MyDateTimePicker";
 import ValidationConstants from "../../../../utils/constants/validationConstants";
+import {useStore} from "../../../../stores/store";
+import {observer} from "mobx-react-lite";
 
 interface AddIncomeFormProps {
     accounts: Account[]
@@ -27,11 +29,12 @@ interface AddIncomeFormProps {
     handleFormSubmit: (values: AddIncomeTransactionCommand) => void
 }
 
-export function AddIncomeForm({ accounts, categories, senders, subcategories, handleFormSubmit }: AddIncomeFormProps) {
+export default observer(function AddIncomeForm({ accounts, categories, senders, subcategories, handleFormSubmit }: AddIncomeFormProps) {
     const [newCategoryMode, setNewCategoryMode] = useState(false)
     const [newSubcategoryMode, setNewSubcategoryMode] = useState(false)
     const [newSenderMode, setNewSenderMode] = useState(false)
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+    const {userStore} = useStore()
 
     const validationSchema = Yup.object({
         transactionDateTime: Yup
@@ -186,7 +189,7 @@ export function AddIncomeForm({ accounts, categories, senders, subcategories, ha
                         minValue={0}
                         showErrors
                         style={{ minWidth: '60%', maxWidth: '400px' }}
-                        inputProps={{ endAdornment: <InputAdornment position='end'>USD</InputAdornment>}} // TODO: Fetch user currency
+                        inputProps={{ endAdornment: <InputAdornment position='end'>{userStore.currentUser?.currency || 'USD'}</InputAdornment>}} // TODO: Fetch user currency
                     />
                     <Button
                         sx={{minWidth: '60%', maxWidth: '400px', borderRadius: '5px'}}
@@ -200,4 +203,4 @@ export function AddIncomeForm({ accounts, categories, senders, subcategories, ha
             )}
         </Formik>
     )
-}
+})

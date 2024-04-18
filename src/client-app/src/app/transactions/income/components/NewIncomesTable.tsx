@@ -10,7 +10,7 @@ interface NewIncomesTableParams {
 }
 
 export default observer (function NewIncomesTable({newIncomes}: NewIncomesTableParams) {
-    const {accountStore} = useStore()
+    const {accountStore, userStore} = useStore()
 
     return (
         <Paper>
@@ -60,7 +60,7 @@ export default observer (function NewIncomesTable({newIncomes}: NewIncomesTableP
                                 {transaction.subcategoryValue}
                             </TableCell>
                             <TableCell align={'center'}>
-                                {formatNumber(transaction.transactionAmount)} {'USD' /*TODO Retrieve user currency*/}
+                                {formatNumber(transaction.transactionAmount)} {userStore.currentUser?.currency || 'USD'}
                             </TableCell>
                             <TableCell align={'center'}>
                                 {formatDate(transaction.transactionDateTime)}

@@ -10,7 +10,7 @@ interface NewInternalTransactionsTableProps {
 }
 
 export default observer (function NewInternalTransactionsTable({newTransactions}: NewInternalTransactionsTableProps) {
-    const {accountStore} = useStore()
+    const {accountStore, userStore} = useStore()
     return (
         <Paper>
             <Table>
@@ -47,7 +47,7 @@ export default observer (function NewInternalTransactionsTable({newTransactions}
                                 {accountStore.getAccount(transaction.toAccountId)?.name || ''}
                             </TableCell>
                             <TableCell align={'center'}>
-                                {formatNumber(transaction.transactionAmount)} {'USD' /*TODO Retrieve user currency*/}
+                                {formatNumber(transaction.transactionAmount)} {userStore.currentUser?.currency || 'USD'}
                             </TableCell>
                             <TableCell align={'center'}>
                                 {formatDate(transaction.transactionDateTime)}

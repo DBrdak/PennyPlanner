@@ -7,11 +7,10 @@ import {CircularProgress, Grid, IconButton, useMediaQuery} from "@mui/material";
 import theme from "../../theme";
 import {AddOutcomeTransactionCommand} from "../../../models/requests/transactions/addOutcomeTransactionCommand";
 import NewOutcomesTable from "./components/NewOutcomesTable";
-import {AddOutcomeForm} from "./components/AddOutcomeForm";
+import AddOutcomeForm from "./components/AddOutcomeForm";
 import {Undo} from "@mui/icons-material";
 import {NoAccountMessage} from "../components/NoAccountMessage";
 import {useNavigate} from "react-router-dom";
-import NewInternalTransactionsTable from "../internal/components/NewInternalTransactionsTable";
 import useAuthProvider from "../../../utils/hooks/useAuthProvider";
 
 export default observer (function AddOutcomePage() {

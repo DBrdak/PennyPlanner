@@ -19,6 +19,8 @@ import MyTextInput from "../../../../components/MyTextInput";
 import {Cancel} from "@mui/icons-material";
 import MyDateTimePicker from "../../../../components/MyDateTimePicker";
 import ValidationConstants from "../../../../utils/constants/validationConstants";
+import {observer} from "mobx-react-lite";
+import {useStore} from "../../../../stores/store";
 
 interface AddOutcomeFormProps {
     recipients: string[];
@@ -28,11 +30,12 @@ interface AddOutcomeFormProps {
     subcategories: string[]
 }
 
-export function AddOutcomeForm({recipients, handleFormSubmit, accounts, categories, subcategories}: AddOutcomeFormProps) {
+export default observer (function AddOutcomeForm({recipients, handleFormSubmit, accounts, categories, subcategories}: AddOutcomeFormProps) {
     const [newCategoryMode, setNewCategoryMode] = useState(false)
     const [newRecipientMode, setNewRecipientMode] = useState(false)
     const [newSubcategoryMode, setNewSubcategoryMode] = useState(false)
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+    const {userStore} = useStore()
 
     const validationSchema = Yup.object({
         transactionDateTime: Yup
@@ -187,7 +190,7 @@ export function AddOutcomeForm({recipients, handleFormSubmit, accounts, categori
                         minValue={0}
                         showErrors
                         style={{ minWidth: '60%', maxWidth: '400px' }}
-                        inputProps={{ endAdornment: <InputAdornment position='end'>USD</InputAdornment>}} // TODO: Fetch user currency
+                        inputProps={{ endAdornment: <InputAdornment position='end'>{userStore.currentUser?.currency || 'USD'}</InputAdornment>}}
                     />
                     <Button
                         sx={{minWidth: '60%', maxWidth: '400px', borderRadius: '5px'}}
@@ -201,4 +204,4 @@ export function AddOutcomeForm({recipients, handleFormSubmit, accounts, categori
             )}
         </Formik>
     )
-}
+})

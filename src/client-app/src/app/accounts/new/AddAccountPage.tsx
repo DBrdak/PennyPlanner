@@ -30,7 +30,7 @@ export default observer(function AddAccountPage() {
     const navigate = useNavigate()
     const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
     const isUwhd = useMediaQuery(theme.breakpoints.up('xl'))
-    const {accountStore} = useStore()
+    const {accountStore, userStore} = useStore()
 
     const validationSchema = yup.object({
         name: string()
@@ -97,7 +97,7 @@ export default observer(function AddAccountPage() {
                                         placeholder={'Initial Account Balance'}
                                         type={'number'}
                                         showErrors
-                                        inputProps={{endAdornment: <InputAdornment position="end">USD</InputAdornment>} /*TODO fetch user currency*/}
+                                        inputProps={{endAdornment: <InputAdornment position="end">{userStore.currentUser?.currency || 'USD'}</InputAdornment>}}
                                     />
                                     <ButtonGroup sx={{alignItems:'center', justifyContent: 'center'}}>
                                         <Button fullWidth
