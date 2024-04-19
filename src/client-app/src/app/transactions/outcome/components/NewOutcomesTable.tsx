@@ -10,7 +10,7 @@ interface NewOutcomesTableProps {
 }
 
 export default observer (function NewOutcomesTable({newOutcomes}: NewOutcomesTableProps) {
-    const {accountStore} = useStore()
+    const {accountStore, userStore} = useStore()
     return (
         <Paper>
             <Table>
@@ -59,7 +59,7 @@ export default observer (function NewOutcomesTable({newOutcomes}: NewOutcomesTab
                                 {transaction.subcategoryValue}
                             </TableCell>
                             <TableCell align={'center'}>
-                                {formatNumber(transaction.transactionAmount)} {'USD' /*TODO Retrieve user currency*/}
+                                {formatNumber(transaction.transactionAmount)} {userStore.currentUser?.currency || 'USD'}
                             </TableCell>
                             <TableCell align={'center'}>
                                 {formatDate(transaction.transactionDateTime)}

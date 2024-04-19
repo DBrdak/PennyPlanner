@@ -9,9 +9,8 @@ import { useStore } from "../../../stores/store";
 import useTitle from "../../../utils/hooks/useTitle";
 import theme from "../../theme";
 import { NoAccountMessage } from "../components/NoAccountMessage";
-import { AddIncomeForm } from "./components/AddIncomeForm";
+import AddIncomeForm from "./components/AddIncomeForm";
 import NewIncomesTable from "./components/NewIncomesTable";
-import NewInternalTransactionsTable from "../internal/components/NewInternalTransactionsTable";
 import useAuthProvider from "../../../utils/hooks/useAuthProvider";
 
 export default observer(function AddIncomePage() {

@@ -6,7 +6,7 @@ import React, {useEffect, useState} from "react";
 import {CircularProgress, Grid, IconButton, useMediaQuery} from "@mui/material";
 import theme from "../../theme";
 import {AddInternalTransactionCommand} from "../../../models/requests/transactions/addInternalTransactionCommand";
-import {AddInternalTransactionForm} from "./components/AddInternalTransactionForm";
+import AddInternalTransactionForm from "./components/AddInternalTransactionForm";
 import NewInternalTransactionsTable from "./components/NewInternalTransactionsTable";
 import {NoAccountMessage} from "../components/NoAccountMessage";
 import {Undo} from "@mui/icons-material";

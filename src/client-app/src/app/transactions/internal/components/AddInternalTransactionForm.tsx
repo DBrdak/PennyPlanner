@@ -16,14 +16,17 @@ import {decimal_MAX} from "../../../../utils/constants/numeric";
 import {Form, Formik} from "formik";
 import MyTextInput from "../../../../components/MyTextInput";
 import MyDateTimePicker from "../../../../components/MyDateTimePicker";
+import {observer} from "mobx-react-lite";
+import {useStore} from "../../../../stores/store";
 
 interface AddInternalTransactionFormProps {
     handleFormSubmit: (values: AddInternalTransactionCommand) => Promise<void>
     accounts: Account[]
 }
 
-export function AddInternalTransactionForm({accounts, handleFormSubmit}: AddInternalTransactionFormProps) {
+export default observer (function AddInternalTransactionForm({accounts, handleFormSubmit}: AddInternalTransactionFormProps) {
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+    const {userStore} = useStore()
 
     const validationSchema = Yup.object({
         transactionDateTime: Yup
@@ -108,7 +111,7 @@ export function AddInternalTransactionForm({accounts, handleFormSubmit}: AddInte
                         minValue={0}
                         showErrors
                         style={{ minWidth: '60%', maxWidth: '400px' }}
-                        inputProps={{ endAdornment: <InputAdornment position='end'>USD</InputAdornment>}} // TODO: Fetch user currency
+                        inputProps={{ endAdornment: <InputAdornment position='end'>{userStore.currentUser?.currency || 'USD'}</InputAdornment>}}
                     />
                     <Button
                         sx={{minWidth: '60%', maxWidth: '400px', borderRadius: '5px'}}
@@ -122,4 +125,4 @@ export function AddInternalTransactionForm({accounts, handleFormSubmit}: AddInte
             )}
         </Formik>
     )
-}
+})
