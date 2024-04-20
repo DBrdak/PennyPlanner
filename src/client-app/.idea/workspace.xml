@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="Section names fix">
+    <list default="true" id="eb76a388-452f-44e8-81ac-e2e091a95f9e" name="Changes" comment="User currency fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,9 +22,24 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DBrdak&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DBrdak/Budgetify.git&quot;,
+    &quot;accountId&quot;: &quot;9afab123-b459-404e-91fb-34e042b09c8c&quot;
+  }
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2b8y7J1T6ElXBlZTzTqtG39cYiR" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -98,6 +113,13 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-2e7d6887c066-JavaScript-WS-241.15989.47" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -152,6 +174,9 @@
       <workItem from="1712090462142" duration="622000" />
       <workItem from="1712558506278" duration="25000" />
       <workItem from="1712830128716" duration="664000" />
+      <workItem from="1713473542895" duration="626000" />
+      <workItem from="1713561906565" duration="28000" />
+      <workItem from="1713648552395" duration="278000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboard initialized">
       <created>1706349545679</created>
@@ -475,7 +500,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710644640751</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="User currency fix">
+      <created>1713474162569</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1713474162569</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -493,7 +525,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Transactions Page Init" />
     <MESSAGE value="Home Page Transactions Tile" />
     <MESSAGE value="Income Transaction Add feature" />
     <MESSAGE value="Transactions Add feature" />
@@ -518,6 +549,7 @@
     <MESSAGE value="Before Authentication and Authorization" />
     <MESSAGE value="Imports Cleanup" />
     <MESSAGE value="Section names fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Section names fix" />
+    <MESSAGE value="User currency fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="User currency fix" />
   </component>
 </project>
